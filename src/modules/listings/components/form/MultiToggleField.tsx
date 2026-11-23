@@ -1,8 +1,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import { Input } from '@mantine/core'
+import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { PURCHASE_CONDITIONS } from '@/modules/listings/constants'
 import type { ListingField } from '@/modules/listings/domain/listingFields'
 import type { FormValues } from '@/modules/listings/types/form'
@@ -18,7 +18,7 @@ const LABEL_KEYS: Partial<Record<ListingField, string>> = {
   purchase_conditions: 'purchase_conditions',
 }
 
-export function MultiToggleField({ fieldDef, formValues, onChange }: FieldRendererProps) {
+export function MultiToggleField({ fieldDef, formValues, onChange, disabled }: FieldRendererProps) {
   const t = useTranslations('listing')
 
   const options  = FIELD_OPTIONS[fieldDef.key] ?? []
@@ -34,22 +34,17 @@ export function MultiToggleField({ fieldDef, formValues, onChange }: FieldRender
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <Label className="text-sm font-medium">{t(labelKey)}</Label>
-      <div className="flex flex-wrap gap-2">
-        {options.map(o => (
-          <Button
-            key={o.value}
-            type="button"
-            variant={selected.includes(o.value) ? 'default' : 'outline'}
-            size="lg"
-            className="rounded-xl"
-            onClick={() => toggle(o.value)}
-          >
-            {t(o.labelKey)}
-          </Button>
-        ))}
-      </div>
-    </div>
+    <Input.Wrapper labelElement="div" label={t(labelKey)}>
+      <FilterChoiceGroup
+        mode="multiple"
+        variant="filled"
+        ariaLabel={t(labelKey)}
+        options={options}
+        getLabel={key => t(key)}
+        selected={selected}
+        onToggle={toggle}
+        disabled={disabled}
+      />
+    </Input.Wrapper>
   )
 }

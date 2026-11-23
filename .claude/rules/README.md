@@ -13,7 +13,7 @@ it.
 | `checklists/design.md` | Opus, creating a task | D1-D13 |
 | `checklists/execute.md` | Sonnet, implementing | I1-I12 |
 | `checklists/review.md` | Opus, reviewing | V1-V14 |
-| `checklists/handoff.md` | Opus, commands for the owner | H1-H6 |
+| `checklists/handoff.md` | Opus, commands for the owner | H1-H7 |
 | `checklists/ui.md` | any role, visible UI | U1-U12 |
 
 ## Detail (opened only for the checklist item that names it)

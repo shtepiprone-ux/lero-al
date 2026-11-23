@@ -13,7 +13,7 @@ executor and the reviewer". The gates are the GitHub workflow (`.github/workflow
 | Opus | creates a task | `checklists/design.md` (D1-D13) | implements it |
 | Sonnet | implements one saved task | `checklists/execute.md` (I1-I12) | designs, reviews, approves; edits `.claude/**`, `CLAUDE.md`, `AGENTS.md`, `.github/**`, `.githooks/**`, `scripts/quality/**` |
 | Opus | reviews and sets the verdict | `checklists/review.md` (V1-V14) | approves its own implementation |
-| Opus | hands Git commands to the owner | `checklists/handoff.md` (H1-H6) | runs a mutating command |
+| Opus | hands Git commands to the owner | `checklists/handoff.md` (H1-H7) | runs a mutating command |
 | Any role, visible UI | — | `checklists/ui.md` (U1-U12) | — |
 | Owner | product decisions, reads the diff, merges, all mutating Git, GitHub and Vercel settings | — | — |
 
@@ -26,7 +26,7 @@ left out is the rule broken. A file a checklist line names is opened for that li
 2. Sonnet: I1-I12 in its own session → report.
 3. Opus: V1-V14 in its own session → review file and verdict. `NEEDS REVISION` → a "Revision <k>" block with one item
    per finding (D, last paragraph) → back to 2.
-4. Opus: H1-H6 → the owner commits, pushes and opens the pull request → `gh pr checks <n>` → the owner merges.
+4. Opus: H1-H7 → the owner commits, pushes and opens the pull request → `gh pr checks <n>` → the owner merges → Opus archives the task (H7).
 
 Every change reaches `main` only through a pull request the owner reads and merges after `CI Required` is green. AI
 review never replaces the owner's review of the diff.
@@ -61,3 +61,8 @@ review never replaces the owner's review of the diff.
 | 2026-11-22 | A1, I6, V2, D4 | "where one or two lines need fixing, the model changes dozens of files"; no file or revision count limit (owner: "remove the limits from the rules") |
 | 2026-11-22 | H1 | "pushing only changed documents and running the full CI is a waste of time"; "it must be written in the rules so that this does not happen again" |
 | 2026-11-23 | I4, I8 | "fix the text": `scripts/quality/*.test.mjs` runs with `node --test`, not `npm test --` (Task 1013 Review 1) |
+| 2026-11-23 | H7 | "I see that you keep the backlog very badly"; "all the other sections must also be checked for relevance" (the step after a merge was in no checklist) |
+| 2026-11-23 | H7, GR-5 | "run check:backlog-active only after the task gets the status Approve; before that there is no sense at all in running this check again and again" (GR-5 asked for it on every design and review response, A5 forbids a product gate locally: the contradiction found in Task 957 Review 5) |
+| 2026-11-23 | A5, A6, I8a, I11, U9, V5a, V9 | "this rule must apply only to the CI tests, not a general ban on running Storybook"; "all these rules should concern the local run of the CI tests, not a total ban on running the dev or Storybook servers"; "you must check not only pages but also components, the Stories in Storybook" (the CI-only rules of 2026-11-21 and 2026-11-22 had been written as a ban on the servers themselves) |
+| 2026-11-23 | V5a, D5, U9 | "your reviews cannot be trusted at all, because you ignore very many points and simply do not check them; this especially concerns front-end regressions"; "add them" (Task 957: the number fields lost the canonical field look, the form buttons grew to 18px, the Firefox arrows were missing, each passed a review read from code and jsdom only) |
+| 2026-11-23 | V13 | "If the status of the task is Needs Revision, you must always give the prompt for the executor at once" (Task 957 Review 5 ended without it) |

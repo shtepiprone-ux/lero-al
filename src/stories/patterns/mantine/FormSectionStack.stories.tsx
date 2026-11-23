@@ -71,3 +71,21 @@ export const Section: Story = {
     );
   },
 };
+
+// Task 957 Revision 2 (R2-8) — a section card with no title: the card owner of a block that is not a section of the form but sits beside it (the listing form's sidebar of actions).
+// The same card, radius and body padding; no header and no divider.
+export const Untitled: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <StoryPageGutter>
+        <MantineFormSection>
+          <Stack>
+            <Button fullWidth>{storyT(l, 'storybook.mantine.action_save')}</Button>
+            <Button fullWidth variant="default">{storyT(l, 'storybook.mantine.action_cancel')}</Button>
+          </Stack>
+        </MantineFormSection>
+      </StoryPageGutter>
+    );
+  },
+};

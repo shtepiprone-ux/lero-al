@@ -14,11 +14,13 @@ interface Props {
   placeholder?: string
   showAllOption?: boolean
   className?: string
+  /** The field is disabled (Task 957 Revision 2, R2-7: the listing form while it is saved); passed to `MantineCombobox`. Default `false`. */
+  disabled?: boolean
 }
 
 export function PropertyTypeCombobox({
   value, onChange,
-  placeholder, showAllOption = true, className,
+  placeholder, showAllOption = true, className, disabled,
 }: Props) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
@@ -42,6 +44,7 @@ export function PropertyTypeCombobox({
         onChange={onChange}
         variant="button"
         placeholder={placeholder ?? t('all_types')}
+        disabled={disabled}
         icon={<Home size={theme.other.iconSize.standard} />}
         triggerWidth={{ base: '100%', sm: '100%' }}
         noResultsLabel={t('no_results')}

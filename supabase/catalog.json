@@ -149,6 +149,10 @@
    "rls": true
   },
   {
+   "name": "rate_limit_hits",
+   "rls": true
+  },
+  {
    "name": "reauth_failures",
    "rls": true
   },
@@ -2574,13 +2578,13 @@
    "table": "listings",
    "grantee": "authenticated",
    "privilege": "INSERT",
-   "cols": "address,area_gross,area_net,bathrooms,bedrooms,condition,created_at,currency,description,expires_at,floor,heating,id,is_premium,land_development_potential,land_legal_status,land_zoning,lat,listing_type,lng,location_id,market_type,multi_storey_building,offer_type,premium_until,price,price_initial,price_old,property_type,public_id,purchase_conditions,rooms,search_vector,slug,status,title,toilets,total_floors,updated_at,user_id,views_count,wall_type,year_built"
+   "cols": "address,area_gross,area_net,bathrooms,bedrooms,condition,created_at,currency,description,expires_at,floor,heating,id,is_premium,land_development_potential,land_legal_status,land_zoning,lat,listing_type,lng,location_id,market_type,multi_storey_building,offer_type,parking_floor,parking_type,premium_until,price,price_initial,price_old,property_type,public_id,purchase_conditions,rooms,search_vector,slug,status,title,toilets,total_floors,updated_at,user_id,views_count,wall_type,year_built"
   },
   {
    "table": "listings",
    "grantee": "authenticated",
    "privilege": "UPDATE",
-   "cols": "address,area_gross,area_net,bathrooms,bedrooms,condition,created_at,currency,description,expires_at,floor,heating,id,is_premium,land_development_potential,land_legal_status,land_zoning,lat,listing_type,lng,location_id,market_type,multi_storey_building,offer_type,premium_until,price,price_initial,price_old,property_type,public_id,purchase_conditions,rooms,search_vector,slug,status,title,toilets,total_floors,updated_at,user_id,views_count,wall_type,year_built"
+   "cols": "address,area_gross,area_net,bathrooms,bedrooms,condition,created_at,currency,description,expires_at,floor,heating,id,is_premium,land_development_potential,land_legal_status,land_zoning,lat,listing_type,lng,location_id,market_type,multi_storey_building,offer_type,parking_floor,parking_type,premium_until,price,price_initial,price_old,property_type,public_id,purchase_conditions,rooms,search_vector,slug,status,title,toilets,total_floors,updated_at,user_id,views_count,wall_type,year_built"
   },
   {
    "table": "notifications",
@@ -2703,6 +2707,16 @@
    "auth_exec": false
   },
   {
+   "name": "consume_rate_limit",
+   "args": "bucket text, subject text, window_seconds integer, max_hits integer",
+   "definer": true,
+   "config": [
+    "search_path=\"\""
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
    "name": "end_user_sessions",
    "args": "p_user uuid",
    "definer": true,
@@ -2808,6 +2822,16 @@
    "definer": true,
    "config": [
     "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "listing_images_owner_folder",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=\"\""
    ],
    "anon_exec": false,
    "auth_exec": false
@@ -3056,6 +3080,11 @@
   },
   {
    "table": "listings",
+   "name": "listings_parking_floor_check",
+   "def": "CHECK (((parking_floor IS NULL) OR ((parking_type IS NOT NULL) AND (parking_type = 'underground'::parking_type) AND ((parking_floor >= '-10'::integer) AND (parking_floor <= '-1'::integer)))))"
+  },
+  {
+   "table": "listings",
    "name": "listings_price_old_positive_check",
    "def": "CHECK (((price_old IS NULL) OR (price_old > (0)::numeric)))"
   },
@@ -3176,6 +3205,12 @@
    "name": "listing_contact_events_set_owner",
    "timing": "BEFORE",
    "events": "INSERT"
+  },
+  {
+   "table": "listing_images",
+   "name": "listing_images_owner_folder",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
   },
   {
    "table": "listing_reports",
@@ -5963,6 +5998,32 @@
    "enum_values": null
   },
   {
+   "table": "listings",
+   "kind": "r",
+   "name": "parking_type",
+   "type": "parking_type",
+   "udt": "parking_type",
+   "typtype": "e",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": [
+    "underground",
+    "private_street",
+    "city"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "parking_floor",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
    "table": "location_translations",
    "kind": "r",
    "name": "id",
@@ -6799,6 +6860,39 @@
    "udt": "bool",
    "typtype": "b",
    "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "rate_limit_hits",
+   "kind": "r",
+   "name": "bucket",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "rate_limit_hits",
+   "kind": "r",
+   "name": "subject",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "rate_limit_hits",
+   "kind": "r",
+   "name": "hit_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
    "is_array": false,
    "enum_values": null
   },

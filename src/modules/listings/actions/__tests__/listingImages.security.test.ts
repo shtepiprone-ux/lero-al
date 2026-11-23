@@ -38,7 +38,8 @@ import { createListing } from '../createListing'
 import { updateListing } from '../updateListing'
 
 const CLOUD = 'lero-cloud'
-const GOOD = (n: number) => ({ url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/listings/${n}.jpg`, is_cover: n === 0, order: n })
+// Task 957: a photo lies in the folder of the listing OWNER (user-a owns the listing); a new listing's photos lie in the folder of the caller
+const GOOD = (n: number, owner = 'user-a') => ({ url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/${owner}/listings/${n}.jpg`, is_cover: n === 0, order: n })
 const EVIL = { url: 'https://tracker.example/pixel.gif?uid=1', is_cover: false, order: 9 }
 const base = { title: 'Flat in Tirana', price: 90000, currency: 'EUR' }
 
@@ -57,7 +58,7 @@ beforeEach(() => {
 
 describe('createListing', () => {
   it('stores trusted images and sets owner, status and counters on the server', async () => {
-    const res = await createListing({ ...base, user_id: 'user-a', status: 'active', views_count: 9999, images: [GOOD(0), GOOD(1)] } as never)
+    const res = await createListing({ ...base, user_id: 'user-a', status: 'active', views_count: 9999, images: [GOOD(0, 'user-b'), GOOD(1, 'user-b')] } as never)
     expect('slug' in res).toBe(true)
     const row = db.tables.listings.find((l) => l.slug !== 'a-listing')
     expect(row).toMatchObject({ user_id: 'user-b', status: 'pending', views_count: 0, price_old: null })
@@ -158,7 +159,7 @@ describe('the shape of the images list (finding S49)', () => {
   })
 
   it('exactly 20 images and an empty list are accepted', async () => {
-    expect('slug' in (await createListing({ ...base, images: Array.from({ length: 20 }, (_, n) => GOOD(n)) } as never))).toBe(true)
+    expect('slug' in (await createListing({ ...base, images: Array.from({ length: 20 }, (_, n) => GOOD(n, 'user-b')) } as never))).toBe(true)
     expect('slug' in (await createListing({ ...base, images: [] } as never))).toBe(true)
   })
 })

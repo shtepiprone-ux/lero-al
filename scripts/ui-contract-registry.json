@@ -351,6 +351,420 @@
           ]
         }
       ]
+    },
+    {
+      "id": "listing-image-upload",
+      "component": "src/modules/listings/components/ImageUpload.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ImageUpload.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/patterns/MantineBadge.tsx",
+        "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx",
+        "src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx"
+      ],
+      "parity": [
+        {
+          "element": "photo tile (number and cover marks, set-as-cover and delete controls over the photo, move controls under it, the cover tile's selected border)",
+          "storyExports": [
+            "WithPhotos",
+            "SinglePhoto",
+            "LimitReached",
+            "Saving"
+          ]
+        },
+        {
+          "element": "empty photo state and the upload that cannot be built",
+          "storyExports": [
+            "Empty",
+            "UploadUnavailable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-shell-container",
+      "component": "src/modules/listings/components/ListingFormShell.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormShellContainer.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/notificationVariants.ts",
+        "src/design-system/mantine/typography.ts"
+      ],
+      "parity": [
+        {
+          "element": "listing form container, as rendered by ListingFormShellView (the container holds the state, the validation and the save, and adds no markup of its own)",
+          "storyExports": [
+            "Create"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-shell-view",
+      "component": "src/modules/listings/components/ListingFormShellView.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormShellView.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/patterns/MantineFormSectionStack.tsx",
+        "src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx"
+      ],
+      "parity": [
+        {
+          "element": "listing form (sections, sidebar, status control, save error)",
+          "storyExports": [
+            "Owner",
+            "Create",
+            "Staff",
+            "OwnerStatusControl",
+            "WithErrors",
+            "Submitting"
+          ]
+        },
+        {
+          "element": "photo limit reached and upload that cannot be built, inside the form",
+          "storyExports": [
+            "PhotoLimitReached",
+            "UploadUnavailable"
+          ]
+        },
+        {
+          "element": "cancel confirmation dialog",
+          "storyExports": [
+            "CancelConfirmation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-dynamic-field-section",
+      "component": "src/modules/listings/components/form/DynamicFieldSection.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "field section of a property type (the grid of its fields)",
+          "storyExports": [
+            "Apartment",
+            "House",
+            "GarageMultiStorey",
+            "Land"
+          ]
+        },
+        {
+          "element": "field values with their errors, and the saving state",
+          "storyExports": [
+            "WithValuesAndErrors",
+            "Saving"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-num-input-field",
+      "component": "src/modules/listings/components/form/NumInputField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "number field (rooms, bedrooms, bathrooms, toilets)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-area-pair-field",
+      "component": "src/modules/listings/components/form/AreaPairField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "pair of area fields (gross and net)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-building-floors-field",
+      "component": "src/modules/listings/components/form/BuildingFloorsField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "building floors number field",
+          "storyExports": [
+            "FieldKinds",
+            "House"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-floor-group-field",
+      "component": "src/modules/listings/components/form/FloorGroupField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "floor group (floor, total floors, multi-storey checkbox)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment",
+            "GarageMultiStorey"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-rooms-selector-field",
+      "component": "src/modules/listings/components/form/RoomsSelectorField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/components/shared/FilterChoiceGroup.tsx"
+      ],
+      "parity": [
+        {
+          "element": "rooms choice group",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-button-group-field",
+      "component": "src/modules/listings/components/form/ButtonGroupField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/components/shared/FilterChoiceGroup.tsx"
+      ],
+      "parity": [
+        {
+          "element": "single choice button group (heating, wall type, offer type)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-enum-selector-field",
+      "component": "src/modules/listings/components/form/EnumSelectorField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/components/shared/FilterChoiceGroup.tsx"
+      ],
+      "parity": [
+        {
+          "element": "enum choice list (condition, land fields)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment",
+            "Land"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-multi-toggle-field",
+      "component": "src/modules/listings/components/form/MultiToggleField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/components/shared/FilterChoiceGroup.tsx"
+      ],
+      "parity": [
+        {
+          "element": "multiple choice group (purchase conditions)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-year-combobox-field",
+      "component": "src/modules/listings/components/form/YearComboboxField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/components/shared/YearCombobox.tsx"
+      ],
+      "parity": [
+        {
+          "element": "year built field",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-number-text-input",
+      "component": "src/modules/listings/components/form/NumberTextInput.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "Mantine NumberInput with its own up and down controls, shown on hover and on focus (empty, with a value, with an error, disabled)",
+          "storyExports": [
+            "NumberInput",
+            "FieldKinds"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-form-parking-field",
+      "component": "src/modules/listings/components/form/ParkingField.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingFormFields.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/components/shared/FilterChoiceGroup.tsx",
+        "src/design-system/mantine/input-chrome.css"
+      ],
+      "parity": [
+        {
+          "element": "parking field (the kind of parking and the floor of an underground one)",
+          "storyExports": [
+            "FieldKinds",
+            "Apartment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "admin-edit-layout",
+      "component": "src/components/admin/AdminEditLayout.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/AdminEditLayout.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "edit layout (main column and sidebar; the widths and the sticky offset are theme.other.layout keys)",
+          "storyExports": [
+            "Default"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "filter-choice-group",
+      "component": "src/components/shared/FilterChoiceGroup.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/FilterControls.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "single and multiple choice group",
+          "storyExports": [
+            "Default"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "year-combobox",
+      "component": "src/components/shared/YearCombobox.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/Combobox.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "year combobox",
+          "storyExports": [
+            "YearCombobox"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mantine-delete-icon-button",
+      "component": "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/DeleteIconButton.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "delete icon action (subtle in rows and cards, filled red over a photo)",
+          "storyExports": [
+            "States",
+            "OnPhoto"
+          ]
+        }
+      ]
     }
   ]
 }

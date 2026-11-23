@@ -61,7 +61,8 @@ import { updateListing } from '../updateListing'
 
 const ID = 'l-1'
 const CLOUD = 'lero-cloud'
-const payload = { title: 'Edited', price: 90000, currency: 'EUR', property_type: 'apartment', images: [{ url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/listings/a.jpg`, is_cover: true, order: 0 }] }
+// Task 957: a photo lies in the folder of the listing OWNER, so the fixture addresses carry the owner id
+const payload = { title: 'Edited', price: 90000, currency: 'EUR', property_type: 'apartment', images: [{ url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/owner-1/listings/a.jpg`, is_cover: true, order: 0 }] }
 
 function arrange(status: string) {
   process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = CLOUD

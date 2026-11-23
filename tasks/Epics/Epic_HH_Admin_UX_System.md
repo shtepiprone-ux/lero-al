@@ -316,7 +316,7 @@ planted illegal-transition proof for C3 (the transaction rejects it and no event
 | Phase 3 — Core pages migration | 308, 309 | 🟠 RE-SCOPE under DS (owner 2026-06-05). Original Sprint 28 kickoffs (`/admin/listings` + `/admin/users` + `/admin/support` + `/admin/inquiries/{support,sales}`) are HISTORICAL — must be re-written to consume `docs/design-system.md` + canonical primitives before resuming. DS-8 (Task 353) admin-migration-plan audit is CLOSED-superseded; this re-scope replaces it. |
 | Phase 4 — Content/settings migration | 310 | DEFERRED — blocked until Sprint 28 ships. Covers remaining 12 admin routes (Locations / Popular Locations / Companies / Property Types / Currency / Email Templates / Footer / Settings / Permissions / Dashboard / Pages / Legal-redirect-or-final). May split into 310a/b/c at planning time. |
 | Phase 5 — Modal standardisation | 311 | DEFERRED — Sprint 28 Task 309 ships Sheet-bottom-drawer pattern for support + inquiries detail modals (canonical pattern proven on owner-flagged surfaces); Phase 5 generalizes to remaining admin modals after Sprint 28 ships. |
-| Phase 6 — Verified Agents workflow | 313 | PLANNED (blocked on owner schema approval; independent of Sprint 28). |
+| Phase 6 — Verified Agents workflow | 313 | CLOSED by the owner 2026-11-23 without implementation ("this task is not relevant, because it was never completed; so we just close it"); the schema contract below stays as a record. |
 
 ## Sprint 28 emergency activation (2026-05-30)
 

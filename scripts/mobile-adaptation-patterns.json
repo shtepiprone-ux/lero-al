@@ -181,6 +181,7 @@
         "src/design-system/mantine/patterns/MantineBadge.tsx",
         "src/design-system/mantine/patterns/MantineCopyIdButton.tsx",
         "src/design-system/mantine/patterns/MantineCountButton.tsx",
+        "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx",
         "src/design-system/mantine/patterns/MantineProgress.tsx"
       ]
     }

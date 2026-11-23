@@ -22,6 +22,7 @@ export type ListingField =
   | 'condition'
   | 'heating'
   | 'wall_type'
+  | 'parking'               // the kind of parking and, for an underground one, its floor (parking_type, parking_floor)
   | 'market_type'            // filter-panel only — not rendered in create/edit form
   | 'layout_features'        // filter-panel only
   | 'offer_type'             // filter-panel only
@@ -42,6 +43,7 @@ export type FieldComponentType =
   | 'floor-group'        // floor + multi_storey_building checkbox + floors_total companion
   | 'building-floors'    // standalone building floors NumInput (house only)
   | 'multi-toggle'       // multi-select chip row (purchase_conditions)
+  | 'parking-group'      // parking kind chips + the floor of an underground parking
   | 'filter-only'        // not a form field; rendered exclusively by filter panel
 
 // ── Filter metadata ───────────────────────────────────────────────────────────

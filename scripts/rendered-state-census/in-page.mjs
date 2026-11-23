@@ -869,6 +869,27 @@ export function installCensus() {
       return { path: p, rows };
     });
   }
+  // Task 957 Revision 2 (R2-5, Review 2 F9): what covers the page from OUTSIDE the app root and outside every `[data-portal="true"]` root - a vendor widget's frame (the
+  // Cloudinary upload window is a `body` child `iframe`, 390x844, z-index 1000000) or any fixed layer a script appends to `body`. Only `body`'s own children are looked at;
+  // the app root, the portal roots, Storybook's own chrome and the tags that render nothing are not overlays. Each entry says which element it is.
+  function outsideRoot() {
+    const root = appRoot();
+    const out = [];
+    for (const el of document.body.children) {
+      if (el === root || SKIP.has(el.tagName)) continue;
+      if (el.matches('[data-portal="true"], #storybook-docs, .sb-wrapper, .sb-errordisplay, .sb-nopreview, .sb-preparing-story, .sb-preparing-docs')) continue;
+      if (!vis(el)) continue;
+      const r = el.getBoundingClientRect();
+      out.push({
+        tag: el.tagName.toLowerCase(),
+        id: el.id || '',
+        title: (el.getAttribute('title') || el.getAttribute('aria-label') || '').slice(0, 60),
+        box: Math.round(r.width) + 'x' + Math.round(r.height),
+      });
+    }
+    return out;
+  }
+
   // What an open overlay looks like, to tell whether two clicks opened the same thing.
   function portalSignature() {
     return portals().map((p) => (p.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 160)).join(' || ');
@@ -878,5 +899,5 @@ export function installCensus() {
     return portals().reduce((n, p) => n + [...p.querySelectorAll(TABBABLE)].filter(vis).length, 0);
   }
 
-  window.__census = { portals, measure, focusState, settleFocus, runningAnimations, layoutSignature, tabbableCount, flavor, candidates, vis, identityOf, findByIdentity, coverage, portalSignature };
+  window.__census = { portals, measure, focusState, settleFocus, runningAnimations, layoutSignature, tabbableCount, flavor, candidates, vis, identityOf, findByIdentity, coverage, portalSignature, outsideRoot };
 }

@@ -11,6 +11,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { validateRegistry } from './registry.mjs';
+import * as discoverApi from './discover.mjs';
 import { fixtureContext, loadStory, runClosedJob, runRangeJob, runStateJob, runWithRetry, summarize } from './runner.mjs';
 
 const WIDTH = 390;
@@ -181,6 +182,21 @@ export const CASES = [
   { name: 'html-text-under-control-below-fold', fail: { app: ['text-overlap'] }, green: ['portal:0'] },
 ];
 
+/**
+ * Task 957 Revision 2 (R2-5, Review 2 F9): the discovery's own self-test. Each case runs `clickThrough` (the real discovery code) over a fixture page and states what it must find.
+ * `overlays`: the least number of elements outside the app root and outside every portal root that discovery must report (with the tag named). `unexplained`: the exact number of
+ * candidate triggers (per width: discovery clicks at 390 and 1440) that could not be operated with nothing to explain it (no registered "mount" row at that width) - the list that fails `--discover`. `misses`: labels of
+ * triggers that must still be found opening a portal. `rows`: the registry rows the Story is given.
+ */
+export const DISCOVER_CASES = [
+  // an element outside the app root appears on a click: it is reported, the Story is reloaded, and the trigger after it is still clicked (it opens a portal, so it is a miss with no row)
+  { name: 'discover-overlay-outside-portal', rows: [], overlays: { atLeast: 1, tag: 'iframe' }, unexplained: 0, misses: ['Open dialog'] },
+  // a trigger that nothing lets Playwright click, with no mount row to explain it: a failing entry
+  { name: 'discover-covered-trigger', rows: [], overlays: { atLeast: 0 }, unexplained: 2, misses: [] },
+  // the same page with a registered "mount" row: the covered trigger is explained, nothing fails
+  { name: 'discover-covered-trigger', label: 'discover-covered-trigger-explained', rows: [{ id: 'mount-row', story: 'discover-covered-trigger', open: { kind: 'mount' }, portals: 1 }], overlays: { atLeast: 0 }, unexplained: 0, misses: [] },
+];
+
 function readFixtureState(fixtureDir, name) {
   const html = readFileSync(join(fixtureDir, `${name}.html`), 'utf8');
   const m = html.match(/<script type="application\/json" id="census-state">(.*?)<\/script>/s);
@@ -301,9 +317,37 @@ export async function verifyGate({ fixtureDir, baseUrl, newPage, breakpoints, lo
         log(`${gateVerdict} ${c.name.padEnd(28)} NOT as stated: ${problems.join('; ')}   [observed: ${observed}]`);
       }
     }
+    for (const c of DISCOVER_CASES) {
+      const label = c.label ?? c.name;
+      const problems = [];
+      let result;
+      try {
+        result = await discoverApi.clickThrough(page, ctx, c.name, c.rows);
+      } catch (e) {
+        problems.push(`discovery threw: ${String(e.message ?? e).split('\n')[0]}`);
+      }
+      if (result) {
+        if (result.error) problems.push(`the fixture did not load: ${result.error}`);
+        const overlays = result.overlays ?? [];
+        if (overlays.length < c.overlays.atLeast) problems.push(`discovery should report at least ${c.overlays.atLeast} element(s) outside the app root, reports ${overlays.length}`);
+        if (c.overlays.tag && !overlays.some((o) => o.overlay?.tag === c.overlays.tag)) problems.push(`discovery should name a <${c.overlays.tag}> outside the app root, names ${JSON.stringify(overlays.map((o) => o.overlay?.tag))}`);
+        if (typeof discoverApi.unexplainedNotOperable !== 'function') problems.push('discover.mjs exports no unexplainedNotOperable (the list that fails --discover)');
+        else {
+          const n = discoverApi.unexplainedNotOperable(result.notOperable).length;
+          if (n !== c.unexplained) problems.push(`${c.unexplained} unexplained not-operable trigger(s) expected, ${n} found: ${JSON.stringify(result.notOperable.map((x) => `${x.label}${x.noMountRow ? '' : ' (explained)'}`))}`);
+        }
+        for (const labelText of c.misses) if (!result.misses.some((m) => m.label === labelText)) problems.push(`the trigger "${labelText}" after the overlay should still be clicked and found opening a portal; misses: ${JSON.stringify(result.misses.map((m) => m.label))}; not operable: ${JSON.stringify(result.notOperable.map((x) => x.label))}`);
+      }
+      const observed = result ? `overlays ${(result.overlays ?? []).length}, clicked ${result.clicks}/${result.found}, not operable ${result.notOperable.length}, misses ${result.misses.length}` : 'no result';
+      if (problems.length === 0) log(`PASS ${label.padEnd(36)} as stated   [observed: ${observed}]`);
+      else {
+        behaves = false;
+        log(`FAIL ${label.padEnd(36)} NOT as stated: ${problems.join('; ')}   [observed: ${observed}]`);
+      }
+    }
   } finally {
     await page.close();
   }
-  log(behaves ? '\nverify-gate: every case behaves as stated.' : '\nverify-gate: AT LEAST ONE CASE DOES NOT BEHAVE AS STATED.');
+  log(behaves ?'\nverify-gate: every case behaves as stated.' : '\nverify-gate: AT LEAST ONE CASE DOES NOT BEHAVE AS STATED.');
   return behaves;
 }

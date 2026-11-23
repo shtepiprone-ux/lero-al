@@ -675,8 +675,8 @@
   "Docker_Security": {
    "applies": false,
    "why": "no container image is built or deployed and no Swarm service is published; Vercel runs the functions",
-   "reviewedSha": "87d77fdbb0320258494968dffc7d17a500ddf753",
-   "reviewedOn": "2026-11-17"
+   "reviewedSha": "8b7bbdf1b535adb77d2b2ddca5ea8a2f6a5b2d57",
+   "reviewedOn": "2026-11-23"
   },
   "DOM_based_XSS_Prevention": {
    "applies": true,
@@ -1475,10 +1475,23 @@
     {
      "quote": "Apply rate limiting to sensitive authentication-related endpoints, including login, password reset, account recovery, and verification flows.",
      "task": "985"
+    },
+    {
+     "quote": "Never write sensitive data to application logs, including passwords, API keys, session tokens, authorization headers, or sensitive personal data.",
+     "task": "1021"
+    },
+    {
+     "quote": "Never write sensitive data to application logs, including passwords, API keys, session tokens, authorization headers, or sensitive personal data.",
+     "control": "src/modules/auth/actions/recovery.ts",
+     "evidence": "function hashEmailForCorrelation("
+    },
+    {
+     "quote": "When logging untrusted input, sanitize or encode newline characters and control sequences to mitigate log injection attacks",
+     "task": "1021"
     }
    ],
-   "reviewedSha": "ec90458efff68533c041ca061cd07d00030b9426",
-   "reviewedOn": "2026-11-17"
+   "reviewedSha": "ae648eab46e6d82a85b83b2ef99b2a192d4143b0",
+   "reviewedOn": "2026-11-23"
   },
   "NoSQL_Security": {
    "applies": false,
@@ -1508,10 +1521,15 @@
      "quote": "so the preinstall, install, postinstall and prepare scripts that a plain npm install runs do not execute on the first install",
      "control": ".npmrc",
      "evidence": "ignore-scripts=true"
+    },
+    {
+     "quote": "In an npm workspaces monorepo, put this setting in the .npmrc at the repository root.",
+     "control": ".npmrc",
+     "evidence": "ignore-scripts=true"
     }
    ],
-   "reviewedSha": "e664404d43bf39d606c284e541c2c1d8869664dc",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "e8af8f041370c40debd239614df791bb6d86ea6b",
+   "reviewedOn": "2026-11-23"
   },
   "OAuth2": {
    "applies": true,
@@ -2124,8 +2142,8 @@
      "task": "959"
     }
    ],
-   "reviewedSha": "9ac6289f294be2de3651d04610c64f1be21a16c4",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "7ae7885ff65372bcbe4efca8930abb8e5946af8d",
+   "reviewedOn": "2026-11-23"
   },
   "Verifying_Third_Party_Agent_Execution_Evidence": {
    "applies": true,

@@ -82,6 +82,27 @@ describe('updateListing', () => {
     expect((await guestRead(listing.id)).data, 'after the approval the guest reads the new content').toEqual([{ id: listing.id, title: retitled }])
   })
 
+  // Task 957 (AC3): a photo from the folder of another account is refused by the action, for the owner and for staff; the photo from the folder of the listing OWNER is accepted (also in a staff edit)
+  it('[SEC-UPLOAD-OWNER-DENY] a photo from the folder of another account answers invalid_image, for the owner and for staff, and the stored gallery is unchanged', async () => {
+    const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'die7okukn'
+    const photo = (folderOwner: string) => ({ url: `https://res.cloudinary.com/${cloud}/image/upload/v1/${folderOwner}/listings/${run.RUN}.jpg`, public_id: 'x', is_cover: true, order: 0 })
+    const listing = await run.makeListing(owner.id, 'pending', 'edit-photo-owner')
+    const stranger = await run.makeUser('edit-photo-stranger', { role: 'user' })
+
+    acting.client = owner.client
+    const foreign = await updateListing(listing.id, { ...editWith(`${run.RUN} foreign photo`), images: [photo(stranger.id)] })
+    expect(foreign, 'the owner cannot attach a photo of another account').toEqual({ error: 'invalid_image' })
+
+    acting.client = moderator.client
+    const staffForeign = await updateListing(listing.id, { ...editWith(`${run.RUN} foreign photo staff`), images: [photo(moderator.id)] })
+    expect(staffForeign, 'a staff edit is held to the folder of the LISTING OWNER, not of the editor').toEqual({ error: 'invalid_image' })
+    expect((await run.admin.from('listing_images').select('id').eq('listing_id', listing.id)).data).toEqual([])
+
+    const staffOwn = await updateListing(listing.id, { ...editWith(`${run.RUN} owner photo staff`), images: [photo(owner.id)] })
+    expect(staffOwn, 'the photo from the folder of the listing owner is accepted').toMatchObject({ slug: listing.slug })
+    expect((await run.admin.from('listing_images').select('url').eq('listing_id', listing.id)).data).toEqual([{ url: photo(owner.id).url }])
+  })
+
   const storedOf = async (id: string) => (await run.admin.from('listings').select('title, description, price, address, listing_type, status').eq('id', id).single()).data
 
   it('[SEC-X-INT-EDIT-DIRECT-DENY] the owner session cannot change the content of an active listing, and the application edit still moderates', async () => {
@@ -110,6 +131,25 @@ describe('updateListing', () => {
     const retitled = `${run.RUN} moderated title`
     expect(await updateListing(listing.id, editWith(retitled)), 'the edit goes through moderation').toEqual({ slug: listing.slug, status: 'pending' })
     expect(await storedOf(listing.id)).toMatchObject({ title: retitled, status: 'pending' })
+  })
+
+  // Review 4 F28, owner decision O957-13 ("Clear in the database"): what the payload leaves empty is stored empty. An underground parking (floor -2) edited to a city parking would break
+  // `listings_parking_floor_check` if its floor stayed; the heating the owner cleared must not come back. Needs `task957-parking.sql` applied (the owner's step).
+  it('[INT-EDIT-EMPTIED] an edit from (underground, -2) to (city) and then to no parking saves and stores what was sent; an emptied optional field is stored empty', async () => {
+    const listing = await run.makeListing(owner.id, 'pending', 'edit-emptied')
+    const seeded = await run.admin.from('listings').update({ parking_type: 'underground', parking_floor: -2, heating: 'gas', rooms: 3, description: 'to be cleared' }).eq('id', listing.id)
+    expect(seeded.error, 'precondition: the parking columns exist and hold (underground, -2)').toBeNull()
+    const stored = async () => (await run.admin.from('listings').select('parking_type, parking_floor, heating, rooms, description, purchase_conditions').eq('id', listing.id).single()).data
+
+    acting.client = owner.client
+    const toCity = await updateListing(listing.id, { ...editWith(`${run.RUN} emptied city`), parking_type: 'city' })
+    expect(toCity, 'the edit to a city parking is saved').toEqual({ slug: listing.slug, status: 'pending' })
+    expect(await stored(), 'the floor and every emptied field are stored empty').toEqual({ parking_type: 'city', parking_floor: null, heating: null, rooms: null, description: null, purchase_conditions: [] })
+
+    const toNone = await updateListing(listing.id, editWith(`${run.RUN} emptied none`))
+    expect(toNone, 'the edit to no parking is saved').toEqual({ slug: listing.slug, status: 'pending' })
+    expect((await stored())?.parking_type, 'no parking kind is stored').toBeNull()
+    expect((await stored())?.parking_floor, 'no floor is stored').toBeNull()
   })
 
   it('[SEC-X-INT-EDIT-DIRECT-ALLOW] a listing that is not active, and staff with the key, are not held to the rule', async () => {

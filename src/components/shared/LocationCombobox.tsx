@@ -41,6 +41,8 @@ interface Props {
   className?: string
   /** Validation error message (shown below the input) */
   error?: string
+  /** The field is disabled (Task 957 Revision 2, R2-7: the listing form while it is saved); passed to `MantineCombobox`. Default `false`. */
+  disabled?: boolean
   /** When provided together with onAddLocation, shows "+ Додати населений пункт" button */
   regions?: RegionOption[]
   /** Admin callback to persist a new city; receives name + region_id, returns the new id */
@@ -57,7 +59,7 @@ interface Props {
 
 export function LocationCombobox({
   locations, value, onChange, onKeyDown, placeholder, className, error,
-  regions, onAddLocation,
+  regions, onAddLocation, disabled,
 }: Props) {
   const tc = useTranslations('common')
   const locale = useLocale()
@@ -122,6 +124,7 @@ export function LocationCombobox({
         icon={<MapPin size={theme.other.iconSize.standard} />}
         placeholder={resolvedPlaceholder}
         error={error}
+        disabled={disabled}
         onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
         triggerWidth={{ base: '100%', sm: '100%' }}
         noResultsLabel={tc('no_results')}

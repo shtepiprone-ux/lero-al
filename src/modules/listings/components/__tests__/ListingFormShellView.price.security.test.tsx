@@ -1,6 +1,6 @@
 /**
  * Security (Task 923 R102, D73, case SEC-X-FE-PRICE-DIGITS): the price field of the listing form keeps digits only.
- *  - the REAL `ListingFormShellView` runs with its real legacy price `Input` and the real `parsePriceDigits`. A harness holds the form data and applies `patch`, as the container
+ *  - the REAL `ListingFormShellView` runs with its real price `TextInput` and the real `parsePriceDigits`. A harness holds the form data and applies `patch`, as the container
  *    does. Typing "20 000 000 000" one character at a time, and pasting it written with ordinary, U+00A0 and U+202F spaces, into the price field with currency ALL leaves
  *    the number 20000000000 in the data and "20000000000" in the field.
  *  - the field is a text input in numeric input mode, so a browser number field no longer drops what it cannot parse.
@@ -8,7 +8,10 @@
  */
 import React, { useState } from 'react'
 import { cleanup, fireEvent, render } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+import { setViewport } from '@/design-system/mantine/patterns/__tests__/viewportKit'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
 import type { FormValues } from '@/modules/listings/types/form'
 
@@ -31,14 +34,13 @@ function Harness() {
   return (
     <ListingFormShellView
       mode="create"
+      cloudinary={{ apiKey: 'key-957', cloudName: 'demo-cloud' }}
       data={data}
       errors={{}}
       schema={getSchema('apartment')}
       locations={[]}
       patch={partial => { patches.calls.push(partial); setData(prev => ({ ...prev, ...partial })) }}
       onPropertyTypeChange={() => {}}
-      uploadPreset="p"
-      uploadFolder="f"
       submitting={false}
       submitError=""
       isDirty
@@ -53,7 +55,7 @@ function Harness() {
 
 function mount() {
   patches.calls = []
-  const { container } = render(<Harness />)
+  const { container } = render(<MantineProvider theme={theme} env="test"><Harness /></MantineProvider>)
   const field = container.querySelector<HTMLInputElement>('#field-price input')
   if (!field) throw new Error('the price field is not rendered')
   return field
@@ -65,6 +67,8 @@ function type(field: HTMLInputElement, text: string) {
 }
 
 afterEach(cleanup)
+
+beforeEach(() => { setViewport(1024) })   // Mantine's provider reads matchMedia, which jsdom lacks
 
 describe('ListingFormShellView', () => {
   it('[SEC-X-FE-PRICE-DIGITS] typed or pasted spaces are dropped from the price', () => {

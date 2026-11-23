@@ -45,7 +45,25 @@ function DialogDemo({ dialog, loading = false }: { dialog: AdminUserProfileDialo
 
 export const Unsaved: Story = { render: () => <DialogDemo dialog="unsaved" /> }
 
-export const Cancel: Story = { render: () => <DialogDemo dialog="cancel" /> }
+// The cancel confirmation keeps its open state, as `AdminUserProfile` does through `onClose` (Task 957 Revision 2, R2-5: the registry row declares the dismissals Mantine supports, and the
+// census measures them): Escape and the close control close it and the rendered state stays closed. It opens on render.
+function CancelDemo() {
+  const [open, setOpen] = useState(true)
+  const [reason, setReason] = useState('')
+  return (
+    <AdminUserProfileDialogsView
+      dialog={open ? 'cancel' : null}
+      userName="Arben Krasniqi"
+      email="arben@example.com"
+      reason={reason}
+      onReasonChange={setReason}
+      loading={false}
+      onConfirm={() => setOpen(false)}
+      onClose={() => setOpen(false)}
+    />
+  )
+}
+export const Cancel: Story = { render: () => <CancelDemo /> }
 
 export const Deactivate: Story = { render: () => <DialogDemo dialog="deactivate" /> }
 

@@ -27,6 +27,13 @@ export const HEATING_TYPES = [
   { value: 'none', labelKey: 'heating_none' },
 ] as const
 
+/** The kinds of parking of a listing (Task 957 Revision 3, O1001-2); none chosen is the empty field. */
+export const PARKING_TYPES = [
+  { value: 'underground', labelKey: 'parking_underground' },
+  { value: 'private_street', labelKey: 'parking_private_street' },
+  { value: 'city', labelKey: 'parking_city' },
+] as const
+
 export const WALL_TYPES = [
   { value: 'brick', labelKey: 'wall_brick' },
   { value: 'concrete', labelKey: 'wall_concrete' },

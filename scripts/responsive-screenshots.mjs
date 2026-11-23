@@ -21,7 +21,7 @@
  * See docs/responsive-screenshot-matrix.md for the canonical viewport/locale matrix.
  */
 
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
@@ -82,7 +82,7 @@ const LOCALES = ['en', 'sq', 'uk', 'it'];
 //   open storybook-static/index.json (or stories.json) and look for "id" fields
 //   OR open npm run storybook and check the URL for each story.
 
-const STORY_TARGETS = [
+export const STORY_TARGETS = [
   // Primitives — locale & mobile stress
   { id: 'primitives-button--default',          label: 'Button/Default' },
   { id: 'primitives-button--mobile-safe',      label: 'Button/MobileSafe',    viewports: ['mobile-320', 'mobile-375'] },
@@ -125,7 +125,10 @@ const STORY_TARGETS = [
   { id: 'mantine-primitives-recentlyviewedgridview--populated', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
   // Task 427 rework AC R4 — targeted rendered proof for the 2 density-changed surfaces
   { id: 'patterns-mantine-listingpreviewdialogview--sold-status-actions', label: 'ListingPreviewDialogView/SoldStatusActions', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
-  { id: 'listings-listingformshellview--staff-status-control-open', label: 'ListingFormShellView/StaffStatusControlOpen', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+  // Task 957 Revision 2 (R2-3, Review 2 F7) — the staff status control OPEN, as a bottom sheet below 640px, which `main` proved with the legacy Story `StaffStatusControlOpen` (Task 427) and
+  // the revision had removed. `open` names the registry row (`scripts/rendered-interaction-states.json`) whose selector is clicked before the shot.
+  { id: 'patterns-mantine-listingformshellview--staff', label: 'ListingFormShellView/StaffStatusControlOpen', open: 'patterns-mantine-listingformshellview--staff~status-select', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+  { id: 'patterns-mantine-listingformshellview--owner-status-control', label: 'ListingFormShellView/OwnerStatusControlOpen', open: 'patterns-mantine-listingformshellview--owner-status-control~status-select', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
 ];
 
 // ── MIME types for static server ──────────────────────────────────────────────
@@ -211,6 +214,38 @@ async function runCheck() {
   console.log('   (requires: npx playwright install chromium)');
 }
 
+// ── Opening a registered state before a shot (Task 957 Revision 2, R2-3) ──────
+
+const REGISTRY_PATH = join(ROOT, 'scripts', 'rendered-interaction-states.json');
+
+/** The registry row a target's `open` names; throws when the row does not exist (a target must not name a state nobody registered). */
+export function registryRow(id, registryPath = REGISTRY_PATH) {
+  const registry = JSON.parse(readFileSync(registryPath, 'utf8'));
+  const row = registry.states.find((state) => state.id === id);
+  if (!row) throw new Error(`open: no row "${id}" in scripts/rendered-interaction-states.json`);
+  if (row.open.kind !== 'click') throw new Error(`open: row "${id}" opens by "${row.open.kind}"; a screenshot target opens a "click" row`);
+  return row;
+}
+
+/**
+ * Clicks the row's selector inside `#storybook-root` and waits until a `[data-portal="true"]` root shows content (a visible box with a size, as the census counts an open portal).
+ * Fails (throws) when the selector matches nothing or the click opens no portal, so the shot is never taken of a closed control.
+ */
+export async function openRegisteredState(page, row) {
+  await page.locator('#storybook-root').locator(row.open.selector).filter({ visible: true }).first().click({ timeout: 5000 });
+  await page.waitForFunction(
+    () => [...document.querySelectorAll('[data-portal="true"]')].some((root) => [...root.querySelectorAll('*')].some((el) => {
+      const box = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      return box.width > 1 && box.height > 1 && style.visibility !== 'hidden' && style.display !== 'none' && Number(style.opacity) > 0;
+    })),
+    null,
+    { timeout: 5000 },
+  ).catch(() => {
+    throw new Error(`open: clicking "${row.id}" opened no portal`);
+  });
+}
+
 // ── Static HTTP server ────────────────────────────────────────────────────────
 
 function startStaticServer(staticDir, port) {
@@ -287,9 +322,11 @@ async function captureScreenshots() {
     let total = 0;
     let failed = 0;
 
+    let openFailed = 0;
     for (const story of STORY_TARGETS) {
+      // a target that names its viewports gets them from the full matrix, so `mobile-390` is captured in a fast run as well (Task 957 Revision 2: the two status targets name it)
       const storyViewports = story.viewports
-        ? viewports.filter(v => story.viewports.includes(v.name))
+        ? VIEWPORTS_FULL.filter(v => story.viewports.includes(v.name))
         : viewports;
       const storyLocales = story.locales ?? LOCALES;
 
@@ -303,6 +340,15 @@ async function captureScreenshots() {
             const page = await browser.newPage();
             await page.setViewportSize({ width: viewport.width, height: viewport.height });
             await page.goto(storyUrl, { waitUntil: 'networkidle', timeout: 15000 });
+            if (story.open) {
+              try {
+                await openRegisteredState(page, registryRow(story.open));
+              } catch (err) {
+                openFailed++;
+                await page.close();
+                throw err;
+              }
+            }
             // Wait for fonts and animations
             await page.waitForTimeout(300);
             await page.screenshot({ path: filePath, fullPage: false });
@@ -319,6 +365,10 @@ async function captureScreenshots() {
     }
 
     console.log(`\n\n✅ Captured ${total} screenshots (${failed} failed)`);
+    if (openFailed > 0) {
+      console.error(`   ${openFailed} shot(s) of a target with "open" could not open their registered state: nothing was shot of a closed control.`);
+      process.exitCode = 1;
+    }
     console.log(`   Output: .screenshots/responsive/${timestamp}/`);
     if (failed > 0) {
       console.warn(`   ${failed} stories failed — check story IDs match the built Storybook.`);
@@ -333,8 +383,10 @@ async function captureScreenshots() {
 
 // ── Entry point ───────────────────────────────────────────────────────────────
 
-if (CHECK_ONLY) {
-  await runCheck();
-} else {
-  await captureScreenshots();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  if (CHECK_ONLY) {
+    await runCheck();
+  } else {
+    await captureScreenshots();
+  }
 }

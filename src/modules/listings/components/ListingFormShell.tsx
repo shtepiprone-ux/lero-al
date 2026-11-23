@@ -3,20 +3,26 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
+import { Center, Stack, Text, ThemeIcon, Title, useMantineTheme } from '@mantine/core'
 import { CheckCircle2 } from 'lucide-react'
+import { VARIANT_COLORS } from '@/design-system/mantine/notificationVariants'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 import { createListing } from '@/modules/listings/actions/createListing'
 import { updateListing } from '@/modules/listings/actions/updateListing'
 import { changeListingStatusAction } from '@/modules/listings/actions/changeListingStatus'
+import { deleteListingAction } from '@/modules/listings/actions/deleteListing'
+import { toast } from '@/lib/toast'
 import { ListingFormShellView } from '@/modules/listings/components/ListingFormShellView'
 import type { LocationOption } from '@/components/shared/LocationCombobox'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
-import { isListingPriceWithinCeiling } from '@/modules/listings/validations'
+import { validateListingForm } from '@/modules/listings/lib/validateListingForm'
 import { isEditMode } from '@/modules/listings/domain/listingFormMode'
 import { isListingVisible, getPostSaveRedirect } from '@/modules/listings/domain/listingSemanticHelpers'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
 import type { ListingStatus } from '@/types/database'
 import type { ListingField } from '@/modules/listings/domain/listingFields'
 import type { FormValues } from '@/modules/listings/types/form'
+import type { CloudinaryWidgetConfig } from '@/modules/listings/lib/cloudinaryWidgetConfig'
 import type { PropertyType } from '@/types/database'
 
 const INITIAL: FormValues = {
@@ -30,10 +36,10 @@ const INITIAL: FormValues = {
 
 interface BaseProps {
   locale: string
-  uploadPreset: string
-  uploadFolder: string
   locations: LocationOption[]
   mode: ListingFormMode
+  /** The API key and the cloud name the page read on the server (`getCloudinaryWidgetConfig`); the photo widget needs both when it is created. */
+  cloudinary: CloudinaryWidgetConfig
 }
 
 interface CreateModeProps extends BaseProps {
@@ -42,6 +48,7 @@ interface CreateModeProps extends BaseProps {
   initialValues?: never
   canManageStatus?: never
   canPublish?: never
+  canDelete?: never
   currentStatus?: never
 }
 
@@ -51,29 +58,37 @@ interface EditModeProps extends BaseProps {
   initialValues: Partial<FormValues>
   /** Server-computed (canAdminEditListing) — only staff (admin/moderator) get the status control. */
   canManageStatus: boolean
-  /** Server-computed (canAdminEditListing) — only staff may set `active` (Task 923 R35, D6). */
+  /** Server-computed (canAdminEditListing) — only staff may set `active` (Task 923 R35, D6) or `expired` (O957-17); the owner sends a listing to moderation (`pending`, "Publish") from every status but `active` (O957-11). */
   canPublish: boolean
+  /** Server-computed on the edit page (`listing.user_id` is the viewer): the owner's form shows a section with "Delete listing" (O957-18). */
+  canDelete?: boolean
   currentStatus: ListingStatus
 }
 
 type Props = CreateModeProps | EditModeProps
 
 export function ListingFormShell(props: Props) {
-  const { uploadPreset, uploadFolder, locations, mode } = props
+  const { locations, mode, cloudinary } = props
   const listingId  = isEditMode(mode) ? (props as EditModeProps).listingId  : undefined
   const initialValues = isEditMode(mode) ? (props as EditModeProps).initialValues : undefined
   const canManageStatus = isEditMode(mode) ? (props as EditModeProps).canManageStatus : false
   const canPublish = isEditMode(mode) ? (props as EditModeProps).canPublish : false
+  const canDelete = isEditMode(mode) ? Boolean((props as EditModeProps).canDelete) : false
 
   const t = useTranslations('listing')
+  const tCabinet = useTranslations('cabinet')
+  const theme = useMantineTheme()
   const router = useRouter()
   const params = useParams()
   const activeLocale = useLocale()
 
-  // In edit mode the URL contains [slug]; navigate there on cancel so the form works
-  // correctly even when opened in a new tab (e.g. from the admin panel) where router.back()
-  // has no history to return to.
+  // Cancel returns to the page the person came from (owner decision O957-19: from "My listings" to the edit form and back to "My listings"). A tab opened straight on the form
+  // (e.g. from the admin panel) has no earlier entry, so router.back() would leave the site: there, in edit mode, the URL contains [slug] and Cancel goes to the listing's page.
   function navigateAway() {
+    if (window.history.length > 1) {
+      router.back()
+      return
+    }
     const slug = params?.slug as string | undefined
     if (slug) {
       router.push(`/${activeLocale}/listings/${slug}`)
@@ -137,6 +152,8 @@ export function ListingFormShell(props: Props) {
       bedrooms:              !newIsVis('bedrooms')                   ? undefined : prev.bedrooms,
       bathrooms:             !newIsVis('bathrooms')                  ? undefined : prev.bathrooms,
       toilets:               !newIsVis('toilets')                    ? undefined : prev.toilets,
+      parking_type:          !newIsVis('parking')                    ? undefined : prev.parking_type,
+      parking_floor:         !newIsVis('parking')                    ? undefined : prev.parking_floor,
       land_legal_status:          !newIsVis('land_legal_status')          ? undefined : prev.land_legal_status,
       land_zoning:                !newIsVis('land_zoning')                ? undefined : prev.land_zoning,
       land_development_potential: !newIsVis('land_development_potential') ? undefined : prev.land_development_potential,
@@ -170,38 +187,8 @@ export function ListingFormShell(props: Props) {
   }
 
   async function handleSubmit() {
-    const newErrors: Partial<Record<keyof FormValues, string>> = {}
-
-    if (!data.title || data.title.trim().length < 5) {
-      newErrors.title = t('error_title')
-    }
-    if (!data.property_type) {
-      newErrors.property_type = t('error_property_type')
-    }
-    // a price above the ceiling of its currency is refused with the same message as an invalid price (Task 923 R101): the server and the database refuse it too
-    if (!data.price || !isListingPriceWithinCeiling(data.price, data.currency)) {
-      newErrors.price = t('error_price')
-    }
-    if (data.images.length === 0) {
-      newErrors.images = t('error_images')
-    }
-
-    if (data.floor !== undefined && data.property_type) {
-      const allowsNeg = schema.floor.allowNegative && data.multi_storey_building === true
-      if (data.floor < 0 && !allowsNeg) {
-        newErrors.floor = t('error_floor_negative')
-      } else if (data.total_floors !== undefined && data.floor > data.total_floors) {
-        newErrors.floor = t('error_floor_exceeds_building')
-      }
-    }
-
-    // Schema-declared required fields — derived from ui.fields.
-    const dataRecord = data as unknown as Record<string, unknown>
-    for (const fieldDef of schema.ui.fields.filter(f => f.required)) {
-      if (!dataRecord[fieldDef.key]) {
-        newErrors[fieldDef.key as keyof FormValues] = t('error_required')
-      }
-    }
+    // the checks live in `validateListingForm` (Task 957 Revision 3, R3-4), shared with the Story harness
+    const newErrors = validateListingForm(data, schema, t)
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -222,6 +209,8 @@ export function ListingFormShell(props: Props) {
       condition:        data.condition,
       wall_type:        data.wall_type,
       heating:          data.heating,
+      parking_type:     isVisible('parking') ? data.parking_type : undefined,
+      parking_floor:    isVisible('parking') && data.parking_type === 'underground' ? data.parking_floor : undefined,
       rooms:            data.rooms,
       bedrooms:         !isVisible('bedrooms')  ? undefined : data.bedrooms,
       bathrooms:        !isVisible('bathrooms') ? undefined : data.bathrooms,
@@ -272,26 +261,30 @@ export function ListingFormShell(props: Props) {
 
   if (done) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="flex flex-col items-center gap-5 text-center max-w-md">
-          <CheckCircle2 className="h-14 w-14 text-status-success shrink-0" />
-          <div className="flex flex-col gap-2">
+      <Center mih="100vh" px="md">
+        <Stack align="center" gap="lg" ta="center" maw={theme.other.boxSize.prose}>
+          {/* the success colour is the one the notifications use (`VARIANT_COLORS.success`), not a palette literal chosen here */}
+          <ThemeIcon size="hero" color={VARIANT_COLORS.success} variant="light">
+            <CheckCircle2 size={theme.other.iconSize.decorative} aria-hidden="true" />
+          </ThemeIcon>
+          {/* the heading size is the shared responsive scale (`TITLE_FZ`, `typography.ts`): `npm run check:type-responsive` refuses a Title with a static size */}
+          <Stack gap="xs">
             {isEditMode(mode) ? (
               <>
-                <p className="font-bold text-xl">{t('edit_success_title')}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <Title order={2} size="h4" fz={TITLE_FZ.h4}>{t('edit_success_title')}</Title>
+                <Text size="sm" c="dimmed">
                   {savedStatus && !isListingVisible(savedStatus) ? t('saved_pending_moderation') : t('edit_success_body')}
-                </p>
+                </Text>
               </>
             ) : (
               <>
-                <p className="font-bold text-xl">{t('moderation_title')}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t('moderation_body')}</p>
+                <Title order={2} size="h4" fz={TITLE_FZ.h4}>{t('moderation_title')}</Title>
+                <Text size="sm" c="dimmed">{t('moderation_body')}</Text>
               </>
             )}
-          </div>
-        </div>
-      </div>
+          </Stack>
+        </Stack>
+      </Center>
     )
   }
 
@@ -312,6 +305,21 @@ export function ListingFormShell(props: Props) {
     router.refresh()
   }
 
+  // The owner's delete from the edit form (owner decision O957-18): the existing action (it checks the owner or `listings.delete` itself); success leaves for the cabinet's listings, an error keeps the form
+  async function onDelete() {
+    try {
+      const result = await deleteListingAction(listingId!)
+      if (result.error) {
+        toast.error(tCabinet('error_deleting'))
+        return
+      }
+    } catch {
+      toast.error(tCabinet('error_deleting'))
+      return
+    }
+    router.push(`/${activeLocale}/cabinet?tab=listings`)
+  }
+
   return (
     <ListingFormShellView
       mode={mode}
@@ -321,8 +329,8 @@ export function ListingFormShell(props: Props) {
       locations={locations}
       patch={patch}
       onPropertyTypeChange={handlePropertyTypeChange}
-      uploadPreset={uploadPreset}
-      uploadFolder={uploadFolder}
+      listingId={listingId}
+      cloudinary={cloudinary}
       submitting={submitting}
       submitError={submitError}
       isDirty={isDirty}
@@ -336,6 +344,8 @@ export function ListingFormShell(props: Props) {
           ? { currentStatus, listingId: listingId!, canPublish, onStatusChange }
           : undefined
       }
+      canDelete={canDelete}
+      onDelete={canDelete ? onDelete : undefined}
     />
   )
 }

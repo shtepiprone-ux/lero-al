@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: discover-overlay-outside-portal</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; margin-right: 8px; }
+  .dialog { position: fixed; left: 16px; right: 16px; top: 48px; padding: 16px; background: #fff; border-radius: 8px; border: 1px solid #888; }
+</style>
+</head>
+<body>
+<!-- Task 957 Revision 2 (R2-5, Review 2 F9) self-test fixture "discover-overlay-outside-portal". See scripts/check-rendered-state-census.mjs --verify-gate.
+     "Open frame" appends a full-viewport frame to <body>, outside the app root and outside any [data-portal="true"] root, as the Cloudinary upload widget does;
+     "Open dialog" opens a real portal root. Discovery must report the frame, reload, and still click "Open dialog". -->
+<div id="storybook-root">
+  <button id="frame-opener" type="button">Open frame</button>
+  <button id="dialog-opener" type="button">Open dialog</button>
+  <p>Fixture page, not a product Story.</p>
+</div>
+<script>
+(function () {
+  document.getElementById('frame-opener').addEventListener('click', function () {
+    if (document.getElementById('census-frame')) return;
+    var frame = document.createElement('iframe');
+    frame.id = 'census-frame';
+    frame.title = 'Vendor window';
+    frame.srcdoc = '<p>vendor window</p>';
+    frame.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;border:0;z-index:1000000;background:#fff';
+    document.body.appendChild(frame);
+  });
+  document.getElementById('dialog-opener').addEventListener('click', function () {
+    if (document.querySelector('[data-portal="true"]')) return;
+    var portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="dialog" role="dialog"><h2>Dialog title</h2><p>Short body text.</p><button type="button">Close</button></div>';
+    document.body.appendChild(portal);
+  });
+})();
+</script>
+</body>
+</html>

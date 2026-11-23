@@ -126,11 +126,22 @@ describe('editAccessRestricted', () => {
 
     // the control: the owner reaches the form of the listing
     actAs('owner')
-    // (the page wraps the form in one block, so the form is that block's only child)
-    const owner = await render('slug-pending')
-    const form = owner.props.children as { type: unknown; props: Record<string, unknown> }
-    expect(form.type, 'owner on pending: the listing form').toBe(ListingFormLoader)
-    expect(form.props.listingId, 'owner on pending: the form of that listing').toBe('id-pending')
+    // (the page adds no frame of its own, Task 957 Revision 1 R1-2: the element is the form)
+    const savedEnv = { key: process.env.CLOUDINARY_API_KEY, cloud: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }
+    try {
+      process.env.CLOUDINARY_API_KEY = 'key-957'
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'cloud-957'
+      const form = await render('slug-pending')
+      expect(form.type, 'owner on pending: the listing form').toBe(ListingFormLoader)
+      expect(form.props.listingId, 'owner on pending: the form of that listing').toBe('id-pending')
+      expect(form.props.cloudinary, 'owner on pending: the Cloudinary API key and cloud name for the photo widget').toEqual({ apiKey: 'key-957', cloudName: 'cloud-957' })
+      delete process.env.CLOUDINARY_API_KEY
+      delete process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+      expect((await render('slug-pending')).props.cloudinary, 'unset variables reach the form as empty values').toEqual({ apiKey: '', cloudName: '' })
+    } finally {
+      if (savedEnv.key === undefined) delete process.env.CLOUDINARY_API_KEY; else process.env.CLOUDINARY_API_KEY = savedEnv.key
+      if (savedEnv.cloud === undefined) delete process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME; else process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = savedEnv.cloud
+    }
 
     // the metadata: the edit page is never indexed, whoever asks and whatever the listing's state (R106; the translation double answers `<namespace>.<key>`)
     for (const who of ['guest', 'stranger', 'owner'] as const) {
@@ -139,6 +150,31 @@ describe('editAccessRestricted', () => {
         title: 'listing.edit_listing | Lero.al',
         robots: { index: false, follow: true },
       })
+    }
+  })
+
+  // Task 957 Revision 6 (R6-2, AC44; Review 6 F41): a failed listing query is not an access refusal. On the live database without `task957-parking.sql` the select answered 42703 and the owner read "access restricted".
+  it('[SEC-X-SRV-EDIT-QUERY-ERROR] a failed listing query (42703) is thrown: not the restricted view, not the form, not not-found, not a redirect; the log holds the code only', async () => {
+    for (const who of ['owner', 'stranger'] as const) {
+      actAs(who)
+      // the session's listing query answers an error that is not "no row" (a missing column); the admin database still holds the hidden listing, so the old behaviour (read as "no row") is visible
+      const failure = { code: '42703', message: 'column listings.parking_type does not exist' }
+      const chain: unknown = new Proxy({}, { get: (_target, prop) => (prop === 'then' ? undefined : prop === 'single' ? () => Promise.resolve({ data: null, error: failure }) : () => chain) })
+      sessionDb = { from: () => chain } as unknown as typeof sessionDb
+      const logged = vi.mocked(console.error)
+      logged.mockClear()
+
+      const result = await outcome('slug-pending')
+      expect(result.element, `${who}: the page renders no element (neither the restricted view nor the form)`).toBeUndefined()
+      expect(result.thrown, `${who}: the page throws`).toBeTruthy()
+      expect(result.thrown, `${who}: not a not-found`).not.toContain('NEXT_NOT_FOUND')
+      expect(result.thrown, `${who}: not a redirect`).not.toContain('NEXT_REDIRECT')
+      expect(result.thrown, `${who}: the thrown error names the code`).toContain('42703')
+      expect(result.thrown, `${who}: the thrown error holds no database message`).not.toContain('parking_type')
+
+      const log = JSON.stringify(logged.mock.calls)
+      expect(log, `${who}: the log names the code`).toContain('42703')
+      for (const secret of ['parking_type', 'does not exist', 'slug-pending', 'id-pending', MARKER.title, MARKER.address, OWNER]) expect(log, `${who}: the log holds no ${secret}`).not.toContain(secret)
     }
   })
 })

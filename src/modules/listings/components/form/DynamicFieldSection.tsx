@@ -2,6 +2,7 @@
 
 import type { FieldDefinition } from '@/modules/listings/domain/listingFields'
 import type { PropertyTypeSchema } from '@/modules/listings/domain/propertyTypeSchema'
+import { SimpleGrid } from '@mantine/core'
 import type { FormValues } from '@/modules/listings/types/form'
 import { FIELD_COMPONENT_REGISTRY, type FieldRendererProps } from './fieldRegistry'
 
@@ -10,6 +11,8 @@ interface Props {
   formValues: FormValues
   errors:     Partial<Record<keyof FormValues, string>>
   onChange:   (patch: Partial<FormValues>) => void
+  /** The form is being saved (Task 957 Revision 2, R2-7): every field is disabled. */
+  disabled?:  boolean
 }
 
 // ── Render group types ────────────────────────────────────────────────────────
@@ -53,11 +56,11 @@ function buildRenderItems(fields: FieldDefinition[]): RenderItem[] {
 
 // ── Renderer ──────────────────────────────────────────────────────────────────
 
-export function DynamicFieldSection({ schema, formValues, errors, onChange }: Props) {
+export function DynamicFieldSection({ schema, formValues, errors, onChange, disabled }: Props) {
   const renderItems = buildRenderItems(schema.ui.fields)
 
   const sharedProps: Omit<FieldRendererProps, 'fieldDef'> = {
-    schema, formValues, errors, onChange,
+    schema, formValues, errors, onChange, disabled,
   }
 
   return (
@@ -65,12 +68,13 @@ export function DynamicFieldSection({ schema, formValues, errors, onChange }: Pr
       {renderItems.map(item => {
         if (item.kind === 'grid') {
           return (
-            <div key={item.groupKey} className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            // one row per field below 640px (the `form-stack` pattern), the Task 905 three columns from 640px (Task 957 Review 2 F15)
+            <SimpleGrid key={item.groupKey} cols={{ base: 1, sm: 3 }} spacing="md">
               {item.fields.map(field => {
                 const FieldComponent = FIELD_COMPONENT_REGISTRY[field.componentType]
                 return <FieldComponent key={field.key} fieldDef={field} {...sharedProps} />
               })}
-            </div>
+            </SimpleGrid>
           )
         }
 

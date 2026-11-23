@@ -5,7 +5,8 @@ import { Stack, Paper, Title, TextInput, Textarea, Button, Flex, Text, Group, Di
 import { useForm } from '@mantine/form'
 
 export interface MantineFormSectionProps {
-  title: string
+  /** The card's header title. Omit it (and `headerAction`) for a card with only its body: no header and no divider (Task 957 Revision 2, R2-8: the listing form's sidebar of actions). */
+  title?: string
   /** Lands on the root, so a form can `scrollIntoView` a section that holds an invalid field. */
   id?: string
   /** Trailing element of the header row (for example a section-level action button). */
@@ -16,18 +17,24 @@ export interface MantineFormSectionProps {
 /**
  * Canonical form section card (Task 893, TailAdmin §6l "Form Layout"): a bordered `rounded-2xl` card whose
  * header carries a 16px / 500 title, an optional trailing action and a bottom divider; header and body share
- * the same responsive padding. It owns no form state, so a consumer may hold any form library.
+ * the same responsive padding. It owns no form state, so a consumer may hold any form library. Without a `title` and a `headerAction` the card is its body only.
  */
 export function MantineFormSection({ title, id, headerAction, children }: MantineFormSectionProps) {
   return (
     <Paper id={id} withBorder radius="2xl">
-      <Group justify="space-between" align="center" wrap="wrap" gap="sm" p={{ base: 'lg', sm: 'xl' }}>
-        <Title order={2} fz="md" fw={500}>
-          {title}
-        </Title>
-        {headerAction}
-      </Group>
-      <Divider />
+      {(title !== undefined || headerAction !== undefined) && (
+        <>
+          <Group justify="space-between" align="center" wrap="wrap" gap="sm" p={{ base: 'lg', sm: 'xl' }}>
+            {title !== undefined && (
+              <Title order={2} fz="md" fw={500}>
+                {title}
+              </Title>
+            )}
+            {headerAction}
+          </Group>
+          <Divider />
+        </>
+      )}
       <Box p={{ base: 'lg', sm: 'xl' }}>{children}</Box>
     </Paper>
   )

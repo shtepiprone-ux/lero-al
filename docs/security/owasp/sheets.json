@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "c2a1e3e32cec12f27be0a3b1e771ce51288a363e",
- "fetchedOn": "2026-11-19T17:31:08.926Z",
+ "commit": "ac9fd32a0a54f4c8e485ce1784e73032694897a3",
+ "fetchedOn": "2026-11-23T14:55:51.159Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -260,7 +260,7 @@
    "name": "Docker_Security",
    "file": "Docker_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
-   "sha": "87d77fdbb0320258494968dffc7d17a500ddf753",
+   "sha": "8b7bbdf1b535adb77d2b2ddca5ea8a2f6a5b2d57",
    "title": "Docker Security Cheat Sheet"
   },
   {
@@ -575,7 +575,7 @@
    "name": "Nodejs_Security",
    "file": "Nodejs_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html",
-   "sha": "ec90458efff68533c041ca061cd07d00030b9426",
+   "sha": "ae648eab46e6d82a85b83b2ef99b2a192d4143b0",
    "title": "NodeJS Security Cheat Sheet"
   },
   {
@@ -589,7 +589,7 @@
    "name": "NPM_Security",
    "file": "NPM_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html",
-   "sha": "e664404d43bf39d606c284e541c2c1d8869664dc",
+   "sha": "e8af8f041370c40debd239614df791bb6d86ea6b",
    "title": "NPM Security best practices"
   },
   {
@@ -862,7 +862,7 @@
    "name": "User_Privacy_Protection",
    "file": "User_Privacy_Protection_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/User_Privacy_Protection_Cheat_Sheet.html",
-   "sha": "9ac6289f294be2de3651d04610c64f1be21a16c4",
+   "sha": "7ae7885ff65372bcbe4efca8930abb8e5946af8d",
    "title": "User Privacy Protection Cheat Sheet"
   },
   {

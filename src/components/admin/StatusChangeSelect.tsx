@@ -24,6 +24,8 @@ export interface StatusChangeSelectProps<S extends string> {
   /** i18n key in `admin.common.status_control` for the note submit button; defaults to `update_status_btn`. */
   submitLabelKey?: string
   disabled?: boolean
+  /** Visible label of the select (Task 957 Revision 2, R2-8): shown above it and, on a phone, as the title of the bottom sheet. Optional: a consumer that labels the control elsewhere passes `aria-label` alone. */
+  label?: string
   'aria-label'?: string
 }
 
@@ -31,7 +33,7 @@ export interface StatusChangeSelectProps<S extends string> {
  * Canonical status select (Task 894, GR-0 CREATE): the `select` variant of the legacy `StatusChangeControl`
  * on the canonical `MantineSelect` (bottom sheet below 640px), plus the optional note path. Picking a different
  * status calls `onSubmit({ toStatus, note })`; success shows `status_change_success`, a thrown error shows
- * `status_change_error`. The legacy control stays for `ListingFormShellView` until Task 796 switches it here.
+ * `status_change_error`. The listing form (`ListingFormShellView`) renders it with a visible `label` (Task 957 Revision 2); the note field has its own label too.
  */
 export function StatusChangeSelect<S extends string>({
   currentStatus,
@@ -40,6 +42,7 @@ export function StatusChangeSelect<S extends string>({
   enableNote = false,
   submitLabelKey,
   disabled = false,
+  label,
   'aria-label': ariaLabel,
 }: StatusChangeSelectProps<S>) {
   const t = useTranslations('admin.common.status_control')
@@ -73,6 +76,7 @@ export function StatusChangeSelect<S extends string>({
     <Stack gap="sm" data-testid="status-change-control">
       <MantineSelect
         data={data}
+        label={label}
         value={currentStatus}
         allowDeselect={false}
         aria-label={ariaLabel}
@@ -86,6 +90,7 @@ export function StatusChangeSelect<S extends string>({
       {enableNote && (
         <Stack gap="xs">
           <Textarea
+            label={t('status_change_note_label')}
             value={note}
             onChange={e => setNote(e.currentTarget.value)}
             placeholder={t('status_change_note_placeholder')}

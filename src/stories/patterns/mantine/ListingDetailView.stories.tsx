@@ -41,6 +41,8 @@ const baseListing: ListingDetailViewListing = {
   condition: 'new_build',
   wall_type: null,
   heating: 'central',
+  parking_type: null,
+  parking_floor: null,
   rooms: 3,
   bedrooms: 2,
   bathrooms: 1,

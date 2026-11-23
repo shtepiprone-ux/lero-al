@@ -1,6 +1,6 @@
 # Task 1013 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1013_CI_Browser_Install_From_A_Main_Only_Cache.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1013_CI_Browser_Install_From_A_Main_Only_Cache.md) · OWASP record: [Task_1013.json](../security/owasp/reviews/Task_1013.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1013_CI_Browser_Install_From_A_Main_Only_Cache.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1013_CI_Browser_Install_From_A_Main_Only_Cache.md) · OWASP record: [Task_1013.json](../security/owasp/reviews/Task_1013.json)
 
 Review 1 of the branch `task/1013-ci-browser-cache-main-only`, working tree on 07d4c76db (uncommitted) — APPROVED
 Scope: the diff against 07d4c76db (the commit the implementation started from): `.github/workflows/ci.yml` (four hunks: the jobs `quality`, `homepage-grid`, `locale-leak`, `click-shield`), `scripts/quality/ci-browser-cache.test.mjs` (new); entry point: the browser install steps of those four jobs and the cache they restore

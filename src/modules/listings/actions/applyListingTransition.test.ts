@@ -327,9 +327,10 @@ describe('applyListingTransitionByStatus — valid transitions', () => {
   })
 })
 
-// (Task 427) For a privileged actor (admin/moderator, or owner of their own
-// listing), applyListingTransitionByStatus allows direct transition to ANY
-// other status — these previously-"invalid" status pairs now succeed.
+// (Task 427) For staff (admin/moderator), applyListingTransitionByStatus allows
+// direct transition to ANY other status — these previously-"invalid" status
+// pairs now succeed. The owner of a listing may set every other status but
+// `active` and `pending` (D8, O957-10; matrix in ownerPublish.security.test.ts).
 describe('applyListingTransitionByStatus — privileged any-status transitions (Task 427)', () => {
   it('sold → active (admin, no base-matrix path, now allowed)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'sold' }, error: null })
@@ -379,9 +380,21 @@ describe('applyListingTransitionByStatus — privileged any-status access', () =
     expect(result).toEqual({ ok: false, reason: 'forbidden' })
   })
 
-  it('owner of own listing: archived → pending (no base-matrix path)', async () => {
+  it('owner of own listing: archived → pending is allowed (O957-11: "Publish" sends the listing to moderation)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'archived', user_id: 'user-1' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'pending', userActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'pending', listingId: 'l1' })
+  })
+
+  it('owner of own listing: active → pending is refused (O957-10: the owner does not send an active listing to review)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'active', user_id: 'user-1' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'pending', userActor, db)
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
+  })
+
+  it('admin: archived → pending (staff may still send a listing to review)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'archived', user_id: 'other-user' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'pending', adminActor, db)
     expect(result).toEqual({ ok: true, nextStatus: 'pending', listingId: 'l1' })
   })
 

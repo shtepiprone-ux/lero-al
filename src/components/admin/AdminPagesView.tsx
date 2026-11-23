@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { AlertTriangle, ExternalLink, Pencil, Plus, Trash2 } from 'lucide-react'
+import { AlertTriangle, ExternalLink, Pencil, Plus } from 'lucide-react'
 import { ActionIcon, Alert, Button, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import {
   MantineDataTableToCards,
@@ -14,6 +14,7 @@ import { getDisplayTitle } from '@/components/admin/adminPagesContent'
 import type { Page } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
+import { MantineDeleteIconButton } from '@/design-system/mantine/patterns/MantineDeleteIconButton'
 
 export interface AdminPagesViewProps {
   /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
@@ -107,19 +108,13 @@ export function AdminPagesView({
         >
           <Pencil size={theme.other.iconSize.compact} />
         </ActionIcon>
-        <ActionIcon
-          variant="subtle"
-          size="sm"
-          color="red"
-          aria-label={tc('delete')}
-          title={tc('delete')}
+        <MantineDeleteIconButton
+          label={tc('delete')}
           disabled={migrationPending}
           loading={deletingId === p.id}
+          touch={touch}
           onClick={() => onRequestDelete(p)}
-          {...touchProps}
-        >
-          <Trash2 size={theme.other.iconSize.compact} />
-        </ActionIcon>
+        />
       </Group>
     )
   }

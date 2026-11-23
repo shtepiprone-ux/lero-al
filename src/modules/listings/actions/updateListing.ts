@@ -26,6 +26,17 @@ interface UpdateListingPayload extends ListingInput {
 }
 
 /**
+ * The optional columns the listing form sends (`ListingFormShell.tsx`, `submitPayload`). postgrest-js drops a key whose value is `undefined` (`@supabase/postgrest-js/dist/index.mjs:264`), so a field the
+ * person emptied kept its stored value and a parking kind changed from underground kept its floor (`listings_parking_floor_check`). Each is written as `null` when the payload leaves it empty
+ * (Review 4 F28, owner decision O957-13: "Clear in the database"); `purchase_conditions` is an array and empties to `[]`. A column the form never sends (`is_premium`, `lat`, `lng`) is not listed
+ * here and so is not touched, and `multi_storey_building` (a nullable column; the form always sends a boolean, `types/form.ts:29`) keeps its value.
+ */
+const FORM_OPTIONAL_COLUMNS = [
+  'description', 'condition', 'wall_type', 'heating', 'parking_type', 'parking_floor', 'rooms', 'bedrooms', 'bathrooms', 'toilets', 'area_gross', 'area_net',
+  'floor', 'total_floors', 'land_legal_status', 'land_zoning', 'land_development_potential', 'offer_type', 'year_built', 'location_id', 'address',
+] as const satisfies readonly (keyof ListingInput)[]
+
+/**
  * The property type and the currency of a listing must be ACTIVE rows of their catalogues (Task 923 R100), the way the cabinet checks the preferred currency
  * (`updateCabinetProfile`): hardening v8b's CHECKs accept nothing else, so a value the staff switched off is refused here with a fixed code, never with the database's own
  * message. Both catalogues are public tables, read with the caller's own session. A catalogue that cannot be read refuses: nothing is written on a guess. A catalogue
@@ -95,8 +106,9 @@ export async function updateListing(
 
   const parsed = listingSchema.safeParse(payload)
   if (!parsed.success) return { error: 'validation_failed' }
-  // an image address from the browser is output in <img src> on public pages: only this project's Cloudinary cloud is accepted (Task 923 Revision 7, S21)
-  if (!isValidImagePayload(payload.images)) return { error: 'invalid_image' }
+  // an image address from the browser is output in <img src> on public pages: only a photo in the folder of the LISTING OWNER is accepted, also when staff edit it
+  // (Task 923 Revision 7, S21; Task 957)
+  if (!isValidImagePayload(payload.images, existing.user_id)) return { error: 'invalid_image' }
   const refusal = await catalogueRefusal(supabase, parsed.data.property_type, parsed.data.currency)
   if (refusal) return { error: refusal }
 
@@ -106,7 +118,8 @@ export async function updateListing(
   // `active` by itself). At any other status the edit is saved with the status unchanged and no transition; a staff edit keeps the status too.
   let resultingStatus = existing.status as ListingStatus
   if (isOwner && isListingVisible(existing.status as ListingStatus)) {
-    const moved = await applyListingTransitionByStatus(listingId, 'pending', { userId: user.id, role: null, source: 'cabinet' })
+    // the source `edit_moderation` is what lets an owner's edit reach `pending`: the owner may not choose that status (O957-10), the server moves the listing (D53)
+    const moved = await applyListingTransitionByStatus(listingId, 'pending', { userId: user.id, role: null, source: 'edit_moderation' })
     if (!moved.ok) {
       console.error('updateListing: the move to review failed, nothing was written', { listingId, reason: moved.reason })
       return { error: 'transition_failed' }
@@ -118,6 +131,8 @@ export async function updateListing(
     .from('listings')
     .update({
       ...parsed.data,
+      ...Object.fromEntries(FORM_OPTIONAL_COLUMNS.map(column => [column, parsed.data[column] ?? null])),
+      purchase_conditions: parsed.data.purchase_conditions ?? [],
       // price_old is server-owned (Sprint 88 D88-2/D88-3): a client value never reaches the DB.
       price_old: computeNextPriceOld({
         prev: { price: existing.price, priceOld: existing.price_old, currency: existing.currency },

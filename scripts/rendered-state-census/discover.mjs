@@ -54,6 +54,18 @@ export function clickWidths(rows) {
 
 const appRootHtml = () => document.querySelector('#storybook-root')?.innerHTML ?? '';
 
+/**
+ * Task 957 Revision 2 (R2-5, Review 2 F9): the candidate triggers that could not be operated and that nothing explains - the Story has no registered `mount` row at that width, so no overlay
+ * the Story opens on render covers them. This is the list that fails `--discover`: a trigger the census cannot click is a trigger it cannot prove, and it used to be only informational,
+ * so 52 triggers of the listing form timed out under a vendor frame and the run still passed. Triggers behind a registered `mount` overlay (a modal covers the page by design) are explained.
+ */
+export function unexplainedNotOperable(notOperable) {
+  return notOperable.filter((n) => n.noMountRow);
+}
+
+/** The key of one element `__census.outsideRoot()` reports. */
+const overlayKey = (o) => `${o.tag}|${o.id}|${o.title}`;
+
 /** Clicks the element at a structural path of the app root; `{ ok: false, reason }` (Playwright's) when it cannot be operated. */
 async function clickPath(page, path) {
   try {
@@ -83,35 +95,66 @@ async function rowTriggerSignature(page, ctx, target, row) {
  * is covered only when it opens the same overlay as the row trigger does; a different overlay is a miss.
  * R17: every candidate is counted - found = clicked + not operable - and each one that cannot be operated is listed with
  * Playwright's reason and whether the Story has a `mount` row at that width (an overlay opened on mount covers the page).
+ * Task 957 Revision 2 (R2-5): a click that makes an element outside the app root visible (a vendor widget's frame is a `body` child outside every `[data-portal="true"]` root) is reported in
+ * `overlays` with the element, and the Story is reloaded, so the triggers after it are clicked on a page nothing covers; a candidate that cannot be clicked because such an element
+ * appeared after the previous click's wait is reported the same way and clicked once more on a reloaded page.
  */
 export async function clickThrough(page, ctx, story, rows) {
   const misses = [];
   const notOperable = [];
+  const overlays = [];
   let clicks = 0;
   let found = 0;
   for (const width of clickWidths(rows)) {
     const target = { story, state: 'closed', locale: CLOSED_LOCALE, width };
     const loaded = await loadStory(page, ctx, target);
-    if (!loaded.ok) return { misses, clicks, found, notOperable, error: loaded.reason };
+    if (!loaded.ok) return { misses, clicks, found, notOperable, overlays, error: loaded.reason };
     const inRange = rows.filter((r) => appliesAtWidth(r, width) && r.open.kind !== 'mount');
     const noMountRow = !rows.some((r) => r.open.kind === 'mount' && appliesAtWidth(r, width));
     const candidates = await page.evaluate(() => window.__census.candidates());
+    let loadedOutside = await page.evaluate(() => window.__census.outsideRoot());
     found += candidates.length;
     const cover = await page.evaluate(
       ([paths, selectors]) => window.__census.coverage(paths, selectors),
       [candidates.map((c) => c.sel), inRange.map((r) => r.open.selector)],
     );
     const rowSignature = new Map();
+    let previous = null; // the candidate clicked just before, for an element that appears after its wait
     for (let i = 0; i < candidates.length; i++) {
       const c = candidates[i];
       const baseline = await page.evaluate(appRootHtml);
-      const clicked = await clickPath(page, c.sel);
+      const outsideBefore = await page.evaluate(() => window.__census.outsideRoot());
+      let clicked = await clickPath(page, c.sel);
       if (!clicked.ok) {
-        notOperable.push({ story, width, tag: c.tag, label: c.label, sel: c.sel, reason: clicked.reason, noMountRow });
-        continue;
+        // an element outside the app root that was not there before the previous click (a frame that arrived after that click's wait) covers the page now: report it,
+        // reload, and click this candidate again; an element that was there from the start of the Story is no explanation
+        const seenAtStart = loadedOutside;
+        const late = outsideBefore.filter((o) => !seenAtStart.some((b) => overlayKey(b) === overlayKey(o)));
+        if (late.length === 0) {
+          notOperable.push({ story, width, tag: c.tag, label: c.label, sel: c.sel, reason: clicked.reason, noMountRow });
+          continue;
+        }
+        overlays.push({ story, width, tag: previous?.tag ?? c.tag, label: previous?.label ?? c.label, late: true, overlay: late[0] });
+        const again = await loadStory(page, ctx, target);
+        if (!again.ok) {
+          for (const rest of candidates.slice(i)) {
+            notOperable.push({ story, width, tag: rest.tag, label: rest.label, sel: rest.sel, reason: `not attempted: the Story could not be reloaded (${again.reason})`, noMountRow });
+          }
+          break;
+        }
+        loadedOutside = await page.evaluate(() => window.__census.outsideRoot());
+        clicked = await clickPath(page, c.sel);
+        if (!clicked.ok) {
+          notOperable.push({ story, width, tag: c.tag, label: c.label, sel: c.sel, reason: clicked.reason, noMountRow });
+          continue;
+        }
       }
+      previous = c;
       clicks++;
       const count = await waitStable(page, null, 1500);
+      const outsideAfter = await page.evaluate(() => window.__census.outsideRoot());
+      const opened = outsideAfter.filter((o) => !outsideBefore.some((b) => overlayKey(b) === overlayKey(o)));
+      for (const o of opened) overlays.push({ story, width, tag: c.tag, label: c.label, late: false, overlay: o });
       let reload = true;
       if (count > 0) {
         const relations = cover[i].rows;
@@ -125,10 +168,11 @@ export async function clickThrough(page, ctx, story, rows) {
         }
         if (!covered) misses.push({ tag: c.tag, label: c.label, sel: c.sel, width, portals: count });
       } else {
-        reload = baseline !== (await page.evaluate(appRootHtml)); // a click that changed nothing needs no reload
+        reload = opened.length > 0 || baseline !== (await page.evaluate(appRootHtml)); // a click that changed nothing needs no reload; one that put an element outside the app root does
       }
       if (reload && i < candidates.length - 1) {
         const again = await loadStory(page, ctx, target);
+        loadedOutside = again.ok ? await page.evaluate(() => window.__census.outsideRoot()) : loadedOutside;
         if (!again.ok) {
           // the rest of this width's candidates cannot be attempted: they are counted, not silently dropped
           for (const rest of candidates.slice(i + 1)) {
@@ -139,7 +183,7 @@ export async function clickThrough(page, ctx, story, rows) {
       }
     }
   }
-  return { misses, clicks, found, notOperable };
+  return { misses, clicks, found, notOperable, overlays };
 }
 
 export async function discover({ root, index, registry, patternRegistry, ctx, browser, concurrency, log }) {
@@ -177,6 +221,7 @@ export async function discover({ root, index, registry, patternRegistry, ctx, br
   let totalClicks = 0;
   let totalFound = 0;
   const notOperable = [];
+  const overlays = [];
   const clickJobs = stories.map((story) => ({
     target: { story: story.id, state: 'closed', locale: CLOSED_LOCALE, width: CLOSED_WIDTH },
     run: async (page) => {
@@ -185,6 +230,7 @@ export async function discover({ root, index, registry, patternRegistry, ctx, br
       totalClicks += r.clicks;
       totalFound += r.found;
       notOperable.push(...r.notOperable);
+      overlays.push(...r.overlays);
       if (r.error) failed.push(`${story.id}  (${r.error})`);
       const text = r.misses.map((m) => `${m.tag} "${m.label}" at ${m.width}px`);
       if (r.misses.length) {
@@ -224,8 +270,11 @@ export async function discover({ root, index, registry, patternRegistry, ctx, br
   // R17: what discovery could not operate. Informational - a candidate under an overlay the Story opens on mount is
   // covered by that overlay; the ones in a Story with no mount row at that width are marked, because nothing explains them.
   notOperable.sort((a, b) => `${a.story}|${String(a.width).padStart(5, '0')}|${a.sel}`.localeCompare(`${b.story}|${String(b.width).padStart(5, '0')}|${b.sel}`));
-  const unexplained = notOperable.filter((n) => n.noMountRow);
-  log(`(R17, informational - not a failing list) candidate triggers per Story x width: found ${totalFound}, clicked ${totalClicks}, not operable ${notOperable.length} (${unexplained.length} of them in a Story with no "mount" row at that width)`);
-  for (const n of notOperable) log(`  - ${n.story} @${n.width} ${n.tag} "${n.label}": ${n.reason}${n.noMountRow ? '  [NO MOUNT ROW AT THIS WIDTH]' : ''}`);
-  return { unregisteredMount, unregisteredImport, unregisteredTriggers, importOpensNothing, failed, missDetails, stories: stories.length, clicks: totalClicks, found: totalFound, notOperable };
+  const unexplained = unexplainedNotOperable(notOperable);
+  log(`(d) candidate triggers per Story x width: found ${totalFound}, clicked ${totalClicks}, not operable ${notOperable.length}; ${notOperable.length - unexplained.length} are behind a registered "mount" overlay (explained) and ${unexplained.length} have nothing to explain them (a Story with no "mount" row at that width) - those fail the run: ${unexplained.length}`);
+  for (const n of notOperable) log(`  - ${n.story} @${n.width} ${n.tag} "${n.label}": ${n.reason}${n.noMountRow ? '  [NO MOUNT ROW AT THIS WIDTH - FAILS]' : '  [behind a registered mount overlay]'}`);
+  // Task 957 Revision 2 (R2-5): what covered the page from outside the app root and every portal root after a click (informational: the Story was reloaded and the run went on)
+  log(`(e, informational) clicks that put an element outside the app root and outside every portal root on the page, the Story reloaded after each: ${overlays.length}`);
+  for (const o of overlays) log(`  - ${o.story} @${o.width} ${o.tag} "${o.label}"${o.late ? ' (seen after the next click)' : ''}: <${o.overlay.tag}${o.overlay.id ? ` id="${o.overlay.id}"` : ''}${o.overlay.title ? ` title="${o.overlay.title}"` : ''}> ${o.overlay.box}`);
+  return { unregisteredMount, unregisteredImport, unregisteredTriggers, importOpensNothing, failed, missDetails, stories: stories.length, clicks: totalClicks, found: totalFound, notOperable, unexplained, overlays };
 }

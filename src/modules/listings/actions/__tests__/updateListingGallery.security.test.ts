@@ -28,7 +28,8 @@ import { createListing } from '../createListing'
 import { updateListing } from '../updateListing'
 
 const CLOUD = 'lero-cloud'
-const url = (name: string) => `https://res.cloudinary.com/${CLOUD}/image/upload/v1/listings/${name}.jpg`
+// Task 957: a photo lies in the folder of the listing OWNER, so the fixture addresses carry the owner id
+const url = (name: string) => `https://res.cloudinary.com/${CLOUD}/image/upload/v1/owner-1/listings/${name}.jpg`
 const OLD = [
   { id: 'img-1', listing_id: 'l-1', url: url('old-1'), is_cover: true, order: 0 },
   { id: 'img-2', listing_id: 'l-1', url: url('old-2'), is_cover: false, order: 1 },
@@ -89,6 +90,6 @@ describe('updateListingGallery', () => {
     db = createFakeDb({ listings: [{ id: 'l-1', slug: 'flat', user_id: 'owner-1', status: 'active', price: 1, price_old: null, currency: 'EUR', title: 'Flat' }], listing_images: OLD.map((r) => ({ ...r })) })
     expect('slug' in (await updateListing('l-1', payload as never))).toBe(true)
     expect(gallery().map((i) => i.url)).toEqual([NEW_IMAGES[0].url])
-    expect(vi.mocked(deleteAsset).mock.calls.map((c) => c[0]).sort()).toEqual(['listings/old-1', 'listings/old-2'])
+    expect(vi.mocked(deleteAsset).mock.calls.map((c) => c[0]).sort()).toEqual(['owner-1/listings/old-1', 'owner-1/listings/old-2'])
   })
 })

@@ -27,6 +27,9 @@ const listingBaseSchema = z.object({
   condition:    z.enum(['new_build', 'good', 'needs_repair', 'needs_renovation', 'under_construction']).optional(),
   wall_type:    z.enum(['brick', 'concrete', 'panel', 'wood', 'other']).optional(),
   heating:      z.enum(['electric', 'wood', 'central', 'gas', 'none']).optional(),
+  // the kind of parking and its underground floor (Task 957 Revision 3, O1001-2); the rules between them and the property type are in `listingSchema`'s superRefine
+  parking_type: z.enum(['underground', 'private_street', 'city']).optional(),
+  parking_floor: z.number().int().min(-10).max(-1).optional(),
   rooms:        z.number().int().min(0).max(50).optional(),
   bedrooms:     z.number().int().min(0).max(50).optional(),
   bathrooms:    z.number().int().min(0).max(20).optional(),
@@ -59,6 +62,15 @@ export const listingSchema = listingBaseSchema.superRefine((data, ctx) => {
   }
   if (data.price_old !== undefined && !isListingPriceWithinCeiling(data.price_old, data.currency)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['price_old'], message: 'error_price' })
+  }
+
+  // Parking (O1001-2): a floor belongs to an underground parking only, and a type that has no parking field (land) takes neither
+  if (data.parking_floor !== undefined && data.parking_type !== 'underground') {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['parking_floor'], message: 'error_parking_floor' })
+  }
+  const hasParkingField = schema.ui.fields.find(f => f.key === 'parking')?.visible ?? false
+  if (!hasParkingField && (data.parking_type !== undefined || data.parking_floor !== undefined)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['parking_type'], message: 'error_parking_type' })
   }
 
   // Rule 1: negative floors only when the type permits it AND checkbox is on.

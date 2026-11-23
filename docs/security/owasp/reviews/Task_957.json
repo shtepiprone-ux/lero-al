@@ -54,9 +54,9 @@
     "Authorization_Regression_Testing": {
       "verdict": "met",
       "quotes": [
-        "Relying on UI hiding is insufficient; the API layer must enforce the check"
+        "Automated tests should specifically target the ways authorization usually degrades over time."
       ],
-      "evidence": "`src/app/api/listings/upload-signature/__tests__/route.security.test.ts`, `src/lib/uploads/__tests__/imageUrl.security.test.ts`, `src/modules/listings/actions/updateListing.integration.test.ts` and `src/tests/integration/listingImageOwner.integration.test.ts` call the route, the actions and PostgREST without the widget"
+      "evidence": "Review 7: F37 is fixed: `[SEC-D8-FE-ERR]` (`listingStatusOptions.security.test.tsx:145-157`) proves the owner again (`canPublish` false: the refused pick is not shown, the error shows, no success) and `[SEC-D8-FE-ERR-STAFF]` keeps the staff case; both turn red when the select keeps the pick (`value` -> `defaultValue` in `StatusChangeSelect.tsx`), restored with cmp equal. Earlier, Review 6: F34 is fixed (`applyListingTransition.test.ts:383-393`: archived -> pending allowed, active -> pending refused; red when `pending` is put back in `STAFF_ONLY_TARGET_STATUSES`). New: `[SEC-D8-FE-ERR]` (`listingStatusOptions.security.test.tsx:144-152`) was moved from the owner (`canPublish` false) to staff (`true`), not stated in the report; the owner variant fails only on its last assertion (`expected '' to be 'Under review'`), so the owner's refused change is no longer proven to stay unsaved in the control (A9)"
     },
     "Authorization_Testing_Automation": {
       "verdict": "met",
@@ -73,9 +73,11 @@
       "evidence": "task957.sql:37-49 deletes the key's hits older than the window, then counts under an advisory lock; rateLimit.integration.test.ts SEC-RATELIMIT-INT-SLIDING runs after the owner's apply"
     },
     "Business_Logic_Security": {
-      "verdict": "finding",
-      "finding": "F27",
-      "note": "Review 4: O957-10 leaves an owner no way back to publication from a hidden, archived, sold, rented or expired listing; F28 (parking edit) also open; upload uniqueness stays met (Review 1)"
+      "verdict": "met",
+      "quotes": [
+        "Always re-derive security-relevant values (prices, permissions, ownership) on the server."
+      ],
+      "evidence": "Review 6: `expired` joins `active` as staff-only on the server (`listingTransitionEngine.ts:221`, O957-17); `[SEC-O957-17-SRV-EXPIRED-DENY]` and `[SEC-O957-17-DOMAIN]` pass and turn red when `expired` leaves the list (4 failed), restored; a session still cannot write `listings.status` at all (`guard_listings_protected_columns`, `supabase/sql_migrations/task923/db-catalog/proposed-hardening.sql:326-335`). Review 5: the owner's status rule is decided on the server (`canOwnerSetStatus`, used by the gateway `applyListingTransition.ts`): `pending` from every status but `active`, `active` never (O957-11, D8); `[SEC-O957-11-SRV-ALLOW]` and `[SEC-O957-10-SRV-DENY]` pass and turn red under both deliberate breaks (5 and 6 failed), restored; `updateListing.ts:134-135` writes the 21 optional form columns as null and `purchase_conditions` as [] (smoke test red on the 9de067faf code, green now); the real-database case `[INT-EDIT-EMPTIED]` runs after the owner's apply of `task957-parking.sql` (UNKNOWN until then); upload uniqueness stays met (Review 1)"
     },
     "CI_CD_Security": {
       "verdict": "met",
@@ -138,7 +140,7 @@
       "quotes": [
         "but not provide any content as part of the response that would reveal implementation details."
       ],
-      "evidence": "route.ts:32 answers fixed codes only; the cleanup answers counts only (cleanup route.security.test.ts SEC-CLEANUP-SRV-DENY)"
+      "evidence": "Review 7: F41 is fixed: `src/app/[locale]/listings/[slug]/edit/page.tsx:80-83` throws any listing-query error but `PGRST116` and logs its code only; `[SEC-X-SRV-EDIT-QUERY-ERROR]` checks that the throw and the log hold the code and no database message, slug or listing field, and turns red when the check is removed, restored with cmp equal. Earlier, Review 6: `src/app/[locale]/listings/[slug]/edit/page.tsx:62-80` read only `data` of the listing query and treats every failure as no row: on the live database without `task957-parking.sql` the select answers 42703 (`column listings.parking_type does not exist`, read-only probe 2026-11-23), and the owner of a hidden listing gets the restricted page, a public one a 404. The upload route and the cleanup still answer fixed codes only (met in Review 1)"
     },
     "File_Upload": {
       "verdict": "met",
@@ -191,7 +193,7 @@
       "quotes": [
         "implement access control checks for each object that users try to access"
       ],
-      "evidence": "route.ts:68-81 (listing owner or listings.moderate); `src/modules/listings/actions/updateListing.ts:100` checks the photos against the listing owner"
+      "evidence": "route.ts:68-81 (listing owner or listings.moderate); `src/modules/listings/actions/updateListing.ts:100` checks the photos against the listing owner; Review 6: the edit form's new delete calls the existing `deleteListingAction`, which loads the listing and refuses anyone but its owner or `listings.delete` before any write (`src/modules/listings/actions/deleteListing.ts:33-34`, unchanged; `deleteListing.security.test.ts` passes); `canDelete` (`edit/page.tsx:159`) only hides the section"
     },
     "JavaScript_and_TypeScript_Security": {
       "verdict": "met",
@@ -374,7 +376,7 @@
     },
     "Unvalidated_Redirects_and_Forwards": {
       "verdict": "not applicable",
-      "reason": "the create page keeps its fixed local sign-in redirect; no new redirect target"
+      "reason": "the create page keeps its fixed local sign-in redirect; Review 6: the edit form's Cancel uses `router.back()` or the fixed listing path, and a delete goes to the fixed `/<locale>/cabinet?tab=listings` (`ListingFormShell.tsx:87-98`, `:320`); no target comes from input"
     },
     "User_Privacy_Protection": {
       "verdict": "met",

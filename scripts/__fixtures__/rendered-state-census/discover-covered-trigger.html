@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: discover-covered-trigger</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  #cover { position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 10; }
+</style>
+</head>
+<body>
+<!-- Task 957 Revision 2 (R2-5, Review 2 F9) self-test fixture "discover-covered-trigger": a trigger of the app root that a transparent fixed layer outside every portal root
+     covers, so Playwright cannot click it ("not operable"). With no registered "mount" row nothing explains it, and --discover must fail on it. -->
+<div id="storybook-root">
+  <button id="covered" type="button">Covered trigger</button>
+  <p>Fixture page, not a product Story.</p>
+</div>
+<div id="cover"></div>
+</body>
+</html>

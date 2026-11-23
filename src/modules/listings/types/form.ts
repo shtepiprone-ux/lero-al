@@ -1,5 +1,5 @@
 import type {
-  ListingType, PropertyType, ListingCondition, WallType, HeatingType,
+  ListingType, PropertyType, ListingCondition, WallType, HeatingType, ParkingType,
   LandLegalStatus, LandZoning, LandDevelopmentPotential,
 } from '@/types/database'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
@@ -15,6 +15,9 @@ export interface FormValues {
   condition?: ListingCondition
   wall_type?: WallType
   heating?: HeatingType
+  parking_type?: ParkingType
+  /** The underground floor of the parking, -10 to -1 (only with `parking_type: 'underground'`). */
+  parking_floor?: number
   rooms?: number
   bedrooms?: number
   bathrooms?: number

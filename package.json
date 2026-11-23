@@ -138,7 +138,7 @@
     "@base-ui/react": "^1.4.0",
     "@hookform/resolvers": "^5.2.2",
     "@mantine/core": "^8.3.18",
-    "@mantine/form": "^8.3.18",
+    "@mantine/form": "^9.7.3",
     "@mantine/hooks": "^8.3.18",
     "@mantine/modals": "^8.3.18",
     "@mantine/notifications": "^8.3.18",

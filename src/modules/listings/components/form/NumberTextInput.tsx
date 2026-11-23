@@ -58,8 +58,10 @@ export function NumberTextInput({ id, label, value, onChange, min, max, placehol
         onChange(parseNumberInput(String(next)))
       }}
       onValueChange={(_payload, { source }) => {
-        if (!emptyBox || (source !== 'increment' && source !== 'decrement')) return
-        const stepped = bounded(source === 'increment' ? 1 : -1)
+        // Mantine passes { source: "increment" | "decrement" } (NumberInput.mjs:197, :222) but types it as react-number-format's SourceType enum (types.d.ts:13), so compare the string
+        const step = String(source)
+        if (!emptyBox || (step !== 'increment' && step !== 'decrement')) return
+        const stepped = bounded(step === 'increment' ? 1 : -1)
         setDraft(stepped)
         onChange(stepped)
       }}

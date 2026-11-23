@@ -49,4 +49,16 @@ F53 — fixed in Revision 12 (R12-1), measured above.
 - Owner decisions of this review cycle: O957-20 (step controls on hover and focus), O957-21 (the description as on `main`), O957-22 (one canonical field
   height); Tasks 1019 (the owner's listing note, O1019-1, O1019-2) and 1020 (the auth form button size) filed.
 
-Open parts, in order: the commit and pull request (H) → `gh pr checks <n>` (V14) → the merge → archive (H7).
+## V14 — pull request #66 (commit `0061132c0`), 2026-11-23
+
+`gh pr checks 66` → red: "Lint, types and product checks", "Unit and component tests", "Authorization regression", "Click-shield" and Vercel; green:
+CodeQL, OWASP task gate, gitleaks, Storybook build, locale leak, change report, dependency audit, SBOM, zizmor. `gh run view 45182648357 --log-failed`:
+every red job stops at the type check of its build, on four errors:
+- `src/modules/listings/components/form/NumberTextInput.tsx(61,27)` and `(61,53)`: TS2367, "the types 'SourceType' and '"increment"' have no overlap".
+  Mantine passes `{ source: "increment" }` and `"decrement"` at run time (`node_modules/@mantine/core/esm/components/NumberInput/NumberInput.mjs:197`,
+  `:222`) but types `onValueChange`'s source as `react-number-format`'s `SourceType` (`node_modules/react-number-format/types/types.d.ts:13`).
+- `src/modules/listings/components/__tests__/listingFormMantine.test.ts(412,77)` and `(413,12)`: TS18048, "'appTheme.other' is possibly 'undefined'".
+The unit tests passed locally because Vitest does not type-check; `tsc` is a CI check (A5). The jobs after the build are UNKNOWN until it passes.
+Fix in this pull request: Revision 13.
+
+Open parts, in order: Revision 13 (Sonnet) → push → `gh pr checks 66` (V14) → the merge → archive (H7).

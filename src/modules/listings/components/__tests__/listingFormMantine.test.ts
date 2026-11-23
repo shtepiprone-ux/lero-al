@@ -409,8 +409,10 @@ describe('the number fields have the canonical field look (Revision 9, AC48, F46
   it('[AC52] theme.components.Input.vars gives the wrapper --input-height equal to theme.other.touchTarget', () => {
     const input = components.Input as { vars?: (theme: unknown, props: unknown, ctx: unknown) => Record<string, Record<string, string>> } | undefined
     expect(typeof input?.vars, 'a vars function').toBe('function')
-    expect(input!.vars!(appTheme, {}, {}).wrapper?.['--input-height']).toBe(appTheme.other.touchTarget)
-    expect(appTheme.other.touchTarget, 'the token is the 44px').toBe('2.75rem')
+    expect(appTheme.other, 'the theme has other').toBeDefined()
+    const other = appTheme.other!
+    expect(input!.vars!(appTheme, {}, {}).wrapper?.['--input-height']).toBe(other.touchTarget)
+    expect(other.touchTarget, 'the token is the 44px').toBe('2.75rem')
   })
 
   it('[AC52] no field entry (TextInput, NumberInput, PasswordInput, Select, FileInput) holds an input minHeight or an --input-height of its own', () => {

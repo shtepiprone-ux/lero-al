@@ -245,7 +245,7 @@ describe('applyAdminListingsVisibility — page.tsx visibility filter (T1)', () 
   function capture() {
     const calls: unknown[][] = []
     const q: Record<string, unknown> = {}
-    for (const method of ['eq', 'in', 'gte', 'or', 'lt', 'is']) {
+    for (const method of ['eq', 'in', 'gte', 'not', 'or', 'lt', 'is']) {
       q[method] = (...args: unknown[]) => {
         calls.push([method, ...args])
         return q
@@ -259,6 +259,8 @@ describe('applyAdminListingsVisibility — page.tsx visibility filter (T1)', () 
     applyAdminListingsVisibility(q, 'visible', '')
     expect(calls).toContainEqual(['eq', 'status', 'active'])
     expect(calls.some(c => c[0] === 'gte' && c[1] === 'expires_at')).toBe(true)
+    // Task 1035: synthetic test listings (slug `zz_synth_…`) are not public, so the admin "visible" filter leaves them out too
+    expect(calls).toContainEqual(['not', 'slug', 'like', 'zz\\_synth\\_%'])
   })
 
   it("'hidden_eligible' applies the audit predicate, narrowed by reason", () => {
@@ -280,7 +282,7 @@ describe('applyAdminListingsVisibility — page.tsx visibility filter (T1)', () 
 describe('applyAdminListingsVisibility — routes through the canonical helpers (T1b)', () => {
   function builder() {
     const q: Record<string, unknown> = {}
-    for (const method of ['eq', 'in', 'gte', 'or', 'lt', 'is']) q[method] = () => q
+    for (const method of ['eq', 'in', 'gte', 'not', 'or', 'lt', 'is']) q[method] = () => q
     return q as never
   }
 

@@ -1,4 +1,5 @@
 import type { ListingStatus } from '@/types/database'
+import { SYNTHETIC_LISTING_SLUG_LIKE } from './indexing'
 
 // ── Canonical status→visibility policy ───────────────────────────────────────
 // Single source of truth for "is this listing publicly visible?"
@@ -134,7 +135,7 @@ export function formatVisibility(listing: {
 // PUBLIC_VISIBLE_STATUSES above.
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function applyPublicVisibility<Q extends { eq: any; in: any; gte: any }>(query: Q): Q {
+export function applyPublicVisibility<Q extends { eq: any; in: any; gte: any; not: any }>(query: Q): Q {
   const eligibleStatuses = (Object.entries(PUBLIC_VISIBLE_STATUSES) as [ListingStatus, VisibilityRule][])
     .filter(([, rule]) => rule.publicEligible)
     .map(([status]) => status)
@@ -164,6 +165,9 @@ export function applyPublicVisibility<Q extends { eq: any; in: any; gte: any }>(
   if (allRequire) {
     q = q.gte('expires_at', new Date().toISOString())
   }
+
+  // Task 1035: a synthetic test listing (slug `zz_synth_…`) is never public, whatever its status: every public read, the sitemap included, leaves it out
+  q = q.not('slug', 'like', SYNTHETIC_LISTING_SLUG_LIKE)
 
   return q as Q
 }

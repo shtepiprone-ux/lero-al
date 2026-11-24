@@ -80,17 +80,38 @@ describe('applyPublicVisibility', () => {
         calls.push({ method: 'gte', args: [col, val] })
         return mockQuery
       },
+      not(col: string, op: string, val: string) {
+        calls.push({ method: 'not', args: [col, op, val] })
+        return mockQuery
+      },
     }
 
     applyPublicVisibility(mockQuery)
 
-    expect(calls).toHaveLength(2)
+    expect(calls).toHaveLength(3)
     expect(calls[0]).toEqual({ method: 'eq', args: ['status', 'active'] })
     expect(calls[1].method).toBe('gte')
     expect(calls[1].args[0]).toBe('expires_at')
     const ts = calls[1].args[1] as string
     expect(new Date(ts).getTime()).not.toBeNaN()
     expect(Math.abs(new Date(ts).getTime() - Date.now())).toBeLessThan(5000)
+    expect(calls[2]).toEqual({ method: 'not', args: ['slug', 'like', 'zz\\_synth\\_%'] })
+  })
+
+  it('[Task 1035 AC1] leaves synthetic test listings out: .not(slug, like, the escaped prefix) besides the status and expiry filters', () => {
+    const calls: Array<{ method: string; args: unknown[] }> = []
+    const mockQuery = {
+      eq(...args: unknown[]) { calls.push({ method: 'eq', args }); return mockQuery },
+      in(...args: unknown[]) { calls.push({ method: 'in', args }); return mockQuery },
+      gte(...args: unknown[]) { calls.push({ method: 'gte', args }); return mockQuery },
+      not(...args: unknown[]) { calls.push({ method: 'not', args }); return mockQuery },
+    }
+
+    applyPublicVisibility(mockQuery)
+
+    expect(calls.filter(c => c.method === 'not')).toEqual([{ method: 'not', args: ['slug', 'like', 'zz\\_synth\\_%'] }])
+    expect(calls.some(c => c.method === 'eq' && c.args[0] === 'status')).toBe(true)
+    expect(calls.some(c => c.method === 'gte' && c.args[0] === 'expires_at')).toBe(true)
   })
 
   it('returns the same query reference for chaining', () => {
@@ -98,6 +119,7 @@ describe('applyPublicVisibility', () => {
       eq() { return mockQuery },
       in() { return mockQuery },
       gte() { return mockQuery },
+      not() { return mockQuery },
     }
     const result = applyPublicVisibility(mockQuery)
     expect(result).toBe(mockQuery)
@@ -178,6 +200,7 @@ describe('applyPublicVisibility — mixed policy guard', () => {
       eq() { return mockQuery },
       in() { return mockQuery },
       gte() { return mockQuery },
+      not() { return mockQuery },
     }
     expect(() => applyPublicVisibility(mockQuery)).not.toThrow()
   })
@@ -195,6 +218,7 @@ describe('applyPublicVisibility — mixed policy guard', () => {
       eq() { return mockQuery },
       in() { return mockQuery },
       gte() { return mockQuery },
+      not() { return mockQuery },
     }
 
     try {
@@ -423,6 +447,7 @@ describe('Per-ListingStatus invariant: fragment ⇔ predicate ⇔ badge (Task 45
       eq(c: unknown, v: unknown) { calls.push({ method: 'eq', args: [c, v] }); return q },
       in(c: unknown, v: unknown) { calls.push({ method: 'in', args: [c, v] }); return q },
       gte(c: unknown, v: unknown) { calls.push({ method: 'gte', args: [c, v] }); return q },
+      not(c: unknown, o: unknown, v: unknown) { calls.push({ method: 'not', args: [c, o, v] }); return q },
     }
     return { q, calls }
   }

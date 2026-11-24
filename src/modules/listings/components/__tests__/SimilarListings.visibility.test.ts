@@ -17,6 +17,7 @@ function createRecordingQuery() {
     eq: (column: string, value: unknown) => { calls.push({ op: 'eq', column, value }); return q },
     neq: (column: string, value: unknown) => { calls.push({ op: 'neq', column, value }); return q },
     gte: (column: string, value: unknown) => { calls.push({ op: 'gte', column, value }); return q },
+    not: (column: string, op: string, value: unknown) => { calls.push({ op: 'not', column, value: [op, value] }); return q },
     lte: (column: string, value: unknown) => { calls.push({ op: 'lte', column, value }); return q },
     in: (column: string, values: unknown[]) => { calls.push({ op: 'in', column, value: values }); return q },
     overlaps: (column: string, values: unknown[]) => { calls.push({ op: 'overlaps', column, value: values }); return q },
@@ -51,6 +52,8 @@ describe('buildSimilarityRungQuery — public-visibility invariant across all 4 
     // (see visibility.ts:120-127 — asserting the SHAPE it composes, not re-deriving its policy).
     expect(calls.some(c => c.op === 'eq' && c.column === 'status' && c.value === 'active')).toBe(true)
     expect(calls.some(c => c.op === 'gte' && c.column === 'expires_at')).toBe(true)
+    // Task 1035: synthetic test listings (slug `zz_synth_…`) are left out at every rung
+    expect(calls).toContainEqual({ op: 'not', column: 'slug', value: ['like', 'zz\\_synth\\_%'] })
 
     expect(calls.some(c => c.op === 'neq' && c.column === 'id' && c.value === CORE.currentId)).toBe(true)
     expect(calls.some(c => c.op === 'eq' && c.column === 'property_type' && c.value === CORE.propertyType)).toBe(true)

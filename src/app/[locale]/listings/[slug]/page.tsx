@@ -20,6 +20,7 @@ import type { PublicUserProfile } from '@/types/database'
 import { ListingDetailView } from '@/modules/listings/components/ListingDetailView'
 import { ListingAccessRestrictedView } from '@/modules/listings/components/ListingAccessRestrictedView'
 import { getListingAccessState } from '@/modules/listings/lib/listingAccessState'
+import { isListingIndexable } from '@/modules/listings/lib/indexing'
 
 // ── Date-fns locale map (mirrors RelativeTime.tsx — server-side only) ─────────
 const DATE_LOCALE_MAP: Record<string, Locale> = { sq, en: enUS, uk, it }
@@ -66,6 +67,8 @@ function safeText(raw: string | null | undefined, maxLen: number): string {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await params
+  // Task 1035: a synthetic test listing is never indexed, whatever its status: the bare title, `noindex, nofollow`, and no database read (robots.txt does not block it, so a crawler can read this)
+  if (!isListingIndexable({ slug })) return { title: 'Lero.al', robots: { index: false, follow: false } }
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
 
   const supabase = await createClient()

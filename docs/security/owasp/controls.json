@@ -1252,8 +1252,8 @@
      "task": "1026"
     }
    ],
-   "reviewedSha": "61843bd5c4d4bee33e351dd37cd0f315b9bc6243",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "88f77cd0b9436fd3abb9df1624b9198fe5114642",
+   "reviewedOn": "2026-11-24"
   },
   "Mass_Assignment": {
    "applies": true,
@@ -2368,8 +2368,8 @@
      "evidence": "EVASIONS"
     }
    ],
-   "reviewedSha": "0a15c1777188ccee1140f5d8300779390e6c5448",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "8e5e2bf68e895ee0f8ec44109ce58fe0597ac5e7",
+   "reviewedOn": "2026-11-24"
   },
   "Zero_Trust_Architecture": {
    "applies": false,

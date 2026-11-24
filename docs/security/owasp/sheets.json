@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "ac9fd32a0a54f4c8e485ce1784e73032694897a3",
- "fetchedOn": "2026-11-23T14:55:51.159Z",
+ "commit": "7fdbe1d332733c4c6308da5a756d1f59d0c5e569",
+ "fetchedOn": "2026-11-24T10:52:12.704Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -491,7 +491,7 @@
    "name": "Logging_Vocabulary",
    "file": "Logging_Vocabulary_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html",
-   "sha": "61843bd5c4d4bee33e351dd37cd0f315b9bc6243",
+   "sha": "88f77cd0b9436fd3abb9df1624b9198fe5114642",
    "title": "Application Logging Vocabulary Cheat Sheet"
   },
   {
@@ -967,7 +967,7 @@
    "name": "XSS_Filter_Evasion",
    "file": "XSS_Filter_Evasion_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html",
-   "sha": "0a15c1777188ccee1140f5d8300779390e6c5448",
+   "sha": "8e5e2bf68e895ee0f8ec44109ce58fe0597ac5e7",
    "title": "XSS Filter Evasion Cheat Sheet"
   },
   {

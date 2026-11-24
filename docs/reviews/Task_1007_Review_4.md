@@ -39,5 +39,16 @@ never writes one.
   that kind is rerun, never loosened.
 - The executor's own notes: a Node import check and an empty interactive Python start outside the listed commands, no effect on the tree (`git status`).
 
+## CI run 45375756204 (V14, 2026-11-24)
+
+At 2e014cfad every job passed but "Lint, types and product checks": `owasp.mjs sync --verify` → "upstream differs from docs/security/owasp/sheets.json"
+(upstream `7fdbe1d33273`: Logging_Vocabulary and XSS_Filter_Evasion changed); not caused by this task, it fails every branch and the daily `main` run.
+Re-read through the upstream compare (`gh api repos/OWASP/CheatSheetSeries/compare/ac9fd32a0a54...7fdbe1d33273`): Logging_Vocabulary changes the level of
+the event for a failed server-side check of a value against a discrete list from WARN to CRITICAL (its mapped quote is unchanged; the events are Task
+1026's); XSS_Filter_Evasion drops the SSI, PHP, IMG Embedded Commands and Cookie Manipulation sections (its mapped quote is unchanged; the control
+`sanitizeCmsHtml.security.test.ts` uses none of them). `owasp.mjs sync` rewrote `docs/security/owasp/sheets.json`; `docs/security/owasp/controls.json`
+sets both `reviewedSha` to the new versions (`88f77cd0…`, `8e5e2bf6…`) and `reviewedOn` 2026-11-24. Then `owasp.mjs sync --verify`, `owasp.mjs check`,
+`owasp.mjs review <kickoff> --base main` and `check-files.mjs` on both files → exit 0.
+
 Open parts, in order: the commit and push to pull request #70 (H) → `gh pr checks 70` → the merge → the moderator check of Route step 5 → the archive
 (H7).

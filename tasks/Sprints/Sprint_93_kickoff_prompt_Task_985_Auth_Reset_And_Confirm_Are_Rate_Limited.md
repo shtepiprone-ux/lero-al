@@ -14,7 +14,7 @@ reset helper without CAPTCHA is gone.
 
 ## Cause
 
-Read at `1d625874c`
+Read at `213103f0a`
 - `src/modules/auth/actions/captcha.ts:50-65`: `requestPasswordResetWithCaptcha` checks that a CAPTCHA token is present
   and calls `resetPasswordForEmail` (`:60`); no limit is consumed.
 - `src/app/auth/confirm/route.ts:69`: the route calls `verifyOtp` for every request; no limit is consumed.

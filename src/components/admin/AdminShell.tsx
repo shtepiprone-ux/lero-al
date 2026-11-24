@@ -9,7 +9,7 @@ import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { AdminHeader } from '@/components/admin/AdminHeader'
 import { MantineAppShellFoundation } from '@/design-system/mantine/patterns/MantineAppShellFoundation'
 
-export function AdminShell({ children, siteName }: { children: React.ReactNode; siteName?: string; locale?: string }) {
+export function AdminShell({ children, siteName, allowedPaths }: { children: React.ReactNode; siteName?: string; locale?: string; allowedPaths?: readonly string[] }) {
   usePresence()
   useAdminPageFreshness()
   const theme = useMantineTheme()
@@ -24,7 +24,7 @@ export function AdminShell({ children, siteName }: { children: React.ReactNode; 
       opened={opened}
       onToggle={toggle}
       headerContent={<AdminHeader opened={opened} onOpen={toggle} siteName={siteName} />}
-      navbarContent={<AdminSidebar onNavigate={close} siteName={siteName} />}
+      navbarContent={<AdminSidebar onNavigate={close} siteName={siteName} allowedPaths={allowedPaths} />}
       mainBg="gray.0"
       padding={0}
       drawerCloseLabel={t('aria_close')}

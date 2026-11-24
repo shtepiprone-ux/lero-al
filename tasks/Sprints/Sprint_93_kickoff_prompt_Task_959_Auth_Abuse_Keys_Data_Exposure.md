@@ -40,7 +40,7 @@ cabinet sends only the columns it renders; personal data is cleared on the O-R01
 
 ## Cause
 
-Read at `1d625874c`
+Read at `213103f0a`
 - Passwords (L-03): an 8-character floor plus composition rules (`src/lib/passwordRules.ts:11-15`), checked on the server only for the cabinet change (`src/modules/cabinet/actions/index.ts:657`); sign-up passes the password to Auth unchecked (`src/modules/auth/actions/captcha.ts:29-36`); recovery checks in the browser and updates from there (`src/modules/auth/components/ResetPasswordClient.tsx:29`, `src/lib/auth/browser.ts:49-50`).
 - Limits (S-02, S-11, OW-02, A-04): read-then-insert counts in the contact form, without a human check (`src/modules/contacts/actions/index.ts:46-58`), the reveal (`src/modules/listings/actions/contactGateway.ts:37` records "parallel requests pass") and the inquiry (`src/modules/listings/actions/submitListingInquiry.ts:41-42`); the view route has none (`src/app/api/listings/[slug]/view/route.ts:46-64`); five inline client-IP readers with different fallbacks (`src/app/api/listings/[slug]/view/route.ts:48`, `src/modules/auth/actions/recovery.ts:77`, `src/modules/cabinet/actions/index.ts:548`, `src/modules/contacts/actions/index.ts:94`, `src/modules/listings/actions/contactGateway.ts:42`).
 - Fingerprint (A-03): an unsalted 24-hex SHA-256 of IP and user agent (`src/app/api/listings/[slug]/view/route.ts:52-55`) under the comment "it cannot identify individuals" (`:46`).

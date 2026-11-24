@@ -16,7 +16,7 @@ import type { ListingStatus } from '@/types/database'
 // `AdminListingsTable`). GR-3a: CREATE — the legacy `Admin/AdminListingsTable` Story rendered the legacy container
 // and is deleted in this task; no canonical Story imported this surface. Tabs, search, status select and the
 // segmented visibility filter sit above the audit panel and the `AdminTable` list (cards below 768px). GR-3b/§7.3: every
-// export renders inside the real `AdminShell` and the route's `AdminPageFrame` (`width="shell"`), so the table
+// export renders inside the real `AdminShell` and the route's `AdminPageFrame` (full width, O1007-2), so the table
 // has the production card width; GR-3d: the frame is the page gutter. `FIXTURE_LISTINGS` is labelled fixture data; the filters are local state. Viewport and locale
 // come from the Storybook toolbar.
 const meta: Meta<typeof AdminListingsView> = {
@@ -70,7 +70,7 @@ function ViewDemo({
     LISTING_STATUS_CODES.map(s => [s, getListingStatusLabel(s, k => tc(k as Parameters<typeof tc>[0]))]),
   ) as Record<ListingStatus, string>
   return (
-    <AdminPageFrame width="shell">
+    <AdminPageFrame>
       <AdminListingsView
         listings={listings}
         page={page}

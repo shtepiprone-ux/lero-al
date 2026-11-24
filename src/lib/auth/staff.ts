@@ -4,8 +4,8 @@ import { cookies } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { requireViewer } from '@/lib/auth/requireViewer'
-import { hasPermission } from '@/lib/auth/permissions'
-import type { PermissionKey } from '@/lib/auth/permissionKeys'
+import { hasPermission, roleHasPermission } from '@/lib/auth/permissions'
+import type { AccessKey, AdminPageKey } from '@/lib/auth/adminPages'
 
 /**
  * The signed-in person's staff role (`admin` or `moderator`), or null for an anonymous visitor, a plain user and an agent.
@@ -33,7 +33,7 @@ export type StaffCheck =
   | { ok: true; userId: string; role: StaffRole }
   | { ok: false; reason: 'unauthenticated' | 'forbidden' }
 
-export async function checkStaff(options: { adminOnly?: boolean; permission?: PermissionKey } = {}): Promise<StaffCheck> {
+export async function checkStaff(options: { adminOnly?: boolean; permission?: AccessKey } = {}): Promise<StaffCheck> {
   const viewer = await requireViewer()
   if (!viewer.ok) return { ok: false, reason: viewer.reason === 'lookup_failed' ? 'forbidden' : 'unauthenticated' }
   const allowed = options.adminOnly ? viewer.role === 'admin' : viewer.role === 'admin' || viewer.role === 'moderator'
@@ -76,12 +76,19 @@ export async function checkActorRank(actorId: string, targetId: string): Promise
  * first read of any kind (a service-role read, an Auth admin read, a permission lookup): a guest is sent to the sign-in page, and anyone who is not an active
  * administrator or moderator (a plain user, an agent, a blocked, deactivated or deleted staff account, a failed lookup) gets `notFound()`. It never returns for them.
  * A page that is gated by a permission key checks its key AFTER this call.
+ *
+ * Task 1007 (owner decision O-P01): the access is a required argument. `{ page }` names the page key the administrator switches for moderators, `{ adminOnly: true }`
+ * closes the page to every moderator (Footer, Permissions: owner decision O1007-1), `{ landing: true }` checks the role only and is for `/admin` alone, whose page
+ * decides for a moderator without `page.dashboard` (a redirect to the first page switched on, or the no-pages state, never a dashboard read). For `page` and `adminOnly` a
+ * moderator without the key gets `notFound()`; the key is read at THIS call (never cached), and a failed read is `notFound()`. An administrator holds every key.
  */
+export type StaffPageAccess = { page: AdminPageKey } | { adminOnly: true } | { landing: true }
+
 const ADMIN_LOCALES = ['sq', 'en', 'uk', 'it'] as const
 const ADMIN_LOCALE_COOKIE = 'admin-locale'
 const ADMIN_LOCALE_DEFAULT = 'en'
 
-export async function requireStaffPage(): Promise<{ userId: string; role: StaffRole }> {
+export async function requireStaffPage(access: StaffPageAccess): Promise<{ userId: string; role: StaffRole }> {
   const viewer = await requireViewer()
   if (!viewer.ok) {
     if (viewer.reason === 'unauthenticated') {
@@ -92,5 +99,9 @@ export async function requireStaffPage(): Promise<{ userId: string; role: StaffR
     notFound()
   }
   if (viewer.role !== 'admin' && viewer.role !== 'moderator') notFound()
+  if (viewer.role === 'moderator' && !('landing' in access)) {
+    // no key and no read for an administrator-only page; for a page key the switch is read NOW, and a failed read is no permission
+    if ('adminOnly' in access || !(await roleHasPermission(viewer.role, access.page))) notFound()
+  }
   return { userId: viewer.userId, role: viewer.role }
 }

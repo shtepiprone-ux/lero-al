@@ -8,6 +8,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb } from '@/tests/fakeSupabase'
 import { PERMISSION_KEYS } from '@/lib/auth/permissionKeys'
+import { ADMIN_PAGE_KEYS } from '@/lib/auth/adminPages'
 
 let db = createFakeDb()
 let currentUser: { id: string } | null = null
@@ -114,7 +115,7 @@ describe('setModeratorPermission', () => {
 describe('getModeratorPermissions', () => {
   it('returns every permission, off unless a row says on, with who changed it', async () => {
     const res = await getModeratorPermissions()
-    expect(Object.keys(res).sort()).toEqual([...PERMISSION_KEYS].sort())
+    expect(Object.keys(res).sort()).toEqual([...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].sort())
     expect(res['listings.delete']).toEqual({ allowed: true, updated_at: '2026-10-01', updated_by_name: 'Admin A' })
     expect(res['users.create']).toEqual({ allowed: false, updated_at: null, updated_by_name: null })
   })

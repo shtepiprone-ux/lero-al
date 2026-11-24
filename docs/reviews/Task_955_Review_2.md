@@ -1,6 +1,6 @@
 # Task 955 — Review 2
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md) · OWASP record: [Task_955.json](../security/owasp/reviews/Task_955.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md) · OWASP record: [Task_955.json](../security/owasp/reviews/Task_955.json)
 
 Review 2 of Revision 1, working tree on f06c3ed5a (uncommitted, branch `task/955-error-text`) — APPROVED
 Scope: the Revision 1 diff (R1-1): `src/modules/__tests__/noDbMessage.security.test.ts`, one entry removed from `STILL_OPEN` (`favoriteActions.ts`) and

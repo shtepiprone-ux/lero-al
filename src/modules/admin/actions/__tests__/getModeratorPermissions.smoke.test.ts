@@ -15,6 +15,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { PERMISSION_KEYS } from '@/lib/auth/permissionKeys'
+import { ADMIN_PAGE_KEYS } from '@/lib/auth/adminPages'
 
 // ── Module mocks (hoisted before any imports) ─────────────────────────────────
 
@@ -74,12 +75,13 @@ describe('getModeratorPermissions', () => {
     const { getModeratorPermissions } = await import('@/modules/admin/actions/permissions')
     const result = await getModeratorPermissions()
 
-    // every key of the registry is present (the registry holds 21 keys today; the title keeps the Task 871 wording "13 keys" fixed by the Task 931 sidecar)
-    expect(Object.keys(result)).toHaveLength(PERMISSION_KEYS.length)
-    expect(PERMISSION_KEYS.every(k => k in result)).toBe(true)
+    // every key of the registry is present (the registry holds 21 action keys today; the title keeps the Task 871 wording "13 keys" fixed by the Task 931 sidecar),
+    // and since Task 1007 every page key of `ADMIN_PAGES` too
+    expect(Object.keys(result)).toHaveLength(PERMISSION_KEYS.length + ADMIN_PAGE_KEYS.length)
+    expect([...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].every(k => k in result)).toBe(true)
     expect(result['reports.delete'].allowed).toBe(true)
     expect(result['audit.clear_history'].allowed).toBe(false)
-    for (const key of PERMISSION_KEYS) {
+    for (const key of [...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS]) {
       if (key !== 'reports.delete') expect(result[key].allowed).toBe(false)
     }
     expect(mockAdminFrom).toHaveBeenCalledWith('role_permissions')
@@ -137,7 +139,7 @@ describe('getModeratorPermissions', () => {
     const { getModeratorPermissions } = await import('@/modules/admin/actions/permissions')
     const result = await getModeratorPermissions()
 
-    expect(Object.keys(result)).toHaveLength(PERMISSION_KEYS.length)
+    expect(Object.keys(result)).toHaveLength(PERMISSION_KEYS.length + ADMIN_PAGE_KEYS.length)
     expect(Object.values(result).every(v => v.allowed === false)).toBe(true)
     expect(consoleSpy).toHaveBeenCalledWith('[permissions] getModeratorPermissions read failed', { code: 'XX000' })
     consoleSpy.mockRestore()

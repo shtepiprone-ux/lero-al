@@ -9,7 +9,7 @@ export const metadata = { title: 'Новий користувач — Admin' }
 
 export default async function AdminUserNewPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.users' })
   const db = createAdminClient()
   const [
     { data: cities },
@@ -25,7 +25,7 @@ export default async function AdminUserNewPage() {
   const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
 
   return (
-    <AdminPageFrame width="form">
+    <AdminPageFrame>
       <AdminUserProfile
         user={null}
         email=""

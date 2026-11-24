@@ -24,6 +24,8 @@ import { updateUserProfile } from '@/modules/admin/actions'
 import { setModeratorPermission } from '@/modules/admin/actions/permissions'
 
 const KEY = 'users.edit'
+/** Task 1007 (AC3): a page key of "Admin panel pages", switched off and on by the administrator through the same action */
+const PAGE_KEY = 'page.users'
 /** the keys the write policies of hardening v8b ask for (Task 956): each is switched off and on by the matrix below, and put back as it was */
 const MATRIX_KEYS = ['listings.moderate', 'listings.delete', 'legal.manage', 'locations.manage', 'catalog.manage', 'reports.manage', 'reports.delete', 'settings.manage',
   'support.manage', 'users.verify', 'companies.manage', 'email_templates.manage', 'inquiries.manage'] as const
@@ -35,6 +37,7 @@ let moderator: SyntheticUser
 let administrator: SyntheticUser
 let target: SyntheticUser
 let storedSwitch: Record<string, unknown> | null
+let storedPageSwitch: Record<string, unknown> | null
 const storedKeys = new Map<string, Record<string, unknown> | null>()
 let matrixListingId = ''
 
@@ -46,6 +49,9 @@ beforeAll(async () => {
   const row = await run.admin.from('role_permissions').select('*').eq('role', 'moderator').eq('permission_key', KEY).maybeSingle()
   expect(row.error, 'the stored switch is readable').toBeNull()
   storedSwitch = row.data
+  const pageRow = await run.admin.from('role_permissions').select('*').eq('role', 'moderator').eq('permission_key', PAGE_KEY).maybeSingle()
+  expect(pageRow.error, 'the stored page switch is readable').toBeNull()
+  storedPageSwitch = pageRow.data
   for (const key of MATRIX_KEYS) {
     const stored = await run.admin.from('role_permissions').select('*').eq('role', 'moderator').eq('permission_key', key).maybeSingle()
     expect(stored.error, `the stored switch ${key} is readable`).toBeNull()
@@ -59,6 +65,10 @@ afterAll(async () => {
     ? await run.admin.from('role_permissions').upsert(storedSwitch, { onConflict: 'role,permission_key' })
     : await run.admin.from('role_permissions').delete().eq('role', 'moderator').eq('permission_key', KEY)
   expect(restored.error, 'the stored switch is restored').toBeNull()
+  const pageRestored = storedPageSwitch
+    ? await run.admin.from('role_permissions').upsert(storedPageSwitch, { onConflict: 'role,permission_key' })
+    : await run.admin.from('role_permissions').delete().eq('role', 'moderator').eq('permission_key', PAGE_KEY)
+  expect(pageRestored.error, 'the stored page switch is restored').toBeNull()
   for (const [key, stored] of storedKeys) {
     const back = stored
       ? await run.admin.from('role_permissions').upsert(stored, { onConflict: 'role,permission_key' })
@@ -120,6 +130,39 @@ describe('moderatorKeys', () => {
       { permission_key: KEY, old_allowed: true, new_allowed: false, actor_user_id: administrator.id },
       { permission_key: KEY, old_allowed: false, new_allowed: true, actor_user_id: administrator.id },
     ])
+  })
+
+  // Task 1007 AC3: the switches of "Admin panel pages" are the administrator's, in the same store and with the same audit row
+  it('[SEC-1007-PAGE-SWITCH] the administrator switches a page key off and on with an audit row each; a moderator is refused; an unknown key is validation', async () => {
+    const stored = async () => (await run.admin.from('role_permissions').select('allowed').eq('role', 'moderator').eq('permission_key', PAGE_KEY).maybeSingle()).data?.allowed
+    const events = async () => (await run.admin.from('role_permission_events').select('old_allowed, new_allowed, permission_key, actor_user_id').eq('actor_user_id', administrator.id).eq('permission_key', PAGE_KEY).order('created_at', { ascending: true })).data ?? []
+    const seeded = await run.admin.from('role_permissions').upsert({ role: 'moderator', permission_key: PAGE_KEY, allowed: true }, { onConflict: 'role,permission_key' })
+    expect(seeded.error, `the page switch ${PAGE_KEY} is set on for this case`).toBeNull()
+
+    acting.client = administrator.client
+    expect(await setModeratorPermission(PAGE_KEY, false), 'the administrator switches the page off').toEqual({})
+    expect(await stored(), 'false is stored').toBe(false)
+    expect(await setModeratorPermission(PAGE_KEY, true), 'the administrator switches the page on again').toEqual({})
+    expect(await stored(), 'true is stored').toBe(true)
+    expect(await events(), 'two audit rows, each with its old and new value and the administrator as actor').toEqual([
+      { permission_key: PAGE_KEY, old_allowed: true, new_allowed: false, actor_user_id: administrator.id },
+      { permission_key: PAGE_KEY, old_allowed: false, new_allowed: true, actor_user_id: administrator.id },
+    ])
+
+    // a moderator cannot switch a page: refused, nothing stored, no new audit row
+    acting.client = moderator.client
+    expect(await setModeratorPermission(PAGE_KEY, false), 'a moderator is refused').toEqual({ error: 'forbidden' })
+    expect(await stored(), 'the stored value is unchanged').toBe(true)
+    expect(await events(), 'no audit row was added').toHaveLength(2)
+
+    // an unknown key and a value that is not a boolean are validation; nothing is written
+    acting.client = administrator.client
+    expect(await setModeratorPermission('page.not_a_page' as never, true)).toEqual({ error: 'validation' })
+    expect(await setModeratorPermission(PAGE_KEY, 'yes' as never)).toEqual({ error: 'validation' })
+    const stray = await run.admin.from('role_permissions').select('*', { count: 'exact', head: true }).eq('permission_key', 'page.not_a_page')
+    expect(stray.error).toBeNull()
+    expect(stray.count, 'the unknown key was not stored').toBe(0)
+    expect(await stored(), 'the value is unchanged by the refused write').toBe(true)
   })
 })
 

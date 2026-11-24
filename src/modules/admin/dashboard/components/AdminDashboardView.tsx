@@ -296,7 +296,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
   const showLocationRequests = !data.locationRequests.ok || data.locationRequests.data.count > 0
 
   return (
-    <MantineDashboardGrid>
+    <MantineDashboardGrid framed={false}>
       <MantineDashboardHeader
         title={t('title')}
         subtitle={t('subtitle')}

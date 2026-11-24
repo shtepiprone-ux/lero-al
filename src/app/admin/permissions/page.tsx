@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { requireStaffPage } from '@/lib/auth/staff'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
@@ -11,9 +10,8 @@ export const metadata = { title: 'Permissions — Admin' }
 
 export default async function AdminPermissionsPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  const { role } = await requireStaffPage()
-  // Task 923 R75 (e): only an administrator opens the permissions screen and reads the switches
-  if (role !== 'admin') notFound()
+  // Task 923 R75 (e): only an administrator opens the permissions screen and reads the switches (Task 1007: `adminOnly`, a moderator gets notFound() from the guard)
+  await requireStaffPage({ adminOnly: true })
   await getAdminLocale()
   const t = await getTranslations('admin.permissions')
   const [permissions, events] = await Promise.all([
@@ -21,7 +19,7 @@ export default async function AdminPermissionsPage() {
     getPermissionEvents(),
   ])
   return (
-    <AdminPageFrame width="panel" gutter="xl" centered={false}>
+    <AdminPageFrame>
       <AdminPageHeader title={t('title')} subtitle={t('description')} />
       <AdminPermissionsManager permissions={permissions} events={events} />
     </AdminPageFrame>

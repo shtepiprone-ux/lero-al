@@ -44,7 +44,7 @@ function ViewDemo({ initialFilters, tickets = ALL_TICKETS }: { initialFilters: S
     resolved: tickets.filter(t => t.status === 'resolved' || t.status === 'closed').length,
   }
   return (
-    <AdminPageFrame width="shell">
+    <AdminPageFrame>
       <AdminSupportView
         tickets={tickets.filter(t => matchesSupportFilters(t, filters))}
         counts={counts}

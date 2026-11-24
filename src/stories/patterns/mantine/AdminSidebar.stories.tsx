@@ -55,3 +55,9 @@ export const ContentActive: Story = {
 export const SystemActive: Story = {
   parameters: { nextjs: { navigation: { pathname: '/admin/settings' } } },
 };
+
+// Task 1007 — a moderator's sidebar: only the pages the administrator switched on (the layout passes their first paths). Permissions and Footer are never shown to a moderator.
+export const ModeratorPages: Story = {
+  args: { allowedPaths: ['/admin', '/admin/listings', '/admin/inquiries/support', '/admin/reports', '/admin/pages'] },
+  parameters: { nextjs: { navigation: { pathname: '/admin/listings' } } },
+};

@@ -16,9 +16,14 @@ interface AdminSidebarProps {
   /** Called after a nav item is activated (Task 852 — closes the AppShell drawer below `lg`). */
   onNavigate?: () => void
   siteName?: string
+  /**
+   * Task 1007: the addresses of the items to show (a moderator: the pages the administrator switched on; an administrator: every item). Absent means every item, as the
+   * Stories render it; the admin layout always passes the list, `[]` after a failed key read. Display only: every page and loader checks its own key.
+   */
+  allowedPaths?: readonly string[]
 }
 
-export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarProps) {
+export function AdminSidebar({ onNavigate, siteName = 'Lero.al', allowedPaths }: AdminSidebarProps) {
   const t = useTranslations('admin.sidebar')
   const pathname = usePathname()
   const router = useRouter()
@@ -64,6 +69,12 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarP
     },
   ]
 
+  // an item the page keys do not allow is not shown, and a group left with no item is hidden with its heading (owner decision O1007-3); the order and every other item stay as they are
+  const visibleGroups = GROUPS.map(group => ({
+    ...group,
+    items: group.items.filter(item => !allowedPaths || allowedPaths.includes(item.href)),
+  })).filter(group => group.items.length > 0)
+
   function isActive(href: string) {
     return href === '/admin' ? pathname === '/admin' : pathname.startsWith(href)
   }
@@ -104,7 +115,7 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarP
           </Group>
 
           <Stack gap="md">
-            {GROUPS.map(group => (
+            {visibleGroups.map(group => (
               <Stack key={group.label} gap="tight">
                 <Text size="xs" fw={600} c="gray.5" tt="uppercase" px="xs">
                   {group.label}

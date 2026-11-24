@@ -3,7 +3,11 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { revalidatePath } from 'next/cache'
-import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
+import { PERMISSION_KEYS } from '@/lib/auth/permissionKeys'
+import { ADMIN_PAGE_KEYS, type AccessKey } from '@/lib/auth/adminPages'
+
+// Task 1007: the switches are the action keys AND the page keys of "Admin panel pages", all in the same `role_permissions` store
+const ACCESS_KEYS: readonly AccessKey[] = [...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS]
 
 // ── Shared types ──────────────────────────────────────────────────────────────
 
@@ -38,7 +42,7 @@ async function getAdminUserId(): Promise<string | null> {
 
 // ── Public actions ────────────────────────────────────────────────────────────
 
-export async function getModeratorPermissions(): Promise<Record<PermissionKey, PermissionData>> {
+export async function getModeratorPermissions(): Promise<Record<AccessKey, PermissionData>> {
   const viewer = await requireViewer()
   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? 'forbidden' : 'unauthenticated')
   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only; a moderator is refused (their own checks go through `roleHasPermission` on the server)
@@ -56,8 +60,8 @@ export async function getModeratorPermissions(): Promise<Record<PermissionKey, P
     .eq('role', 'moderator')
 
   const result = Object.fromEntries(
-    PERMISSION_KEYS.map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
-  ) as Record<PermissionKey, PermissionData>
+    ACCESS_KEYS.map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
+  ) as Record<AccessKey, PermissionData>
 
   if (rowsError) {
     console.error('[permissions] getModeratorPermissions read failed', { code: rowsError.code })
@@ -81,8 +85,8 @@ export async function getModeratorPermissions(): Promise<Record<PermissionKey, P
   }
 
   for (const row of rows ?? []) {
-    if (PERMISSION_KEYS.includes(row.permission_key as PermissionKey)) {
-      const key = row.permission_key as PermissionKey
+    if (ACCESS_KEYS.includes(row.permission_key as AccessKey)) {
+      const key = row.permission_key as AccessKey
       result[key] = {
         allowed: row.allowed,
         updated_at: row.updated_at ?? null,
@@ -142,15 +146,15 @@ export async function getPermissionEvents(limit = 20): Promise<PermissionEvent[]
 }
 
 export async function setModeratorPermission(
-  key: PermissionKey,
+  key: AccessKey,
   value: boolean,
 ): Promise<SetPermissionResult> {
   try {
     const adminUserId = await getAdminUserId()
     if (!adminUserId) return { error: 'forbidden' }
 
-    // The key and the value are types only; at runtime the caller can send any string (Task 923 Revision 7). Only a known permission, switched to a real boolean.
-    if (!PERMISSION_KEYS.includes(key) || typeof value !== 'boolean') return { error: 'validation' }
+    // The key and the value are types only; at runtime the caller can send any string (Task 923 Revision 7). Only a known permission or page key, switched to a real boolean.
+    if (!ACCESS_KEYS.includes(key) || typeof value !== 'boolean') return { error: 'validation' }
 
     const db = createAdminClient()
 

@@ -27,7 +27,7 @@ type Story = StoryObj<typeof AdminUsersTable>
 
 export const Default: Story = {
   render: () => (
-    <AdminPageFrame width="shell">
+    <AdminPageFrame>
       <AdminUsersTable users={FIXTURE_USERS} total={FIXTURE_USERS.length} page={1} perPage={25} activeRole="" activeStatus="" searchQuery="Marco" activeTab="all" verifiedAgents={[]} />
     </AdminPageFrame>
   ),

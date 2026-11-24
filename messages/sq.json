@@ -1809,6 +1809,8 @@
       "error_transient": "Gabim i përkohshëm. Provoni sërish.",
       "admin_section_title": "Administrator",
       "admin_full_access": "Akses i plotë (jo i konfigurueshëm)",
+      "pages_section_title": "Faqet e panelit të administrimit",
+      "pages_section_description": "Zgjidhni cilat faqe të administrimit mund t'i hapin moderatorët. Një faqe e çaktivizuar fshihet nga menyja anësore dhe nuk mund të hapet. Footer dhe Lejet janë gjithmonë vetëm për administratorët.",
       "column_description": "Përshkrimi",
       "column_last_updated": "Ndryshuar më",
       "column_updated_by": "Nga",
@@ -1865,6 +1867,9 @@
         "companies_manage": "Mund të krijojë, redaktojë ose fshijë kompani dhe logot e tyre",
         "listings_moderate": "Mund t'i miratojë njoftimet, të ndryshojë statusin e tyre dhe t'i redaktojë"
       }
+    },
+    "pages_access": {
+      "none": "Asnjë faqe e administrimit nuk është aktivizuar për llogarinë tuaj. Kërkojini një administratori t'ju japë akses."
     },
     "common": {
       "status_control": {

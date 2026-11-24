@@ -53,7 +53,8 @@ import {
 } from '../index'
 
 // the keys the acting moderator holds: since Task 923 R75 every action that admits a moderator names its key (`listings.moderate`, `support.manage`), read at each check
-const PERMISSIONS = ['listings.set_premium', 'listings.delete', 'locations.manage', 'legal.manage', 'listings.moderate', 'support.manage']
+// (Task 1007: the user picker also needs the support page, `page.support`)
+const PERMISSIONS = ['listings.set_premium', 'listings.delete', 'locations.manage', 'legal.manage', 'listings.moderate', 'support.manage', 'page.support']
 const body = { sq: { title: 'Kushtet', body: '<p>Tekst</p>' } }
 const UUID = '11111111-1111-4111-8111-111111111111'
 const DELETED = '22222222-2222-4222-8222-222222222222'

@@ -114,7 +114,7 @@ function ProfileDemo({
   const [createEmail, setCreateEmail] = useState('')
   const avatarInputRef = useRef<HTMLInputElement>(null)
   return (
-    <AdminPageFrame width={mode === 'create' ? 'form' : 'page'}>
+    <AdminPageFrame>
       <AdminUserProfileView
         mode={mode}
         user={user}

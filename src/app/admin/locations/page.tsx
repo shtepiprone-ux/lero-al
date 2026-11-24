@@ -3,6 +3,7 @@ import { requireStaffPage } from '@/lib/auth/staff'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminLocationsManager, type Location } from '@/components/admin/AdminLocationsManager'
 
 export const metadata = { title: 'Населені пункти — Admin' }
@@ -11,7 +12,7 @@ export default async function AdminLocationsPage({
   searchParams,
 }: { searchParams: Promise<Record<string, string | undefined>> }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.locations' })
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const sp = await searchParams
@@ -34,13 +35,13 @@ export default async function AdminLocationsPage({
     .order('name_al')
 
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <AdminPageFrame>
       <AdminPageHeader title={t('locations_title')} subtitle={t('locations_subtitle', { count: count ?? 0 })} />
       <AdminLocationsManager
         locations={(locations ?? []) as Location[]}
         parents={(parents ?? []) as Location[]}
         activeType={type}
       />
-    </div>
+    </AdminPageFrame>
   )
 }

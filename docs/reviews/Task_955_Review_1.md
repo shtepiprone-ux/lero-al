@@ -1,6 +1,6 @@
 # Task 955 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md) · OWASP record: [Task_955.json](../security/owasp/reviews/Task_955.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md) · OWASP record: [Task_955.json](../security/owasp/reviews/Task_955.json)
 
 Review 1 of the working tree on 5355ed1c8 (uncommitted, branch `task/955-error-text`) — APPROVED
 Scope: `src/modules/listings/actions/favoriteActions.ts`, `src/modules/auth/actions/captcha.ts`, `src/modules/auth/components/AuthSheet.tsx` (`:456`) and the

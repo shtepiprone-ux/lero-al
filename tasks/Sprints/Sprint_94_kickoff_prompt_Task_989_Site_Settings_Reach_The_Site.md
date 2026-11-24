@@ -20,7 +20,7 @@ footer tab and no field that repeats the Footer page; no setting the admin saves
 
 ## Cause
 
-Read at `1d625874c`
+Read at `213103f0a`
 - Two editors for the footer: the settings Footer tab saves social links and two "footer text" fields (`src/components/admin/AdminSettings.tsx:19`), and the General tab a tagline, an e-mail and a phone (`:17`); the Footer page saves per language a brand title, a tagline and social links (`src/components/admin/AdminFooterManager.tsx:170-175`, `:207-218`). The site reads only the Footer page's tagline and social links (`src/components/layout/Footer.tsx:25`, `:38`) and none of the settings fields (`grep -rln "contact_phone\|social_facebook\|about_al" src --include=*.tsx --include=*.ts` → the settings page, the form, the action file, tests, one Story fixture).
 - Production, read 2026-11-19: the `sq` footer row links to the account's Facebook profile and to `https://instagram.com`; the `en`, `uk` and `it` rows link to `https://facebook.com` and `https://instagram.com`; the settings hold the account's Facebook and Instagram addresses; `about_al` and `about_uk` hold the support and sales addresses (no sales field exists); the General tagline equals the `sq` footer text; `contact_phone` is empty.
 - The Footer page's brand title is never read: the footer brand is `site_name` (`src/components/layout/Footer.tsx:15`, `:20-22`). `contact_email` and `contact_phone` take any text (`src/modules/admin/actions/index.ts:294-300`).

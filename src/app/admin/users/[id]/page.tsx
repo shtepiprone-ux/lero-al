@@ -12,7 +12,7 @@ import { userLocation } from '@/modules/admin/lib/userLocation'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.users' })
   const { id } = await params
   const db = createAdminClient()
   const { data } = await db.from('users').select('name, last_name').eq('id', id).single()
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function AdminUserProfilePage({ params }: { params: Promise<{ id: string }> }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.users' })
   const { id } = await params
   const db = createAdminClient()
 
@@ -93,7 +93,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
     : null
 
   return (
-    <AdminPageFrame width="page">
+    <AdminPageFrame>
       <AdminUserProfile
         user={{ ...user, location: userLocation(user.location_id, cities ?? [], regions ?? []) }}
         email={email}

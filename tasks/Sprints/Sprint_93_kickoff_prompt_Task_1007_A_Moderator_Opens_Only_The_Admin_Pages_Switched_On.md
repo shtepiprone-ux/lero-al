@@ -2,7 +2,14 @@
 
 Sprint 93. Priority P1. Owner decision O-P01 (2026-11-19, translated): "On the 'Permissions' page a setting must be
 added: the list of pages with a switcher that turns the moderator's access to the page on or off (a separate section
-'Admin panel pages')." Filed from Task 959 (O-P01 was its open question) and carries audit finding P-01
+'Admin panel pages')." Owner decision O1007-1 (2026-11-24, translated: "administrator only"): Footer and
+Permissions are administrator-only pages: a moderator gets 404 and neither item in the sidebar (on `main` a moderator
+sees both items, opens Footer and gets its loader's refusal, `src/app/admin/footer/page.tsx:12`,
+`src/modules/admin/actions/footer.ts:16`, and gets 404 on Permissions). Owner decision O1007-2 (2026-11-24, translated):
+"All pages in the admin must have the canonical width, because now every page has its own width, which is wrong. The
+width must be the full screen (we have breakpoints for this)"; in this task, the dashboard included; the listing
+preview: "do not touch". Owner decision O1007-3 (2026-11-24): a sidebar group left with no page for a moderator is
+hidden with its heading. Filed from Task 959 (O-P01 was its open question) and carries audit finding P-01
 (`docs/security/audit-2026-11-06/findings.md`). Implementer: Sonnet. Reviewer: Opus (also the SQL round trip). The
 owner applies the SQL before the merge. Human owner of the change: the owner.
 
@@ -11,35 +18,97 @@ owner applies the SQL before the merge. Human owner of the change: the owner.
 After the task: "Permissions" has a section "Admin panel pages" with one switch per admin page a moderator can be given;
 a moderator opens, sees in the sidebar and reads through the page's server functions only the pages switched on; an
 administrator keeps every page; the administrator-only pages (Permissions, Footer, and the Contacts page of Task 1006)
-stay administrator-only and are not in the list; the release keeps today's access until the administrator changes a
+are administrator-only (O1007-1) and are not in the list; the release keeps today's access until the administrator changes a
 switch.
 
 ## Cause
 
-Read at `1d625874c`
+Read at `03c9a9773`
 - The page guard takes no key: `requireStaffPage()` admits every active moderator (`src/lib/auth/staff.ts:84`, `:94`); `grep -rl "requireStaffPage()" src/app/admin | wc -l` → `22`.
 - The switches exist only for actions: `src/lib/auth/permissionKeys.ts:1-24` lists action keys, and the Permissions screen offers only those (`src/components/admin/AdminPermissionsManager.tsx:12`, `:46`; `src/modules/admin/actions/permissions.ts:153`).
+- Every key check takes only an action key: `roleHasPermission`, `hasPermission`, `assertPermission` (`src/lib/auth/permissions.ts:8`, `:33`, `:41`), `checkStaff({ permission })` (`src/lib/auth/staff.ts:39`) and `resolveAdminActor` / `assertAdminAccess` (`src/modules/admin/actions/index.ts:33`, `:41`) are typed `PermissionKey`, and the Permissions screen holds `Record<PermissionKey, PermissionData>` (`src/modules/admin/actions/permissions.ts:41`, `src/components/admin/AdminPermissionsManager.tsx:15`, `src/components/admin/AdminPermissionsView.tsx:13`).
 - The sidebar lists every item for every staff role (`src/components/admin/AdminSidebar.tsx:27`), Permissions included, which answers 404 to a moderator (`src/app/admin/permissions/page.tsx:16`).
 - Two page loaders a browser can call read under a write key: `getAllCurrenciesAdmin` and `getAllPropertyTypesAdmin` check `catalog.manage` (`src/modules/admin/actions/currencies.ts:20`, `src/modules/admin/actions/propertyTypes.ts:14`); `searchUsersForPicker` checks `support.manage` (`src/modules/admin/actions/index.ts:826`); the Footer loader is administrator-only (`src/modules/admin/actions/footer.ts:16`).
+- Each admin page has its own width (O1007-2): `AdminPageFrame` caps a page by one of five widths, 672px to 1792px (`src/components/admin/AdminPageFrame.tsx:11-17`, `:38`; `src/design-system/mantine/theme.ts:879-883`), and eleven pages pass four of them (`grep -rnoE "<AdminPageFrame[^>]*>" src/app/admin` → `shell` ×8, `page`, `form`, `panel` with `gutter="xl"`); seven pages hand-write `max-w-3xl` to `max-w-5xl` (Scope frame line); the dashboard caps itself at 1440px with a 16px/24px gutter (`src/design-system/mantine/patterns/MantineDashboardGrid.tsx:58`).
 - The store already fits: `role_permissions.permission_key` is text with no list check (`supabase/catalog.json`: only `role_permissions_role_check`), and a key with no row is off (`src/lib/auth/permissions.ts:26`).
 
-Fix: page keys in the same store with their own section and switches; `requireStaffPage` requires a page key or "administrator only"; the sidebar, the landing page and the page loaders follow the same keys; SQL seeds today's access.
+Fix: page keys in the same store with their own section and switches; `requireStaffPage` requires a page key or "administrator only"; the sidebar, the landing page and the page loaders follow the same keys; SQL seeds today's access; every admin page but the preview renders the one `AdminPageFrame`, full width with the breakpoint gutter (O1007-2).
 
 ## Scope
 
-- `src/lib/auth/adminPages.ts` (new): `ADMIN_PAGES` in sidebar order — `page.dashboard` (`/admin`), `page.listings` (`/admin/listings`, `/admin/listings/[id]/preview`), `page.users` (`/admin/users`, `/admin/users/[id]`, `/admin/users/new`), `page.support`, `page.inquiries_support` (also the `/admin/inquiries` redirect), `page.inquiries_sales`, `page.reports`, `page.locations`, `page.popular_locations`, `page.companies`, `page.pages` (also the `/admin/legal` redirect), `page.property_types`, `page.currency`, `page.email_templates`, `page.settings` — each with its sidebar label key and paths; `AdminPageKey`.
-- `src/lib/auth/staff.ts`: `requireStaffPage(access: { page: AdminPageKey } | { adminOnly: true })` (required argument): after the role check, a moderator without the page key, or for an administrator-only page, gets `notFound()`; the key is read at this call (`roleHasPermission`, never cached); a failed read is `notFound()`. Every page under `src/app/admin` passes its key; Permissions and Footer pass `adminOnly` (Task 1006's page too, whichever merges second).
-- Legacy page frames leave with the guard change (owner rule 2026-11-19, `.claude/rules/shared/canonical-component-reuse.md`): the pages that still wrap
-  themselves in `<div className="p-6 lg:p-8 ...">` — `src/app/admin/companies/page.tsx:44`, `src/app/admin/email-templates/page.tsx:30`
-  (unless Task 988 merged first), `src/app/admin/footer/page.tsx:18`, `src/app/admin/locations/page.tsx:37`,
-  `src/app/admin/popular-locations/page.tsx:33`, `src/app/admin/property-types/page.tsx:24`, `src/app/admin/settings/page.tsx:60`
-  (unless Task 989 did it) — render `AdminPageFrame` as `src/app/admin/currency/page.tsx:20` does, with the same width.
-- `src/app/admin/page.tsx`: a moderator without `page.dashboard` is redirected to the first page switched on in `ADMIN_PAGES` order; with none, the canonical empty state (`MantineEmptyLoadingErrorState`, `admin.pages_access.none`) and sign-out.
-- `src/app/admin/layout.tsx` reads the moderator's page keys once and passes the allowed paths through `AdminShell` to `AdminSidebar`, which shows only those items (an administrator: every item; a failed read: none); Permissions and Footer are never shown to a moderator.
-- Loaders: `getAllCurrenciesAdmin` and `getAllPropertyTypesAdmin` check their page key (the writes keep `catalog.manage`); `searchUsersForPicker` needs `page.support` and `support.manage`.
-- Permissions: `permissions.ts` reads and switches `PERMISSION_KEYS` and the page keys (an unknown key is still `validation`); `AdminPermissionsView` gains the section "Admin panel pages" (`MantineFormSection`, one `Switch` per page, its sidebar label, its path as the description); the audit log names a page key by its label; the count shows actions and pages separately.
+- `src/lib/auth/adminPages.ts` (new): `ADMIN_PAGES` in sidebar order — `page.dashboard` (`/admin`), `page.listings` (`/admin/listings`, `/admin/listings/[id]/preview`), `page.users` (`/admin/users`, `/admin/users/[id]`, `/admin/users/new`), `page.support`, `page.inquiries_support` (also the `/admin/inquiries` redirect), `page.inquiries_sales`, `page.reports`, `page.locations`, `page.popular_locations`, `page.companies`, `page.pages` (also the `/admin/legal` redirect), `page.property_types`, `page.currency`, `page.email_templates`, `page.settings` — each with its sidebar label key and paths; `ADMIN_PAGE_KEYS`, `AdminPageKey`, and `AccessKey = PermissionKey | AdminPageKey` (a type import from `permissionKeys.ts`, which stays unchanged).
+- `src/lib/auth/permissions.ts`: `roleHasPermission`, `hasPermission`, `assertPermission` (`:8`, `:33`, `:41`) take `AccessKey`; the bodies are unchanged. New `allowedAdminPageKeys(role): Promise<AdminPageKey[]>`, the one read the layout and the landing use: an administrator → every key of `ADMIN_PAGES`; a moderator → one `role_permissions` select (`role = 'moderator'`, `allowed = true`, `permission_key` in the page keys), in `ADMIN_PAGES` order; any other role or a failed read → `[]`.
+- `src/lib/auth/staff.ts`: `checkStaff` takes `permission?: AccessKey` (`:39`). `requireStaffPage(access: { page: AdminPageKey } | { adminOnly: true } | { landing: true })` (required argument): after the role check, a moderator without the page key, or for an administrator-only page, gets `notFound()`; the key is read at this call (`roleHasPermission`, never cached); a failed read is `notFound()`; `landing` checks the role only and returns it. Every page under `src/app/admin` passes its key; Permissions and Footer pass `adminOnly` (Task 1006's page too, whichever merges second); only `src/app/admin/page.tsx` passes `landing`.
+- One canonical page frame (O1007-2): `src/components/admin/AdminPageFrame.tsx` (`:9-43`) loses `width`, `gutter`,
+  `centered` and `maw`: full width, the gutter `{ base: 'xl', lg: '2xl' }` (24px, 32px from `lg` 1024px:
+  `src/design-system/mantine/theme.ts:679`, `:684`, `:651`). The five `adminPage*MaxWidth` tokens leave
+  `theme.ts` (`:284-298`, `:879-883`; no other reader, `grep -rn "adminPage" src`).
+  - The eleven framed pages render `<AdminPageFrame>` with no prop: `src/app/admin/currency/page.tsx:20`,
+    `inquiries/sales/page.tsx:47`, `inquiries/support/page.tsx:47`, `listings/page.tsx:120`, `pages/page.tsx:23`,
+    `permissions/page.tsx:24`, `reports/page.tsx:42`, `support/page.tsx:49`, `users/new/page.tsx:28`,
+    `users/page.tsx:87`, `users/[id]/page.tsx:96` (all under `src/app/admin/`).
+  - The legacy frames leave with the guard change (owner rule 2026-11-19, `.claude/rules/shared/canonical-component-reuse.md:24`):
+    `<div className="p-6 lg:p-8 ...">` becomes `<AdminPageFrame>` in `src/app/admin/companies/page.tsx:44`,
+    `src/app/admin/email-templates/page.tsx:30` (unless Task 988 merged first), `src/app/admin/footer/page.tsx:18`,
+    `src/app/admin/locations/page.tsx:37`, `src/app/admin/popular-locations/page.tsx:33`,
+    `src/app/admin/property-types/page.tsx:24`, `src/app/admin/settings/page.tsx:60` (unless Task 989 did it).
+  - The dashboard: `src/app/admin/page.tsx` renders `<AdminPageFrame>` around `AdminDashboardView`;
+    `src/design-system/mantine/patterns/MantineDashboardGrid.tsx` (`:8-10`, `:55-58`) gains `framed` (default `true`:
+    the box as on `main`); `framed={false}` drops its `maw`, `mx` and `p`, and
+    `src/modules/admin/dashboard/components/AdminDashboardView.tsx:298` passes it.
+  - Not changed (owner, 2026-11-24, "do not touch"): `src/app/admin/listings/[id]/preview/page.tsx` keeps
+    `ListingDetailView` without a frame.
+  - Stories render the same frame (GR-3b): `AdminPageFrame.stories.tsx` shows the one frame; the `width` prop leaves
+    `AdminCurrenciesView`, `AdminInquiriesView`, `AdminListingsView`, `AdminPagesView`, `AdminPermissionsView`,
+    `AdminReportsView`, `AdminSupportView`, `AdminUserProfileView`, `AdminUsersTable`, `AdminUsersTableContainer`
+    (`src/stories/patterns/mantine/*.stories.tsx`); `AdminDashboardView.stories.tsx` renders inside `AdminPageFrame`
+    with `framed={false}`.
+- `src/app/admin/page.tsx`: the first await is `requireStaffPage({ landing: true })`; then an administrator, or a moderator for whom `roleHasPermission(role, 'page.dashboard')` is true, gets the dashboard reads as today; any other moderator reads `allowedAdminPageKeys(role)` and is redirected to the first path of the first key other than `page.dashboard` (never to `/admin` itself, so a read that changes between the two calls cannot loop); with none (a failed read included), the canonical empty state (`MantineEmptyLoadingErrorState`, `admin.pages_access.none`) in the frame. No dashboard read runs before the key check. Sign-out stays the sidebar's (`src/components/admin/AdminSidebar.tsx:143-150`, shown with no items); no new button.
+- `src/app/admin/layout.tsx` reads the moderator's page keys once and passes the allowed paths to `src/components/admin/AdminShell.tsx` (a new prop, handed to `AdminSidebar` at `:27`), and `src/components/admin/AdminSidebar.tsx` (`AdminSidebarProps` `:15`, the items `:27-66`) shows only those items (an administrator: every item; a failed read: none); a group with no item left is hidden with its heading (O1007-3); Permissions and Footer are never shown to a moderator. The layout reads `allowedAdminPageKeys` and always passes the list (`[]` on a failed read); the prop is optional in `AdminShell` and `AdminSidebar`, and absent means every item, so the Stories and `src/stories/_StoryAdminShell.tsx` stay as on `main` (display only: every page and loader checks its own key).
+- Loaders: `src/modules/admin/actions/currencies.ts` `getAllCurrenciesAdmin` (`:41`) and `src/modules/admin/actions/propertyTypes.ts` `getAllPropertyTypesAdmin` (`:207`) check `checkStaff({ permission: 'page.currency' })` and `'page.property_types'` instead of `assertAdmin()` (the writes keep `assertAdmin()` with `catalog.manage`); `src/modules/admin/actions/index.ts`: `resolveAdminActor` and `assertAdminAccess` take `AccessKey` (`:33`, `:41`), and `searchUsersForPicker` calls `assertAdminAccess('page.support')` before `assertAdminAccess('support.manage')` (`:826`).
+- Permissions: `src/modules/admin/actions/permissions.ts` `getModeratorPermissions` (`:41-60`, `:84-85`) and `setModeratorPermission` (`:145`, `:153`) read and switch `PERMISSION_KEYS` and `ADMIN_PAGE_KEYS` as `AccessKey` (an unknown key is still `validation`); `src/components/admin/AdminPermissionsManager.tsx` (`:15`, `:23`, `:25`, `:46`) and `src/components/admin/AdminPermissionsView.tsx` (`:13`, `:16-19`) take `Record<AccessKey, PermissionData>` and `AccessKey`, and the manager counts actions over `PERMISSION_KEYS` and pages over `ADMIN_PAGE_KEYS`, passed separately; `AdminPermissionsView` gains the section "Admin panel pages" (`MantineFormSection`, one `Switch` per page, its sidebar label, its path as the description); the audit log names a page key by its label; the count shows actions and pages separately.
 - SQL `supabase/sql_migrations/task1007/` (`task1007-preflight.sql`, `task1007.sql`, `task1007-rollback.sql`): one row `('moderator', '<page key>', true)` per page key, `on conflict do nothing` (today every listed page is open to moderators); the rollback deletes the `page.%` rows; the preflight lists existing `page.%` rows and the moderator count.
-- Messages in four locales (`admin.permissions.pages_section_title`, `pages_section_description`, `admin.pages_access.none`). Story `src/stories/patterns/mantine/AdminPermissionsView.stories.tsx` gains `WithPagesSection`. Dependencies: none.
+- Messages in four locales (`admin.permissions.pages_section_title`, `pages_section_description`, `admin.pages_access.none`). Story `src/stories/patterns/mantine/AdminPermissionsView.stories.tsx` gains `WithPagesSection`; `src/stories/patterns/mantine/AdminSidebar.stories.tsx` gains `ModeratorPages` (a moderator's filtered items).
+- `scripts/mantine-migration-scope.json`: the seven legacy pages of the frame line enrolled, no baseline entry (checklist U2).
+- Existing tests the Fix breaks, each kept as strict (A9): `src/lib/auth/__tests__/moderatorKeys.security.test.ts:157` (the `searchUsersForPicker` case needs `page.support` and `support.manage`: refused without either, passes with both); `src/modules/admin/actions/__tests__/adminOperations.security.test.ts:56` (`PERMISSIONS` gains `page.support`: its moderator searches); `src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:78-79`, `:140` (the result holds `PERMISSION_KEYS` and `ADMIN_PAGE_KEYS`, every key present); `src/lib/auth/__tests__/staffPage.security.test.ts:122`, `:124` (AC2).
+- Revision 1 (Review 1; nothing else changes): R1-1 (F1) `src/modules/admin/actions/__tests__/permissions.security.test.ts:117` (an existing test the Fix
+  breaks, missed by the line above) expects `[...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].sort()`, `ADMIN_PAGE_KEYS` imported from `@/lib/auth/adminPages`;
+  nothing else in the file changes.
+- Revision 2 (Review 3, the red CI of pull request #70; nothing else changes): R2-1 (F2) a test renders `AdminShell` with `allowedPaths` and shows
+  only the allowed sidebar items, so `src/components/admin/AdminShell.tsx:27` runs in a test (`changed-lines-coverage.mjs`); R2-2 (F3)
+  `scripts/check-signed-in-pages.mjs` (the Click-shield walk; its route table `:64-85` expects the page for a moderator everywhere): `/admin/footer`
+  takes `ADMIN_ONLY` (O1007-1), and a moderator's expected result on every row of a page key follows that key's live switch, read with the service
+  role just before the moderator visits the row (on: as today; off: `NOT_FOUND`; `/admin`: the landing of `src/app/admin/page.tsx:29-44`), with
+  its cases in `scripts/__tests__/check-signed-in-pages.test.ts`.
+- Revision 3 (Review 5, CI run 45379769180; nothing else changes): R3-1 (F5) `scripts/mantine-migration-scope.json` loses the seven `page.tsx` entries
+  this task added (the list of `main`, which enrols no `page.tsx`; the migrated element of those pages is the enrolled `AdminPageFrame`, `:125`); this
+  replaces the scope-file line above and the enrolment of U2. R3-2 (F6) `src/stories/patterns/mantine/AdminPageFrame.stories.tsx` `Default` renders
+  its placeholder content with no style prop on any wrapper (`scripts/check-ui-contract.mjs` rule `story-wrapper-presentation`: canonical components
+  with their public state only).
+- Dependencies: none.
+- Out of scope: the content, loaders and controls of every admin page; the action keys and their writes; Task 1006's
+  Contacts page (it takes `adminOnly` in whichever task merges second); Tasks 988 and 989.
+- Kept as on `main` (checklist A2):
+  - `staff.ts`: a guest goes to sign-in with the admin locale and `session=lost`; a user or agent gets `notFound()`; an
+    administrator opens every page (`src/lib/auth/staff.ts:84-96`); `checkStaff` decides as today for every action key.
+  - `permissions.ts` (lib): an administrator holds every key; a moderator's key is read from `role_permissions` at each
+    call; no row or a failed read is `false` (`src/lib/auth/permissions.ts:8-31`).
+  - `index.ts`: `searchUsersForPicker`'s query and result shape; every other action keeps its key.
+  - `AdminShell`: header, drawer, presence and freshness (`src/components/admin/AdminShell.tsx:12-33`).
+  - every page under `src/app/admin`: its header, content, loaders and controls; only the guard argument and the frame
+    (full width, O1007-2) change; the preview is unchanged.
+  - `src/app/admin/page.tsx`: an administrator, and a moderator with `page.dashboard`, see the dashboard's blocks,
+    order, columns per breakpoint and gaps as today; only its width cap and gutter become the frame's.
+  - `MantineDashboardGrid`: with the default `framed` the cabinet statistics (`AgentStatisticsView`) keep the 1440px
+    cap and the 16px/24px gutter (`MantineDashboardGrid.tsx:58`).
+  - `AdminSidebar`: groups, order, labels, icons, active state, sign-out and the locale switcher
+    (`src/components/admin/AdminSidebar.tsx:27-66`); an administrator sees every item; a moderator loses only the
+    items switched off and Footer and Permissions (O1007-1), and a group left empty (O1007-3).
+  - the three loaders: their return shapes; the writes keep `catalog.manage` and `support.manage`.
+  - `permissions.ts`, `AdminPermissionsView`: the administrator card, the action-key rows (label, change line, icon,
+    `Switch`, `aria-label`), the audit log and its unavailable state (`src/components/admin/AdminPermissionsView.tsx:46-169`),
+    the toasts of `AdminPermissionsManager.tsx:30-34`; the page stays administrator-only (`src/app/admin/permissions/page.tsx:16`).
+  - access: the SQL seeds every listed page on for moderators, so no moderator loses a page at release.
 
 ## Attack surface
 
@@ -53,11 +122,11 @@ Changed: every admin page entry, three page loaders, the sidebar, the permission
    - T4 E: a new admin page ships without a key → mitigate: the required argument and the page census → AC1.
    - T5 R: a switch change is untraced → mitigate: the existing `role_permission_events` row with the actor → AC3.
 3. Each mitigation is an acceptance criterion with a test that fails when the control is removed.
-4. Authorization matrix, per page of `ADMIN_PAGES`: administrator → 200; moderator with the key → 200; moderator without it → 404; user, agent → 404; guest → sign-in. Administrator-only pages: moderator → 404.
+4. Authorization matrix, per page of `ADMIN_PAGES`: administrator → 200; moderator with the key → 200; moderator without it → 404; user, agent → 404; guest → sign-in. Administrator-only pages: moderator → 404. `/admin` (`page.dashboard`): a moderator without the key → a redirect to the first page switched on, or the no-pages state with none; never a dashboard read.
 
 ## OWASP
 
-Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
+Required by `node scripts/quality/owasp.mjs plan` (2026-11-19; re-run 2026-11-24).
 
 - AI_Agent_Security: not applicable — the task cites a project rule file; no agent, tool or agent permission changes.
 - Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names every page entry, the three loaders and the write — AC1, AC2, AC4.
@@ -77,6 +146,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - GraphQL: not applicable — the project serves no GraphQL endpoint.
 - Injection_Prevention: not applicable — keys are compared against a fixed list; nothing is interpreted.
 - Input_Validation: "Reject invalid requests with a clear error; do not continue with partially validated data." — an unknown key or a non-boolean value is `validation`, nothing written — AC3.
+- Insecure_Direct_Object_Reference_Prevention: "This verification should be performed for all operations involving object references, including read, create, update, delete, export, and administrative actions." — the three administrative reads (currencies, property types, the user picker) check the page key at the call, not only the page — AC4.
 - JavaScript_and_TypeScript_Security: not applicable — a constant list; no merge, path setter or new regular expression.
 - LLM_Prompt_Injection_Prevention: not applicable — no language model reads or writes any data of this task.
 - Logging: "User administration actions such as addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens" — every switch change writes a `role_permission_events` row with the actor — AC3.
@@ -87,6 +157,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Multifactor_Authentication: not applicable — staff MFA is Task 960; no factor changes here.
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — the loaders in `'use server'` files check the page key themselves — AC4.
 - OAuth2: not applicable — no OAuth flow or return path is touched.
+- OS_Command_Injection_Defense: not applicable — the scope file gains seven path strings; no OS command is called.
 - Prototype_Pollution_Prevention: not applicable — no object is built from client keys; the list is a constant.
 - Query_Parameterization: not applicable — the SQL inserts fixed rows; the code uses the client library's builders.
 - Server_Side_Template_Injection_Prevention: not applicable — only the email-templates page frame changes; template rendering is untouched.
@@ -107,10 +178,17 @@ its Story, `MantineFormSection`, `Mantine/Primitives/Switch`, `AdminSidebar`, `M
 EXTEND `AdminPermissionsView` (a second switch section like the first) and `AdminSidebar` (filtered items); REUSE the
 rest. Reference research (GR-7): inherited canonical design — owner decision 2026-10-20 (`AdminPermissionsView`,
 `Mantine/Primitives/Switch`, `MantineEmptyLoadingErrorState`).
+- U2: the seven legacy pages of the Scope frame line lose `className` and take `AdminPageFrame`; enrolled in `scripts/mantine-migration-scope.json` with no baseline entry. Every admin page but the preview takes the one full-width frame (O1007-2); compared Stories: `AdminPageFrame.stories.tsx` and `AdminDashboardView.stories.tsx` against `main`.
+- U3: no `style`, `styles`, `className` or literal in the changed pages, `AdminPermissionsView`, `AdminSidebar` or their Stories (AC10 for the pages).
+- U4: a page row takes the tokens of an action row (`AdminPermissionsView.tsx:72-118`: `Group` `justify="space-between"`, `Divider` between rows, the icon and `Switch` group); compared Stories: `AdminPermissionsView.stories.tsx:76` `Default` and the new `WithPagesSection`.
+- U6: `WithPagesSection` (some pages off, one saving) and `AdminSidebar` `ModeratorPages`; the no-pages state reuses `EmptyLoadingErrorState.stories.tsx`.
+- U7: GR-8 not applicable — the section is a switch list, not a table of records; GR-3i met as today — the audit log actor (`AdminPermissionsView.tsx:143-168`); GR-3h — the new `MantineFormSection` sits in the same `Stack` as the others; GR-3e not applicable — no popup; GR-3c — the section title is `MantineFormSection`'s, as the two sections above it.
+- U11: default built (`WithPagesSection`); loading not needed — server-rendered page, as today; empty not needed — the list is the constant `ADMIN_PAGES`; error built — the audit log's unavailable state as today, a failed key read denies (AC2); saving and disabled built — `savingKey` disables that switch; no permission built — 404 (AC2) and the no-pages state (AC5); a failed toggle built — the toasts of `AdminPermissionsManager.tsx:30-34`; longest locale and 320px — the mobile record.
+- U12: each page `Switch` has a visible label and the `aria-label` of that label, as `AdminPermissionsView.tsx:113`; the icon colour repeats the switch state, never alone; colours `green` and `dimmed` from the theme as today; focus is Mantine's `Switch` ring, unchanged; a failed toggle names the error in a toast as today.
 
 ## Mobile adaptation record
 - Scope: visible
-- Surfaces: src/components/admin/AdminPermissionsView.tsx — the "Admin panel pages" section; src/components/admin/AdminSidebar.tsx — the filtered items; src/app/admin/page.tsx — the no-pages state
+- Surfaces: src/components/admin/AdminPermissionsView.tsx — the "Admin panel pages" section; src/components/admin/AdminSidebar.tsx — the filtered items; src/app/admin/page.tsx — the no-pages state; src/components/admin/AdminPageFrame.tsx — every admin page at full width (O1007-2)
 - Component families: form-picker-and-choice, navigation-and-pagination
 - Pattern IDs: form-stack, inline-control
 - Standards: w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, w3c-target-size, apple-hig-menus, android-layout-navigation
@@ -119,27 +197,34 @@ rest. Reference research (GR-7): inherited canonical design — owner decision 2
 - Mobile range and switches: <640px (theme.other.mobileGate / sm): each page row full width, label and path above, the switch at the row's end; 640px transition as the first section today
 - Mobile order: action permissions → admin panel pages → audit log; each row label → path → switch
 - Required-content treatment: labels and paths wrap, never truncated; each switch keeps the 44px target
-- Story and verification: AdminPermissionsView `WithPagesSection` at 320px, 639px, 640px and 1440px × sq, en, uk, it
+- Story and verification: AdminPermissionsView `WithPagesSection` and AdminSidebar `ModeratorPages` at 320px, 639px, 640px and 1440px × sq, en, uk, it; `AdminPageFrame` and `AdminDashboardView` at 320px, 1023px, 1024px, 1440px and 1920px: no max width, gutter 24px below 1024px and 32px from it
 
 ## Acceptance criteria
 
-- AC1 Every admin page names its access — test: `src/lib/auth/__tests__/adminPages.test.ts` (new): each `src/app/admin/**/page.tsx` calls `requireStaffPage` with a key of `ADMIN_PAGES` or `adminOnly`; every key's paths exist; the keys equal the sidebar items that are not administrator-only; and `npm run typecheck`.
-- AC2 The guard follows the switch — test: `src/lib/auth/__tests__/staffPage.security.test.ts` (extended): `SEC-1007-PAGE-DENY` for every key: a moderator without it → `notFound()` before any read; with it → the page; a failed read → `notFound()`; an administrator → the page; a moderator on an administrator-only page → `notFound()`; user and agent → `notFound()`; guest → sign-in.
+- AC1 Every admin page names its access — test: `src/lib/auth/__tests__/adminPages.test.ts` (new): each `src/app/admin/**/page.tsx` calls `requireStaffPage` with a key of `ADMIN_PAGES` or `adminOnly`, and only `src/app/admin/page.tsx` with `landing`; every key's paths exist; the keys equal the sidebar items that are not administrator-only. The type check of the required argument runs in CI (AC9).
+- AC2 The guard follows the switch — test: `src/lib/auth/__tests__/staffPage.security.test.ts` (extended): `SEC-1007-PAGE-DENY` for every key but `page.dashboard` (its `/admin` landing is AC5): a moderator without it → `notFound()` before any read; with it → the page; a failed read → `notFound()`; an administrator → the page; a moderator on an administrator-only page → `notFound()`; user and agent → `notFound()`; guest → sign-in. The census of `[SEC-X-SRV-ADMINPAGE-GUARD]` (`:122`, `:124`) now requires the first await to be `requireStaffPage(` with a key of `ADMIN_PAGES`, `adminOnly`, or `landing` in `src/app/admin/page.tsx` only (stricter, never loosened: A9).
 - AC3 The switches are the administrator's — test: `src/tests/integration/moderatorKeys.integration.test.ts` (extended, CI `authz` job, real database): an administrator switches `page.users` off and on and each change writes an event with the actor; a moderator's call is refused and nothing changes; an unknown key is `validation`.
 - AC4 The loaders follow the page keys — test: `src/__tests__/security/staffActions.test.ts` (extended): without its page key a moderator gets `[]` from `getAllCurrenciesAdmin` and `getAllPropertyTypesAdmin` and a refusal from `searchUsersForPicker`; with it, the data.
-- AC5 The sidebar and the landing follow the keys — test: `src/components/admin/__tests__/AdminSidebar.pages.test.tsx` (new: a moderator sees only allowed items and never Permissions or Footer; an administrator sees all) and `src/app/admin/__tests__/dashboardLanding.test.tsx` (new: the redirect to the first allowed page; the empty state with none).
+- AC5 The sidebar and the landing follow the keys — test: `src/components/admin/__tests__/AdminSidebar.pages.test.tsx` (new: a moderator sees only allowed items and never Permissions or Footer; a group with no allowed item renders no heading (O1007-3); an administrator sees all; the layout passes the list of `allowedAdminPageKeys`, `[]` on a failed read) and `src/app/admin/__tests__/dashboardLanding.test.tsx` (new: a moderator without `page.dashboard` → no dashboard read and the redirect to the first allowed page; the empty state with none and on a failed read; an administrator and a moderator with the key → the dashboard).
 - AC6 The section works — test: `src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx` (extended): fifteen page switches with their labels; a toggle calls `setModeratorPermission` with the page key.
-- AC7 The SQL holds — test: `node scripts/quality/db-sql-roundtrip.mjs` over the three `task1007` files exits 0; after the apply `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` reports none of its invariants.
-- AC8 Stories, widths and languages hold — test: `node scripts/check-i18n-parity.mjs`, `node scripts/check-mobile-adaptation-contract.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for `WithPagesSection`.
+- AC7 The SQL holds — test (Opus, checklist H4): `db-sql-roundtrip.mjs` does not apply, because it compares the catalog and these files change rows only (`scripts/quality/db-sql-roundtrip.mjs:250` refuses a change that "changed nothing the catalog queries read"); instead `task1007-preflight.sql` and `task1007-rollback.sql` pass the H4 checks read-only with LF and with CRLF, `md5` compared, and the preflight shows no `page.%` row before the apply (so the rollback's `like 'page.%'` removes only the seeded rows); after the apply, `select permission_key, allowed from public.role_permissions where permission_key like 'page.%'` lists the 15 keys of `ADMIN_PAGES` allowed, and `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` reports none of its invariants.
+- AC8 Stories, widths and languages hold — test: the CI product checks (i18n parity, mobile adaptation contract) and Storybook jobs, read with `gh pr checks <n>` (checklist A5: never run locally); before the push the executor measures `WithPagesSection`, `ModeratorPages`, `AdminPageFrame` and `AdminDashboardView` on the Storybook dev server at the widths and locales of the mobile record (I8a).
 - AC9 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
-- AC10 Every admin page sits in the canonical frame (owner rule 2026-11-19) — test: `src/app/admin/__tests__/adminPageFrame.test.ts` (new or extended): every `src/app/admin/**/page.tsx` that renders (not a redirect) renders `AdminPageFrame` and has no `className`.
+- AC10 Every admin page sits in the canonical frame (owner rule 2026-11-19) — test: `src/app/admin/__tests__/adminPageFrame.test.ts` (new or extended): every `src/app/admin/**/page.tsx` has no `className`, and every one that renders (not a redirect) renders `<AdminPageFrame>` with no prop, except `src/app/admin/listings/[id]/preview/page.tsx`, named in the test with the owner decision of 2026-11-24; `AdminPageFrame` renders no `max-width` and the gutter `xl`/`2xl`; `MantineDashboardGrid` with `framed={false}` renders no `max-width` or padding, and with the default the box of `main` (O1007-2).
 
 ## Route
 
-1. Branch from `main`. Read `staff.ts`, `permissions.ts` (both), `permissionKeys.ts`, every page under `src/app/admin`, the layout, `AdminShell`, `AdminSidebar`, `AdminPermissionsView` and its Story, the three loaders.
+1. Work on the branch the owner created from `main` (checklist H1; no model creates it). Read `staff.ts`, `permissions.ts` (both), `permissionKeys.ts`, every page under `src/app/admin`, the layout, `AdminShell`, `AdminSidebar`, `AdminPermissionsManager`, `AdminPermissionsView` and its Story, the three loaders (`currencies.ts`, `propertyTypes.ts`, `index.ts`), `AdminPageFrame`, `MantineDashboardGrid`, `AdminDashboardView`, `theme.ts` and the Stories of the frame line.
 2. Tests first (AC1-AC6, AC10); save each failing output.
 3. The page list, the guard and every page, the landing, the sidebar, the loaders, the section, the SQL set (handed to Opus for AC7; the owner applies it before the merge), the messages, the Story. One pass over every changed file (checklist I7).
-4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate break: the key check removed from `requireStaffPage` → `SEC-1007-PAGE-DENY` fails; restored.
-5. Report: each command, exit code, relevant output; the finding P-01 row moves to fixed with this test. After the merge Opus opens the admin as `HYDRATION_MODERATOR` with one page switched off and checks the sidebar and the address.
+4. Run: `npm test -- src/lib/auth/__tests__/adminPages.test.ts src/lib/auth/__tests__/staffPage.security.test.ts src/__tests__/security/staffActions.test.ts src/components/admin/__tests__/AdminSidebar.pages.test.tsx src/app/admin/__tests__/dashboardLanding.test.tsx src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx src/app/admin/__tests__/adminPageFrame.test.ts src/lib/auth/__tests__/moderatorKeys.security.test.ts src/modules/admin/actions/__tests__/adminOperations.security.test.ts src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts` (AC3 runs in the CI `authz` job against the real database; AC7 is Opus's in the review) · the I8a measurement on the dev servers · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate break: the key check removed from `requireStaffPage` → `SEC-1007-PAGE-DENY` fails; restored.
+5. Report: each command, exit code, relevant output. Opus moves the finding P-01 row of `docs/security/audit-2026-11-06/findings.md` to `fixed` with `SEC-1007-PAGE-DENY` at the archive (checklist H7); the executor does not edit it. After the merge Opus opens the admin as `HYDRATION_MODERATOR` with one page switched off and checks the sidebar and the address.
 
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_1.md)
+- [Review 2 — APPROVED](../../docs/reviews/Task_1007_Review_2.md)
+- [Review 3 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_3.md)
+- [Review 4 — APPROVED](../../docs/reviews/Task_1007_Review_4.md)
+- [Review 5 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_5.md)
+- [Review 6 — APPROVED](../../docs/reviews/Task_1007_Review_6.md)

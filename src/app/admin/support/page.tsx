@@ -13,7 +13,7 @@ export default async function AdminSupportPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.support' })
   const sp = await searchParams
   const initialFilters = parseSupportFilters(sp)
   await getAdminLocale()
@@ -46,7 +46,7 @@ export default async function AdminSupportPage({
   }
 
   return (
-    <AdminPageFrame width="shell">
+    <AdminPageFrame>
       <AdminSupportManager tickets={tickets} events={events} initialFilters={initialFilters} />
     </AdminPageFrame>
   )

@@ -23,7 +23,7 @@ interface Props {
 
 export default async function AdminListingPreviewPage({ params }: Props) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.listings' })
   const { id } = await params
   const locale = await getAdminLocale()
 

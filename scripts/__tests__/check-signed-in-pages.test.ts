@@ -14,7 +14,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it, vi } from 'vitest'
 
-import { ROLES, ROUTES, WIDTHS, checkRouteTable, installReadOnlyGuard, judgeVisit, listPages, resolveTemplate, runCheck } from '../check-signed-in-pages.mjs'
+import { ROLES, ROUTES, WIDTHS, checkRouteTable, installReadOnlyGuard, judgeVisit, listPages, readModeratorPageKeys, resolveTemplate, runCheck } from '../check-signed-in-pages.mjs'
+import { ADMIN_PAGES } from '../../src/lib/auth/adminPages'
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 
@@ -49,10 +50,16 @@ interface Setup {
   launchFails?: boolean
   visitThrows?: boolean
   createRunThrows?: boolean
+  /** The page keys the moderator's switches hold in `role_permissions` (Task 1007); every key of `ADMIN_PAGES` when absent: what the route table states. */
+  moderatorKeys?: string[]
+  /** The read of the switches fails. */
+  readThrows?: boolean
 }
 
+const ALL_KEYS: string[] = ADMIN_PAGES.map(page => page.key)
+
 function setup(options: Setup = {}) {
-  const calls = { createRun: 0, makeUser: [] as string[], makeListing: [] as string[], cleanup: 0, cookies: 0, visited: [] as string[], opened: [] as string[] }
+  const calls = { createRun: 0, makeUser: [] as string[], makeListing: [] as string[], cleanup: 0, cookies: 0, visited: [] as string[], opened: [] as string[], events: [] as string[] }
   const logs: string[] = []
   const createRun = () => {
     calls.createRun++
@@ -79,6 +86,7 @@ function setup(options: Setup = {}) {
         return {
           visit: async (requested: string, width: number) => {
             calls.visited.push(`${role} ${requested} @${width}`)
+            calls.events.push(`visit ${role} ${requested}`)
             if (options.visitThrows) throw new Error('page.goto: Timeout 60000ms exceeded.')
             const correct = correctObservation(role, requested)
             return options.observe ? options.observe(role, requested, correct, width) : correct
@@ -92,7 +100,12 @@ function setup(options: Setup = {}) {
   }
   const buildCookies = async () => { calls.cookies++; return [{ name: 'sb-test-auth-token', value: COOKIE }] }
   const log = (line: string) => { logs.push(line) }
-  const run = () => runCheck({ createRun, launchBrowser, buildCookies, routes: ROUTES, pages: listPages(REPO), log })
+  const readModeratorPageKeys = async () => {
+    calls.events.push('read')
+    if (options.readThrows) throw new Error('role_permissions: the read failed')
+    return options.moderatorKeys ?? ALL_KEYS
+  }
+  const run = () => runCheck({ createRun, launchBrowser, buildCookies, readModeratorPageKeys, routes: ROUTES, pages: listPages(REPO), log })
   return { calls, logs, run }
 }
 
@@ -449,5 +462,159 @@ describe('AC6 — the walk removes what it created, pass or fail', () => {
     expect(result.ok).toBe(false)
     expect(env.calls.makeUser).toEqual([])
     expect(env.logs.join('\n')).toContain('SECURITY_TEST_TARGET=development')
+  })
+})
+
+// ── Task 1007 (Review 3, F3): a moderator opens only the pages switched on ───────
+
+type Seen = (role: Role, requested: string, correct: Observed) => Observed
+type WalkRow = { role: string; path: string; width: number; ok: boolean; failures: string[] }
+
+/** The row's path as the walk logs it (`{userId}` unresolved), and as the browser asks for it. */
+const templateOf = (route: string): string => ((ROUTES as Row[]).find(row => row.page === `src/app${route}/page.tsx`) as Row).path
+const requestedOf = (route: string): string => resolveTemplate(templateOf(route), PARAMS)
+/** Every address the keys of `ADMIN_PAGES` open, as the walk requests it. */
+const KEYED = new Set(ADMIN_PAGES.flatMap(page => page.paths.map(requestedOf)))
+
+/**
+ * What a correct build answers a moderator when `allowed` are the page keys switched on: a keyed page that is off is the not-found page; `/admin` stays the page, or is the redirect
+ * `landing` when the dashboard is off and another page is on. Written here from the Task 1007 rules, not from the walk's own function.
+ */
+function moderatorSees(allowed: string[], landing: string | null): Seen {
+  const open = new Set(ADMIN_PAGES.filter(page => allowed.includes(page.key)).flatMap(page => page.paths.map(requestedOf)))
+  return (role, requested, correct) => {
+    if (role !== 'moderator') return correct
+    if (requested === '/admin') return landing ? { ...correct, status: 200, finalPath: landing } : correct
+    return KEYED.has(requested) && !open.has(requested) ? { ...correct, status: 404, finalPath: requested } : correct
+  }
+}
+
+const failedRows = (rows: unknown) => (rows as WalkRow[]).filter(row => !row.ok)
+const label = (row: WalkRow) => `${row.role} ${row.path} @${row.width}`
+
+describe('Task 1007 — the moderator\'s expected result follows the page switches', () => {
+  it('the route table states the pages as they are with the switch on, and Footer is for an administrator only (O1007-1)', () => {
+    const footer = (ROUTES as Row[]).find(row => row.path === '/admin/footer') as Row
+    expect(footer.expect.moderator).toEqual({ kind: 'not-found' })
+    expect(footer.expect.admin).toEqual({ kind: 'page' })
+    for (const page of ADMIN_PAGES) expect((ROUTES as Row[]).filter(row => page.paths.some(route => row.page === `src/app${route}/page.tsx`)), page.key).toHaveLength(page.paths.length)
+  })
+
+  it('Footer is not found for a moderator: the not-found page passes, a 200 fails', async () => {
+    const passing = await setup().run()
+    expect(passing.ok).toBe(true)
+    const env = setup({ observe: (role, requested, correct) => (role === 'moderator' && requested === '/admin/footer' ? { ...correct, status: 200, finalPath: requested } : correct) })
+    const result = await env.run()
+    expect(result.ok).toBe(false)
+    expect(failedRows(result.rows).map(label).sort()).toEqual(['moderator /admin/footer @1280', 'moderator /admin/footer @390'])
+    expect(failedRows(result.rows)[0].failures.join(' ')).toContain('status 200 where the not-found page was expected')
+  })
+
+  it('every switch on: the walk passes with the pages as the table states them', async () => {
+    const result = await setup({ moderatorKeys: ALL_KEYS, observe: moderatorSees(ALL_KEYS, null) }).run()
+    expect(result.ok).toBe(true)
+  })
+
+  const SWITCHABLE = ADMIN_PAGES.filter(page => page.key !== 'page.dashboard')
+
+  it.each(SWITCHABLE.map(page => [page.key, page] as const))('%s switched off: every address of the key is the not-found page, and a 200 on any of them fails', async (_key, page) => {
+    const keys = ALL_KEYS.filter(key => key !== page.key)
+    const asked = page.paths.map(templateOf)
+    expect(asked.length).toBeGreaterThan(0)
+    const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, null) }).run()
+    expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
+    // a build that still answers the page (the table's expectation of today) fails exactly the rows of this key, at both widths
+    const wrong = await setup({ moderatorKeys: keys }).run()
+    expect(wrong.ok).toBe(false)
+    expect(failedRows(wrong.rows).map(label).sort()).toEqual(asked.flatMap(requested => WIDTHS.map(width => `moderator ${requested} @${width}`)).sort())
+    expect(failedRows(wrong.rows)[0].failures.join(' ')).toContain('where the not-found page was expected')
+  })
+
+  it('a key switched on keeps the page: the page passes, and the not-found page on it fails', async () => {
+    const keys = ['page.users']
+    const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, '/admin/users') }).run()
+    expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
+    const hidden = await setup({ moderatorKeys: keys, observe: (role, requested, correct) => (role === 'moderator' && requested === '/admin/users' ? { ...correct, status: 404, finalPath: requested } : moderatorSees(keys, '/admin/users')(role, requested, correct)) }).run()
+    expect(hidden.ok).toBe(false)
+    expect(failedRows(hidden.rows).map(label).sort()).toEqual(['moderator /admin/users @1280', 'moderator /admin/users @390'])
+  })
+
+  describe('the landing /admin', () => {
+    const observeLanding = (keys: string[], landing: string | null, at: Seen): Seen => (role, requested, correct) => (role === 'moderator' && requested === '/admin' ? at(role, requested, correct) : moderatorSees(keys, landing)(role, requested, correct))
+    const dashboardRows = (rows: unknown) => failedRows(rows).map(label).sort()
+
+    it('with page.dashboard on the moderator gets the page, and a redirect to another page fails', async () => {
+      const right = await setup({ moderatorKeys: ALL_KEYS, observe: moderatorSees(ALL_KEYS, null) }).run()
+      expect(right.ok).toBe(true)
+      const wrong = await setup({ moderatorKeys: ALL_KEYS, observe: observeLanding(ALL_KEYS, null, (_r, _q, correct) => ({ ...correct, finalPath: '/admin/listings' })) }).run()
+      expect(dashboardRows(wrong.rows)).toEqual(['moderator /admin @1280', 'moderator /admin @390'])
+    })
+
+    it('with page.dashboard off and others on the moderator is sent to the first path of the first key in ADMIN_PAGES order, never to /admin', async () => {
+      const keys = ['page.reports', 'page.support']   // the database's order is not the sidebar's: support comes first
+      const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, '/admin/support') }).run()
+      expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
+      for (const wrongTarget of ['/admin/reports', '/admin']) {
+        const wrong = await setup({ moderatorKeys: keys, observe: observeLanding(keys, '/admin/support', (_r, _q, correct) => ({ ...correct, status: 200, finalPath: wrongTarget })) }).run()
+        expect(dashboardRows(wrong.rows), wrongTarget).toEqual(['moderator /admin @1280', 'moderator /admin @390'])
+      }
+      // the first key's FIRST path: page.inquiries_support opens /admin/inquiries/support, not the /admin/inquiries redirect
+      const inquiries = ['page.inquiries_support']
+      const first = await setup({ moderatorKeys: inquiries, observe: moderatorSees(inquiries, '/admin/inquiries/support') }).run()
+      expect(first.ok, failedRows(first.rows).map(label).join(', ')).toBe(true)
+    })
+
+    it('with no page on the moderator gets the page /admin (the no-pages state), every other page is not found, and a redirect fails', async () => {
+      const right = await setup({ moderatorKeys: [], observe: moderatorSees([], null) }).run()
+      expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
+      const wrong = await setup({ moderatorKeys: [], observe: observeLanding([], null, (_r, _q, correct) => ({ ...correct, status: 200, finalPath: '/admin/listings' })) }).run()
+      expect(dashboardRows(wrong.rows)).toEqual(['moderator /admin @1280', 'moderator /admin @390'])
+    })
+  })
+
+  it('the switches are read just before each moderator visit of a page with a key, and not for the other roles or the other pages', async () => {
+    const env = setup()
+    await env.run()
+    const events = env.calls.events
+    const moderatorVisits = events.map((event, index) => ({ event, index })).filter(({ event }) => event.startsWith('visit moderator '))
+    expect(moderatorVisits).toHaveLength((ROUTES as Row[]).length * WIDTHS.length)
+    const keyedVisits = moderatorVisits.filter(({ event }) => KEYED.has(event.replace('visit moderator ', '')))
+    expect(keyedVisits.length).toBeGreaterThan(0)
+    for (const { event, index } of keyedVisits) expect(events[index - 1], event).toBe('read')
+    expect(events.filter(event => event === 'read')).toHaveLength(keyedVisits.length)
+    // no read happens while another role is walked
+    for (const [index, event] of events.entries()) if (event.startsWith('visit ') && !event.startsWith('visit moderator ')) expect(events[index - 1], event).not.toBe('read')
+  })
+
+  it('a failed read of the switches fails the moderator\'s rows of the pages with a key, and never passes them as on', async () => {
+    const env = setup({ readThrows: true })
+    const result = await env.run()
+    expect(result.ok).toBe(false)
+    const failed = failedRows(result.rows)
+    expect(failed.length).toBeGreaterThan(0)
+    for (const row of failed) {
+      expect(row.role).toBe('moderator')
+      expect(row.failures.join(' ')).toContain('the visit could not be made')
+      expect(row.failures.join(' ')).toContain('the read failed')
+    }
+    expect(env.calls.cleanup).toBe(1)
+  })
+
+  it('the walk reads the switches of the moderator role for the page keys of ADMIN_PAGES, and writes nothing', async () => {
+    const used: string[] = []
+    const chain: Record<string, unknown> = {}
+    const answer = { data: [{ permission_key: 'page.users' }, { permission_key: 'page.reports' }], error: null }
+    for (const method of ['from', 'select', 'eq', 'in']) chain[method] = (...args: unknown[]) => { used.push(`${method} ${JSON.stringify(args)}`); return method === 'in' ? Promise.resolve(answer) : chain }
+    const keys = await readModeratorPageKeys({ admin: chain })
+    expect(keys).toEqual(['page.users', 'page.reports'])
+    expect(used).toEqual([
+      'from ["role_permissions"]',
+      'select ["permission_key"]',
+      'eq ["role","moderator"]',
+      'eq ["allowed",true]',
+      `in ${JSON.stringify(['permission_key', ALL_KEYS])}`,
+    ])
+    // the table is read through these four calls only: any other method on the client (insert, upsert, update, delete) is not defined on the double and would throw
+    await expect(readModeratorPageKeys({ admin: { from: () => ({ select: () => ({ eq: () => ({ eq: () => ({ in: async () => ({ data: null, error: { code: '42501' } }) }) }) }) }) } })).rejects.toThrow('could not be read')
   })
 })

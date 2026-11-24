@@ -59,10 +59,11 @@ export function verifyOtp({ token_hash, type }: { token_hash: string; type: stri
 
 // Task 1033: on a sign-out supabase-js gives the Realtime client the anonymous key and Realtime pushes it to every joined channel, which checks the notifications
 // filter as `anon` ("invalid column for filter user_id"). The channels are removed first; a failure there never blocks the sign-out.
+// Each channel is removed on its own: `removeAllChannels()` also closes the socket, which leaves a 10 s timer (Task 1033 Review 1, F1).
 export async function signOut(scope?: 'global' | 'local') {
   const supabase = createClient()
   try {
-    await supabase.removeAllChannels()
+    await Promise.all(supabase.getChannels().map((channel) => supabase.removeChannel(channel)))
   } catch {
     // the sign-out below still runs
   }

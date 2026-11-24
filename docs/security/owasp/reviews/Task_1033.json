@@ -88,7 +88,7 @@
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_1033_Review_1.md` reviews the diff against `f1959d0b5`"
+   "evidence": "`docs/reviews/Task_1033_Review_1.md` and `docs/reviews/Task_1033_Review_2.md`"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",
@@ -127,9 +127,11 @@
    "evidence": "Review 1 reran the Route line (30 passed) and the wider run of every sign-out caller (`src/lib/auth/controller.signout.security.test.ts` failed)"
   },
   "WebSocket_Security": {
-   "verdict": "finding",
-   "finding": "F1",
-   "note": "the channels are closed at sign-out, but removeAllChannels also closes the socket and leaves a timer that fails the controller sign-out test"
+   "verdict": "met",
+   "quotes": [
+    "When users log out, close all their WebSocket connections immediately."
+   ],
+   "evidence": "`src/lib/auth/browser.ts` `signOut` removes every Realtime channel before `auth.signOut` (`src/lib/auth/__tests__/browser.smoke.test.ts` order cases); F1 fixed in Revision 1, Review 2"
   }
  }
 }

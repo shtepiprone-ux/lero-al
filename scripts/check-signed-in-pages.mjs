@@ -13,6 +13,7 @@
  *   3. puts each session into a browser as the `@supabase/ssr` auth cookie and opens every row of the table at each of the two widths (1280 and 390), each width a row of
  *      its own; a row fails on a status of 500 or more, a page error, a
  *      hydration message, or a final address that is not the expected one (an unexpected redirect, or a page where the role should have been sent away);
+ *      Task 1007: a moderator's expected result on the pages of `ADMIN_PAGES` follows the page's switch, read from `role_permissions` just before the visit (the walk never writes one);
  *   4. READS ONLY: every request that is not GET, HEAD or OPTIONS is aborted before it leaves the browser, and counted;
  *   5. removes everything it created, whether the walk passed or failed, and the step fails if the clean-up leaves a row or cannot prove it left none.
  *
@@ -29,6 +30,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isEntryPoint } from './lib/entry-point.mjs';
 import { redactSensitive } from './lib/redact-log.mjs';
+// Task 1007: the one list of the admin pages a moderator can be given (a plain constant file: nothing is imported at run time, so Node reads it as it is)
+import { ADMIN_PAGES } from '../src/lib/auth/adminPages.ts';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -48,7 +51,7 @@ const redirectTo = (to) => ({ kind: 'redirect', to });
 const AWAY_FROM_ADMIN = redirectTo('/en');
 const STAFF_ONLY = { admin: PAGE, moderator: PAGE, agent: AWAY_FROM_ADMIN, user: AWAY_FROM_ADMIN };
 const STAFF_REDIRECT = (to) => ({ admin: redirectTo(to), moderator: redirectTo(to), agent: AWAY_FROM_ADMIN, user: AWAY_FROM_ADMIN });
-// `src/app/admin/permissions/page.tsx:16`: a moderator gets `notFound()`.
+// `src/app/admin/permissions/page.tsx:14` and `src/app/admin/footer/page.tsx:13` (`requireStaffPage({ adminOnly: true })`, Task 1007, O1007-1): a moderator gets `notFound()`.
 const ADMIN_ONLY = { admin: PAGE, moderator: NOT_FOUND, agent: AWAY_FROM_ADMIN, user: AWAY_FROM_ADMIN };
 const EVERY_SIGNED_IN_ROLE = { admin: PAGE, moderator: PAGE, agent: PAGE, user: PAGE };
 // `src/app/[locale]/cabinet/statistics/page.tsx:38`: only an agent sees the dashboard.
@@ -59,13 +62,14 @@ const OWNER_OR_STAFF = { admin: PAGE, moderator: PAGE, agent: PAGE, user: redire
 /**
  * One row per `page.tsx`. `path` is what the browser opens; `{userId}`, `{listingId}` and `{listingSlug}` are the run's user and the run agent's listing. `expect` states, for each
  * role, the page, the redirect that role gets (the final address), or the not-found page.
+ * Task 1007: on a page of a key of `ADMIN_PAGES` the moderator's entry is the result with the page's switch ON; `moderatorExpectation` gives the result of the switch as it is.
  */
 export const ROUTES = [
   { page: 'src/app/admin/page.tsx', path: '/admin', expect: STAFF_ONLY },
   { page: 'src/app/admin/companies/page.tsx', path: '/admin/companies', expect: STAFF_ONLY },
   { page: 'src/app/admin/currency/page.tsx', path: '/admin/currency', expect: STAFF_ONLY },
   { page: 'src/app/admin/email-templates/page.tsx', path: '/admin/email-templates', expect: STAFF_ONLY },
-  { page: 'src/app/admin/footer/page.tsx', path: '/admin/footer', expect: STAFF_ONLY },
+  { page: 'src/app/admin/footer/page.tsx', path: '/admin/footer', expect: ADMIN_ONLY },
   { page: 'src/app/admin/inquiries/page.tsx', path: '/admin/inquiries', expect: STAFF_REDIRECT('/admin/inquiries/support') },
   { page: 'src/app/admin/inquiries/sales/page.tsx', path: '/admin/inquiries/sales', expect: STAFF_ONLY },
   { page: 'src/app/admin/inquiries/support/page.tsx', path: '/admin/inquiries/support', expect: STAFF_ONLY },
@@ -138,6 +142,56 @@ export function checkRouteTable(routes, pages) {
   return problems;
 }
 
+// ── The moderator's page switches (Task 1007) ────────────────────────────────
+
+/** The address a row's `page.tsx` serves, as `ADMIN_PAGES` writes it: `src/app/admin/listings/[id]/preview/page.tsx` → `/admin/listings/[id]/preview`. */
+const routeOf = (row) => row.page.replace(/^src\/app/, '').replace(/\/page\.tsx$/, '');
+
+/** The key of `ADMIN_PAGES` whose paths include this row's page, or undefined (Footer, Permissions and the pages outside the admin have none). */
+export function pageKeyOf(row) {
+  const route = routeOf(row);
+  return ADMIN_PAGES.find((page) => page.paths.includes(route))?.key;
+}
+
+/** `/admin` is the landing (`src/app/admin/page.tsx:29-44`): its result depends on the dashboard's key and on the other keys. */
+const isLanding = (row) => routeOf(row) === '/admin';
+
+/** A moderator's result on this row is decided by the switches. */
+export const readsSwitches = (row) => pageKeyOf(row) !== undefined;
+
+/**
+ * What a moderator gets on this row when `allowedKeys` are the page keys switched on (`role_permissions`, role `moderator`, `allowed`):
+ *  - a page of a key switched on: the result of today (the row's own entry); switched off: the not-found page, redirects included (`/admin/inquiries`, `/admin/legal`);
+ *  - `/admin`: the page with `page.dashboard`; else the redirect to the first path of the first key switched on, in `ADMIN_PAGES` order, other than `page.dashboard`
+ *    (never `/admin` itself); else the page (the no-pages state).
+ */
+export function moderatorExpectation(row, allowedKeys) {
+  const today = row.expect.moderator;
+  if (isLanding(row)) {
+    if (allowedKeys.includes('page.dashboard')) return today;
+    const first = ADMIN_PAGES.find((page) => page.key !== 'page.dashboard' && allowedKeys.includes(page.key));
+    return first ? redirectTo(first.paths[0]) : today;
+  }
+  const key = pageKeyOf(row);
+  if (key === undefined) return today;
+  return allowedKeys.includes(key) ? today : NOT_FOUND;
+}
+
+/**
+ * The switches as the live project holds them, read with the service role (`run.admin`, the client of `fixtures.createRun()`). The walk only selects: the rows are role-wide,
+ * so it never writes one. A failed read throws; the row is a failure, never a page assumed open.
+ */
+export async function readModeratorPageKeys(run) {
+  const { data, error } = await run.admin
+    .from('role_permissions')
+    .select('permission_key')
+    .eq('role', 'moderator')
+    .eq('allowed', true)
+    .in('permission_key', ADMIN_PAGES.map((page) => page.key));
+  if (error) throw new Error(`the moderator's page switches could not be read (${error.code ?? 'error'})`);
+  return (data ?? []).map((row) => row.permission_key);
+}
+
 /** Fills `{userId}`, `{listingId}` and `{listingSlug}`; a placeholder with no value throws, so a missing fixture is a failure, never a request for "undefined". */
 export function resolveTemplate(template, params) {
   return template.replace(/\{(\w+)\}/g, (_match, name) => {
@@ -160,10 +214,11 @@ const HYDRATION_PATTERNS = [
 const clip = (text) => String(text).replace(/\s+/g, ' ').slice(0, 300);
 
 /**
- * @param {{ row: { path: string; expect: Record<string, { kind: string; to?: string }> }, role: string, params: Record<string, string>, observed: object }} visit
+ * @param {{ row: { path: string; expect: Record<string, { kind: string; to?: string }> }, role: string, params: Record<string, string>, observed: object, expectation?: { kind: string; to?: string } }} visit
+ *   `expectation` replaces the row's entry for the role (a moderator's, by the switches).
  * @returns {string[]} what is wrong with this visit; empty when the row passes
  */
-export function judgeVisit({ row, role, params, observed }) {
+export function judgeVisit({ row, role, params, observed, expectation = row.expect[role] }) {
   const failures = [];
   if (observed.navigationError) return [`navigation failed: ${clip(observed.navigationError)}`];
 
@@ -174,7 +229,6 @@ export function judgeVisit({ row, role, params, observed }) {
     if (HYDRATION_PATTERNS.some((pattern) => pattern.test(message))) failures.push(`hydration message: ${clip(message)}`);
   }
 
-  const expectation = row.expect[role];
   const requested = resolveTemplate(row.path, params);
   const wanted = expectation.kind === 'redirect' ? resolveTemplate(expectation.to, params) : requested;
   if (observed.finalPath !== wanted) failures.push(`unexpected redirect: wanted ${wanted}, got ${observed.finalPath}`);
@@ -287,10 +341,12 @@ const errorText = (error) => String(error?.message ?? error);
  *   createRun: () => { makeUser: Function, makeListing: Function, cleanup: Function },
  *   launchBrowser: () => Promise<{ openSession: Function, close: Function }>,
  *   buildCookies: (session: { accessToken: string, refreshToken: string }) => Promise<{ name: string, value: string }[]>,
+ *   readModeratorPageKeys?: (run: object) => Promise<string[]>,
  *   routes?: object[], pages: string[], log?: (line: string) => void }} deps
+ *   `readModeratorPageKeys` answers the page keys switched on for the moderator role; it is called just before each moderator visit of a page with a key.
  * @returns {Promise<{ ok: boolean, rows: { role: string, path: string, width: number, ok: boolean, failures: string[] }[], blockedWrites: number, cleanup: object | null }>}
  */
-export async function runCheck({ createRun, launchBrowser, buildCookies, routes = ROUTES, pages, log = console.log }) {
+export async function runCheck({ createRun, launchBrowser, buildCookies, readModeratorPageKeys: readSwitches = readModeratorPageKeys, routes = ROUTES, pages, log = console.log }) {
   const secrets = [];
   const emit = (line) => log(redactSensitive(line, secrets));
   const rows = [];
@@ -358,8 +414,11 @@ export async function runCheck({ createRun, launchBrowser, buildCookies, routes 
             let observed = null;
             try {
               const requested = resolveTemplate(row.path, params);
+              // Task 1007: the moderator's switches are role-wide rows another job may change (the Authorization regression job switches `page.users`), so they are read
+              // here, just before the visit, and the row's expected result follows what was read. A failed read is this row's failure.
+              const expectation = role === 'moderator' && readsSwitches(row) ? moderatorExpectation(row, await readSwitches(run)) : undefined;
               observed = await session.visit(requested, width);
-              failures = judgeVisit({ row, role, params, observed });
+              failures = judgeVisit({ row, role, params, observed, expectation });
             } catch (error) {
               failures = [`the visit could not be made: ${errorText(error)}`];
             }

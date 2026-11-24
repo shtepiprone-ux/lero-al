@@ -74,6 +74,12 @@ Fix: page keys in the same store with their own section and switches; `requireSt
 - Revision 1 (Review 1; nothing else changes): R1-1 (F1) `src/modules/admin/actions/__tests__/permissions.security.test.ts:117` (an existing test the Fix
   breaks, missed by the line above) expects `[...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].sort()`, `ADMIN_PAGE_KEYS` imported from `@/lib/auth/adminPages`;
   nothing else in the file changes.
+- Revision 2 (Review 3, the red CI of pull request #70; nothing else changes): R2-1 (F2) a test renders `AdminShell` with `allowedPaths` and shows
+  only the allowed sidebar items, so `src/components/admin/AdminShell.tsx:27` runs in a test (`changed-lines-coverage.mjs`); R2-2 (F3)
+  `scripts/check-signed-in-pages.mjs` (the Click-shield walk; its route table `:64-85` expects the page for a moderator everywhere): `/admin/footer`
+  takes `ADMIN_ONLY` (O1007-1), and a moderator's expected result on every row of a page key follows that key's live switch, read with the service
+  role just before the moderator visits the row (on: as today; off: `NOT_FOUND`; `/admin`: the landing of `src/app/admin/page.tsx:29-44`), with
+  its cases in `scripts/__tests__/check-signed-in-pages.test.ts`.
 - Dependencies: none.
 - Out of scope: the content, loaders and controls of every admin page; the action keys and their writes; Task 1006's
   Contacts page (it takes `adminOnly` in whichever task merges second); Tasks 988 and 989.
@@ -213,3 +219,5 @@ rest. Reference research (GR-7): inherited canonical design — owner decision 2
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_1.md)
 - [Review 2 — APPROVED](../../docs/reviews/Task_1007_Review_2.md)
+- [Review 3 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_3.md)
+- [Review 4 — APPROVED](../../docs/reviews/Task_1007_Review_4.md)

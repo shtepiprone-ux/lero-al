@@ -27,7 +27,7 @@ Footer page; the public
 
 ## Cause
 
-Read at `1d625874c`
+Read at `213103f0a`
 - The page renders the heading and the text under it from the message catalogue and then the form, nothing else (`src/app/[locale]/contact/page.tsx:26-36`); no setting is read, so the admin can change neither the text nor what the page shows.
 - The topic starts empty (`src/modules/contacts/components/ContactForm.tsx:35`) and Send is disabled only while sending (`:193`); a press without a topic shows "Please select a topic" (`:120`) and the server refuses an empty or unknown topic (`src/modules/contacts/actions/index.ts:78-79`), so no message leaves without a topic today, but the button looks pressable.
 - The page and the form are built from Tailwind classes and the legacy `@/components/ui` kit (`src/app/[locale]/contact/page.tsx:29-34`, `src/modules/contacts/components/ContactForm.tsx:7-10`).

@@ -13,7 +13,7 @@ height); one canonical component owns that look and behaviour, and a gate keeps 
 
 ## Cause
 
-Read at `1d625874c`
+Read at `213103f0a`
 - The contact form's "Message" field is a legacy textarea with resizing switched off: `rows={5}` and `className="resize-none"` (`src/modules/contacts/components/ContactForm.tsx:178-183`).
 - Mantine's `Textarea` sets CSS `resize` to `'none'` by default: `grep -n "resize" node_modules/@mantine/core/lib/components/Textarea/Textarea.d.ts` → `11: /** Controls resize CSS property @default 'none' */`, and the theme sets no other value (`src/design-system/mantine/theme.ts:1083-1095`), so no Mantine multi-line field can be made taller either: `src/components/admin/AdminUserProfileDialogsView.tsx:63`, `src/components/admin/CreateTicketDialogView.tsx:117`, `:160`, `src/components/admin/InquiryDetailDialogView.tsx:140`, `src/components/admin/ReportDetailDialogView.tsx:221`, `src/components/admin/StatusChangeSelect.tsx:88`, `src/components/admin/TicketDetailDialogView.tsx:160`, `src/design-system/mantine/patterns/MantineFormSectionStack.tsx:96`, `src/design-system/mantine/patterns/MantineTwoColumnForm.tsx:77`, `src/modules/listings/components/ListingInquiryDialogView.tsx:87`.
 - The browser's own handle cannot serve phones: MDN browser-compat-data `css.properties.resize` (read 2026-11-19) → `safari_ios` "version_added": false, "The property is recognized, but has no effect"; `firefox_android` removed in 79 with the same note. It also sits in the corner, not centred as in the owner's screenshot.

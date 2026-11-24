@@ -7,8 +7,8 @@ import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import {
   AdminInquiriesManager,
   type InquiryRow,
-  type ReplyRow,
 } from '@/components/admin/AdminInquiriesManager'
+import { loadInquiryReplies } from '@/modules/contacts/lib/inquiryReplies'
 
 export const metadata = { title: 'Sales Inquiries — Admin' }
 
@@ -33,15 +33,7 @@ export default async function AdminInquiriesSalesPage() {
   const inquiries = (rawInquiries ?? []) as InquiryRow[]
   const inquiryIds = inquiries.map(i => i.id)
 
-  let replies: ReplyRow[] = []
-  if (inquiryIds.length > 0) {
-    const { data: rawReplies } = await db
-      .from('contact_inquiry_replies')
-      .select('id, inquiry_id, body, created_at, replied_by, replier:users!replied_by(name)')
-      .in('inquiry_id', inquiryIds)
-      .order('created_at', { ascending: true })
-    replies = (rawReplies ?? []) as unknown as ReplyRow[]
-  }
+  const replies = await loadInquiryReplies(db, inquiryIds)
 
   return (
     <AdminPageFrame>

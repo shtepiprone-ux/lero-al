@@ -768,7 +768,8 @@
    "requirements": [
     {
      "quote": "Unhandled errors can assist an attacker in this initial phase, which is very important for the rest of the attack.",
-     "task": "955"
+     "control": "src/modules/__tests__/noDbMessage.security.test.ts",
+     "evidence": "[SEC-X-SRV-NO-DB-MESSAGE] database messages stay on the server"
     }
    ],
    "reviewedSha": "a20adf879e45e82ecc302d021cd99295f3e5813d",

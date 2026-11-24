@@ -144,6 +144,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - NPM_Security: not applicable — no dependency is added; the advisories are Task 947 and 952.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — check-client-bundle.mjs and check-csp-violations.mjs start git and node with argument arrays, never a shell string — AC3, AC5.
 - Prototype_Pollution_Prevention: not applicable — no request object is merged in this task.
+- React_Security: "Use a Content Security Policy to limit the damage of several threats described in this sheet." — the enforced CSP is the second layer behind React escaping — AC5.
 - REST_Security: not applicable — route handlers only gain a Cache-Control header; no access decision or method changes.
 - Secrets_Management: "prevent them from leaking and compromising the organization" — the built client code is scanned for every server secret — AC3.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC6.

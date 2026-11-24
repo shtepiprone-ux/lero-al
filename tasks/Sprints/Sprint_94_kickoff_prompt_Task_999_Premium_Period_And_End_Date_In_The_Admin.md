@@ -71,6 +71,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Multi_Tenant_Security: not applicable — the table is staff-only and holds no tenant-scoped session path.
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — the action is tested by direct call with forged choices — AC2.
 - Query_Parameterization: not applicable — the SQL is a fixed schema change with no dynamic statements.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the period and the dates render as React text — AC3.
 - SQL_Injection_Prevention: not applicable — the SQL takes no input; the action writes through the client library.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC5.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC5.

@@ -99,6 +99,7 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-19).
 - Multifactor_Authentication: not applicable — staff sign-in and its factors are unchanged (Task 960 carries MFA).
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — the tests call the action directly, and it returns `{}` or `{ error }` only — AC1, AC5.
 - Prototype_Pollution_Prevention: not applicable — no object is built from caller-supplied keys.
+- React_Security: not applicable — every new text is a message key rendered as React text.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC10.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC10.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC1-AC4.

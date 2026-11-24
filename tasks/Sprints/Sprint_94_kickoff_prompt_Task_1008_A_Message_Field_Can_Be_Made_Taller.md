@@ -60,6 +60,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - NPM_Security: not applicable — no package is added, removed or updated; only two script entries.
 - OS_Command_Injection_Defense: not applicable — the new gate starts no process; `product-gates.mjs` gains one fixed argument list.
 - Query_Parameterization: not applicable — "migration" names the Mantine UI migration; no query text is built here.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the field keeps React's value binding and the handle renders only its translated label — AC1.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC5.
 - Software_Supply_Chain_Security: not applicable — the lockfile does not change and no dependency is added.
 - SQL_Injection_Prevention: not applicable — "migration" names the Mantine UI migration; no SQL is written or built.

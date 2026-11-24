@@ -83,6 +83,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - OS_Command_Injection_Defense: not applicable — editing the migration manifest starts no operating system process at all.
 - Prototype_Pollution_Prevention: not applicable — no object is built from client keys.
 - Query_Parameterization: not applicable — the reconciliation SQL has constant values and no dynamic SQL.
+- React_Security: not applicable — the dialog renders message keys and input values through Mantine fields.
 - SQL_Injection_Prevention: not applicable — the SQL takes no input; the action writes through the client library.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC6.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC6.

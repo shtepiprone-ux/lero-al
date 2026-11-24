@@ -31,6 +31,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-22).
 - Cross_Site_Scripting_Prevention: not applicable — a layout fix of a dialog renders no new text or markup
 - DOM_based_XSS_Prevention: not applicable — no DOM sink is added or changed by the layout fix
 - JavaScript_and_TypeScript_Security: not applicable — no merge, path setter, regular expression or eval is added
+- React_Security: not applicable — a layout fix of a dialog renders no new text or markup
 - Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; the code is written by Sonnet and its every claim is rerun by Opus — AC2
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns every claim of the executor's report — AC2
 - Web_Frontend_Security: not applicable — no innerHTML or other markup sink is added by the fix

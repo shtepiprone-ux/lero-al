@@ -83,6 +83,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Nextjs_Security: "Rendering the form only on a protected page does not authenticate the action request." — each Server Action is a row whether or not a protected page renders its form — AC1, AC3.
 - Prototype_Pollution_Prevention: not applicable — the matrix test parses source with the TypeScript tree; no request object is merged.
 - Query_Parameterization: not applicable — no query is written by this task; the dumped schema is read, not executed.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the page guards read for the matrix render text through React escaping only; lint (react/no-danger, no-script-url) runs on them — AC5.
 - Transport_Layer_Security: "so the main defense is making sure safe methods have no side effects" (TLS 1.3 early data can be replayed; mapping of 2026-11-15) — every `GET` route handler is a row whose action is read, or a single-use token exchange or a `CRON_SECRET` cron with its reason — AC7.
 - REST_Security: "the access control decision should be taken locally by REST endpoints" — each route handler is a matrix row with its own deny cases — AC1.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC5.

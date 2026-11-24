@@ -61,6 +61,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Identity_Propagation_Patterns: not applicable — the sitemap is public and acts for no user; its service read filters by the public rule.
 - JavaScript_and_TypeScript_Security: not applicable — a two-value setting; no merge, path setter or regular expression.
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — `saveSettings` is tested by direct call with a forged value — AC2.
+- React_Security: not applicable — the switch renders message keys; listing slugs stay URI-encoded in the sitemap as today.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC5.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC5.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC1 and AC2.

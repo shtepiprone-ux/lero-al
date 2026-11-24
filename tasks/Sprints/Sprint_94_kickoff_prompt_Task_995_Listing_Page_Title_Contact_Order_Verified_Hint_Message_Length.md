@@ -66,6 +66,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - LLM_Prompt_Injection_Prevention: not applicable — no language model reads or writes any data of this task.
 - MCP_Security: not applicable — no MCP server, tool or agent permission is added or changed here.
 - OS_Command_Injection_Defense: not applicable — the type gate starts no operating system process.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the tooltip and the field error render message keys and a number as React text — AC3, AC4.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC6.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results — AC6.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — no HTML sink is added — AC3, AC4.

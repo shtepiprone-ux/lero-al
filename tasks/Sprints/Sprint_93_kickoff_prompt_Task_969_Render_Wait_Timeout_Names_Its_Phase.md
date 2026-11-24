@@ -73,6 +73,7 @@ Required by `node scripts/quality/owasp.mjs plan` (a13983001cb3, mapping of 2026
 - Injection_Prevention: not applicable — the detector's flags and its URL building are unchanged; only an error reason changes.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — the new reason is built from fixed text and two page fields, with no new regex; lint and CodeQL run on it — AC4.
 - OS_Command_Injection_Defense: not applicable — no process is started or changed; the detector's runs keep their fixed flags.
+- React_Security: not applicable — `Modal.stories.tsx` is cited as evidence; no Story or render output changes.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's timeout list is input: Opus reads every listed report before writing the fix — AC3.
 - Software_Supply_Chain_Security: not applicable — no dependency, lockfile or workflow pin changes in this task.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — Opus reruns AC1, AC2 and at least one AC3 shard in review — AC1, AC2, AC3.

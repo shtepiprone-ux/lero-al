@@ -160,3 +160,4 @@ and a support link. Reference research (GR-7): inherited canonical design — ow
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_991_Review_1.md)
 - [Review 2 — APPROVED WITH NOTES](../../docs/reviews/Task_991_Review_2.md)
+- [Review 3 — NEEDS REVISION](../../docs/reviews/Task_991_Review_3.md)

@@ -61,6 +61,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - DOM_based_XSS_Prevention: not applicable — no sink and no input.
 - JavaScript_and_TypeScript_Security: "Never pass untrusted input to a recursive merge or set-by-path helper" — the pick reads the server's own catalogue with fixed keys, no input — AC2.
 - Nextjs_Security: "Do not pass ORM records, session objects, or configuration merely because they are available." — each layout passes only the texts its client code reads; staff texts leave the public pages — AC2.
+- React_Security: "Pass only the specific fields a Client Component requires" — each layout passes only the texts its client code reads — AC2.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC6.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC6.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC2.

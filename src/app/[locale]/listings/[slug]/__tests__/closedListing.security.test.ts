@@ -160,6 +160,30 @@ describe('closedListing', () => {
   })
 })
 
+// Task 1035 AC3: a synthetic test listing (the integration fixtures' slug prefix `zz_synth_`) is kept out of the index by the page itself, whatever its status: the bare title and
+// `noindex, nofollow`; a listing with a real slug is indexed exactly as before (no `robots` for an active one).
+describe('closedListing: synthetic listings are never indexed (Task 1035 AC3)', () => {
+  const meta = async (slug: string) => (await generateMetadata(params(slug))) as { title?: string; robots?: { index: boolean; follow: boolean } }
+
+  it('[SEC-X-SRV-CLOSED-PAGE] an active listing with a synthetic slug answers the bare title and noindex, nofollow; one with a normal slug is indexed as today', async () => {
+    const synthetic = { ...listing('syn', 'active'), slug: 'zz_synth_mi5k3a1f0b2c-flat' }
+    const syntheticSold = { ...listing('syn-sold', 'sold'), slug: 'zz_synth_mi5k3a1f0b2c-sold' }
+    const normal = { ...listing('norm', 'active'), slug: 'apartament-1' }
+    const lookalike = { ...listing('look', 'active'), slug: 'zz-synth-house' }
+    sessionDb = createFakeDb({ listings: [synthetic, syntheticSold, normal, lookalike] })
+
+    expect(await meta('zz_synth_mi5k3a1f0b2c-flat'), 'active synthetic listing').toEqual({ title: 'Lero.al', robots: { index: false, follow: false } })
+    expect(await meta('zz_synth_mi5k3a1f0b2c-sold'), 'sold synthetic listing').toEqual({ title: 'Lero.al', robots: { index: false, follow: false } })
+
+    const indexed = await meta('apartament-1')
+    expect(indexed.title, 'a normal slug gets the full title').toContain('| Lero.al')
+    expect(indexed.robots, 'a normal active listing carries no robots rule').toBeUndefined()
+    const alike = await meta('zz-synth-house')
+    expect(alike.title, 'a slug that only looks like the prefix gets the full title').toContain('| Lero.al')
+    expect(alike.robots, 'a slug that only looks like the prefix carries no robots rule').toBeUndefined()
+  })
+})
+
 // Task 953 (purity): the "new" badge compares the creation time with the clock. The clock is read outside the render body now, and the answer on either side of the
 // LISTING_NEW_DAYS window must be the same as before.
 describe('closedListing: the new-listing window follows the clock', () => {

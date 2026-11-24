@@ -20,6 +20,18 @@ const db = vi.hoisted(() => ({
   calls: [] as Call[],
   count: 0,
   rows: [] as Array<{ slug: string | null; updated_at: string | null }>,
+  /** a LIKE pattern read the way PostgreSQL reads it: a backslash makes the next character literal, `%` is any run of characters, `_` is any one character */
+  likeToRegExp: (pattern: string): RegExp => {
+    const literal = (c: string) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    let source = ''
+    for (let i = 0; i < pattern.length; i++) {
+      const ch = pattern[i]
+      if (ch === String.fromCharCode(92)) { i += 1; source += literal(pattern[i] ?? '') } else if (ch === '%') source += '.*'
+      else if (ch === '_') source += '.'
+      else source += literal(ch)
+    }
+    return new RegExp(`^${source}$`, 's')
+  },
 }))
 
 vi.mock('@/lib/supabase/admin', () => ({
@@ -29,16 +41,21 @@ vi.mock('@/lib/supabase/admin', () => ({
       from: (table: string) => {
         db.tables.push(table)
         let head = false
+        const notLike: string[] = []
         const query: Record<string, unknown> = {}
-        for (const method of ['select', 'eq', 'in', 'gte', 'order', 'range']) {
+        for (const method of ['select', 'eq', 'in', 'gte', 'not', 'order', 'range']) {
           query[method] = (...args: unknown[]) => {
             db.calls.push([method, ...args])
             if (method === 'select' && (args[1] as { head?: boolean } | undefined)?.head) head = true
+            // the database applies `.not('slug', 'like', pattern)`: a row whose slug matches the pattern is not returned
+            if (method === 'not' && args[1] === 'like') notLike.push(String(args[2]))
             return query
           }
         }
         query.then = (resolve: (value: unknown) => unknown) =>
-          resolve(head ? { count: db.count, error: null } : { data: db.rows, error: null })
+          resolve(head
+            ? { count: db.count, error: null }
+            : { data: db.rows.filter((row) => !notLike.some((pattern) => db.likeToRegExp(pattern).test(row.slug ?? ''))), error: null })
         return query
       },
     }
@@ -186,6 +203,26 @@ describe('sitemap files: only what a visitor may open', () => {
       ['select', 'id', { count: 'exact', head: true }],
       ['eq', 'status', 'active'],
       ['gte', 'expires_at', '2026-11-11T10:00:00.000Z'],
+      ['not', 'slug', 'like', 'zz\\_synth\\_%'],
     ])
+  })
+
+  it('[Task 1035 AC5] a synthetic test listing is left out of every file, in every language, and a real listing is kept', async () => {
+    db.rows = [
+      { slug: 'zz_synth_mi5k3a1f0b2c-delete-mine', updated_at: '2026-11-01T00:00:00.000Z' },
+      { slug: 'apartament-1', updated_at: '2026-11-02T00:00:00.000Z' },
+      { slug: 'zz-synth-house', updated_at: '2026-11-03T00:00:00.000Z' },
+    ]
+    for (const id of ['0', '1']) {
+      db.calls = []
+      const entries = await serve(id)
+      // the filter the route applies reaches the database: the policy of the public listings, plus the exclusion of the synthetic prefix
+      expect(db.calls, `file ${id}`).toContainEqual(['not', 'slug', 'like', 'zz\\_synth\\_%'])
+      const listingUrls = entries.map((e) => e.url).filter((url) => url.includes('/listings/') && !url.endsWith('/listings'))
+      expect(listingUrls.some((url) => url.includes('zz_synth_')), `file ${id}: no address of a synthetic listing`).toBe(false)
+      expect(listingUrls, `file ${id}: the real listings stay, in the four languages`).toEqual(
+        ['apartament-1', 'zz-synth-house'].flatMap((slug) => ['sq', 'en', 'uk', 'it'].map((l) => `https://lero.al/${l}/listings/${slug}`)),
+      )
+    }
   })
 })

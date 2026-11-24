@@ -38,4 +38,14 @@ describe('robots.txt', () => {
     ])
     expect(revalidate).toBe(3600)
   })
+
+  it('[Task 1035 AC5] has no rule for listing addresses: a crawler must be able to read the noindex of a synthetic listing, so none is blocked here', async () => {
+    const result = await robots()
+    const rules = Array.isArray(result.rules) ? result.rules : [result.rules]
+    for (const rule of rules) {
+      const disallowed = ([] as string[]).concat(rule?.disallow ?? [])
+      expect(disallowed.filter((path) => /listing|synth/i.test(path)), 'no disallow names a listing address or the synthetic prefix').toEqual([])
+      expect(rule?.allow, 'everything not private stays allowed').toBe('/')
+    }
+  })
 })

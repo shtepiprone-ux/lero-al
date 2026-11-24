@@ -7,7 +7,7 @@ import { applyPublicEligibleButHidden, applyPublicVisibility } from '@/modules/l
  * is ignored. No status or expiry literal lives here — the predicates are the shared helpers'.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function applyAdminListingsVisibility<Q extends { eq: any; in: any; gte: any; or: any; lt: any; is: any }>(
+export function applyAdminListingsVisibility<Q extends { eq: any; in: any; gte: any; or: any; lt: any; is: any; not: any }>(
   query: Q,
   visibility: string,
   reason: string,

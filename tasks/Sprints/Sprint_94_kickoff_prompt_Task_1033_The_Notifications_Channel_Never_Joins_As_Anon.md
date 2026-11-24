@@ -75,7 +75,7 @@ No visible change.
 1. Work on the branch the owner created from `main` (checklist H1); its first commit carries this kickoff and the archive of Task 1035 (Opus's).
 2. Tests first (AC1, AC2); save each failing output.
 3. `browser.ts` and the hook.
-4. Run: `npm test -- src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/browserAuth.security.test.ts src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts src/lib/auth/controller.signout.security.test.ts`. Deliberate breaks: `removeAllChannels` after `auth.signOut` → AC1 fails; subscribe without awaiting `setAuth` → AC2 fails; each restored. CI on GitHub only (`gh pr checks <n>`).
+4. Run: `npm test -- src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/browserAuth.security.test.ts src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts src/lib/auth/controller.signout.security.test.ts src/__tests__/reactHooksV7Behaviour.test.tsx`. Deliberate breaks: `removeAllChannels` after `auth.signOut` → AC1 fails; subscribe without awaiting `setAuth` → AC2 fails; each restored. CI on GitHub only (`gh pr checks <n>`).
 5. Report: each command, exit code, relevant output, each break and its result. After the merge Opus signs in and out on `localhost:3000` and the owner exports the Postgres log of that minute: no "invalid column for filter".
 
 ## Revision 1
@@ -86,9 +86,15 @@ No visible change.
 
 - R2-1 (Review 3, F2) `src/lib/auth/browser.ts:66`: the map's parameter is typed `(channel: RealtimeChannel)` (`import type { RealtimeChannel } from '@supabase/supabase-js'`); CI run 45495618495: "Parameter 'channel' implicitly has an 'any' type".
 
+## Revision 3
+
+- R3-1 (Review 5, F3) `src/__tests__/reactHooksV7Behaviour.test.tsx`: the client double gains `realtime: { setAuth: async () => {} }`, and the three `useNotifications` cases wait for the channel before their assertions (CI run 45499925266: 3 failed); that file joins the Route's run.
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1033_Review_1.md)
 - [Review 2 — APPROVED](../../docs/reviews/Task_1033_Review_2.md)
 - [Review 3 — NEEDS REVISION](../../docs/reviews/Task_1033_Review_3.md)
 - [Review 4 — APPROVED](../../docs/reviews/Task_1033_Review_4.md)
+- [Review 5 — NEEDS REVISION](../../docs/reviews/Task_1033_Review_5.md)
+- [Review 6 — APPROVED](../../docs/reviews/Task_1033_Review_6.md)

@@ -43,9 +43,17 @@
    "verdict": "not applicable",
    "reason": "the sign-in path and its CAPTCHA are unchanged"
   },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "not applicable",
+   "reason": "a test file of a hook changes; no output of input changes"
+  },
   "Denial_of_Service": {
    "verdict": "not applicable",
    "reason": "one awaited call before a subscription; no new request path"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no DOM sink in the hook or its test double"
   },
   "Input_Validation": {
    "verdict": "not applicable",
@@ -95,12 +103,16 @@
    "verdict": "not applicable",
    "reason": "no object is built from client keys here"
   },
+  "React_Security": {
+   "verdict": "not applicable",
+   "reason": "the hook keeps its outputs; only its Realtime join waits for the token"
+  },
   "Secure_Code_Review": {
    "verdict": "met",
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_1033_Review_1.md` to `docs/reviews/Task_1033_Review_4.md` (Review 3 read CI run 45495618495 of pull request #75)"
+   "evidence": "`docs/reviews/Task_1033_Review_1.md` to `docs/reviews/Task_1033_Review_6.md` (Reviews 3 and 5 read CI runs 45495618495 and 45499925266 of pull request #75)"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",
@@ -137,6 +149,10 @@
     "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
    ],
    "evidence": "Review 1 reran the Route line (30 passed) and the wider run of every sign-out caller (`src/lib/auth/controller.signout.security.test.ts` failed)"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "not applicable",
+   "reason": "no HTML sink or script is added by the task"
   },
   "WebSocket_Security": {
    "verdict": "met",

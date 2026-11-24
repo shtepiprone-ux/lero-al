@@ -23,6 +23,7 @@ import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import messages from '../../../../messages/en.json'
 import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
+import { ADMIN_PAGES, ADMIN_PAGE_KEYS, type AccessKey } from '@/lib/auth/adminPages'
 import type { PermissionData, PermissionEvent } from '@/modules/admin/actions/permissions'
 import { AdminPermissionsManager } from '../AdminPermissionsManager'
 
@@ -47,9 +48,12 @@ vi.mock('@/lib/toast', () => ({
 const t = messages.admin.permissions
 const keyLabel = (key: PermissionKey) => t.keys[key.replace('.', '_') as keyof typeof t.keys]
 
+// Task 1007: a page switch is labelled with the page's sidebar label (`admin.sidebar.<labelKey>`)
+const pageLabel = (labelKey: string) => messages.admin.sidebar[labelKey as keyof typeof messages.admin.sidebar]
+
 const PERMISSIONS = Object.fromEntries(
-  PERMISSION_KEYS.map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
-) as Record<PermissionKey, PermissionData>
+  [...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
+) as Record<AccessKey, PermissionData>
 
 const EVENTS: PermissionEvent[] = []
 
@@ -123,13 +127,45 @@ describe('AdminPermissionsManager — toggle (Task 892)', () => {
   })
 })
 
+describe('AdminPermissionsManager — page switches (Task 1007)', () => {
+  it('T8: toggling a page switch calls setModeratorPermission with the page key, then checks the switch and counts it among the pages', async () => {
+    renderManager()
+    const sw = screen.getByRole('switch', { name: pageLabel('item_users') }) as HTMLInputElement
+    expect(sw.checked).toBe(false)
+    fireEvent.click(sw)
+
+    expect(mockSetPermission).toHaveBeenCalledWith('page.users', true)
+    await waitFor(() => expect(sw.checked).toBe(true))
+    expect(mockToastSuccess).toHaveBeenCalledWith(t.save_success)
+    expect(document.body.textContent).toContain(`1 of ${ADMIN_PAGE_KEYS.length} allowed`)
+    expect(document.body.textContent, 'the action count is not touched').toContain(`0 of ${PERMISSION_KEYS.length} allowed`)
+  })
+})
+
 describe('AdminPermissionsManager — view states (Task 892)', () => {
   it('T4: every permission switch is reachable by its accessible name', () => {
     renderManager()
     for (const key of PERMISSION_KEYS) {
       expect(screen.getByRole('switch', { name: keyLabel(key) })).toBeTruthy()
     }
-    expect(screen.getAllByRole('switch')).toHaveLength(PERMISSION_KEYS.length)
+    expect(screen.getAllByRole('switch')).toHaveLength(PERMISSION_KEYS.length + ADMIN_PAGE_KEYS.length)
+  })
+
+  it('T6 (Task 1007): the section "Admin panel pages" has fifteen switches, each reachable by its sidebar label, with its path', () => {
+    renderManager()
+    expect(screen.getByText(t.pages_section_title)).toBeTruthy()
+    expect(ADMIN_PAGES).toHaveLength(15)
+    for (const page of ADMIN_PAGES) {
+      expect(screen.getByRole('switch', { name: pageLabel(page.labelKey) }), `${page.key}: ${pageLabel(page.labelKey)}`).toBeTruthy()
+      expect(screen.getAllByText(page.paths[0]).length, `${page.key}: its path is shown`).toBeGreaterThan(0)
+    }
+  })
+
+  it('T7 (Task 1007): the counts show the actions and the pages separately', () => {
+    renderManager()
+    const text = document.body.textContent ?? ''
+    expect(text).toContain(`0 of ${PERMISSION_KEYS.length} allowed`)
+    expect(text).toContain(`0 of ${ADMIN_PAGE_KEYS.length} allowed`)
   })
 
   it('T5: a failed audit read shows the unavailable alert', () => {

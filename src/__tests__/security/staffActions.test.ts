@@ -14,6 +14,8 @@ const access: Access[] = []
 const sideEffects: string[] = []
 let sessionUser: { id: string; email?: string } | null = null
 let sessionRole: string | null = null
+/** the `role_permissions` switches of the moderator that are on (Task 1007: the page keys and the action keys) */
+let switchedOn = new Set<string>()
 
 function recorder(client: 'user' | 'admin') {
   return {
@@ -25,12 +27,15 @@ function recorder(client: 'user' | 'admin') {
       chain.select = (cols?: string) => { rec.cols = cols; return chain }
       chain.insert = setOp('insert'); chain.update = setOp('update'); chain.upsert = setOp('upsert'); chain.delete = setOp('delete')
       for (const m of ['eq', 'neq', 'is', 'not', 'or', 'ilike', 'gte', 'lte', 'order', 'limit', 'range', 'match']) chain[m] = () => chain
+      // the switch of a moderator (Task 1007): `roleHasPermission` reads `role_permissions` for one `permission_key`; a key that is on answers `allowed`, any other has no row
+      let permissionKey = ''
+      chain.eq = (column: string, value: string) => { if (column === 'permission_key') permissionKey = value; return chain }
       // the rank read of an action on another account (Task 923 R66 (a), fail-closed): it is answered for exactly the ids that were asked for
       let rankIds: string[] | null = null
       chain.in = (_column: string, ids: string[]) => { rankIds = ids; return chain }
       const row = table === 'users' ? { role: sessionRole, status: 'active', user_type: 'private', name: 'X', id: sessionUser?.id } : null
       chain.single = async () => ({ data: row, error: row ? null : { message: 'none', code: 'PGRST116' } })
-      chain.maybeSingle = async () => ({ data: row, error: null })
+      chain.maybeSingle = async () => ({ data: table === 'role_permissions' ? (switchedOn.has(permissionKey) ? { allowed: true } : null) : row, error: null })
       chain.then = (resolve: (v: unknown) => void) => resolve(
         table === 'users' && rankIds
           ? { data: rankIds.map((id) => ({ id, role: id === sessionUser?.id ? sessionRole : 'user' })), error: null, count: rankIds.length }
@@ -139,6 +144,7 @@ beforeEach(() => {
   sideEffects.length = 0
   sessionUser = null
   sessionRole = null
+  switchedOn = new Set()
   vi.spyOn(console, 'error').mockImplementation(() => {})
   vi.spyOn(console, 'warn').mockImplementation(() => {})
   vi.spyOn(console, 'info').mockImplementation(() => {})
@@ -175,6 +181,49 @@ describe.each([
     await run(fn, args)
     expect(beyondRoleLookup(), `database access: ${JSON.stringify(beyondRoleLookup())}`).toEqual([])
     expect(sideEffects).toEqual([])
+  })
+})
+
+// ── Task 1007 AC4: the three loaders a browser can call follow the page keys ───────────────────────────────────────────────────────
+describe('a moderator and the page keys (Task 1007)', () => {
+  beforeEach(() => { sessionUser = { id: 'u-mod', email: 'mod@example.com' }; sessionRole = 'moderator' })
+  const reachedTable = (table: string) => access.some((a) => a.table === table)
+
+  const LOADERS: [name: string, pageKey: string, writeKey: string, table: string, fn: Fn][] = [
+    ['getAllCurrenciesAdmin', 'page.currency', 'catalog.manage', 'currencies', currencies.getAllCurrenciesAdmin as Fn],
+    ['getAllPropertyTypesAdmin', 'page.property_types', 'catalog.manage', 'property_types', propertyTypes.getAllPropertyTypesAdmin as Fn],
+  ]
+  it.each(LOADERS)('%s: without %s a moderator gets [] (the write key %s is no help); with it, the read runs', async (_name, pageKey, writeKey, table, fn) => {
+    switchedOn = new Set([writeKey, 'support.manage'])
+    expect(await fn(), 'no page key: nothing').toEqual([])
+    expect(reachedTable(table), `${table} is not read without ${pageKey}`).toBe(false)
+
+    access.length = 0
+    switchedOn = new Set([pageKey])   // the page key alone is enough to read the page: the writes keep catalog.manage
+    await fn()
+    expect(reachedTable(table), `${table} is read with ${pageKey}`).toBe(true)
+  })
+
+  it('searchUsersForPicker: refused without page.support and without support.manage; with both, the users are searched', async () => {
+    const search = admin.searchUsersForPicker as Fn
+    for (const on of [[], ['support.manage'], ['page.support']]) {
+      access.length = 0
+      switchedOn = new Set(on)
+      await expect(search('alba'), `switched on: ${on.join(', ') || 'nothing'}`).rejects.toThrow('forbidden')
+      expect(beyondRoleLookup(), `switched on: ${on.join(', ') || 'nothing'}: no user was read`).toEqual([])
+    }
+    access.length = 0
+    switchedOn = new Set(['page.support', 'support.manage'])
+    await search('alba')
+    expect(beyondRoleLookup().some((a) => a.table === 'users'), 'with both keys the users are searched').toBe(true)
+  })
+
+  it('an administrator reads all three with no row', async () => {
+    sessionRole = 'admin'
+    await (currencies.getAllCurrenciesAdmin as Fn)()
+    await (propertyTypes.getAllPropertyTypesAdmin as Fn)()
+    await (admin.searchUsersForPicker as Fn)('alba')
+    expect(reachedTable('currencies') && reachedTable('property_types') && access.some((a) => a.table === 'users' && /last_name/.test(a.cols ?? ''))).toBe(true)
   })
 })
 

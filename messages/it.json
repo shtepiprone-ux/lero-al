@@ -1809,6 +1809,8 @@
       "error_transient": "Errore temporaneo. Riprovare.",
       "admin_section_title": "Amministratore",
       "admin_full_access": "Accesso completo (non configurabile)",
+      "pages_section_title": "Pagine del pannello admin",
+      "pages_section_description": "Scegli quali pagine del pannello admin possono aprire i moderatori. Una pagina disattivata è nascosta dalla barra laterale e non può essere aperta. Footer e Permessi sono sempre riservati agli amministratori.",
       "column_description": "Descrizione",
       "column_last_updated": "Ultimo aggiornamento",
       "column_updated_by": "Da",
@@ -1865,6 +1867,9 @@
         "companies_manage": "Può creare, modificare o eliminare aziende e i loro loghi",
         "listings_moderate": "Può approvare gli annunci, cambiarne lo stato e modificarli"
       }
+    },
+    "pages_access": {
+      "none": "Nessuna pagina del pannello admin è attivata per il tuo account. Chiedi a un amministratore di darti l'accesso."
     },
     "common": {
       "status_control": {

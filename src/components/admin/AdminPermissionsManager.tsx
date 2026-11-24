@@ -9,10 +9,11 @@ import {
   type PermissionData,
   type PermissionEvent,
 } from '@/modules/admin/actions/permissions'
-import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
+import { PERMISSION_KEYS } from '@/lib/auth/permissionKeys'
+import { ADMIN_PAGE_KEYS, type AccessKey } from '@/lib/auth/adminPages'
 
 interface Props {
-  permissions: Record<PermissionKey, PermissionData>
+  permissions: Record<AccessKey, PermissionData>
   events: PermissionEvent[] | null
 }
 
@@ -20,9 +21,9 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
   const t = useTranslations('admin.permissions')
   const [permissions, setPermissions] = useState(initial)
   const [pending, startTransition] = useTransition()
-  const [saving, setSaving] = useState<PermissionKey | null>(null)
+  const [saving, setSaving] = useState<AccessKey | null>(null)
 
-  function handleToggle(key: PermissionKey, value: boolean) {
+  function handleToggle(key: AccessKey, value: boolean) {
     setSaving(key)
     startTransition(async () => {
       const result = await setModeratorPermission(key, value)
@@ -43,13 +44,16 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
     })
   }
 
+  // the actions and the admin pages are counted separately (Task 1007)
   const allowedCount = PERMISSION_KEYS.filter(k => permissions[k].allowed).length
+  const allowedPagesCount = ADMIN_PAGE_KEYS.filter(k => permissions[k].allowed).length
 
   return (
     <AdminPermissionsView
       permissions={permissions}
       events={events}
       allowedCount={allowedCount}
+      allowedPagesCount={allowedPagesCount}
       savingKey={saving && pending ? saving : null}
       onToggle={handleToggle}
     />

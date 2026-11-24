@@ -3,6 +3,7 @@ import { requireStaffPage } from '@/lib/auth/staff'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminPopularLocationsManager } from '@/components/admin/AdminPopularLocationsManager'
 import type { Location } from '@/types/database'
 
@@ -10,7 +11,7 @@ export const metadata = { title: 'Popular Locations — Admin' }
 
 export default async function AdminPopularLocationsPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.popular_locations' })
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
 
@@ -30,7 +31,7 @@ export default async function AdminPopularLocationsPage() {
   ])
 
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <AdminPageFrame>
       <AdminPageHeader
         title={t('popular_locations_title')}
         subtitle={t('popular_locations_subtitle', { count: featured?.length ?? 0 })}
@@ -39,6 +40,6 @@ export default async function AdminPopularLocationsPage() {
         featured={(featured ?? []) as Location[]}
         allCities={(allCities ?? []) as Location[]}
       />
-    </div>
+    </AdminPageFrame>
   )
 }

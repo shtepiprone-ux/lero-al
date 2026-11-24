@@ -1809,6 +1809,8 @@
       "error_transient": "Temporary error. Please try again.",
       "admin_section_title": "Administrator",
       "admin_full_access": "Full access (not configurable)",
+      "pages_section_title": "Admin panel pages",
+      "pages_section_description": "Choose which admin pages moderators can open. A page that is switched off is hidden from the sidebar and cannot be opened. Footer and Permissions are always for administrators only.",
       "column_description": "Description",
       "column_last_updated": "Last updated",
       "column_updated_by": "By",
@@ -1865,6 +1867,9 @@
         "companies_manage": "Can create, edit or delete companies and their logos",
         "listings_moderate": "Can approve listings, change their status and edit them"
       }
+    },
+    "pages_access": {
+      "none": "No admin pages are switched on for your account. Ask an administrator to give you access."
     },
     "common": {
       "status_control": {

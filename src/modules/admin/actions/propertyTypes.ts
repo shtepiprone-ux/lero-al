@@ -204,7 +204,8 @@ export async function deletePropertyType(
 export async function getAllPropertyTypesAdmin(): Promise<DBPropertyType[]> {
   // Security (Task 923 Revision 7, S16/S17): every exported function of this file is a public endpoint, so the read is guarded like the writes.
   // Without it the service-role query below answered ANY caller (here with the providers' api_key).
-  if ('error' in (await assertAdmin())) return []
+  // Task 1007: the read is the Property types page's, so it follows the page key the administrator switches (the writes keep `catalog.manage`)
+  if (!(await checkStaff({ permission: 'page.property_types' })).ok) return []
   const db = createAdminClient()
   const { data } = await db
     .from('property_types')

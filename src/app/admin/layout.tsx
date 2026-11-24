@@ -3,6 +3,8 @@ import { cookies } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { requireViewer } from '@/lib/auth/requireViewer'
+import { allowedAdminPageKeys } from '@/lib/auth/permissions'
+import { adminSidebarPaths } from '@/lib/auth/adminPages'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { getAllSettings } from '@/modules/admin/lib/settings'
 const ADMIN_LOCALE_COOKIE = 'admin-locale'
@@ -43,6 +45,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const isAuthorized = viewer.ok && (viewer.role === 'admin' || viewer.role === 'moderator')
   if (!isAuthorized) redirect(`/${locale}`)
 
+  // Task 1007: the sidebar shows the pages the administrator switched on for a moderator (one read, shared with the `/admin` landing); an administrator sees every item, a failed
+  // read shows none. Display only: every page and every loader checks its own key.
+  const role = viewer.ok ? viewer.role : null
+  const allowedPaths = adminSidebarPaths(role ? await allowedAdminPageKeys(role) : [], role === 'admin')
+
   const settings = await getAllSettings()
   const siteName = settings['site_name'] ?? 'Lero.al'
 
@@ -51,7 +58,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <AdminShell siteName={siteName} locale={locale}>{children}</AdminShell>
+      <AdminShell siteName={siteName} locale={locale} allowedPaths={allowedPaths}>{children}</AdminShell>
     </NextIntlClientProvider>
   )
 }

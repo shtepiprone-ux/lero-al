@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { requireStaffPage } from '@/lib/auth/staff'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminSettings } from '@/components/admin/AdminSettings'
 import type { AllSettings } from '@/components/admin/AdminSettings'
 import { getAllSettings } from '@/modules/admin/lib/settings'
@@ -31,7 +32,7 @@ const DEFAULTS: AllSettings = {
 
 export default async function AdminSettingsPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.settings' })
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const stored = await getAllSettings()
@@ -57,12 +58,12 @@ export default async function AdminSettingsPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl mx-auto">
+    <AdminPageFrame>
       <AdminPageHeader
         title={t('settings_title')}
         subtitle={t('settings_subtitle')}
       />
       <AdminSettings initialSettings={initialSettings} />
-    </div>
+    </AdminPageFrame>
   )
 }

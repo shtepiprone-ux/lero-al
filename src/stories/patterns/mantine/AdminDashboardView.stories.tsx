@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { withAdminShell } from '@/stories/_StoryAdminShell'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminDashboardView, type AdminDashboardViewProps } from '@/modules/admin/dashboard/components/AdminDashboardView'
 import { DASHBOARD_PERIOD_NOW } from '@/stories/fixtures/dashboardPeriod.fixture'
 import {
@@ -36,8 +37,8 @@ import {
 // `MantineAppShellFoundation` has `navbarBreakpoint="lg"` (`src/components/admin/AdminShell.tsx:23`) and a fixed
 // 240px navbar from 1024px. Every export therefore renders inside the real `AdminShell` (one meta decorator),
 // the same way `AdminShell.stories.tsx` does — no Box, width, padding or viewport pin of this Story's own.
-// GR-3d: no `StoryPageGutter` — this page-level View carries its own page gutter, the root
-// `MantineDashboardGrid` (`px={{ base: 'md', md: 'xl' }}`, `src/design-system/mantine/patterns/MantineDashboardGrid.tsx`).
+// GR-3d: no `StoryPageGutter` — Task 1007 (owner decision O1007-2): in production `src/app/admin/page.tsx` renders the view inside `AdminPageFrame` (full width, the breakpoint
+// gutter) and the view's root `MantineDashboardGrid` is `framed={false}` (no cap, no padding of its own), so every export renders inside the same `AdminPageFrame`.
 const meta: Meta<typeof AdminDashboardView> = {
   title: 'Patterns/Mantine/AdminDashboardView',
   component: AdminDashboardView,
@@ -76,14 +77,14 @@ function baseProps(locale: string): AdminDashboardViewProps {
 export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} /></AdminPageFrame>
   },
 }
 /** R7 state — the ADM-02 query fails; every other block still renders its own data. */
 export const Adm02Error: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} data={adminDashboardAdm02Error(locale)} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} data={adminDashboardAdm02Error(locale)} /></AdminPageFrame>
   },
 }
 
@@ -91,7 +92,7 @@ export const Adm02Error: Story = {
 export const AllQueuesZero: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} data={adminDashboardAllQueuesZero(locale)} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} data={adminDashboardAllQueuesZero(locale)} /></AdminPageFrame>
   },
 }
 
@@ -99,7 +100,7 @@ export const AllQueuesZero: Story = {
 export const Adm09Zero: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} data={adminDashboardAdm09Zero(locale)} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} data={adminDashboardAdm09Zero(locale)} /></AdminPageFrame>
   },
 }
 
@@ -107,7 +108,7 @@ export const Adm09Zero: Story = {
 export const NoLocationRequests: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} data={adminDashboardNoLocationRequests(locale)} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} data={adminDashboardNoLocationRequests(locale)} /></AdminPageFrame>
   },
 }
 
@@ -116,7 +117,7 @@ export const NoLocationRequests: Story = {
 export const ActivityStale: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} freshness={freshnessStale()} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} freshness={freshnessStale()} /></AdminPageFrame>
   },
 }
 
@@ -125,7 +126,7 @@ export const ActivityStale: Story = {
 export const ActivityError: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} activity={activitySeriesFailed()} freshness={freshnessFailed()} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} activity={activitySeriesFailed()} freshness={freshnessFailed()} /></AdminPageFrame>
   },
 }
 
@@ -133,7 +134,7 @@ export const ActivityError: Story = {
 export const ActivityEmptyPeriod: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} activity={activitySeriesAllZero(30)} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} activity={activitySeriesAllZero(30)} /></AdminPageFrame>
   },
 }
 
@@ -142,7 +143,7 @@ export const ActivityEmptyPeriod: Story = {
 export const TrendsError: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} trends={adminTrendsError()} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} trends={adminTrendsError()} /></AdminPageFrame>
   },
 }
 
@@ -150,6 +151,6 @@ export const TrendsError: Story = {
 export const CitiesOnlyOther: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    return <AdminDashboardView {...baseProps(locale)} cities={adminCitiesOnlyOther()} />
+    return <AdminPageFrame><AdminDashboardView {...baseProps(locale)} cities={adminCitiesOnlyOther()} /></AdminPageFrame>
   },
 }

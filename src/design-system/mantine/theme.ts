@@ -281,21 +281,6 @@ declare module '@mantine/core' {
       appShellNavbarWidth: number
       appShellHeaderHeight: number
       adminTopBarHeight: number
-      // Task 877 (D71-4, precedent Task 825's `lightboxMediaMaxWidth`) — `/admin/currency`'s page
-      // wrapper `max-w-5xl` (64rem, 1024px), the same wrapper the other admin pages still carry.
-      adminPageMaxWidth: string
-      // Task 893 (R8) — `/admin/users/new`'s page wrapper `max-w-3xl` (48rem, 768px), the narrower form
-      // wrapper; same value type and read helper as `adminPageMaxWidth`.
-      adminPageFormMaxWidth: string
-      // Task 868 (R6) — `/admin/pages`'s page wrapper `max-w-4xl` (56rem, 896px), the narrower list wrapper;
-      // same value type and read helper as `adminPageMaxWidth`.
-      adminPageNarrowMaxWidth: string
-      // Task 896 (R5) — `/admin/users`'s page wrapper `max-w-10xl` / `.container-admin` (112rem, 1792px), the
-      // widest list wrapper; same value type and read helper as `adminPageMaxWidth`. Task 857 reuses this key.
-      adminPageShellMaxWidth: string
-      // Task 892 (R5) — `/admin/permissions`'s page wrapper `max-w-2xl` (42rem, 672px), the narrowest admin
-      // wrapper; same value type and read helper as `adminPageMaxWidth`.
-      adminPagePanelMaxWidth: string
       // Task 857 R19 — the width of a data table's title column (a `wrap: true` column clamped to two lines).
       // Provenance: legacy `AdminListingsTable.tsx:511` (`git show HEAD`) `truncate max-w-50`, 12.5rem; owner
       // decision 2026-10-02; `docs/mantine-responsive-design-system.md` §7.3 (a).
@@ -876,11 +861,6 @@ export const theme = createTheme({
       appShellNavbarWidth: 240,   // Task 852: MantineAppShellFoundation default navbar width (spec §17.1)
       appShellHeaderHeight: 60,   // Task 852: MantineAppShellFoundation default header height
       adminTopBarHeight: 72,      // Task 852: AdminShell's own top-bar height (spec §17.1, all widths)
-      adminPageMaxWidth: '64rem', // 1024px — Task 877: admin page wrapper (legacy `max-w-5xl`)
-      adminPageFormMaxWidth: '48rem', // 768px — Task 893: admin form page wrapper (legacy `max-w-3xl`)
-      adminPageNarrowMaxWidth: '56rem', // 896px — Task 868: /admin/pages page wrapper (legacy `max-w-4xl`)
-      adminPageShellMaxWidth: '112rem', // 1792px — Task 896: admin list-page wrapper (legacy max-w-10xl / .container-admin cap)
-      adminPagePanelMaxWidth: '42rem', // 672px — Task 892: /admin/permissions page wrapper (legacy max-w-2xl)
       tableTitleColumnWidth: '12.5rem', // 200px — Task 857 R19: table title column (legacy `max-w-50`, §7.3 (a))
       editLayoutSidebarWidth: 288,      // Task 957 R2-1: AdminEditLayout sidebar from 1024px (legacy `lg:w-72`)
       editLayoutSidebarWidthWide: 320,  // Task 957 R2-1: AdminEditLayout sidebar from 1280px (legacy `xl:w-80`)

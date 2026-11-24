@@ -3,6 +3,7 @@ import { requireStaffPage } from '@/lib/auth/staff'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminCompaniesManager } from '@/components/admin/AdminCompaniesManager'
 import type { Company } from '@/types/database'
 
@@ -10,7 +11,7 @@ export const metadata = { title: 'Companies — Admin' }
 
 export default async function AdminCompaniesPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.companies' })
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
 
@@ -41,12 +42,12 @@ export default async function AdminCompaniesPage() {
   }))
 
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <AdminPageFrame>
       <AdminPageHeader
         title={t('companies_title')}
         subtitle={t('companies_subtitle', { count: count ?? 0 })}
       />
       <AdminCompaniesManager companies={rows} now={new Date().toISOString()} />
-    </div>
+    </AdminPageFrame>
   )
 }

@@ -164,6 +164,8 @@ describe('moderatorKeys', () => {
       ['listings.moderate', 'changeListingStatusAction', () => listings.changeListingStatusAction('l1', 'inactive')],
       ['locations.manage', 'approveLocationRequest', () => admin.approveLocationRequest('u1', 1)],
     ]
+    // Task 1007: the user picker belongs to the support page, so it needs the page key as well as the action key
+    const ALSO_NEEDS: Record<string, string[]> = { searchUsersForPicker: ['page.support'] }
     const run = async (fn: () => Promise<unknown>) => { try { return await fn() } catch (e) { return `threw:${(e as Error).message}` } }
     const keysCovered = new Set(CASES.map((c) => c[0]))
     for (const key of ['users.edit', 'users.verify', 'support.manage', 'inquiries.manage', 'catalog.manage', 'email_templates.manage', 'companies.manage', 'listings.moderate']) {
@@ -179,7 +181,13 @@ describe('moderatorKeys', () => {
       expect(state.reached.filter((r) => r !== 'listings'), `${name} without ${key}: nothing was written and the gateway was not reached`).toEqual([])
 
       // the same moderator WITH the key (switched on between the two calls: nothing is cached)
+      // (a call that needs a second key is refused with the action key alone, and passes with both)
       state.allowedKeys = new Set([key]); state.reached = []
+      if (ALSO_NEEDS[name]) {
+        expect(JSON.stringify(await run(call)).toLowerCase(), `${name} with ${key} only`).toMatch(/forbidden|unauthori/)
+        state.reached = []
+      }
+      state.allowedKeys = new Set([key, ...(ALSO_NEEDS[name] ?? [])])
       const allowed = await run(call)
       expect(JSON.stringify(allowed ?? '').toLowerCase(), `${name} with ${key}`).not.toMatch(/forbidden|unauthori/)
 

@@ -16,7 +16,7 @@ export default async function AdminReportsPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.reports' })
   const sp = await searchParams
   const initialFilter = parseReportStatusParam(sp.status)
   const locale = await getAdminLocale()
@@ -39,7 +39,7 @@ export default async function AdminReportsPage({
     .limit(200)
 
   return (
-    <AdminPageFrame width="shell">
+    <AdminPageFrame>
       <AdminPageHeader
         title={t('reports_title')}
         subtitle={t('reports_subtitle', { count: count ?? 0 })}

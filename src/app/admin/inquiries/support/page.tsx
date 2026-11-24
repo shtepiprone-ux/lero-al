@@ -14,7 +14,7 @@ export const metadata = { title: 'Support Inquiries — Admin' }
 
 export default async function AdminInquiriesSupportPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
-  await requireStaffPage()
+  await requireStaffPage({ page: 'page.inquiries_support' })
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const db = createAdminClient()
@@ -44,7 +44,7 @@ export default async function AdminInquiriesSupportPage() {
   }
 
   return (
-    <AdminPageFrame width="shell">
+    <AdminPageFrame>
       <AdminPageHeader
         title={t('inquiries_support_title')}
         subtitle={t('inquiries_subtitle', { count: count ?? 0 })}

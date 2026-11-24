@@ -11,7 +11,7 @@ import { applyListingTransitionByStatus } from '@/modules/listings/actions/apply
 import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 import { routing } from '@/i18n/routing'
 import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
-import type { PermissionKey } from '@/lib/auth/permissionKeys'
+import type { AccessKey } from '@/lib/auth/adminPages'
 import { createNotification } from '@/modules/notifications/lib/createNotification'
 import { orContains } from '@/lib/postgrest/escape'
 import { safeExternalUrl } from '@/lib/security/safeUrl'
@@ -30,7 +30,7 @@ import { trustedAppOrigin, trustedRedirectUrl } from '@/lib/auth/trustedOrigin'
 // Resolves the authenticated admin actor for transition gateway calls.
 // Returns userId + role for the TransitionActorContext.
 
-async function resolveAdminActor(permission?: PermissionKey) {
+async function resolveAdminActor(permission?: AccessKey) {
   // one guard for every staff action (Task 923 R71 (k)): a blocked, deactivated, deleted or missing account of any role is refused here too. Every action that admits a
   // moderator names its key (Task 923 R75): an administrator holds every key, a moderator only the keys that were switched on.
   const staff = await checkStaff({ permission })
@@ -38,7 +38,7 @@ async function resolveAdminActor(permission?: PermissionKey) {
   return { userId: staff.userId, role: staff.role as string, source: 'admin_panel' as const }
 }
 
-async function assertAdminAccess(permission: PermissionKey) {
+async function assertAdminAccess(permission: AccessKey) {
   await resolveAdminActor(permission)
 }
 
@@ -823,6 +823,7 @@ export async function searchUsersForPicker(query: string): Promise<{
   id: string; name: string | null; last_name: string | null; phone: string | null;
   role: string; status: string | null; company_name: string | null;
 }[]> {
+  await assertAdminAccess('page.support')     // Task 1007: the picker is read by the support page, so a moderator needs the page switched on too
   await assertAdminAccess('support.manage')   // the picker belongs to the support tickets (it finds the requester and the reported user)
   const q = query.trim()
   if (q.length < 2) return []

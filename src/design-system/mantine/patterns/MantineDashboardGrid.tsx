@@ -7,6 +7,9 @@ const TOP_ROW_MAX_COLUMNS = 4
 
 export interface MantineDashboardGridProps {
   children?: ReactNode
+  /** Task 1007 (owner decision O1007-2): `true` (default) is the box the cabinet statistics use, capped and padded as on `main`; `false` drops the cap, the centring and the
+   * padding because a page frame (`AdminPageFrame`) already owns them — the admin dashboard. The gap between rows stays. */
+  framed?: boolean
 }
 
 export interface MantineDashboardGridTopRowProps {
@@ -52,10 +55,11 @@ export interface MantineDashboardGridFullProps {
  *
  * Production consumers: 853, 854.
  */
-export function MantineDashboardGrid({ children }: MantineDashboardGridProps) {
+export function MantineDashboardGrid({ children, framed = true }: MantineDashboardGridProps) {
   const theme = useMantineTheme()
+  const box = framed ? { maw: theme.other.boxSize.dashboardContentMaxWidth, mx: 'auto', p: { base: 'md', md: 'xl' } } : {}
   return (
-    <Box w="100%" maw={theme.other.boxSize.dashboardContentMaxWidth} mx="auto" p={{ base: 'md', md: 'xl' }}>
+    <Box w="100%" {...box}>
       <Flex direction="column" gap={{ base: 'md', md: 'xl' }}>
         {children}
       </Flex>

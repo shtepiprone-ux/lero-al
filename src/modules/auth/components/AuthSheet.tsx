@@ -453,7 +453,7 @@ function RegisterView({
         setCaptchaToken(null)
         setErrorKey('captcha_error_failed')
       } else {
-        setErrorKey(result.supabaseErrorMessage ? mapAuthError(result.supabaseErrorMessage) : 'error_generic')
+        setErrorKey(result.errorKey ?? 'error_generic')
         widgetRef.current?.reset()
         setCaptchaToken(null)
       }

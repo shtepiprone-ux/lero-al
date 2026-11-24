@@ -66,11 +66,10 @@ const rel = (path: string) => path.slice(process.cwd().length + 1).split('\\').j
 
 /** places where a caught error's message is deliberately returned, with the reason */
 const ON_PURPOSE: Record<string, string> = {
-  'src/modules/auth/actions/captcha.ts': 'the sign-up and reset forms map Supabase AUTH\'s own message (not a database message) to their text; the action also tests it for the word "captcha"',
+  'src/modules/auth/actions/captcha.ts': 'the sign-up action maps Supabase AUTH\'s own message (not a database message) to a key on the server (mapAuthError) and answers only the key; the reset answers no text; the action also tests the message for the word "captcha"',
 }
 /** places still open at the time of Revision 16, with the reason: they are outside both security contracts of Task 923 and are reported to Opus */
 const STILL_OPEN: Record<string, string> = {
-  'src/modules/listings/actions/favoriteActions.ts': 'outside the scope of both contracts (two `return { error: error.message }`)',
   'src/app/api/cron/listing-activity/route.ts': 'a cron-secret caller reads it, not a browser; outside the scope of both contracts',
 }
 

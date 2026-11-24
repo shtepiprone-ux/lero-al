@@ -37,7 +37,7 @@ export async function addFavorite(
   }
 
   console.error('Failed to add favorite', { error, listingId, userId: authUser.id })
-  return { error: error.message }
+  return { error: 'favorite_failed' }
 }
 
 /**
@@ -63,7 +63,7 @@ export async function removeFavorite(
 
   if (error) {
     console.error('Failed to remove favorite', { error, listingId, userId: authUser.id })
-    return { error: error.message }
+    return { error: 'favorite_failed' }
   }
 
   revalidateFavorites()

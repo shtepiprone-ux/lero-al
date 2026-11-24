@@ -621,7 +621,7 @@
    "requirements": [
     {
      "quote": "Using validation that is cheap in resources first",
-     "task": "955"
+     "task": "1025"
     },
     {
      "quote": "can take exponential time on some inputs, so one short request can keep a CPU core busy",
@@ -1028,11 +1028,11 @@
    "requirements": [
     {
      "quote": "Validate on the server even when the browser checks the same fields.",
-     "task": "955"
+     "task": "1025"
     },
     {
      "quote": "Reject invalid requests with a clear error; do not continue with partially validated data.",
-     "task": "955"
+     "task": "1025"
     },
     {
      "quote": "Build absolute URLs, such as password reset and email links, from configuration instead of the request",
@@ -1099,7 +1099,7 @@
    "requirements": [
     {
      "quote": "Never pass untrusted input to a recursive merge or set-by-path helper",
-     "task": "955"
+     "task": "1025"
     },
     {
      "quote": "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters.",
@@ -1223,7 +1223,7 @@
    "requirements": [
     {
      "quote": "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted",
-     "task": "955"
+     "task": "1021"
     },
     {
      "quote": "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted",
@@ -1248,7 +1248,7 @@
    "requirements": [
     {
      "quote": "Developers must embrace this standard and begin to implement",
-     "task": "955"
+     "task": "1026"
     }
    ],
    "reviewedSha": "61843bd5c4d4bee33e351dd37cd0f315b9bc6243",
@@ -1437,7 +1437,7 @@
    "requirements": [
     {
      "quote": "Treat each reachable action as a client-callable POST entry point.",
-     "task": "955"
+     "task": "1025"
     },
     {
      "quote": "Rendering the form only on a protected page does not authenticate the action request.",
@@ -1649,7 +1649,7 @@
    "requirements": [
     {
      "quote": "If objects have to be used then they should be created using the Object.create(null) API",
-     "task": "955"
+     "task": "1025"
     }
    ],
    "reviewedSha": "8e34d7c3e48743779ba9de12db8d459c6e258143",
@@ -2261,7 +2261,7 @@
    "requirements": [
     {
      "quote": "Schema validation enforces constraints and syntax defined by the schema.",
-     "task": "955"
+     "task": "1025"
     }
    ],
    "reviewedSha": "be2a9f1c09cadffbca6c179e7d3c27c20a053226",

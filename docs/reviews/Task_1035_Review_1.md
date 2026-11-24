@@ -1,6 +1,6 @@
 # Task 1035 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md) · OWASP record: [Task_1035.json](../security/owasp/reviews/Task_1035.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md) · OWASP record: [Task_1035.json](../security/owasp/reviews/Task_1035.json)
 
 Review 1 of the working tree on 1e37f942a (uncommitted) — APPROVED
 Scope: `src/modules/listings/lib/indexing.ts` (new), the `.not` line and constraint in `visibility.ts`, the `noindex` branch of the listing page's `generateMetadata`, the AC tests, and the two query doubles of Opus's Scope amendment (after the executor's BLOCKED report): exactly the Fix.

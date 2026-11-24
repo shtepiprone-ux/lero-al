@@ -1,6 +1,6 @@
 # Task 1035 — Review 3
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md) · OWASP record: [Task_1035.json](../security/owasp/reviews/Task_1035.json) · Previous: [Review 2](Task_1035_Review_2.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md) · OWASP record: [Task_1035.json](../security/owasp/reviews/Task_1035.json) · Previous: [Review 2](Task_1035_Review_2.md)
 
 Review 3 of the working tree on 9cb38f45e (Revision 1, uncommitted) — APPROVED
 Scope: `src/app/admin/listings/visibilityFilter.ts:10`, one line: exactly R1-1.

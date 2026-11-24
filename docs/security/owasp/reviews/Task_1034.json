@@ -1,6 +1,10 @@
 {
  "task": "1034",
  "sheets": {
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff changes checklist D3 text only; no agent tool, permission or hook changes"
+  },
   "Authorization": {
    "verdict": "met",
    "quotes": [
@@ -60,6 +64,10 @@
    "verdict": "not applicable",
    "reason": "no key is created, read or rotated here"
   },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no model prompt or model input path changes in the diff"
+  },
   "Logging": {
    "verdict": "met",
    "quotes": [
@@ -74,6 +82,10 @@
   "Mass_Assignment": {
    "verdict": "not applicable",
    "reason": "the task writes no record at all"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or configuration changes in the diff"
   },
   "Multi_Tenant_Security": {
    "verdict": "not applicable",

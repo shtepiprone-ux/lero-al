@@ -33,3 +33,12 @@ Overall risk: the pages read the stored replies again; a failed read is logged b
 ## Open parts of Opus and the owner
 
 - Owner: commit, push and open the pull request; Opus: V14 (`gh pr checks <n>`), then H7.
+
+## V14 — pull request #73, run 45464508190
+
+`gh pr checks 73` → exit 1: `Lint, types and product checks` failed at `check-files.mjs --all`: "`## Cause`: b582094da is not a commit of this repository"
+(the kickoff's "Read at" named a commit of the squash-merged, deleted Task 1032 branch; locally the commit still exists, so the local check passed). Every
+other check passed, `Authorization regression` (AC2) among them. Fixed by Opus: "Read at `756950f15`" (`main`; the four cited files are identical
+there, `git rev-parse <sha>:<path>`), and checklist D3 now requires a "Read at" commit on `main` (owner, 2026-11-24: "change the rules if it is
+really necessary from the point of view of best practice"). The rule change adds AI_Agent_Security, LLM_Prompt_Injection_Prevention and
+MCP_Security to `Task_1034.json`. No product file changes; the verdict stands.

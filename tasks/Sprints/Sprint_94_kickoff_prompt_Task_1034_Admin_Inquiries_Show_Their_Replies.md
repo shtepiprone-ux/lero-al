@@ -12,7 +12,7 @@ both pages load the replies with the name of the staff member who sent each one,
 
 ## Cause
 
-Read at `b582094da`
+Read at `756950f15`
 - Both pages read the replies with the embed `replier:users!replied_by(name)` (`src/app/admin/inquiries/sales/page.tsx:40`, `src/app/admin/inquiries/support/page.tsx:40`) and ignore the error of that read (`:38-43`: only `data` is used).
 - `contact_inquiry_replies.replied_by` references `auth.users`, not `public.users`: Task 923's account-deletion migration repointed it (`supabase/sql_migrations/task923/db-catalog/proposed-account-deletion.sql:246`) and added the column `replied_by_name`, filled by a trigger, to keep the name when the account goes (`:182`, `:226`).
 - So PostgREST cannot resolve the embed: the page's query run with the service role on 2026-11-24 → `PGRST200 Could not find a relationship between 'contact_inquiry_replies' and 'users' in the schema cache`; the same read without the embed → 6 rows, `replied_by_name` set on all 6. The page gets `replies = []`, and the dialog shows the alert for an inquiry with `reply_count > 0` (`src/components/admin/InquiryDetailDialogView.tsx:117-119`).

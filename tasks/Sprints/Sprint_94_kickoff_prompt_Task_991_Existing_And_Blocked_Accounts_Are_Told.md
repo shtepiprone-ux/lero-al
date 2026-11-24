@@ -99,6 +99,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19; re-run 2026-11-24
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — `explainRefusedSignIn` checks token and limiter itself, tested by direct call — AC3.
 - OAuth2: not applicable — Google sign-in is out of scope and unchanged.
 - Prototype_Pollution_Prevention: not applicable — no object is built from client keys.
+- React_Security: "Validate every argument as untrusted input" — mapped 2026-11-24 in Review 2 (upstream `18e6c89f960e`): `explainRefusedSignIn` checks the type and length of every argument before any call, and the reset request checks the address's shape before its lookup (Revision 1) — AC2, AC3.
 - Query_Parameterization: "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure." — the function takes typed arguments and builds no dynamic SQL — AC5.
 - SQL_Injection_Prevention: "use parameterized queries for dynamic data values" — the address and password reach SQL only as function arguments through the RPC — AC5.
 - Secrets_Management: not applicable — no secret is added; the service-role key and the Turnstile secret stay where they are.
@@ -158,3 +159,4 @@ and a support link. Reference research (GR-7): inherited canonical design — ow
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_991_Review_1.md)
+- [Review 2 — APPROVED WITH NOTES](../../docs/reviews/Task_991_Review_2.md)

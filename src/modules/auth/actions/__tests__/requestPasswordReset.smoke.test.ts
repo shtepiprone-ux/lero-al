@@ -46,7 +46,9 @@ async function flushAfter() {
   while (afterQueue.length) await afterQueue.shift()!()
 }
 
-// Task 991: the service-role client, as the action uses it (address search, Auth account of a candidate, profile row, shared limiter) and the mail helper.
+// Task 991 Revision 1 (F1): the service-role client, as the action uses it: ONE exact-address lookup `account_status_by_email` (the double matches
+// lower(email) = lower(p_email) exactly, as the SQL does, so `%` and `_` are ordinary characters) and the shared limiter. Any other call
+// (the wildcard search `admin_search_users_by_email`, `auth.admin.*`, a table read) is not answered, so a call to it fails the lookup and is listed in `rpcCalls`.
 type Account = { id: string; email: string; status: string; suspended_until: string | null }
 const world = {
   accounts: [] as Account[],
@@ -60,9 +62,10 @@ vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: () => ({
     rpc: async (name: string, args: Record<string, unknown>) => {
       world.rpcCalls.push({ name, args })
-      if (name === 'admin_search_users_by_email') {
+      if (name === 'account_status_by_email') {
         if (world.searchError) return { data: null, error: { code: 'XX000' } }
-        return { data: world.accounts.filter((a) => a.email.toLowerCase().includes(String(args.q))).map((a) => ({ id: a.id })), error: null }
+        const wanted = String(args.p_email).toLowerCase()
+        return { data: world.accounts.filter((a) => a.email.toLowerCase() === wanted).map((a) => ({ id: a.id, email: a.email, status: a.status, suspended_until: a.suspended_until })), error: null }
       }
       if (name === 'consume_rate_limit') {
         if (world.limiterError) return { data: null, error: { code: 'XX000' } }
@@ -73,20 +76,6 @@ vi.mock('@/lib/supabase/admin', () => ({
       }
       return { data: null, error: { code: '42883' } }
     },
-    auth: { admin: { getUserById: async (id: string) => {
-      const account = world.accounts.find((a) => a.id === id)
-      return { data: { user: account ? { id, email: account.email } : null }, error: null }
-    } } },
-    from: (table: string) => ({
-      select: () => ({
-        eq: (_column: string, id: string) => ({
-          maybeSingle: async () => {
-            const account = world.accounts.find((a) => a.id === id)
-            return { data: table === 'users' && account ? { status: account.status, suspended_until: account.suspended_until, deleted_at: null } : null, error: null }
-          },
-        }),
-      }),
-    }),
   }),
 }))
 vi.mock('@/modules/notifications/lib/sendTemplatedEmail', () => ({
@@ -276,4 +265,70 @@ describe('requestPasswordResetWithCaptcha — a blocked address (Task 991 AC2)',
     const unknown = await requestPasswordResetWithCaptcha(reset('nobody@example.com'))
     expect(JSON.stringify([blocked, active, unknown])).toBe(JSON.stringify([{ ok: true }, { ok: true }, { ok: true }]))
   })
+})
+
+// ── Task 991 Revision 1 (F1): the lookup is one exact-address call, after a shape check, never a wildcard search ──────────────────────────────────────────────────────────
+
+describe('requestPasswordResetWithCaptcha — the account lookup is exact and cheap (Task 991 Revision 1, F1)', () => {
+  const reset = (email: unknown, captchaToken = 'valid-token') => ({ email, captchaToken, redirectTo: 'https://lero.al/sq/auth/reset-password' }) as never
+  const account = (over: Partial<Account> = {}): Account => ({ id: 'user-1', email: 'Ana@Example.com', status: 'blocked', suspended_until: null, ...over })
+  const lookups = () => world.rpcCalls.filter((c) => c.name === 'account_status_by_email')
+
+  it.each([
+    ['an address that is not text (a number)', 42],
+    ['an address that is not text (null)', null],
+    ['an address that is not text (an object)', { a: 1 }],
+    ['an empty address', ''],
+    ['an address of 255 characters', `${'a'.repeat(243)}@example.com`],
+    ['an address without an at sign', 'ana.example.com'],
+    ['the wildcard % alone', '%'],
+    ['the wildcard _ alone', '_'],
+  ])('%s goes to Auth as before: no service-role call at all, no mail, no token check by the action', async (_label, email) => {
+    world.accounts = [account()]
+    const { requestPasswordResetWithCaptcha } = await import('../captcha')
+    expect(await requestPasswordResetWithCaptcha(reset(email))).toEqual({ ok: true })
+    expect(world.rpcCalls, 'no lookup and no limiter call for an address of the wrong shape').toEqual([])
+    expect(mockResetPasswordForEmail).toHaveBeenCalledTimes(1)
+    expect(mockResetPasswordForEmail.mock.calls[0][0]).toBe(email)
+    expect(mockVerifyTurnstile).not.toHaveBeenCalled()
+    await flushAfter()
+    expect(world.mails).toEqual([])
+  })
+
+  it('an address of exactly 254 characters is still looked up (the shape check is a bound, not a stricter rule)', async () => {
+    const longest = `${'a'.repeat(242)}@example.com`
+    expect(longest).toHaveLength(254)
+    const { requestPasswordResetWithCaptcha } = await import('../captcha')
+    await requestPasswordResetWithCaptcha(reset(longest))
+    expect(lookups()).toHaveLength(1)
+  })
+
+  it('the lookup is ONE account_status_by_email call with the lower-cased, trimmed address, and never the wildcard search or an Auth admin call', async () => {
+    world.accounts = [account()]
+    const { requestPasswordResetWithCaptcha } = await import('../captcha')
+    expect(await requestPasswordResetWithCaptcha(reset('  ANA@Example.COM  '))).toEqual({ ok: true })
+    expect(lookups()).toHaveLength(1)
+    expect(lookups()[0].args).toEqual({ p_email: 'ana@example.com' })
+    expect(world.rpcCalls.map((c) => c.name)).not.toContain('admin_search_users_by_email')
+    // blocked: the token is verified here and the one mail goes out after the answer; the rest of the calls are the limiter's
+    await flushAfter()
+    expect(world.mails.map((m) => m.key)).toEqual(['account_blocked'])
+    expect(world.rpcCalls.map((c) => c.name).sort()).toEqual(['account_status_by_email', 'consume_rate_limit'])
+  })
+
+  it.each([['%@example.com'], ['_na@example.com'], ['%na@example.com'], ['ana@%']])(
+    'the wildcard address %j looks nothing else up: one exact call with that text, no account found, no mail, Auth as before',
+    async (email) => {
+      world.accounts = [account(), account({ id: 'user-2', email: 'bob@example.com', status: 'active' })]
+      const { requestPasswordResetWithCaptcha } = await import('../captcha')
+      expect(await requestPasswordResetWithCaptcha(reset(email))).toEqual({ ok: true })
+      expect(lookups()).toHaveLength(1)
+      expect(lookups()[0].args).toEqual({ p_email: email })
+      expect(world.rpcCalls.map((c) => c.name)).toEqual(['account_status_by_email'])
+      expect(mockResetPasswordForEmail).toHaveBeenCalledTimes(1)
+      expect(mockVerifyTurnstile).not.toHaveBeenCalled()
+      await flushAfter()
+      expect(world.mails).toEqual([])
+    },
+  )
 })

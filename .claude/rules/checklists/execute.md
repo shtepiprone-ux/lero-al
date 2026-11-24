@@ -5,7 +5,7 @@ Every item, in this order, under checklist A. The report names each item with it
 
 | # | Step | Done when |
 |---|---|---|
-| I1 | `git status --short` | the output is empty; otherwise stop and report it |
+| I1 | `git status --short`; before a revision also `git log --oneline -1` | the output is empty, or lists only Opus's uncommitted documentation and rules (`docs/`, `tasks/`, `.claude/rules/`; checklist H1), which the executor never touches; before a revision, `git log --oneline -1` also shows the commit the review's Revision block or the executor's prompt names; otherwise stop and report it |
 | I2 | Read the kickoff in full; write down the Scope files and the Route's test files | these are the only files you change and the only tests you run |
 | I3 | Read each Scope file and its `main` version (`git show main:<path>`) | you know what `main` does there (A2) |
 | I4 | Write each acceptance criterion's test; run it: `npm test -- <test file>`; a `scripts/quality/*.test.mjs` file: `node --test <test file>` (Vitest excludes `scripts/quality/**`, `vitest.config.ts`) | it fails on the unchanged code; keep that output |

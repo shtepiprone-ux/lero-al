@@ -22,5 +22,13 @@ from (
   union all select 5, 'every placeholder used in a template body is listed in its variables',
          not exists (select 1 from public.email_templates t, regexp_matches(t.html_body || ' ' || t.subject, '\{\{(\w+)\}\}', 'g') as m
                      where t.key in ('account_exists', 'account_blocked') and t.locale = 'sq' and not (t.variables ? m[1]))
+  union all select 6, 'account_status_by_email is SECURITY DEFINER with an empty search_path (Revision 1, F1)',
+         exists (select 1 from pg_proc p join pg_namespace s on s.oid = p.pronamespace
+                 where s.nspname = 'public' and p.proname = 'account_status_by_email' and p.prosecdef
+                   and exists (select 1 from unnest(p.proconfig) c where c = 'search_path=""'))
+  union all select 7, 'account_status_by_email is executable by the service role only (Revision 1, F1)',
+         has_function_privilege('service_role', 'public.account_status_by_email(text)', 'execute')
+         and not has_function_privilege('authenticated', 'public.account_status_by_email(text)', 'execute')
+         and not has_function_privilege('anon', 'public.account_status_by_email(text)', 'execute')
 ) checks
 order by n;

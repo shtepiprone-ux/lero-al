@@ -46,7 +46,8 @@ async function flushAfter() {
   while (afterQueue.length) await afterQueue.shift()!()
 }
 
-// Task 991: the service-role client, as the action uses it: the address search of the admin panel, the Auth account of a candidate, the profile row, and the shared limiter.
+// Task 991 Revision 1 (F1): the service-role client, as the action uses it: ONE exact-address lookup `account_status_by_email` (the double matches lower(email) = lower(p_email) exactly,
+// as the SQL does, so `%` and `_` are ordinary characters) and the shared limiter. Any other call (the wildcard search `admin_search_users_by_email`, `auth.admin.*`, a table read) is not answered.
 type Account = { id: string; email: string; status: string; suspended_until: string | null }
 const world = {
   accounts: [] as Account[],
@@ -61,9 +62,10 @@ vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: () => ({
     rpc: async (name: string, args: Record<string, unknown>) => {
       world.rpcCalls.push({ name, args })
-      if (name === 'admin_search_users_by_email') {
+      if (name === 'account_status_by_email') {
         if (world.searchError) return { data: null, error: { code: 'XX000' } }
-        return { data: world.accounts.filter((a) => a.email.toLowerCase().includes(String(args.q))).map((a) => ({ id: a.id })), error: null }
+        const wanted = String(args.p_email).toLowerCase()
+        return { data: world.accounts.filter((a) => a.email.toLowerCase() === wanted).map((a) => ({ id: a.id, email: a.email, status: a.status, suspended_until: a.suspended_until })), error: null }
       }
       if (name === 'consume_rate_limit') {
         if (world.limiterError) return { data: null, error: { code: 'XX000' } }
@@ -74,20 +76,6 @@ vi.mock('@/lib/supabase/admin', () => ({
       }
       return { data: null, error: { code: '42883' } }
     },
-    auth: { admin: { getUserById: async (id: string) => {
-      const account = world.accounts.find((a) => a.id === id)
-      return { data: { user: account ? { id, email: account.email } : null }, error: null }
-    } } },
-    from: (table: string) => ({
-      select: () => ({
-        eq: (_column: string, id: string) => ({
-          maybeSingle: async () => {
-            const account = world.accounts.find((a) => a.id === id)
-            return { data: table === 'users' && account ? { status: account.status, suspended_until: account.suspended_until, deleted_at: null } : null, error: null }
-          },
-        }),
-      }),
-    }),
   }),
 }))
 vi.mock('@/modules/notifications/lib/sendTemplatedEmail', () => ({
@@ -303,6 +291,34 @@ describe('signUpWithCaptcha — an address that already has an account (Task 991
     await expect(flushAfter()).resolves.toBeUndefined()
     expect(world.mails).toEqual([])
   })
+
+  it('Revision 1 (F1): the lookup is ONE account_status_by_email call with the lower-cased, trimmed address, never the wildcard search or an Auth admin call', async () => {
+    world.accounts = [account()]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('  ANA@Example.COM '))).toEqual({ ok: true })
+    await flushAfter()
+    const lookups = world.rpcCalls.filter((c) => c.name === 'account_status_by_email')
+    expect(lookups).toHaveLength(1)
+    expect(lookups[0].args).toEqual({ p_email: 'ana@example.com' })
+    expect(world.rpcCalls.map((c) => c.name)).not.toContain('admin_search_users_by_email')
+    expect(world.rpcCalls.map((c) => c.name).sort()).toEqual(['account_status_by_email', 'consume_rate_limit'])
+    expect(world.mails.map((m) => m.key)).toEqual(['account_exists'])
+  })
+
+  it.each([['%@example.com'], ['_na@example.com'], ['%na@example.com'], ['ana@%']])(
+    'Revision 1 (F1): the wildcard address %j looks nothing else up: one exact call with that text, no account found, no mail',
+    async (email) => {
+      world.accounts = [account(), account({ id: 'user-2', email: 'bob@example.com', status: 'blocked' })]
+      answerExisting()
+      const { signUpWithCaptcha } = await import('../captcha')
+      expect(await signUpWithCaptcha(params(email))).toEqual({ ok: true })
+      await flushAfter()
+      expect(world.rpcCalls.map((c) => c.name)).toEqual(['account_status_by_email'])
+      expect(world.rpcCalls[0].args).toEqual({ p_email: email })
+      expect(world.mails).toEqual([])
+    },
+  )
 
   it('an address that is not in the account list gets no mail', async () => {
     world.accounts = [account({ email: 'someone.else@example.com' })]

@@ -2,6 +2,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { verifyTurnstile } from '@/lib/captcha/verifyTurnstile'
+import { accountStatusByEmail } from '@/modules/auth/lib/accountStatus'
 
 // Task 991 (O991-2, owner item 32): Supabase Auth refuses a banned account with `user_banned` BEFORE it checks the password, so the sign-in sheet cannot tell a blocked person from a stranger and
 // shows the wrong-credentials text to both (D21, Task 923). This action is called by the sheet after such a refusal. It says `blocked: true` ONLY to a caller that proves the password, so a
@@ -13,21 +14,6 @@ export type ExplainRefusedSignInResult = { blocked: true; until?: string } | { b
 const NOT_BLOCKED: ExplainRefusedSignInResult = { blocked: false }
 const MAX_ADDRESS_LENGTH = 254
 const MAX_PASSWORD_LENGTH = 1024
-
-async function statusOf(email: string): Promise<{ blocked: boolean; until: string | null } | null> {
-  const db = createAdminClient()
-  const { data, error } = await db.rpc('admin_search_users_by_email', { q: email })
-  if (error || !Array.isArray(data)) return null
-  for (const candidate of data as { id: string }[]) {
-    const { data: found, error: authError } = await db.auth.admin.getUserById(candidate.id)
-    if (authError || found.user?.email?.toLowerCase() !== email) continue
-    const { data: profile, error: profileError } = await db.from('users').select('status, suspended_until').eq('id', candidate.id).maybeSingle()
-    if (profileError || !profile) return null
-    const until = typeof profile.suspended_until === 'string' && new Date(profile.suspended_until).getTime() > Date.now() ? profile.suspended_until : null
-    return { blocked: profile.status === 'blocked' || profile.status === 'inactive', until }
-  }
-  return null
-}
 
 export async function explainRefusedSignIn(params: { email: string; password: string; captchaToken: string }): Promise<ExplainRefusedSignInResult> {
   try {
@@ -59,8 +45,8 @@ export async function explainRefusedSignIn(params: { email: string; password: st
     }
     if (matches !== true) return NOT_BLOCKED
 
-    // 5. the right password: now the status may be told
-    const status = await statusOf(address)
+    // 5. the right password: now the status may be told (one exact-address lookup, Revision 1, F1; a lookup that fails throws and is a refusal below)
+    const status = await accountStatusByEmail(address)
     if (!status || !status.blocked) return NOT_BLOCKED
     return status.until ? { blocked: true, until: status.until } : { blocked: true }
   } catch {

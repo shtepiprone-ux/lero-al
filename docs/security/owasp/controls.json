@@ -1687,6 +1687,45 @@
    "reviewedSha": "99f742ca78caa944eab9f6a29b5803e6a44389a4",
    "reviewedOn": "2026-11-07"
   },
+  "React_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.tsx$"
+    ],
+    "words": [
+     "\\b(dangerouslySetInnerHTML|innerHTML|Server Functions?|JSX)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Without sanitization, it allows injected scripts to execute in the browser.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K8'"
+    },
+    {
+     "quote": "Never allow `javascript:` or `data:` in navigable attributes.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K5'"
+    },
+    {
+     "quote": "Writing to `.innerHTML`, `.outerHTML`, or `.insertAdjacentHTML()` through a ref is exactly as safe or unsafe as `dangerouslySetInnerHTML` with the same input",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K3'"
+    },
+    {
+     "quote": "For protected operations, enforce authentication and authorization inside the function.",
+     "control": "src/__tests__/security/serverEntryGuards.test.ts",
+     "evidence": "no unguarded entry point is missing from the allowlist"
+    },
+    {
+     "quote": "Validate every argument as untrusted input",
+     "task": "1025"
+    }
+   ],
+   "reviewedSha": "6ae302af0ae65fb66ab29fa9dbec00b08681d58f",
+   "reviewedOn": "2026-11-24"
+  },
   "REST_Assessment": {
    "applies": false,
    "why": "a penetration testing guide; the project equivalent is the authorization matrix and route tests mapped under Authorization_Testing_Automation",

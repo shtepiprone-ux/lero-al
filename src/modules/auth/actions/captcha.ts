@@ -8,6 +8,7 @@ import { verifyTurnstile } from '@/lib/captcha/verifyTurnstile'
 import { SITE_URL } from '@/lib/siteUrl'
 import { cleanSignupMetadata } from '@/modules/auth/lib/signupMetadata'
 import { mapAuthError } from '@/modules/auth/lib/mapAuthError'
+import { accountStatusByEmail, type AccountStatus } from '@/modules/auth/lib/accountStatus'
 import { sendTemplatedEmail } from '@/modules/notifications/lib/sendTemplatedEmail'
 
 // Task 923 R67 (c): Supabase Auth is the ONE verifier of the Turnstile token. A Turnstile token is single-use: these actions used to verify it themselves and then hand
@@ -21,29 +22,12 @@ function isCaptchaRefusal(error: { code?: string; message?: string }): boolean {
 
 // ── The notice to the owner of an existing address (Task 991, O991-1) ─────────
 // A sign-up with an address that already has an account, and a reset request for a blocked address, are answered like any other request (`ok`); the owner of the address is told by
-// mail what the page may not say. The account is found through the admin panel's address search and its exact address (the profile row has no e-mail column). Every failure here
+// mail what the page may not say. The account is found by its exact address in one call (`accountStatusByEmail`, Revision 1, F1). Every failure here
 // stays inside: a lookup or a limiter that fails sends no mail, and nothing but a code is logged (no address, no text).
 
-type KnownAccount = { id: string; email: string; blocked: boolean; until: string | null }
-
-/** `null` when no account has exactly this address; throws when the lookup cannot be completed. */
-async function findAccount(email: string): Promise<KnownAccount | null> {
-  const wanted = email.trim().toLowerCase()
-  const db = createAdminClient()
-  const { data, error } = await db.rpc('admin_search_users_by_email', { q: wanted })
-  if (error || !Array.isArray(data)) throw new Error('lookup_failed')
-  for (const candidate of data as { id: string }[]) {
-    const { data: found, error: authError } = await db.auth.admin.getUserById(candidate.id)
-    if (authError) throw new Error('lookup_failed')
-    const address = found.user?.email
-    if (!address || address.toLowerCase() !== wanted) continue
-    const { data: profile, error: profileError } = await db.from('users').select('status, suspended_until').eq('id', candidate.id).maybeSingle()
-    if (profileError || !profile) throw new Error('lookup_failed')
-    const blocked = profile.status === 'blocked' || profile.status === 'inactive'
-    const until = typeof profile.suspended_until === 'string' && new Date(profile.suspended_until).getTime() > Date.now() ? profile.suspended_until : null
-    return { id: candidate.id, email: address, blocked, until }
-  }
-  return null
+/** An address of a shape that cannot be an account's is not looked up (OWASP Input_Validation, Denial_of_Service: the cheap check first). */
+function looksLikeAddress(email: unknown): email is string {
+  return typeof email === 'string' && email.length > 0 && email.length <= 254 && email.includes('@')
 }
 
 /** " deri më 24.12.2026" (the sq text of the template), or nothing for a block with no end date */
@@ -54,7 +38,7 @@ function untilText(until: string | null): string {
 }
 
 /** One notice mail per address per hour (O991-1); a limiter that fails sends nothing (fail closed). */
-async function sendAccountNotice(account: KnownAccount): Promise<void> {
+async function sendAccountNotice(account: AccountStatus): Promise<void> {
   const { data, error } = await createAdminClient().rpc('consume_rate_limit', { bucket: 'account_notice_mail', subject: account.email.toLowerCase(), window_seconds: 3600, max_hits: 1 })
   if (error) {
     console.error('[auth] the account notice limiter failed', { code: error.code })
@@ -68,9 +52,9 @@ async function sendAccountNotice(account: KnownAccount): Promise<void> {
 }
 
 /** Runs after the answer, so neither the answer nor its time depends on the address; never throws. */
-async function noticeInBackground(email: string, known?: KnownAccount | null): Promise<void> {
+async function noticeInBackground(email: string, known?: AccountStatus | null): Promise<void> {
   try {
-    const account = known === undefined ? await findAccount(email) : known
+    const account = known === undefined ? await accountStatusByEmail(email) : known
     if (account) await sendAccountNotice(account)
   } catch {
     console.error('[auth] the account notice failed')
@@ -131,11 +115,14 @@ export async function requestPasswordResetWithCaptcha(params: {
 
   // Task 991: a blocked or inactive address gets the "blocked" mail instead of a reset link that its ban would make useless. Auth would verify the token for every other request; here
   // nothing goes to Auth, so the token is verified by this action. A lookup that fails cannot show the status, and the request goes to Auth as before.
-  let account: KnownAccount | null = null
-  try {
-    account = await findAccount(email)
-  } catch {
-    console.error('[auth] the account lookup of a reset request failed')
+  // An address of a shape that cannot be an account's (not text, empty, over 254 characters, no `@`) goes to Auth as before, with no lookup (Revision 1, F1).
+  let account: AccountStatus | null = null
+  if (looksLikeAddress(email)) {
+    try {
+      account = await accountStatusByEmail(email)
+    } catch {
+      console.error('[auth] the account lookup of a reset request failed')
+    }
   }
   if (account?.blocked) {
     const human = await verifyTurnstile(captchaToken)

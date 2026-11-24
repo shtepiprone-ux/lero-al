@@ -39,26 +39,15 @@ vi.mock('@/lib/supabase/admin', () => ({
         const account = world.accounts.find((a) => a.email.toLowerCase() === args.p_email)
         return { data: Boolean(account) && account!.password === args.p_password, error: null }
       }
-      if (name === 'admin_search_users_by_email') {
-        return { data: world.accounts.filter((a) => a.email.toLowerCase().includes(String(args.q))).map((a) => ({ id: a.id })), error: null }
+      // Task 991 Revision 1 (F1): the status comes from ONE exact-address lookup, matched as the SQL does (lower(email) = lower(p_email): `%` and `_` are ordinary characters).
+      // Any other call (the wildcard search `admin_search_users_by_email`, `auth.admin.*`, a table read) is not answered.
+      if (name === 'account_status_by_email') {
+        if (world.profileError) return { data: null, error: { code: 'XX000' } }
+        const wanted = String(args.p_email).toLowerCase()
+        return { data: world.accounts.filter((a) => a.email.toLowerCase() === wanted).map((a) => ({ id: a.id, email: a.email, status: a.status, suspended_until: a.suspended_until })), error: null }
       }
       return { data: null, error: { code: '42883' } }
     },
-    auth: { admin: { getUserById: async (id: string) => {
-      const account = world.accounts.find((a) => a.id === id)
-      return { data: { user: account ? { id, email: account.email } : null }, error: null }
-    } } },
-    from: () => ({
-      select: () => ({
-        eq: (_column: string, id: string) => ({
-          maybeSingle: async () => {
-            if (world.profileError) return { data: null, error: { code: 'XX000' } }
-            const account = world.accounts.find((a) => a.id === id)
-            return { data: account ? { status: account.status, suspended_until: account.suspended_until, deleted_at: null } : null, error: null }
-          },
-        }),
-      }),
-    }),
   }),
 }))
 
@@ -87,6 +76,22 @@ describe('[SEC-991-BLOCKED-EXPLAIN-ALLOW] the right password of a blocked accoun
     expect(world.rpcCalls.map((c) => c.name).slice(0, 2)).toEqual(['consume_rate_limit', 'auth_password_matches'])
     expect(world.rpcCalls[0].args).toEqual({ bucket: 'blocked_signin', subject: 'ana@example.com', window_seconds: 900, max_hits: 5 })
     expect(world.rpcCalls[1].args).toEqual({ p_email: 'ana@example.com', p_password: PASSWORD })
+  })
+
+  it('Revision 1 (F1): the status is ONE account_status_by_email call with the lower-cased, trimmed address, after the password check; the wildcard search is never called', async () => {
+    expect(await call({ email: '  ANA@Example.COM ' })).toEqual({ blocked: true })
+    expect(world.rpcCalls.map((c) => c.name)).toEqual(['consume_rate_limit', 'auth_password_matches', 'account_status_by_email'])
+    expect(world.rpcCalls[2].args).toEqual({ p_email: 'ana@example.com' })
+    expect(world.rpcCalls.map((c) => c.name)).not.toContain('admin_search_users_by_email')
+  })
+
+  it('Revision 1 (F1): an address with a wildcard never reaches the status lookup (the password does not match it) and matches no other account', async () => {
+    world.accounts = [account(), account({ id: 'user-2', email: 'bob@example.com' })]
+    for (const email of ['%@example.com', '_na@example.com', '%na@example.com', 'ana@%']) {
+      expect(await call({ email })).toEqual({ blocked: false })
+    }
+    expect(world.rpcCalls.filter((c) => c.name === 'account_status_by_email')).toEqual([])
+    expect(world.rpcCalls.map((c) => c.name)).not.toContain('admin_search_users_by_email')
   })
 
   it('a dated suspension carries its end date; an inactive account is blocked too', async () => {

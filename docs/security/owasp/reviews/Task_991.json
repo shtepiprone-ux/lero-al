@@ -8,6 +8,10 @@
    ],
    "evidence": "T1-T5 of the kickoff each have a test: `src/modules/auth/actions/__tests__/explainRefusedSignIn.security.test.ts`, `signUpWithCaptcha.smoke.test.ts`, `requestPasswordReset.smoke.test.ts` (Review 1, V3 and V8: they fail without the change)"
   },
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff changes checklist text only (I1, V13); no agent tool, permission, hook or setting changes"
+  },
   "Attack_Surface_Analysis": {
    "verdict": "met",
    "quotes": [
@@ -87,12 +91,14 @@
    "quotes": [
     "Configured with the minimum permissions required as discussed in the permissions section below."
    ],
-   "evidence": "`supabase/sql_migrations/task991/task991.sql` revokes EXECUTE from public, anon, authenticated and grants service_role only, `search_path = ''`; `task991-verify.sql` rows 1-2; proof on the database is Opus's H4 part (not applied yet)"
+   "evidence": "both functions in `supabase/sql_migrations/task991/task991.sql` grant EXECUTE to service_role only, `search_path = ''`; Review 2 trial apply on dev in a rolled-back transaction: `task991-verify.sql` 7/7 true, anon and authenticated refused 42501, catalog fingerprint unchanged"
   },
   "Denial_of_Service": {
-   "verdict": "finding",
-   "finding": "F1",
-   "note": "the reset action runs an unvalidated substring search (up to 100 Auth admin calls) before any human check"
+   "verdict": "met",
+   "quotes": [
+    "Using validation that is cheap in resources first"
+   ],
+   "evidence": "F1 fixed in Revision 1: `src/modules/auth/actions/captcha.ts` `looksLikeAddress` before one exact `account_status_by_email` call (`src/modules/auth/lib/accountStatus.ts`); the token and the limit run before `auth_password_matches`; Review 2 breaks of the shape check and the lower-casing fail 5 and 2 tests"
   },
   "DOM_based_XSS_Prevention": {
    "verdict": "not applicable",
@@ -132,9 +138,11 @@
    "reason": "values reach SQL only as RPC arguments; no command or query is built from strings"
   },
   "Input_Validation": {
-   "verdict": "finding",
-   "finding": "F1",
-   "note": "the reset action passes the raw address to a lookup without a shape check; the explain action validates its input"
+   "verdict": "met",
+   "quotes": [
+    "Reject invalid requests with a clear error; do not continue with partially validated data."
+   ],
+   "evidence": "Review 2: `requestPasswordReset.smoke.test.ts` cases for a number, null, an object, an empty, a 255-character and an @-less address make no service-role call; `explainRefusedSignIn.security.test.ts` shape cases refuse before any call"
   },
   "Insecure_Direct_Object_Reference_Prevention": {
    "verdict": "not applicable",
@@ -147,6 +155,10 @@
   "Key_Management": {
    "verdict": "not applicable",
    "reason": "no key is created, read or rotated by this change"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no model prompt or model input path changes; only checklist text I1 and V13"
   },
   "Logging": {
    "verdict": "met",
@@ -162,6 +174,10 @@
   "Mass_Assignment": {
    "verdict": "not applicable",
    "reason": "no record is written from caller fields in this diff"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or configuration is added or changed in this diff"
   },
   "Multi_Tenant_Security": {
    "verdict": "not applicable",
@@ -193,6 +209,13 @@
    ],
    "evidence": "`supabase/sql_migrations/task991/task991.sql` takes typed arguments and builds no dynamic SQL; `task991-verify.sql` row 3"
   },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Validate every argument as untrusted input"
+   ],
+   "evidence": "`src/modules/auth/actions/explainRefusedSignIn.ts` checks type and length of email, password and token before any call (test `%s is refused before any token check, limit or lookup`); the reset request checks the address shape (`captcha.ts` `looksLikeAddress`)"
+  },
   "Secrets_Management": {
    "verdict": "not applicable",
    "reason": "no secret is added; existing keys stay where they are"
@@ -202,7 +225,7 @@
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_991_Review_1.md` reviews the working-tree diff against `d1cc78258`"
+   "evidence": "`docs/reviews/Task_991_Review_1.md` (working tree on `d1cc78258`) and `docs/reviews/Task_991_Review_2.md` (diff against `9aad177c0`)"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",
@@ -234,7 +257,7 @@
    "quotes": [
     "use parameterized queries for dynamic data values"
    ],
-   "evidence": "the address and password reach SQL only as RPC arguments (`src/modules/auth/actions/explainRefusedSignIn.ts`, `db.rpc('auth_password_matches', ...)`); the ILIKE wildcard of the reused search is F1"
+   "evidence": "the address and password reach SQL only as RPC arguments (`src/modules/auth/lib/accountStatus.ts`, `src/modules/auth/actions/explainRefusedSignIn.ts`); `account_status_by_email` matches exactly, no LIKE (Review 2 trial on dev: `%`, `_` and a substring return 0 rows)"
   },
   "Third_Party_Javascript_Management": {
    "verdict": "not applicable",
@@ -245,7 +268,7 @@
    "quotes": [
     "the threat modeling process should answer the following four questions"
    ],
-   "evidence": "\"## Attack surface\" of the kickoff; F1 (`src/modules/auth/actions/captcha.ts:134-139`) adds the pre-check lookup the model missed, fixed in Revision 1"
+   "evidence": "\"## Attack surface\" of the kickoff; F1 (the pre-check wildcard lookup) fixed in Revision 1, `src/modules/auth/lib/accountStatus.ts`"
   },
   "Transport_Layer_Security": {
    "verdict": "not applicable",
@@ -260,7 +283,7 @@
    "quotes": [
     "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
    ],
-   "evidence": "Review 1 reran `npm test --` on the six Route files (204 passed), the failing-first run (14 failed) and the three deliberate breaks of `src/modules/auth/actions/explainRefusedSignIn.ts` (2, 1, 2 failed)"
+   "evidence": "Reviews 1 and 2 reran `npm test --` on the six Route files (204, then 225 passed), the failing-first runs (14, then 31 failed) and deliberate breaks of `src/modules/auth/actions/explainRefusedSignIn.ts` and `src/modules/auth/lib/accountStatus.ts`"
   },
   "Web_Frontend_Security": {
    "verdict": "met",

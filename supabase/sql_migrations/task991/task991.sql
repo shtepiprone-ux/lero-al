@@ -1,4 +1,4 @@
--- Task 991: (1) public.auth_password_matches, the one password check outside Supabase Auth, and (2) the two sq e-mail templates of the "an account already exists" and "the account is blocked" notices.
+-- Task 991: (1) public.auth_password_matches, the one password check outside Supabase Auth, (2) public.account_status_by_email, the one exact-address lookup of an account (Revision 1, F1), and (3) the two sq e-mail templates of the "an account already exists" and "the account is blocked" notices.
 -- One transaction. Run task991-preflight.sql first (every row must say 0); after the apply run task991-verify.sql (every row ok = true). The way back is task991-rollback.sql.
 begin;
 
@@ -36,7 +36,29 @@ $$;
 revoke all on function public.auth_password_matches(text, text) from public, anon, authenticated;
 grant execute on function public.auth_password_matches(text, text) to service_role;
 
--- 2. The two notices, in Albanian only (Task 251: every administrator e-mail is sent in sq). Same shape as the existing keys: inner HTML only (sendTemplatedEmail wraps it in the brand frame), `variables` a jsonb array of the
+-- 2. The account lookup (Revision 1, F1). The auth actions used to find the account of an address through the admin panel's search (`admin_search_users_by_email`: `ILIKE '%' || q || '%' LIMIT 100`) and then one Auth admin call
+--    per candidate: a wildcard search with up to 100 calls for one request, before any human check. This function answers from ONE exact match, `lower(u.email) = lower(p_email)` (no LIKE: `%` and `_` are ordinary
+--    characters), with the status and the end date of the suspension of the profile row. Deleted accounts are not found. At most one row: an address held by two rows that differ only in letter case gives the
+--    older one, so the answer never depends on the order the database happens to read. It writes nothing and builds no dynamic SQL. SECURITY DEFINER with an empty search_path; executable by the service role only.
+--    The types are those the database has: auth.users.id uuid, auth.users.email varchar (cast to text), public.users.status text, public.users.suspended_until timestamptz.
+create function public.account_status_by_email(p_email text)
+returns table (id uuid, email text, status text, suspended_until timestamptz)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select u.id, u.email::text, p.status, p.suspended_until
+    from auth.users u
+    join public.users p on p.id = u.id
+    where lower(u.email) = lower(p_email) and u.deleted_at is null
+    order by u.created_at, u.id
+    limit 1
+$$;
+revoke all on function public.account_status_by_email(text) from public, anon, authenticated;
+grant execute on function public.account_status_by_email(text) to service_role;
+
+-- 3. The two notices, in Albanian only (Task 251: every administrator e-mail is sent in sq). Same shape as the existing keys: inner HTML only (sendTemplatedEmail wraps it in the brand frame), `variables` a jsonb array of the
 --    placeholder names, the subject plain text. A row that already exists is left as it is (the administrator may have edited it): this file never overwrites a template.
 --    account_exists  {{signInUrl}}: the sign-in page of the site; the text names "Harruat fjalëkalimin?" because no link opens that view directly.
 --    account_blocked {{supportUrl}}: the contact page; {{untilText}}: " deri më <date>" for a dated suspension, empty otherwise.

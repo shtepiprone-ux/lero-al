@@ -15,6 +15,26 @@
    ],
    "evidence": "the one public filter `src/modules/listings/lib/visibility.ts:170` and the page metadata; Review 1 ran the tests of every consumer (125 files, 1917 passed)"
   },
+  "Authorization": {
+   "verdict": "not applicable",
+   "reason": "the admin wrapper changes its type constraint only; the page guard is unchanged"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "no authorization decision changes; one type constraint gains a method"
+  },
+  "Authorization_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no access rule moves between layers in this revision"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "not applicable",
+   "reason": "no role or page key changes; the admin filter keeps its behaviour"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "not applicable",
+   "reason": "no authorization matrix row changes in this task"
+  },
   "Bot_Management_and_Anti-Automation": {
    "verdict": "not applicable",
    "reason": "no limit or automation control changes in this task"
@@ -59,7 +79,7 @@
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_1035_Review_1.md` reviews the diff against `1e37f942a`"
+   "evidence": "`docs/reviews/Task_1035_Review_1.md` to `docs/reviews/Task_1035_Review_3.md` (Review 2 read CI run 45479979660 of pull request #74)"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",

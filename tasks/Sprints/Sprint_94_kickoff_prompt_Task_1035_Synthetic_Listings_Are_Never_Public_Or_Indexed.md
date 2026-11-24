@@ -83,6 +83,12 @@ No visible change: synthetic listings stop appearing; no component, text or styl
 4. Run: `npm test -- src/modules/listings/lib/__tests__/visibility.test.ts src/modules/listings/lib/__tests__/indexing.test.ts "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts" src/app/__tests__/sitemap.security.test.ts src/app/__tests__/robots.test.ts src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts src/modules/admin/dashboard/__tests__/queries.test.ts src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx` (AC4 in the CI `authz` job). Deliberate breaks: drop the `.not` line → AC1 fails; an unescaped pattern `zz_synth_%` → AC2 fails; drop the metadata branch → AC3 fails; each restored.
 5. Report: each command, exit code, relevant output, each break and its result.
 
+## Revision 1
+
+- R1-1 (Review 2, F1) `src/app/admin/listings/visibilityFilter.ts:10`: the generic constraint of `applyAdminListingsVisibility` gains `not: any`, so its `Q` meets `applyPublicVisibility`'s constraint (CI run 45479979660: TS2322 and TS2345 at `:15`). No other line changes.
+
 ## Review
 
 - [Review 1 — APPROVED](../../docs/reviews/Task_1035_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_1035_Review_2.md)
+- [Review 3 — APPROVED](../../docs/reviews/Task_1035_Review_3.md)

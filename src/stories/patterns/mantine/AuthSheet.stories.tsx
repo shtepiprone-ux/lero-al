@@ -172,6 +172,61 @@ export const LoginValidationError: Story = {
 }
 
 /**
+ * Task 991 (O991-2) — a blocked person who signs in with the right password reads that the account is blocked, with a link to support, instead of "wrong e-mail or password".
+ * The real sheet is driven by its own `play`: the sign-in is the Storybook Supabase stub, which answers `user_banned` for the one synthetic address below, and the sheet then asks the
+ * explain action (also a Storybook stub, `.storybook/stubs/auth-explain-refused-sign-in.ts`), which says `blocked: true` for it. No Story-only prop exists in production code.
+ */
+export const LoginBlocked: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <MantineStoryShell>
+        <Button variant="default" disabled>trigger (Story opens the drawer directly)</Button>
+        <AuthSheet key={`login-blocked-${locale}`} open onOpenChange={() => {}} initialView="login" />
+      </MantineStoryShell>
+    )
+  },
+  play: async ({ canvasElement, context }) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const doc = canvasElement.ownerDocument
+    const canvas = within(doc.body)
+    await userEvent.type(doc.getElementById('login-email') as HTMLInputElement, 'blocked@example.com')
+    await userEvent.type(doc.getElementById('login-password') as HTMLInputElement, 'x')
+    await userEvent.click(await canvas.findByRole('button', { name: authT(locale, 'auth', 'login') }))
+    const link = await canvas.findByRole('link', { name: authT(locale, 'auth', 'error_account_blocked_contact') })
+    await expect(link).toHaveAttribute('href', `/${locale}/contact`)
+    await expect(canvas.getByRole('alert')).toHaveTextContent(authT(locale, 'auth', 'error_account_blocked'))
+  },
+}
+
+/**
+ * Task 991 (O991-1) — the registration success view, with the neutral text that is true for every address ("check your e-mail"). The real sheet is driven by its own `play`; the sign-up answer is the
+ * Storybook stub of the auth actions (`.storybook/stubs/auth-captcha-actions.ts`).
+ */
+export const RegisterSuccess: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <MantineStoryShell>
+        <Button variant="default" disabled>trigger (Story opens the drawer directly)</Button>
+        <AuthSheet key={`register-success-${locale}`} open onOpenChange={() => {}} initialView="register" />
+      </MantineStoryShell>
+    )
+  },
+  play: async ({ canvasElement, context }) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const doc = canvasElement.ownerDocument
+    const canvas = within(doc.body)
+    await userEvent.type(doc.getElementById('reg-name') as HTMLInputElement, 'Alba Hoxha')
+    await userEvent.type(doc.getElementById('reg-email') as HTMLInputElement, 'alba@example.com')
+    await userEvent.type(doc.getElementById('reg-password') as HTMLInputElement, 'Str0ng!Passw0rd')
+    await userEvent.click(await canvas.findByRole('button', { name: authT(locale, 'auth', 'register') }))
+    await expect(await canvas.findByText(authT(locale, 'auth', 'register_success_title'))).toBeVisible()
+    await expect(canvas.getByText(authT(locale, 'auth', 'register_success_body'))).toBeVisible()
+  },
+}
+
+/**
  * Task 872 (§17.2, D81-2) — the real production `CaptchaWidget`, rendered standalone (not
  * through `AuthSheet`, which already renders it inside its Register/RegisterAgent/ForgotPassword
  * views above). GR-1 container-exempt Header/NotificationBell still need this component enrolled

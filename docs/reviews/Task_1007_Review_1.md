@@ -1,6 +1,6 @@
 # Task 1007 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json)
 
 Review 1 of the working tree on de99ecd87 (uncommitted, branch `task/1007-admin-page-access`) — NEEDS REVISION
 Scope: 63 changed files and 8 new ones (`git diff --stat HEAD`, `git status --short`); every product file is named in the kickoff's Scope; the kickoff's

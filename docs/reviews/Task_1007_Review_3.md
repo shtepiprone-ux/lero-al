@@ -1,6 +1,6 @@
 # Task 1007 — Review 3
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 2](Task_1007_Review_2.md)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 2](Task_1007_Review_2.md)
 
 Review 3 of pull request #70 at dd2a28ba5 (checklist V14, the red CI) — NEEDS REVISION
 Scope: the CI run 45366677787 of pull request #70; the five commits are signed (`gh api repos/:owner/:repo/pulls/70/commits`: `verified=true`, `valid`).

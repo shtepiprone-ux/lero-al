@@ -1,6 +1,6 @@
 # Task 1007 — Review 6
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 5](Task_1007_Review_5.md)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 5](Task_1007_Review_5.md)
 
 Review 6 of the working tree on c8d9f87aa (pull request #70, uncommitted Revision 3) — APPROVED
 Scope: Revision 3 changed `scripts/mantine-migration-scope.json` (−7 lines: the seven `page.tsx` entries; `git diff main --` the file → empty) and

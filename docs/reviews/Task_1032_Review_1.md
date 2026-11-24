@@ -1,6 +1,6 @@
 # Task 1032 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1032_An_Unconfirmed_Address_Signs_Up_Again.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1032_An_Unconfirmed_Address_Signs_Up_Again.md) · OWASP record: [Task_1032.json](../security/owasp/reviews/Task_1032.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1032_An_Unconfirmed_Address_Signs_Up_Again.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1032_An_Unconfirmed_Address_Signs_Up_Again.md) · OWASP record: [Task_1032.json](../security/owasp/reviews/Task_1032.json)
 
 Review 1 of the working tree on b582094da (uncommitted) — APPROVED
 Scope: one file, `src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts`, the case at `:348-358` replaced (8 insertions, 6 deletions): exactly the Fix.

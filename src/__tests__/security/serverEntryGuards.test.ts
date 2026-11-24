@@ -97,6 +97,7 @@ const PUBLIC_BY_DESIGN: Record<string, string> = {
   'src/modules/contacts/actions/index.ts#submitContactInquiry': 'public contact form: it must work without a session; it validates its input and is rate limited per sender',
   'src/modules/auth/actions/captcha.ts#signUpWithCaptcha': 'sign-up has no session by definition; the captcha token is verified server-side before Supabase is called',
   'src/modules/auth/actions/captcha.ts#requestPasswordResetWithCaptcha': 'a password-reset request has no session by definition; the captcha token is verified server-side first and the answer is neutral',
+  'src/modules/auth/actions/explainRefusedSignIn.ts#explainRefusedSignIn': 'a refused sign-in has no session by definition; it is bounded by a fresh Turnstile token verified first, the blocked_signin limit (5 per address per 15 minutes, fail closed) and a service-role check that answers only a flag (and a date) after the password matches',
   'src/modules/cabinet/actions/index.ts#consumeEmailChangeToken': 'authorised by the one-time secret token in the e-mailed link (only its SHA-256 is stored); it works from any device',
   'src/modules/notifications/lib/mutations.ts#markNotificationRead': `runs on the caller own database client, so row-level security limits the update to the caller own notifications (docs/rls-rules.md)`,
   'src/modules/notifications/lib/mutations.ts#markAllNotificationsRead': `runs on the caller own database client, so row-level security limits the update to the caller own notifications (docs/rls-rules.md)`,

@@ -188,9 +188,11 @@
    "reason": "the sign-in factors are unchanged; Task 960 carries MFA"
   },
   "Nextjs_Security": {
-   "verdict": "finding",
-   "finding": "F3",
-   "note": "the new anonymous service-role action is missing from the PUBLIC_BY_DESIGN register of serverEntryGuards.test.ts"
+   "verdict": "met",
+   "quotes": [
+    "Treat each reachable action as a client-callable POST entry point."
+   ],
+   "evidence": "`explainRefusedSignIn.security.test.ts` calls the action directly with no, refused and malformed tokens and inputs; `src/__tests__/security/serverEntryGuards.test.ts` `PUBLIC_BY_DESIGN` names it with its bounds (F3 fixed in Revision 2; removing the entry fails 2 assertions, Review 4)"
   },
   "OAuth2": {
    "verdict": "not applicable",
@@ -227,7 +229,7 @@
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_991_Review_1.md`, `docs/reviews/Task_991_Review_2.md` and `docs/reviews/Task_991_Review_3.md` (CI run 45417124768 of pull request #71)"
+   "evidence": "`docs/reviews/Task_991_Review_1.md` to `docs/reviews/Task_991_Review_4.md` (CI run 45417124768 of pull request #71 read in Review 3)"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",

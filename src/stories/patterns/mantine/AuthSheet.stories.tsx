@@ -195,7 +195,8 @@ export const LoginBlocked: Story = {
     await userEvent.click(await canvas.findByRole('button', { name: authT(locale, 'auth', 'login') }))
     const link = await canvas.findByRole('link', { name: authT(locale, 'auth', 'error_account_blocked_contact') })
     await expect(link).toHaveAttribute('href', `/${locale}/contact`)
-    await expect(canvas.getByRole('alert')).toHaveTextContent(authT(locale, 'auth', 'error_account_blocked'))
+    // the alert that holds the link: without a Google client id the sheet also shows the Google notice as an alert (the CI build has none)
+    await expect(link.closest('[role="alert"]')).toHaveTextContent(authT(locale, 'auth', 'error_account_blocked'))
   },
 }
 

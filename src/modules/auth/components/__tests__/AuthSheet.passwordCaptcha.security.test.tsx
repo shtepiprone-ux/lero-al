@@ -25,6 +25,9 @@ const router = vi.hoisted(() => ({ push: vi.fn(), refresh: vi.fn() }))
 vi.mock('next/navigation', () => ({ useRouter: () => router }))
 vi.mock('@/modules/auth/actions/recovery', () => ({ logPasswordRecoveryRequest: vi.fn() }))
 vi.mock('@/modules/auth/actions/captcha', () => ({ signUpWithCaptcha: vi.fn(), requestPasswordResetWithCaptcha: vi.fn() }))
+// Task 991: after a banned answer the sheet asks the explain action; this file is about the human check, so the action answers "not blocked" (the wrong-credentials text stays)
+const explain = vi.hoisted(() => ({ explainRefusedSignIn: vi.fn() }))
+vi.mock('@/modules/auth/actions/explainRefusedSignIn', () => explain)
 vi.mock('@/modules/companies/hooks/useCompanies', () => ({ useCompanies: () => ({ companies: [], refetch: vi.fn() }) }))
 vi.mock('@/modules/locations/hooks/useLocations', () => ({ useLocations: () => ({ locations: [] }) }))
 const widget = vi.hoisted(() => ({ reset: vi.fn() }))
@@ -32,7 +35,8 @@ vi.mock('@/components/auth/CaptchaWidget', async () => {
   const React = await import('react')
   return {
     CaptchaWidget: React.forwardRef(function CaptchaWidgetDouble(p: { onSuccess: (t: string) => void; onError?: () => void; onExpire?: () => void }, ref: React.Ref<unknown>) {
-      React.useImperativeHandle(ref, () => ({ reset: widget.reset }))
+      // `getToken` hands the development token, as the real widget does without a site key (the explain call takes a fresh token of its own)
+      React.useImperativeHandle(ref, () => ({ reset: widget.reset, getToken: async () => 'dev-noop-token' }))
       return (
         <div>
           <button type="button" onClick={() => p.onSuccess('cap-token')}>captcha-ok</button>
@@ -71,6 +75,7 @@ const alertText = () => screen.queryByRole('alert')?.textContent ?? null
 function freshSheet(locale: LocaleCode, answer: unknown) {
   cleanup()
   browser.signIn.mockReset(); widget.reset.mockReset(); onOpenChange.mockReset(); router.push.mockReset(); router.refresh.mockReset()
+  explain.explainRefusedSignIn.mockReset(); explain.explainRefusedSignIn.mockResolvedValue({ blocked: false })
   browser.signIn.mockResolvedValue(answer)
   open(locale)
 }
@@ -80,6 +85,7 @@ beforeEach(() => {
   setViewport(1024)
   browser.signIn.mockReset(); browser.signInWithGoogleIdToken.mockReset(); widget.reset.mockReset()
   router.push.mockReset(); router.refresh.mockReset(); onOpenChange.mockReset(); sessionStorage.clear()
+  explain.explainRefusedSignIn.mockReset(); explain.explainRefusedSignIn.mockResolvedValue({ blocked: false })
 })
 afterEach(() => { cleanup(); vi.unstubAllEnvs() })
 
@@ -136,13 +142,32 @@ it('[SEC-X-FE-LOGIN-CAPTCHA-ERR] a refused sign-in resets the check and needs a 
     expect(alertText(), `${locale}: a new token removes the CAPTCHA alert`).toBeNull()
     expect(loginButton(), `${locale}: a new token enables the button`).toBeEnabled()
 
-    // wrong credentials and a banned account (D21): the same wrong-credentials text, a reset check, a button that waits for a new token
-    for (const message of ['Invalid login credentials', 'User is banned']) {
+    // wrong credentials: the wrong-credentials text, one reset of the check, a button that waits for a new token
+    {
+      const message = 'Invalid login credentials'
       freshSheet(locale, { error: { message } })
       fill(); click('captcha-ok'); submit()
       await waitFor(() => expect(alertText(), `${locale}: ${message}`).toBe(auth.error_invalid_credentials))
       expect(alertText(), `${locale}: ${message} does not name the ban`).not.toMatch(/ban|block|bllok|блок|заблок|blocc/i)
       expect(widget.reset, `${locale}: ${message} resets the check`).toHaveBeenCalledTimes(1)
+      expect(loginButton(), `${locale}: ${message} disables the button`).toBeDisabled()
+      submit()
+      expect(browser.signIn, `${locale}: ${message}: the used token is not sent again`).toHaveBeenCalledTimes(1)
+      click('captcha-ok')
+      expect(loginButton(), `${locale}: ${message}: a new token enables the button`).toBeEnabled()
+    }
+
+    // a banned account (D21, Task 991): the sheet resets the check after the sign-in and again after the explain call, which used a fresh token of its own; the explain action answers
+    // `blocked: false`, so the same wrong-credentials text stays, the button waits for a new token and the used token is not sent to the sign-in again
+    {
+      const message = 'User is banned'
+      freshSheet(locale, { error: { message } })
+      fill(); click('captcha-ok'); submit()
+      await waitFor(() => expect(alertText(), `${locale}: ${message}`).toBe(auth.error_invalid_credentials))
+      expect(alertText(), `${locale}: ${message} does not name the ban`).not.toMatch(/ban|block|bllok|блок|заблок|blocc/i)
+      expect(widget.reset, `${locale}: ${message} resets the check twice (after the sign-in and after the explain call)`).toHaveBeenCalledTimes(2)
+      expect(explain.explainRefusedSignIn, `${locale}: ${message} asks the explain action once`).toHaveBeenCalledTimes(1)
+      expect(explain.explainRefusedSignIn, `${locale}: ${message} sends the e-mail, the password and a fresh token`).toHaveBeenCalledWith({ email: 'alba@example.com', password: 'secret', captchaToken: 'dev-noop-token' })
       expect(loginButton(), `${locale}: ${message} disables the button`).toBeDisabled()
       submit()
       expect(browser.signIn, `${locale}: ${message}: the used token is not sent again`).toHaveBeenCalledTimes(1)

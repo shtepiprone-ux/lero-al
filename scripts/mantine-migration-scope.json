@@ -173,12 +173,5 @@
   "src/components/admin/AdminEditLayout.tsx",
   "src/components/shared/FilterChoiceGroup.tsx",
   "src/components/shared/YearCombobox.tsx",
-  "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx",
-  "src/app/admin/companies/page.tsx",
-  "src/app/admin/email-templates/page.tsx",
-  "src/app/admin/footer/page.tsx",
-  "src/app/admin/locations/page.tsx",
-  "src/app/admin/popular-locations/page.tsx",
-  "src/app/admin/property-types/page.tsx",
-  "src/app/admin/settings/page.tsx"
+  "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx"
 ]

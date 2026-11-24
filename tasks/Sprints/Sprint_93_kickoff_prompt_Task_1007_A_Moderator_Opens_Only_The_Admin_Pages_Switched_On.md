@@ -80,6 +80,11 @@ Fix: page keys in the same store with their own section and switches; `requireSt
   takes `ADMIN_ONLY` (O1007-1), and a moderator's expected result on every row of a page key follows that key's live switch, read with the service
   role just before the moderator visits the row (on: as today; off: `NOT_FOUND`; `/admin`: the landing of `src/app/admin/page.tsx:29-44`), with
   its cases in `scripts/__tests__/check-signed-in-pages.test.ts`.
+- Revision 3 (Review 5, CI run 45379769180; nothing else changes): R3-1 (F5) `scripts/mantine-migration-scope.json` loses the seven `page.tsx` entries
+  this task added (the list of `main`, which enrols no `page.tsx`; the migrated element of those pages is the enrolled `AdminPageFrame`, `:125`); this
+  replaces the scope-file line above and the enrolment of U2. R3-2 (F6) `src/stories/patterns/mantine/AdminPageFrame.stories.tsx` `Default` renders
+  its placeholder content with no style prop on any wrapper (`scripts/check-ui-contract.mjs` rule `story-wrapper-presentation`: canonical components
+  with their public state only).
 - Dependencies: none.
 - Out of scope: the content, loaders and controls of every admin page; the action keys and their writes; Task 1006's
   Contacts page (it takes `adminOnly` in whichever task merges second); Tasks 988 and 989.
@@ -221,3 +226,5 @@ rest. Reference research (GR-7): inherited canonical design — owner decision 2
 - [Review 2 — APPROVED](../../docs/reviews/Task_1007_Review_2.md)
 - [Review 3 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_3.md)
 - [Review 4 — APPROVED](../../docs/reviews/Task_1007_Review_4.md)
+- [Review 5 — NEEDS REVISION](../../docs/reviews/Task_1007_Review_5.md)
+- [Review 6 — APPROVED](../../docs/reviews/Task_1007_Review_6.md)

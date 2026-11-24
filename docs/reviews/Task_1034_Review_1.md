@@ -1,6 +1,6 @@
 # Task 1034 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1034_Admin_Inquiries_Show_Their_Replies.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1034_Admin_Inquiries_Show_Their_Replies.md) · OWASP record: [Task_1034.json](../security/owasp/reviews/Task_1034.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1034_Admin_Inquiries_Show_Their_Replies.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1034_Admin_Inquiries_Show_Their_Replies.md) · OWASP record: [Task_1034.json](../security/owasp/reviews/Task_1034.json)
 
 Review 1 of the working tree on 05ce259b0 (uncommitted) — APPROVED
 Scope: `src/modules/contacts/lib/inquiryReplies.ts` (new), the two inquiry pages (the reply block replaced by one call; the now unused `type ReplyRow` import removed and the loader imported, which ESLint's `no-unused-vars` needs), and the two tests of AC1 and AC2: exactly the Fix.

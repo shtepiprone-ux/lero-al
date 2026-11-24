@@ -75,7 +75,13 @@ No visible change.
 1. Work on the branch the owner created from `main` (checklist H1); its first commit carries this kickoff and the archive of Task 1035 (Opus's).
 2. Tests first (AC1, AC2); save each failing output.
 3. `browser.ts` and the hook.
-4. Run: `npm test -- src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/browserAuth.security.test.ts src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts`. Deliberate breaks: `removeAllChannels` after `auth.signOut` → AC1 fails; subscribe without awaiting `setAuth` → AC2 fails; each restored. CI on GitHub only (`gh pr checks <n>`).
+4. Run: `npm test -- src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/browserAuth.security.test.ts src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts src/lib/auth/controller.signout.security.test.ts`. Deliberate breaks: `removeAllChannels` after `auth.signOut` → AC1 fails; subscribe without awaiting `setAuth` → AC2 fails; each restored. CI on GitHub only (`gh pr checks <n>`).
 5. Report: each command, exit code, relevant output, each break and its result. After the merge Opus signs in and out on `localhost:3000` and the owner exports the Postgres log of that minute: no "invalid column for filter".
 
+## Revision 1
+
+- R1-1 (Review 1, F1) `src/lib/auth/browser.ts` `signOut`: remove the existing channels one by one (`Promise.all(supabase.getChannels().map((channel) => supabase.removeChannel(channel)))`) instead of `removeAllChannels()`, which always closes the socket and leaves a timer that fails `src/lib/auth/controller.signout.security.test.ts`; AC1's test follows; that file joins the Route's run.
+
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1033_Review_1.md)

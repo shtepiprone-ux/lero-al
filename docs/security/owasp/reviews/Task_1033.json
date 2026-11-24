@@ -1,0 +1,135 @@
+{
+ "task": "1033",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "T1 and T2 of the kickoff; `src/lib/auth/__tests__/browser.smoke.test.ts` order and rejection cases (Review 1)"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the sign-out procedure `src/lib/auth/browser.ts` and the notifications channel; Review 1 ran the tests of every sign-out caller (1074 tests)"
+  },
+  "Authentication": {
+   "verdict": "not applicable",
+   "reason": "no credential, password or sign-in rule changes in this task"
+  },
+  "Authentication_Patterns": {
+   "verdict": "not applicable",
+   "reason": "Supabase Auth stays the only mechanism; its calls are unchanged"
+  },
+  "Authorization": {
+   "verdict": "not applicable",
+   "reason": "no grant, policy or role check changes; anon keeps no access"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "not applicable",
+   "reason": "no limit or automation control is touched here"
+  },
+  "Cookie_Theft_Mitigation": {
+   "verdict": "not applicable",
+   "reason": "no cookie is set, read or changed by the task"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the sign-in path and its CAPTCHA are unchanged"
+  },
+  "Denial_of_Service": {
+   "verdict": "not applicable",
+   "reason": "one awaited call before a subscription; no new request path"
+  },
+  "Input_Validation": {
+   "verdict": "not applicable",
+   "reason": "no input is read or parsed by the changed code"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the channel stays scoped to the signed-in user id"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "not applicable",
+   "reason": "no merge, regular expression or dynamic code added"
+  },
+  "Logging": {
+   "verdict": "not applicable",
+   "reason": "no log line is added or changed by the task"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "no security event is added to the log vocabulary"
+  },
+  "Mass_Assignment": {
+   "verdict": "not applicable",
+   "reason": "no record is written by the changed code"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "not applicable",
+   "reason": "the channel user filter and RLS stay as they are"
+  },
+  "Multifactor_Authentication": {
+   "verdict": "not applicable",
+   "reason": "the factors of sign-in are unchanged by the task"
+  },
+  "OAuth2": {
+   "verdict": "not applicable",
+   "reason": "Google sign-in and its tokens are untouched by the task"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is built from client keys here"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Diff-Based Reviews focus on code changes only."
+   ],
+   "evidence": "`docs/reviews/Task_1033_Review_1.md` reviews the diff against `f1959d0b5`"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "Review 1 ran `src/lib/auth/controller.signout.security.test.ts`, which the Route had not listed, and found F1"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "T1 and T2 are AC1: `src/lib/auth/__tests__/browser.smoke.test.ts`"
+  },
+  "Session_Management": {
+   "verdict": "not applicable",
+   "reason": "session creation, renewal and server sign-out are unchanged; channels close first"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "the threat modeling process should answer the following four questions"
+   ],
+   "evidence": "\"## Attack surface\" of the kickoff; AC1 in `src/lib/auth/__tests__/browser.smoke.test.ts`"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "verdict": "not applicable",
+   "reason": "the sign-out redirects are unchanged; no target from input"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "Review 1 reran the Route line (30 passed) and the wider run of every sign-out caller (`src/lib/auth/controller.signout.security.test.ts` failed)"
+  },
+  "WebSocket_Security": {
+   "verdict": "finding",
+   "finding": "F1",
+   "note": "the channels are closed at sign-out, but removeAllChannels also closes the socket and leaves a timer that fails the controller sign-out test"
+  }
+ }
+}

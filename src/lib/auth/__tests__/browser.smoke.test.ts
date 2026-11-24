@@ -25,9 +25,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 const mockSignInWithPassword = vi.fn()
 const mockSignOut = vi.fn()
 const mockSignInWithIdToken = vi.fn()
+const mockRemoveAllChannels = vi.fn()
 
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
+    removeAllChannels: (...args: unknown[]) => mockRemoveAllChannels(...args),
     auth: {
       signInWithPassword: (...args: unknown[]) => mockSignInWithPassword(...args),
       signOut: (...args: unknown[]) => mockSignOut(...args),
@@ -41,6 +43,8 @@ vi.mock('@/lib/supabase/client', () => ({
 describe('browser auth — signIn / signOut smoke tests (Guard, Task 441)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockRemoveAllChannels.mockReset()
+    mockSignOut.mockReset()
   })
 
   // ── Login (email/password) ─────────────────────────────────────────────────
@@ -91,5 +95,48 @@ describe('browser auth — signIn / signOut smoke tests (Guard, Task 441)', () =
     await signOut('global')
 
     expect(mockSignOut).toHaveBeenCalledWith({ scope: 'global' })
+  })
+
+  // ── Task 1033 AC1: the Realtime channels are removed before the session ends ─
+  // Supabase pushes the anonymous key to every joined channel on a sign-out, and Realtime then checks the
+  // notifications filter as `anon`, which may not read `notifications.user_id`.
+
+  it('signOut() removes every Realtime channel before auth.signOut (call order recorded)', async () => {
+    const order: string[] = []
+    mockRemoveAllChannels.mockImplementation(async () => { order.push('removeAllChannels'); return [] })
+    mockSignOut.mockImplementation(async () => { order.push('auth.signOut'); return { error: null } })
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut()
+
+    expect(order).toEqual(['removeAllChannels', 'auth.signOut'])
+    expect(mockSignOut).toHaveBeenCalledWith(undefined)
+    expect(result).toEqual({ error: null })
+  })
+
+  it("signOut('local') removes every Realtime channel before auth.signOut (call order recorded)", async () => {
+    const order: string[] = []
+    mockRemoveAllChannels.mockImplementation(async () => { order.push('removeAllChannels'); return [] })
+    mockSignOut.mockImplementation(async () => { order.push('auth.signOut'); return { error: null } })
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut('local')
+
+    expect(order).toEqual(['removeAllChannels', 'auth.signOut'])
+    expect(mockSignOut).toHaveBeenCalledWith({ scope: 'local' })
+    expect(result).toEqual({ error: null })
+  })
+
+  it('a rejecting removeAllChannels still ends the session and returns the auth.signOut result', async () => {
+    const authResult = { error: { message: 'logout request failed' } }
+    mockRemoveAllChannels.mockRejectedValue(new Error('socket already closed'))
+    mockSignOut.mockResolvedValue(authResult)
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut()
+
+    expect(mockRemoveAllChannels).toHaveBeenCalledOnce()
+    expect(mockSignOut).toHaveBeenCalledOnce()
+    expect(result).toBe(authResult)
   })
 })

@@ -57,8 +57,16 @@ export function verifyOtp({ token_hash, type }: { token_hash: string; type: stri
 
 // ── Sign-out ─────────────────────────────────────────────────────────────────
 
-export function signOut(scope?: 'global' | 'local') {
-  return createClient().auth.signOut(scope ? { scope } : undefined)
+// Task 1033: on a sign-out supabase-js gives the Realtime client the anonymous key and Realtime pushes it to every joined channel, which checks the notifications
+// filter as `anon` ("invalid column for filter user_id"). The channels are removed first; a failure there never blocks the sign-out.
+export async function signOut(scope?: 'global' | 'local') {
+  const supabase = createClient()
+  try {
+    await supabase.removeAllChannels()
+  } catch {
+    // the sign-out below still runs
+  }
+  return supabase.auth.signOut(scope ? { scope } : undefined)
 }
 
 // ── Session access ───────────────────────────────────────────────────────────

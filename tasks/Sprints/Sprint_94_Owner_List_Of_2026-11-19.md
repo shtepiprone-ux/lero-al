@@ -28,9 +28,9 @@ kickoff is written by `create-task` (cause, OWASP plan, tested acceptance criter
 | 27 reports count after a delete | 1000 | 94 |
 | 28 deep security review of the whole project, then security tests | 1003 | 93 |
 | 29 slow pages on the site and in the admin | 1002 | 94 |
-| 30 sign-up with an e-mail that already has an account | 991 | 94 |
+| 30 sign-up with an e-mail that already has an account | 991 — merged in PR #71 (`371081efd`), 2026-11-24; the unconfirmed-address case is 1032 | 94 |
 | 31 premium period and end date in the admin listings table | 999 | 94 |
-| 32 a blocked account asks for a password reset (with O991-2) | 991 | 94 |
+| 32 a blocked account asks for a password reset (with O991-2) | 991 — merged in PR #71 (`371081efd`), 2026-11-24 | 94 |
 | added 2026-11-19: the "Message" field can be made taller, as in the owner's screenshot | 1008 | 94 |
 
 ## Facts per task
@@ -115,7 +115,7 @@ Measured 2026-11-19 on the real Auth with `HYDRATION_AGENT2` (a 2-minute ban, li
 existing address → no error, a user with no identities; a banned account → `user_banned` for the wrong and the right
 password alike, an unknown address → `invalid_credentials`. So the blocked message comes from a server check of the
 password that runs after Auth's refusal. Kickoff:
-`tasks/Sprints/Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md`.
+`tasks/Archive/Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md`.
 
 **992 — sold and rented listings listed.** Measured 2026-11-19 on production: an anonymous visitor opens a sold and a
 rented listing by its address (200, the listing's title in the page, no `noindex`), and an expired one shows the closed

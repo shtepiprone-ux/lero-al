@@ -345,13 +345,15 @@ describe('signUpWithCaptcha — an address that already has an account (Task 991
     expect(world.mails.map((m) => m.key).sort()).toEqual(['account_blocked', 'account_exists'])
   })
 
-  it('an address whose account is not confirmed yet: what Auth answers on the development project is the existing sign-up failure, with no mail and no lookup (measured 2026-11-24)', async () => {
-    // Measured on the development project with a synthetic fixture: `signUp` for an address whose account is not confirmed answered `unexpected_failure` (status 500), no user, no
-    // session; the same project answered a NEW address the same way, so the measurement does not separate the two (see the report). The action keeps mapping that answer as it does today.
-    mockSignUp.mockResolvedValue({ data: { user: null, session: null }, error: { code: 'unexpected_failure', message: 'Database error saving new user', status: 500 } })
-    vi.spyOn(console, 'error').mockImplementation(() => {})
+  it('an address whose account is not confirmed yet: Auth sends the confirmation again and answers a user with an identity, so the answer is { ok: true } with no lookup and no notice mail (measured 2026-11-24)', async () => {
+    // Measured 2026-11-24 (Task 1032, "## Cause") with a deliverable address (Resend's test sink): an unconfirmed account made through the Auth admin API, then a sign-up of the same address
+    // -> the sheet "Check your email", `auth.users.confirmation_sent_at` set, the confirmation mail delivered, no `account_notice_mail` row. So Auth answers no error and a user WITH an
+    // identity (the confirmation is sent again by Auth); the action answers `ok` and schedules nothing. The 500 that Task 991 once pinned here came from the Auth e-mail hook refusing an
+    // undeliverable synthetic address (Auth log 2026-11-24 13:03:37 UTC, `user_confirmation_requested`), not from the unconfirmed state.
+    mockSignUp.mockResolvedValue({ data: { user: { id: 'pending', identities: [{ id: 'i' }] }, session: null }, error: null })
     const { signUpWithCaptcha } = await import('../captcha')
-    expect(await signUpWithCaptcha(params('pending@example.com'))).toEqual({ ok: false, reason: 'signup_failed', errorKey: 'error_generic' })
+    expect(await signUpWithCaptcha(params('pending@example.com'))).toEqual({ ok: true })
+    expect(afterQueue).toEqual([])
     await flushAfter()
     expect(world.mails).toEqual([])
     expect(world.rpcCalls).toEqual([])

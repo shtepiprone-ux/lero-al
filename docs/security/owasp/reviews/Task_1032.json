@@ -1,0 +1,114 @@
+{
+ "task": "1032",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "not applicable",
+   "reason": "one test case changes; no abuse path is added or removed"
+  },
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff changes checklist H3 text only; no agent tool, permission or hook changes"
+  },
+  "Authentication": {
+   "verdict": "met",
+   "quotes": [
+    "Using any of the authentication mechanisms (login, password reset, or password recovery), an application must respond with a generic error message regardless of whether:"
+   ],
+   "evidence": "`src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts` (the replaced case) asserts `{ ok: true }` for an unconfirmed address, the answer of a new and an existing address; Review 1 break of `captcha.ts:97` fails it"
+  },
+  "Authentication_Patterns": {
+   "verdict": "not applicable",
+   "reason": "Auth stays the only sign-up mechanism; nothing in it changes"
+  },
+  "Authorization": {
+   "verdict": "not applicable",
+   "reason": "sign-up is anonymous and no permission check changes here"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "no authorization decision exists in the changed test case"
+  },
+  "Authorization_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no access rule moves between layers in this task"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "not applicable",
+   "reason": "no role or permission rule is touched by this task"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "not applicable",
+   "reason": "no authorization matrix row changes in this task"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "not applicable",
+   "reason": "the CAPTCHA and the notice limit stay unchanged in the code"
+  },
+  "Cookie_Theft_Mitigation": {
+   "verdict": "not applicable",
+   "reason": "sign-up sets no session cookie for an unconfirmed address"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the sign-in path and its CAPTCHA are not touched"
+  },
+  "Denial_of_Service": {
+   "verdict": "not applicable",
+   "reason": "no resource use changes; one test case only"
+  },
+  "Input_Validation": {
+   "verdict": "not applicable",
+   "reason": "no input handling changes in the product code"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is looked up by caller input here"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "not applicable",
+   "reason": "test code only; no merge, regex or sink added"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no model prompt or model input path changes in the diff"
+  },
+  "Mass_Assignment": {
+   "verdict": "not applicable",
+   "reason": "no record is written from caller fields in this task"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or configuration changes in the diff"
+  },
+  "Multifactor_Authentication": {
+   "verdict": "not applicable",
+   "reason": "the factors of sign-in are unchanged by this task"
+  },
+  "Nextjs_Security": {
+   "verdict": "not applicable",
+   "reason": "the Server Action itself is unchanged; only its test changes"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is built from client keys here"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "the replaced case states only the measurement cited in the kickoff \"## Cause\"; `git diff --stat HEAD` shows the one Scope file"
+  },
+  "Session_Management": {
+   "verdict": "not applicable",
+   "reason": "no session is created, renewed or ended by the case"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "Review 1 reran `npm test -- src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts` (21 passed) and the break of `src/modules/auth/actions/captcha.ts:97` (2 failed)"
+  }
+ }
+}

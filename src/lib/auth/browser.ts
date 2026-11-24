@@ -14,7 +14,7 @@
  */
 
 import { createClient } from '@/lib/supabase/client'
-import type { AuthChangeEvent, Session } from '@supabase/supabase-js'
+import type { AuthChangeEvent, RealtimeChannel, Session } from '@supabase/supabase-js'
 import type { User } from '@/types/database'
 
 // ── Sign-in ──────────────────────────────────────────────────────────────────
@@ -63,7 +63,7 @@ export function verifyOtp({ token_hash, type }: { token_hash: string; type: stri
 export async function signOut(scope?: 'global' | 'local') {
   const supabase = createClient()
   try {
-    await Promise.all(supabase.getChannels().map((channel) => supabase.removeChannel(channel)))
+    await Promise.all(supabase.getChannels().map((channel: RealtimeChannel) => supabase.removeChannel(channel)))
   } catch {
     // the sign-out below still runs
   }

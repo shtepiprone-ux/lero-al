@@ -8,6 +8,10 @@
    ],
    "evidence": "T1 and T2 of the kickoff; `src/lib/auth/__tests__/browser.smoke.test.ts` order and rejection cases (Review 1)"
   },
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff changes checklist text A5, I8, V3 only; no agent tool, permission or hook changes"
+  },
   "Attack_Surface_Analysis": {
    "verdict": "met",
    "quotes": [
@@ -55,6 +59,10 @@
    "verdict": "not applicable",
    "reason": "no merge, regular expression or dynamic code added"
   },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no model prompt or model input path changes in the diff"
+  },
   "Logging": {
    "verdict": "not applicable",
    "reason": "no log line is added or changed by the task"
@@ -66,6 +74,10 @@
   "Mass_Assignment": {
    "verdict": "not applicable",
    "reason": "no record is written by the changed code"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or configuration changes in the diff"
   },
   "Multi_Tenant_Security": {
    "verdict": "not applicable",
@@ -88,7 +100,7 @@
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_1033_Review_1.md` and `docs/reviews/Task_1033_Review_2.md`"
+   "evidence": "`docs/reviews/Task_1033_Review_1.md` to `docs/reviews/Task_1033_Review_4.md` (Review 3 read CI run 45495618495 of pull request #75)"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",

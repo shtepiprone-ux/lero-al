@@ -82,7 +82,13 @@ No visible change.
 
 - R1-1 (Review 1, F1) `src/lib/auth/browser.ts` `signOut`: remove the existing channels one by one (`Promise.all(supabase.getChannels().map((channel) => supabase.removeChannel(channel)))`) instead of `removeAllChannels()`, which always closes the socket and leaves a timer that fails `src/lib/auth/controller.signout.security.test.ts`; AC1's test follows; that file joins the Route's run.
 
+## Revision 2
+
+- R2-1 (Review 3, F2) `src/lib/auth/browser.ts:66`: the map's parameter is typed `(channel: RealtimeChannel)` (`import type { RealtimeChannel } from '@supabase/supabase-js'`); CI run 45495618495: "Parameter 'channel' implicitly has an 'any' type".
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1033_Review_1.md)
 - [Review 2 — APPROVED](../../docs/reviews/Task_1033_Review_2.md)
+- [Review 3 — NEEDS REVISION](../../docs/reviews/Task_1033_Review_3.md)
+- [Review 4 — APPROVED](../../docs/reviews/Task_1033_Review_4.md)

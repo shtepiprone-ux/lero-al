@@ -1,6 +1,6 @@
 # Task 991 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md) · OWASP record: [Task_991.json](../security/owasp/reviews/Task_991.json) · Previous: [Review 1](Task_991_Review_1.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md) · OWASP record: [Task_991.json](../security/owasp/reviews/Task_991.json) · Previous: [Review 1](Task_991_Review_1.md)
 
 Review 2 of the working tree on 9aad177c0 (Revision 1, uncommitted) — APPROVED WITH NOTES
 Scope: Revision 1 changed `captcha.ts`, `explainRefusedSignIn.ts`, the three action tests and the four `task991*.sql` files, and added

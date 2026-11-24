@@ -1,6 +1,6 @@
 # Task 991 — Review 4
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md) · OWASP record: [Task_991.json](../security/owasp/reviews/Task_991.json) · Previous: [Review 3](Task_991_Review_3.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_991_Existing_And_Blocked_Accounts_Are_Told.md) · OWASP record: [Task_991.json](../security/owasp/reviews/Task_991.json) · Previous: [Review 3](Task_991_Review_3.md)
 
 Review 4 of the working tree on 59ff109d5 (Revision 2, uncommitted) — APPROVED WITH NOTES
 Scope: Revision 2 changed `src/__tests__/security/serverEntryGuards.test.ts` (+1 line), `src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx`

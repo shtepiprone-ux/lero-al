@@ -43,6 +43,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-16).
 - Injection_Prevention: not applicable — the JSON ledgers are rewritten by their own tools; nothing is interpreted.
 - JavaScript_and_TypeScript_Security: not applicable — code is removed and one test file reads source text only.
 - OS_Command_Injection_Defense: not applicable — no process call is added; the ledger tools run unchanged.
+- React_Security: not applicable — a component is deleted; no output path is added or changed.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the reviewer reruns every claimed command and the grep that proves no reference is left — AC1, AC2.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the implementer's report is checked against the reviewer's rerun of every command — AC3.
 - Web_Frontend_Security: not applicable — the browser receives one form fewer and no new code.

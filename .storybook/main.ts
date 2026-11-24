@@ -31,6 +31,10 @@ const config: StorybookConfig = {
       '@/lib/supabase/client': path.resolve(__dirname, './stubs/supabase-client.ts'),
       // Task 957 Revision 2 (R2-5) — the photo widget would load Cloudinary's script and build a frame that takes the focus from an open picker; no Story opens it. The inert stub renders its children only.
       'next-cloudinary': path.resolve(__dirname, './stubs/next-cloudinary.ts'),
+      // Task 991 — the real `'use server'` modules of the auth actions now reach the service-role client and the mail helper (no browser build); the `LoginBlocked` and `RegisterSuccess` Stories need the
+      // sheet's calls to ANSWER, so these two exact specifiers resolve to stubs that answer without a network or a database. Before '@': first match wins.
+      '@/modules/auth/actions/captcha': path.resolve(__dirname, './stubs/auth-captcha-actions.ts'),
+      '@/modules/auth/actions/explainRefusedSignIn': path.resolve(__dirname, './stubs/auth-explain-refused-sign-in.ts'),
       '@': path.resolve(__dirname, '../src'),
       // Task 757 (§15.1a) — narrow resolution stubs so the real production AuthSheet.tsx
       // (which statically imports 'use server' action modules) can be bundled by Vite at

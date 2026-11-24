@@ -8,6 +8,10 @@
  * token is present and hands it to `signUp`; a refusal by Supabase (code `captcha_failed`) maps to `captcha_failed`.
  * `verifyTurnstile` stays mocked so that a call to it would be seen.
  *
+ * Task 991 AC1: an address that already has an account is answered with the same neutral `{ ok: true }` as a new address, and the owner of the
+ * existing address gets one mail (`account_exists`, or `account_blocked` for a blocked or inactive account), sent in `after()` through the
+ * `account_notice_mail` limit (one mail per address per hour; a limiter that fails sends nothing).
+ *
  * Planted-violation proof:
  *   Remove the `if (!captchaToken) return { ok: false, reason: 'captcha_failed' }` guard
  *   → the empty-captcha test FAILS (proceeds to verifyTurnstile and gets captcha_failed
@@ -33,6 +37,55 @@ vi.mock('@/lib/supabase/server', () => ({
   createClient: (...args: unknown[]) => mockCreateClient(...args),
 }))
 
+// Task 991: `after()` has no request to attach to in a test; the work it is given is kept and run by `flushAfter()`, so a test can see that nothing ran before the answer.
+const afterQueue: (() => unknown)[] = []
+vi.mock('next/server', () => ({
+  after: (task: () => unknown) => { afterQueue.push(task) },
+}))
+async function flushAfter() {
+  while (afterQueue.length) await afterQueue.shift()!()
+}
+
+// Task 991 Revision 1 (F1): the service-role client, as the action uses it: ONE exact-address lookup `account_status_by_email` (the double matches lower(email) = lower(p_email) exactly,
+// as the SQL does, so `%` and `_` are ordinary characters) and the shared limiter. Any other call (the wildcard search `admin_search_users_by_email`, `auth.admin.*`, a table read) is not answered.
+type Account = { id: string; email: string; status: string; suspended_until: string | null }
+const world = {
+  accounts: [] as Account[],
+  hits: [] as string[],
+  limiterError: false,
+  searchError: false,
+  rpcCalls: [] as { name: string; args: Record<string, unknown> }[],
+  mails: [] as { key: string; to: string; variables: Record<string, string> }[],
+  mailFails: false,
+}
+vi.mock('@/lib/supabase/admin', () => ({
+  createAdminClient: () => ({
+    rpc: async (name: string, args: Record<string, unknown>) => {
+      world.rpcCalls.push({ name, args })
+      if (name === 'account_status_by_email') {
+        if (world.searchError) return { data: null, error: { code: 'XX000' } }
+        const wanted = String(args.p_email).toLowerCase()
+        return { data: world.accounts.filter((a) => a.email.toLowerCase() === wanted).map((a) => ({ id: a.id, email: a.email, status: a.status, suspended_until: a.suspended_until })), error: null }
+      }
+      if (name === 'consume_rate_limit') {
+        if (world.limiterError) return { data: null, error: { code: 'XX000' } }
+        const key = `${args.bucket}|${args.subject}`
+        if (world.hits.filter((h) => h === key).length >= Number(args.max_hits)) return { data: false, error: null }
+        world.hits.push(key)
+        return { data: true, error: null }
+      }
+      return { data: null, error: { code: '42883' } }
+    },
+  }),
+}))
+vi.mock('@/modules/notifications/lib/sendTemplatedEmail', () => ({
+  sendTemplatedEmail: async (options: { key: string; to: string; variables?: Record<string, string> }) => {
+    if (world.mailFails) throw new Error('smtp down')
+    world.mails.push({ key: options.key, to: options.to, variables: options.variables ?? {} })
+    return {}
+  },
+}))
+
 // ── Setup ─────────────────────────────────────────────────────────────────────
 
 beforeEach(() => {
@@ -44,6 +97,8 @@ beforeEach(() => {
   mockCreateClient.mockResolvedValue({
     auth: { signUp: (...args: unknown[]) => mockSignUp(...args) },
   })
+  afterQueue.length = 0
+  Object.assign(world, { accounts: [], hits: [], limiterError: false, searchError: false, rpcCalls: [], mails: [], mailFails: false })
 })
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
@@ -133,5 +188,188 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
 
     // Guard: error must be typed (not raw Supabase error) so caller shows localized copy
     expect(result).toEqual({ ok: false, reason: 'signup_failed', errorKey: 'error_email_exists' })
+  })
+})
+
+// ── Task 991 AC1 ──────────────────────────────────────────────────────────────
+
+describe('signUpWithCaptcha — an address that already has an account (Task 991 AC1)', () => {
+  const params = (email: string) => ({ email, password: 'SecureP@ss1', captchaToken: 'valid-token', emailRedirectTo: 'https://lero.al/sq/auth/verified' })
+  /** what Supabase Auth answers for an address that already has a CONFIRMED account (measured 2026-11-19 on the real Auth: no error, a user, `identities: []`, no session) */
+  const answerExisting = () => mockSignUp.mockResolvedValue({ data: { user: { id: 'obfuscated', identities: [] }, session: null }, error: null })
+  const answerNew = () => mockSignUp.mockResolvedValue({ data: { user: { id: 'fresh', identities: [{ id: 'i' }] }, session: null }, error: null })
+  const account = (over: Partial<Account> = {}): Account => ({ id: 'user-1', email: 'Ana@Example.com', status: 'active', suspended_until: null, ...over })
+
+  it('an existing active address gets the neutral answer and, after it, one account_exists mail with the sign-in link', async () => {
+    world.accounts = [account()]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('ana@example.com'))).toEqual({ ok: true })
+    expect(world.mails, 'nothing is sent before the answer: the lookup and the mail run in after()').toEqual([])
+    expect(afterQueue).toHaveLength(1)
+    await flushAfter()
+    expect(world.mails).toHaveLength(1)
+    expect(world.mails[0].key).toBe('account_exists')
+    expect(world.mails[0].to).toBe('Ana@Example.com')
+    expect(world.mails[0].variables.signInUrl).toMatch(/^https:\/\/[^/]+\/sq\/auth\/login$/)
+    expect(world.mails[0].variables).not.toHaveProperty('supportUrl')
+  })
+
+  it('a blocked address gets account_blocked with the support link, and a dated suspension names its end date', async () => {
+    world.accounts = [account({ status: 'blocked' })]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('ana@example.com'))).toEqual({ ok: true })
+    await flushAfter()
+    expect(world.mails.map((m) => m.key)).toEqual(['account_blocked'])
+    expect(world.mails[0].variables.supportUrl).toMatch(/^https:\/\/[^/]+\/sq\/contact$/)
+    expect(world.mails[0].variables.untilText).toBe('')
+
+    world.mails = []; world.hits = []
+    const until = new Date(Date.now() + 5 * 86_400_000).toISOString()
+    world.accounts = [account({ status: 'blocked', suspended_until: until })]
+    await signUpWithCaptcha(params('ana@example.com'))
+    await flushAfter()
+    expect(world.mails[0].key).toBe('account_blocked')
+    expect(world.mails[0].variables.untilText).toContain(String(new Date(until).getUTCFullYear()))
+  })
+
+  it('an inactive account gets account_blocked too', async () => {
+    world.accounts = [account({ status: 'inactive' })]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    await signUpWithCaptcha(params('ana@example.com'))
+    await flushAfter()
+    expect(world.mails.map((m) => m.key)).toEqual(['account_blocked'])
+  })
+
+  it('a new address sends no mail and does not even look up an account', async () => {
+    answerNew()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('new@example.com'))).toEqual({ ok: true })
+    await flushAfter()
+    expect(afterQueue).toHaveLength(0)
+    expect(world.mails).toEqual([])
+    expect(world.rpcCalls).toEqual([])
+  })
+
+  it('a second attempt within the hour answers the same and sends no second mail; the limit is account_notice_mail, 3600 s, 1 hit, keyed by the lower-cased address', async () => {
+    world.accounts = [account()]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('Ana@Example.com'))).toEqual({ ok: true })
+    await flushAfter()
+    expect(await signUpWithCaptcha(params('ANA@example.com'))).toEqual({ ok: true })
+    await flushAfter()
+    expect(world.mails).toHaveLength(1)
+    const limiterCalls = world.rpcCalls.filter((c) => c.name === 'consume_rate_limit')
+    expect(limiterCalls).toHaveLength(2)
+    for (const call of limiterCalls) expect(call.args).toEqual({ bucket: 'account_notice_mail', subject: 'ana@example.com', window_seconds: 3600, max_hits: 1 })
+  })
+
+  it('a limiter that fails sends no mail (fail closed) and the answer stays neutral', async () => {
+    world.accounts = [account()]
+    world.limiterError = true
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('ana@example.com'))).toEqual({ ok: true })
+    await flushAfter()
+    expect(world.mails).toEqual([])
+  })
+
+  it('a lookup, a limiter or a mail that fails never reaches the caller and nothing throws out of after()', async () => {
+    const { signUpWithCaptcha } = await import('../captcha')
+    answerExisting()
+    world.accounts = [account()]
+    world.searchError = true
+    expect(await signUpWithCaptcha(params('ana@example.com'))).toEqual({ ok: true })
+    await expect(flushAfter()).resolves.toBeUndefined()
+    expect(world.mails).toEqual([])
+
+    world.searchError = false; world.mailFails = true
+    expect(await signUpWithCaptcha(params('ana@example.com'))).toEqual({ ok: true })
+    await expect(flushAfter()).resolves.toBeUndefined()
+    expect(world.mails).toEqual([])
+  })
+
+  it('Revision 1 (F1): the lookup is ONE account_status_by_email call with the lower-cased, trimmed address, never the wildcard search or an Auth admin call', async () => {
+    world.accounts = [account()]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('  ANA@Example.COM '))).toEqual({ ok: true })
+    await flushAfter()
+    const lookups = world.rpcCalls.filter((c) => c.name === 'account_status_by_email')
+    expect(lookups).toHaveLength(1)
+    expect(lookups[0].args).toEqual({ p_email: 'ana@example.com' })
+    expect(world.rpcCalls.map((c) => c.name)).not.toContain('admin_search_users_by_email')
+    expect(world.rpcCalls.map((c) => c.name).sort()).toEqual(['account_status_by_email', 'consume_rate_limit'])
+    expect(world.mails.map((m) => m.key)).toEqual(['account_exists'])
+  })
+
+  it.each([['%@example.com'], ['_na@example.com'], ['%na@example.com'], ['ana@%']])(
+    'Revision 1 (F1): the wildcard address %j looks nothing else up: one exact call with that text, no account found, no mail',
+    async (email) => {
+      world.accounts = [account(), account({ id: 'user-2', email: 'bob@example.com', status: 'blocked' })]
+      answerExisting()
+      const { signUpWithCaptcha } = await import('../captcha')
+      expect(await signUpWithCaptcha(params(email))).toEqual({ ok: true })
+      await flushAfter()
+      expect(world.rpcCalls.map((c) => c.name)).toEqual(['account_status_by_email'])
+      expect(world.rpcCalls[0].args).toEqual({ p_email: email })
+      expect(world.mails).toEqual([])
+    },
+  )
+
+  it('an address that is not in the account list gets no mail', async () => {
+    world.accounts = [account({ email: 'someone.else@example.com' })]
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('ana@example.com'))).toEqual({ ok: true })
+    await flushAfter()
+    expect(world.mails).toEqual([])
+  })
+
+  it('[SEC-991-ENUM-DENY] a new, an existing and a blocked address get exactly the same answer', async () => {
+    const { signUpWithCaptcha } = await import('../captcha')
+    answerNew()
+    const fresh = await signUpWithCaptcha(params('new@example.com'))
+    world.accounts = [account(), account({ id: 'user-2', email: 'blocked@example.com', status: 'blocked' })]
+    answerExisting()
+    const existing = await signUpWithCaptcha(params('ana@example.com'))
+    const blocked = await signUpWithCaptcha(params('blocked@example.com'))
+    expect(fresh).toEqual({ ok: true })
+    expect(existing).toEqual(fresh)
+    expect(blocked).toEqual(fresh)
+    expect(JSON.stringify([fresh, existing, blocked])).toBe(JSON.stringify([fresh, fresh, fresh]))
+    await flushAfter()
+    expect(world.mails.map((m) => m.key).sort()).toEqual(['account_blocked', 'account_exists'])
+  })
+
+  it('an address whose account is not confirmed yet: what Auth answers on the development project is the existing sign-up failure, with no mail and no lookup (measured 2026-11-24)', async () => {
+    // Measured on the development project with a synthetic fixture: `signUp` for an address whose account is not confirmed answered `unexpected_failure` (status 500), no user, no
+    // session; the same project answered a NEW address the same way, so the measurement does not separate the two (see the report). The action keeps mapping that answer as it does today.
+    mockSignUp.mockResolvedValue({ data: { user: null, session: null }, error: { code: 'unexpected_failure', message: 'Database error saving new user', status: 500 } })
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { signUpWithCaptcha } = await import('../captcha')
+    expect(await signUpWithCaptcha(params('pending@example.com'))).toEqual({ ok: false, reason: 'signup_failed', errorKey: 'error_generic' })
+    await flushAfter()
+    expect(world.mails).toEqual([])
+    expect(world.rpcCalls).toEqual([])
+  })
+
+  it('no log line carries the address', async () => {
+    const logged: string[] = []
+    for (const level of ['error', 'warn', 'info', 'log'] as const) vi.spyOn(console, level).mockImplementation((...args: unknown[]) => { logged.push(JSON.stringify(args)) })
+    world.accounts = [account()]
+    world.limiterError = true
+    answerExisting()
+    const { signUpWithCaptcha } = await import('../captcha')
+    await signUpWithCaptcha(params('ana@example.com'))
+    await flushAfter()
+    world.limiterError = false; world.mailFails = true
+    await signUpWithCaptcha(params('ana@example.com'))
+    await flushAfter()
+    expect(logged.length, 'the failures are logged').toBeGreaterThan(0)
+    expect(logged.join('\n').toLowerCase()).not.toContain('ana@example.com')
   })
 })

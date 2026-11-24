@@ -89,6 +89,7 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-19).
 - Nextjs_Security: "Use for optimistic redirects and request filtering. Do not make it the only authorization layer." — the proxy rule only redirects; every page keeps its own check — AC2, AC3.
 - OAuth2: not applicable — no OAuth flow, client or token handling changes.
 - OS_Command_Injection_Defense: not applicable — no process is started with any input.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the link is checked by `safeNextPath` before it reaches `href`, on top of React's own URL handling — AC1, AC4.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC6.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC6.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC1 and AC2.

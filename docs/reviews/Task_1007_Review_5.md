@@ -1,6 +1,6 @@
 # Task 1007 — Review 5
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 4](Task_1007_Review_4.md)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 4](Task_1007_Review_4.md)
 
 Review 5 of pull request #70 at c8d9f87aa (checklist V14, CI run 45379769180) — NEEDS REVISION
 Scope: the red job "Lint, types and product checks" (`gh run view 45379769180 --job 138395448739 --log-failed`); 21 checks pass, Click-shield and the unit

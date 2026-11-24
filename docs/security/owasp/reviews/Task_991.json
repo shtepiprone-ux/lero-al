@@ -1,0 +1,300 @@
+{
+ "task": "991",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "T1-T5 of the kickoff each have a test: `src/modules/auth/actions/__tests__/explainRefusedSignIn.security.test.ts`, `signUpWithCaptcha.smoke.test.ts`, `requestPasswordReset.smoke.test.ts` (Review 1, V3 and V8: they fail without the change)"
+  },
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff changes checklist text only (I1, V13); no agent tool, permission, hook or setting changes"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the new action `src/modules/auth/actions/explainRefusedSignIn.ts`, the two changed actions `src/modules/auth/actions/captcha.ts` and the function in `supabase/sql_migrations/task991/task991.sql` were read in Review 1; F1 is an attack-surface defect of the reset action"
+  },
+  "Authentication": {
+   "verdict": "met",
+   "quotes": [
+    "Using any of the authentication mechanisms (login, password reset, or password recovery), an application must respond with a generic error message regardless of whether:"
+   ],
+   "evidence": "`[SEC-991-ENUM-DENY]` in `signUpWithCaptcha.smoke.test.ts`, `requestPasswordReset.smoke.test.ts` and `explainRefusedSignIn.security.test.ts`: equal answers for new, existing, blocked and unknown addresses; the time of the reset lookup is F1"
+  },
+  "Authentication_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Do not embed authentication in new systems."
+   ],
+   "evidence": "`src/modules/auth/actions/explainRefusedSignIn.ts` returns a flag and a date only and creates no session; Auth stays the only sign-in (`src/lib/auth/browser.ts:23`)"
+  },
+  "Authorization": {
+   "verdict": "not applicable",
+   "reason": "the actions act for an anonymous visitor on nothing but the typed address; no role check changes"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "no authorization decision is added; the output is one boolean and a date"
+  },
+  "Authorization_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no access rule moves between the application and database layers"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "not applicable",
+   "reason": "no role rule changes; AC5 covers the grants of the new function"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Integration test cases validate the correct implementation of the authorization matrix."
+   ],
+   "evidence": "`src/tests/integration/authPasswordMatches.integration.test.ts` `[SEC-991-RPC-DENY]`; it runs only in the CI `authz` job after the owner applies the SQL (UNKNOWN until then)"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Per endpoint — the login endpoint deserves a tighter limit than the home page."
+   ],
+   "evidence": "`src/modules/auth/actions/explainRefusedSignIn.ts` bucket `blocked_signin` 900 s / 5 and `src/modules/auth/actions/captcha.ts:58` bucket `account_notice_mail` 3600 s / 1; deliberate break of the limit check fails 1 test (Review 1, V3)"
+  },
+  "Content_Security_Policy": {
+   "verdict": "not applicable",
+   "reason": "the existing Turnstile widget and the policy are unchanged"
+  },
+  "Cookie_Theft_Mitigation": {
+   "verdict": "not applicable",
+   "reason": "no cookie is set or read by the new or changed actions"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "or similar puzzle for each login attempt can help to identify automated/bot attacks"
+   ],
+   "evidence": "`src/modules/auth/actions/explainRefusedSignIn.ts` calls `verifyTurnstile` before the limit and the password check; the sheet takes a fresh token (`src/modules/auth/components/AuthSheet.tsx`, `explainBan`); deliberate break of the token check fails 2 tests"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the new texts are message keys and the date is formatted text, no HTML sink"
+  },
+  "Cryptographic_Storage": {
+   "verdict": "not applicable",
+   "reason": "the stored hash is Auth's own; the function only compares it with crypt"
+  },
+  "Database_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Configured with the minimum permissions required as discussed in the permissions section below."
+   ],
+   "evidence": "both functions in `supabase/sql_migrations/task991/task991.sql` grant EXECUTE to service_role only, `search_path = ''`; Review 2 trial apply on dev in a rolled-back transaction: `task991-verify.sql` 7/7 true, anon and authenticated refused 42501, catalog fingerprint unchanged"
+  },
+  "Denial_of_Service": {
+   "verdict": "met",
+   "quotes": [
+    "Using validation that is cheap in resources first"
+   ],
+   "evidence": "F1 fixed in Revision 1: `src/modules/auth/actions/captcha.ts` `looksLikeAddress` before one exact `account_status_by_email` call (`src/modules/auth/lib/accountStatus.ts`); the token and the limit run before `auth_password_matches`; Review 2 breaks of the shape check and the lower-casing fail 5 and 2 tests"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no new DOM sink; the support link is a fixed internal path"
+  },
+  "Error_Handling": {
+   "verdict": "met",
+   "quotes": [
+    "The outcome being that when an unexpected error occurs then a generic response is returned by the application but the error details are logged server side for investigation, and not returned to the user."
+   ],
+   "evidence": "`src/modules/auth/actions/explainRefusedSignIn.ts` answers `{ blocked: false }` on every failure and logs codes only; `captcha.ts:75-77` swallows background failures; tests 'a lookup, a limiter or a mail that fails never reaches the caller'"
+  },
+  "Forgot_Password": {
+   "verdict": "met",
+   "quotes": [
+    "Return a consistent message for both existent and non-existent accounts."
+   ],
+   "evidence": "`[SEC-991-ENUM-DENY]` in `src/modules/auth/actions/__tests__/requestPasswordReset.smoke.test.ts`: blocked, active and unknown addresses get the same `{ ok: true }`; the timing of the pre-check lookup is F1"
+  },
+  "GraphQL": {
+   "verdict": "not applicable",
+   "reason": "the project serves no GraphQL endpoint at all"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "verdict": "not applicable",
+   "reason": "no response header or transport setting changes in this diff"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Each receiving service must still authorize the requested action and resource."
+   ],
+   "evidence": "the database grants `auth_password_matches` to service_role alone (`supabase/sql_migrations/task991/task991.sql`), whatever the caller"
+  },
+  "Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "values reach SQL only as RPC arguments; no command or query is built from strings"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": [
+    "Reject invalid requests with a clear error; do not continue with partially validated data."
+   ],
+   "evidence": "Review 2: `requestPasswordReset.smoke.test.ts` cases for a number, null, an object, an empty, a 255-character and an @-less address make no service-role call; `explainRefusedSignIn.security.test.ts` shape cases refuse before any call"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the only object is the account of the address the caller proves"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "not applicable",
+   "reason": "no merge, path setter or regular expression over unbounded input"
+  },
+  "Key_Management": {
+   "verdict": "not applicable",
+   "reason": "no key is created, read or rotated by this change"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no model prompt or model input path changes; only checklist text I1 and V13"
+  },
+  "Logging": {
+   "verdict": "met",
+   "quotes": [
+    "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+   ],
+   "evidence": "tests 'no log line carries the password or the address' in `explainRefusedSignIn.security.test.ts` and 'no log line carries the address' in `signUpWithCaptcha.smoke.test.ts` pass"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "the task adds no security event to the log vocabulary"
+  },
+  "Mass_Assignment": {
+   "verdict": "not applicable",
+   "reason": "no record is written from caller fields in this diff"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or configuration is added or changed in this diff"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "not applicable",
+   "reason": "no tenant-scoped data is read; the account is the caller's address"
+  },
+  "Multifactor_Authentication": {
+   "verdict": "not applicable",
+   "reason": "the sign-in factors are unchanged; Task 960 carries MFA"
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Treat each reachable action as a client-callable POST entry point."
+   ],
+   "evidence": "`explainRefusedSignIn.security.test.ts` calls the action directly with no, refused and malformed tokens and inputs; `src/__tests__/security/serverEntryGuards.test.ts` `PUBLIC_BY_DESIGN` names it with its bounds (F3 fixed in Revision 2; removing the entry fails 2 assertions, Review 4)"
+  },
+  "OAuth2": {
+   "verdict": "not applicable",
+   "reason": "Google sign-in is out of scope and unchanged"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "the scripts/quality change replaces three hash strings; no command is built or run"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is built from client-supplied keys here"
+  },
+  "Query_Parameterization": {
+   "verdict": "met",
+   "quotes": [
+    "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure."
+   ],
+   "evidence": "`supabase/sql_migrations/task991/task991.sql` takes typed arguments and builds no dynamic SQL; `task991-verify.sql` row 3"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Validate every argument as untrusted input"
+   ],
+   "evidence": "`src/modules/auth/actions/explainRefusedSignIn.ts` checks type and length of email, password and token before any call (test `%s is refused before any token check, limit or lookup`); the reset request checks the address shape (`captcha.ts` `looksLikeAddress`)"
+  },
+  "Secrets_Management": {
+   "verdict": "not applicable",
+   "reason": "no secret is added; existing keys stay where they are"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Diff-Based Reviews focus on code changes only."
+   ],
+   "evidence": "`docs/reviews/Task_991_Review_1.md` to `docs/reviews/Task_991_Review_4.md` (CI run 45417124768 of pull request #71 read in Review 3)"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "no dependency added (`git diff --stat` shows no lockfile); every claim of the report was rerun in Review 1 (V3, V8)"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "AC1-AC5 carry T1-T5; tests listed in `docs/reviews/Task_991_Review_1.md`"
+  },
+  "Server_Side_Template_Injection_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "Do not try to filter template syntax out of input."
+   ],
+   "evidence": "`src/modules/auth/actions/captcha.ts:64-66` fills the templates only with server-built URLs and a date; `sendTemplatedEmail` escapes every variable"
+  },
+  "Session_Management": {
+   "verdict": "not applicable",
+   "reason": "no session is created, renewed or ended by the change"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "use parameterized queries for dynamic data values"
+   ],
+   "evidence": "the address and password reach SQL only as RPC arguments (`src/modules/auth/lib/accountStatus.ts`, `src/modules/auth/actions/explainRefusedSignIn.ts`); `account_status_by_email` matches exactly, no LIKE (Review 2 trial on dev: `%`, `_` and a substring return 0 rows)"
+  },
+  "Third_Party_Javascript_Management": {
+   "verdict": "not applicable",
+   "reason": "the Turnstile script is already loaded; nothing is added"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "the threat modeling process should answer the following four questions"
+   ],
+   "evidence": "\"## Attack surface\" of the kickoff; F1 (the pre-check wildcard lookup) fixed in Revision 1, `src/modules/auth/lib/accountStatus.ts`"
+  },
+  "Transport_Layer_Security": {
+   "verdict": "not applicable",
+   "reason": "no transport or certificate setting changes in this diff"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "verdict": "not applicable",
+   "reason": "the new link is a fixed internal path; redirect handling unchanged"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "Reviews 1 and 2 reran `npm test --` on the six Route files (204, then 225 passed), the failing-first runs (14, then 31 failed) and deliberate breaks of `src/modules/auth/actions/explainRefusedSignIn.ts` and `src/modules/auth/lib/accountStatus.ts`"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "met",
+   "quotes": [
+    "The fundamental security rule is to never use innerHTML with untrusted data."
+   ],
+   "evidence": "`src/modules/auth/components/AuthSheet.tsx` renders message keys, a formatted date and an `Anchor` to `/${locale}/contact`; no HTML sink"
+  }
+ }
+}

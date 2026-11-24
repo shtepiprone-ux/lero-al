@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { CheckCircle2 } from 'lucide-react'
@@ -12,6 +13,7 @@ import { completeGoogleSignIn, openStoredDestination } from '@/modules/auth/lib/
 import type { RememberedGoogleAccount } from '@/lib/auth/rememberedGoogleAccount'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
+import { explainRefusedSignIn } from '@/modules/auth/actions/explainRefusedSignIn'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { GoogleWelcomeBack } from '@/components/auth/GoogleWelcomeBack'
@@ -41,6 +43,11 @@ interface AuthSheetProps {
 
 // ── Login view ────────────────────────────────────────────────────────────────
 
+/** Supabase Auth refuses a banned account with the code `user_banned` (message "User is banned") before it checks the password (Task 923 R40, Task 991). */
+function isBannedRefusal(error: { code?: string; message?: string }): boolean {
+  return error.code === 'user_banned' || /user is banned/i.test(error.message ?? '')
+}
+
 function LoginView({
   onRegister,
   onForgotPassword,
@@ -52,33 +59,55 @@ function LoginView({
 }) {
   const t = useTranslations('auth')
   const tc = useTranslations('common')
+  const locale = useLocale()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [errorKey, setErrorKey] = useState<string | null>(null)
+  // Task 991: set only when the server confirms, for a caller that proved the password, that the account is blocked
+  const [blocked, setBlocked] = useState<{ until: string | null } | null>(null)
   const [loading, setLoading] = useState(false)
   const sessionLost = useSessionLostNotice()
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const widgetRef = useRef<CaptchaWidgetHandle>(null)
 
+  /** After `user_banned` (Task 991, O991-2): a fresh token from the widget and the server's answer; any failure or refusal is `null`, which keeps the wrong-credentials text. */
+  async function explainBan(): Promise<{ until: string | null } | null> {
+    try {
+      const token = await widgetRef.current?.getToken()
+      const answer = await explainRefusedSignIn({ email, password, captchaToken: token ?? '' })
+      if (answer?.blocked === true) return { until: typeof answer.until === 'string' ? answer.until : null }
+    } catch {
+      // the explanation is only an addition: the person still reads the wrong-credentials text
+    } finally {
+      // this call used its own token as well: the next attempt needs a new check
+      widgetRef.current?.reset()
+      setCaptchaToken(null)
+    }
+    return null
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setErrorKey(null)
+    setBlocked(null)
     if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
     if (!password) { setErrorKey('error_weak_password'); return }
     if (!captchaToken) return
     setLoading(true)
     const { error } = await signIn(email, password, captchaToken)
-    setLoading(false)
     if (error) {
       // a token is valid once (Task 923 R151): the next attempt needs a new check
       widgetRef.current?.reset()
       setCaptchaToken(null)
+      const explained = isBannedRefusal(error) ? await explainBan() : null
+      setLoading(false)
+      if (explained) { setBlocked(explained); return }
       setErrorKey(mapAuthError(error.message))
       return
     }
+    setLoading(false)
     onClose()
     // Redirect to the originally-requested route (set by AuthRedirect when gated routes redirect here).
     // sanitizeReturnTo ensures the path is a safe same-origin relative path.
@@ -107,6 +136,14 @@ function LoginView({
       )}
       {errorKey && (
         <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>
+      )}
+      {blocked && (
+        <Alert color="red">
+          {t('error_account_blocked')}
+          {blocked.until && ` ${t('error_account_blocked_until', { date: new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(blocked.until)) })}`}
+          {' '}
+          <Anchor component={Link} href={`/${locale}/contact`} c="red.7" underline="always" onClick={onClose}>{t('error_account_blocked_contact')}</Anchor>
+        </Alert>
       )}
 
       <TextInput

@@ -44,6 +44,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Injection_Prevention: not applicable — the gate drives a browser over a static Storybook build and builds no command from input.
 - JavaScript_and_TypeScript_Security: not applicable — no merge, path setter or regular expression over input.
 - OS_Command_Injection_Defense: not applicable — the gate's browser launch is unchanged and takes no input.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the header renders the title and label as React text; card values are unchanged — AC3.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC6.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results, the deliberate break included — AC6.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — no HTML sink is added — AC3.

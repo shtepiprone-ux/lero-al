@@ -44,6 +44,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - DOM_based_XSS_Prevention: not applicable — no value from the address or storage reaches a sink.
 - JavaScript_and_TypeScript_Security: not applicable — a number in state; no merge, path setter or regular expression.
 - Nextjs_Security: not applicable — no action, route or data read changes; the page still checks staff first.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the count renders through the message formatter as React text — AC3.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC4.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results — AC4.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — no HTML sink is added — AC1.

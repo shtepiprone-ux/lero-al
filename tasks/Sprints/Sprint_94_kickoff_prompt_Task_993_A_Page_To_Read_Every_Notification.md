@@ -75,6 +75,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Multifactor_Authentication: not applicable — the factors of sign-in are unchanged.
 - Nextjs_Security: "Rendering the form only on a protected page does not authenticate the action request." — `markNotificationRead` keeps its own viewer check and row filter — AC3.
 - OS_Command_Injection_Defense: not applicable — no operating system process is started.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — titles and bodies render as text through the existing resolution; the action link passes `notificationHref` — AC3.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC7.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC7.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC2 and AC3.

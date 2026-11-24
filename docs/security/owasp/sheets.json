@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "7fdbe1d332733c4c6308da5a756d1f59d0c5e569",
- "fetchedOn": "2026-11-24T10:52:12.704Z",
+ "commit": "18e6c89f960e10a5b64f7c882c2b9dc17c423d10",
+ "fetchedOn": "2026-11-24T14:00:25.905Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -668,6 +668,13 @@
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/RAG_Security_Cheat_Sheet.html",
    "sha": "99f742ca78caa944eab9f6a29b5803e6a44389a4",
    "title": "Retrieval-Augmented Generation (RAG) Security Cheat Sheet"
+  },
+  {
+   "name": "React_Security",
+   "file": "React_Security_Cheat_Sheet.md",
+   "url": "https://cheatsheetseries.owasp.org/cheatsheets/React_Security_Cheat_Sheet.html",
+   "sha": "6ae302af0ae65fb66ab29fa9dbec00b08681d58f",
+   "title": "React Security Cheat Sheet"
   },
   {
    "name": "REST_Assessment",

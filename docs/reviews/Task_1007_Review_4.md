@@ -1,6 +1,6 @@
 # Task 1007 — Review 4
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 3](Task_1007_Review_3.md)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 3](Task_1007_Review_3.md)
 
 Review 4 of the working tree on dd2a28ba5 (pull request #70, uncommitted Revision 2) — APPROVED
 Scope: Revision 2 changed `scripts/check-signed-in-pages.mjs` (+73 −4), `scripts/__tests__/check-signed-in-pages.test.ts` (+170 −3) and added

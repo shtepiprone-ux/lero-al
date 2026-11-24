@@ -1,6 +1,6 @@
 # Task 1007 — Review 2
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 1](Task_1007_Review_1.md)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1007_A_Moderator_Opens_Only_The_Admin_Pages_Switched_On.md) · OWASP record: [Task_1007.json](../security/owasp/reviews/Task_1007.json) · Previous: [Review 1](Task_1007_Review_1.md)
 
 Review 2 of the working tree on de99ecd87 (uncommitted, branch `task/1007-admin-page-access`), Revision 1 — APPROVED
 Scope: Revision 1 changed one file, `src/modules/admin/actions/__tests__/permissions.security.test.ts` (+2 −1: the `ADMIN_PAGE_KEYS` import at `:11` and the

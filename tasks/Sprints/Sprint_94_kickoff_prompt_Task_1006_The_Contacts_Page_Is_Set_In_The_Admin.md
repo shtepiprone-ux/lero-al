@@ -107,6 +107,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19, revised with O989
 - OS_Command_Injection_Defense: not applicable — editing the migration manifest starts no operating system process at all.
 - Prototype_Pollution_Prevention: not applicable — the view takes named props; no object is built from client keys.
 - Query_Parameterization: not applicable — "migration" names the Mantine UI migration; no query text is built here.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the intro is validated on save and rendered as React text — AC2, AC3.
 - Secrets_Management: not applicable — the two existing server variables stay where they are; no secret is added.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC8.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC8.

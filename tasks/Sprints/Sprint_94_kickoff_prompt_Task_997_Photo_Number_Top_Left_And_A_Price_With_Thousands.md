@@ -62,6 +62,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - MCP_Security: not applicable — no MCP server, tool or agent permission is added or changed here.
 - OS_Command_Injection_Defense: not applicable — no operating system process is started.
 - Prototype_Pollution_Prevention: not applicable — no object is built from client keys.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — the marks, hint and errors render as React text and badges — AC1, AC3.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC5.
 - User_Privacy_Protection: not applicable — no personal data or address is added to the photo tiles.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results — AC5.

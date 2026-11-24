@@ -46,13 +46,22 @@ function channel(): Channel {
   }
 }
 
+// Task 991 — the one synthetic address of the `LoginBlocked` Story (`AuthSheet.stories.tsx`): Auth refuses it as a banned account, with the code and the message the real Auth answers
+// (`user_banned`, "User is banned", status 400). Every other address is answered as before.
+const BLOCKED_STORY_EMAIL = 'blocked@example.com'
+type BannedAnswer = { data: { user: null; session: null }; error: { code: string; message: string; status: number } }
+
 const auth = {
   // `controller.ts` destructures `{ data: { subscription } }` from this call and unsubscribes it later.
   onAuthStateChange: (..._args: unknown[]) => ({ data: { subscription: { unsubscribe() {} } } }),
   getUser: async (..._args: unknown[]): Promise<SignedOutUser> => signedOutUser(),
   getSession: async (..._args: unknown[]): Promise<SignedOutSession> => signedOutSession(),
   signOut: async (..._args: unknown[]): Promise<{ error: null }> => ({ error: null }),
-  signInWithPassword: async (..._args: unknown[]): Promise<SignedOutPair> => signedOutPair(),
+  signInWithPassword: async (credentials?: { email?: string }): Promise<SignedOutPair | BannedAnswer> => (
+    credentials?.email === BLOCKED_STORY_EMAIL
+      ? { data: { user: null, session: null }, error: { code: 'user_banned', message: 'User is banned', status: 400 } }
+      : signedOutPair()
+  ),
   signInWithIdToken: async (..._args: unknown[]): Promise<SignedOutPair> => signedOutPair(),
   signUp: async (..._args: unknown[]): Promise<SignedOutPair> => signedOutPair(),
   verifyOtp: async (..._args: unknown[]): Promise<SignedOutPair> => signedOutPair(),

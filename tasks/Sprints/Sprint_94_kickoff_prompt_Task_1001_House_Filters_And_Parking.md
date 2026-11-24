@@ -72,6 +72,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — the create and update actions are tested by direct call with extra and invalid fields — AC4.
 - Prototype_Pollution_Prevention: not applicable — no object is built from client keys; the schema picks named fields.
 - Query_Parameterization: "SQL Injection is best prevented through the use of" — the search binds values through the client library's builders, never string concatenation — AC3.
+- React_Security: "Where possible, render untrusted content as text using JSX expressions." — values render as message-key labels through React — AC2, AC5.
 - REST_Security: "Achieve an implicit input validation by using strong types like numbers, booleans, dates, times or fixed data ranges in API parameters." — the API route reads `parking` and `layout_features` only from fixed value lists — AC3.
 - SQL_Injection_Prevention: not applicable — the SQL is a fixed schema change; no statement is built from input.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC7.

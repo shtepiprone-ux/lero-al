@@ -23,6 +23,7 @@
 
 import type { MantineThemeOther } from '@mantine/core'
 import { cn } from '@/lib/utils'
+import { r2ThumbUrl } from '@/lib/uploads/imageUrl'
 import styles from './AppImage.module.css'
 
 export type ImageVariant =
@@ -265,7 +266,32 @@ export function safeImageSrc(src: string | null | undefined): string | undefined
   return undefined
 }
 
+// ── R2 listing photos (Task 1038) ─────────────────────────────────────────────
+// A photo on the platform's media host has two objects, `full` (1920 px) and `thumb` (640 px), made by the browser before the upload; there is no transformation service. The variant is
+// not known to `insertTransform` / `buildSrcset`, only what it asks for: a variant whose largest requested width is at most `R2_THUMB_MAX_WIDTH` (the cards, the form tiles, the strip)
+// renders `thumb`; a wider one (the gallery, the lightbox) renders `full` and gets a `srcset` of `thumb 640w, full 1920w`.
+
+/** the widest request a `thumb` object (640 px) serves: the card variants ask for 800 px at most, the gallery for 1200 px and more */
+const R2_THUMB_MAX_WIDTH = 800
+
+/** the width a Cloudinary transformation string asks for (`w_800,h_600,...`), or null */
+function requestedWidth(transform: string): number | null {
+  const match = /(?:^|,)w_(\d+)(?:,|$)/.exec(transform)
+  return match ? Number(match[1]) : null
+}
+
+/** `thumb 640w, full 1920w` for the address of an R2 listing photo's `full` object, or null when the address is not one */
+export function r2GallerySrcset(src: string): string | null {
+  const thumb = r2ThumbUrl(src)
+  return thumb === null ? null : `${thumb} 640w, ${src} 1920w`
+}
+
 export function insertTransform(src: string, transform: string): string {
+  const thumb = r2ThumbUrl(src)
+  if (thumb !== null) {
+    const width = requestedWidth(transform)
+    return width !== null && width <= R2_THUMB_MAX_WIDTH ? thumb : src
+  }
   if (!transform || !isCloudinaryDeliveryUrl(src)) return src
   const idx = src.indexOf(UPLOAD_MARKER)
   if (idx === -1) return src
@@ -274,6 +300,8 @@ export function insertTransform(src: string, transform: string): string {
 }
 
 export function buildSrcset(src: string, base: string, entries: SrcsetEntry[]): string {
+  const gallery = r2GallerySrcset(src)
+  if (gallery !== null) return entries.length > 0 && Math.max(...entries.map((entry) => entry.w)) > R2_THUMB_MAX_WIDTH ? gallery : ''
   if (!isCloudinaryDeliveryUrl(src)) return ''
   return entries
     .map(({ w, h }) => {

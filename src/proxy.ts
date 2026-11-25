@@ -94,8 +94,11 @@ export const config = {
   //                         The id is one to three digits (Revision 1, R1-3): the sitemap route serves request-time ids and caches every path it answers, 404 included, so
   //                         three digits bound the paths an anonymous visitor can add to the cache to 1 110 (1 000 files, 5 000 000 listings); `/sitemap/1234.xml` keeps the
   //                         proxy, which sends it to a 404 page.
+  //   vendor/<file>.js, vendor/<file>.txt — the vendored Worker script of the photo compression and its licence (Task 1038): they read no session, and a language prefix sent them
+  //                         to /sq/vendor/..., a 404, so the Worker's script load failed and every photo was compressed on the main thread. Only files directly under /vendor/
+  //                         with these two endings: `/vendor`, `/vendor/`, `/vendor/a/b.js`, `/vendorx/a.js` and `/vendor/x.json` keep the session refresh and locale routing.
   // Every other /api route and /admin are INCLUDED so that an expired or refused session is renewed or ended there too (R45 (a)); locale routing stays off on them.
   matcher: [
-    '/((?!api/cron|api/auth-email-hook|auth|_next/static|_next/image|favicon.ico|robots\\.txt$|sitemap/\\d{1,3}\\.xml$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+    '/((?!api/cron|api/auth-email-hook|auth|_next/static|_next/image|favicon.ico|robots\\.txt$|sitemap/\\d{1,3}\\.xml$|vendor/[^/]+\\.(?:js|txt)$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 }

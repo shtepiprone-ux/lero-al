@@ -126,3 +126,79 @@ describe('isOwnedListingImageUrl', () => {
     expect(isValidImagePayload([theirs], OWNER)).toBe(false)
   })
 })
+
+// Task 1038 (AC5): a photo on the platform's own media host. The address is the `full` object of the OWNER's folder: `https://media.lero.al/<owner>/listings/<uuid>/full.{webp,jpg}`.
+describe('an R2 listing photo address', () => {
+  const OWNER = '22222222-2222-4222-8222-222222222222'
+  const OTHER = '33333333-3333-4333-8333-333333333333'
+  const FOLDER = '44444444-4444-4444-8444-444444444444'
+  const good = (owner = OWNER, name = 'full.webp') => `https://media.lero.al/${owner}/listings/${FOLDER}/${name}`
+
+  it.each([
+    ['a WebP photo', good()],
+    ['a JPEG photo', good(OWNER, 'full.jpg')],
+  ])('[SEC-R2URL-OWNER-ALLOW] accepts %s of the owner', (_label, url) => {
+    expect(isOwnedListingImageUrl(url, OWNER, CLOUD)).toBe(true)
+    expect(isTrustedImageUrl(url, CLOUD)).toBe(true)
+  })
+
+  it.each([
+    ['another account\'s folder', good(OTHER)],
+    ['the thumb object (only full is stored)', good(OWNER, 'thumb.webp')],
+    ['the thumb object as JPEG', good(OWNER, 'thumb.jpg')],
+    ['another extension (png)', good(OWNER, 'full.png')],
+    ['another extension (jpeg)', good(OWNER, 'full.jpeg')],
+    ['another extension (svg)', good(OWNER, 'full.svg')],
+    ['no extension', good(OWNER, 'full')],
+    ['another object name', good(OWNER, 'original.webp')],
+    ['a doubled extension', good(OWNER, 'full.webp.html')],
+    ['a folder name that is not a UUID', `https://media.lero.al/${OWNER}/listings/x/full.webp`],
+    ['an upper-case folder UUID', `https://media.lero.al/${OWNER}/listings/ABCDEF12-4444-4444-8444-444444444444/full.webp`],
+    ['no folder UUID at all', `https://media.lero.al/${OWNER}/listings/full.webp`],
+    ['a segment more', `https://media.lero.al/${OWNER}/listings/${FOLDER}/x/full.webp`],
+    ['the owner\'s other folder', `https://media.lero.al/${OWNER}/avatars/${FOLDER}/full.webp`],
+    ['a folder that only starts like the owner\'s', `https://media.lero.al/${OWNER}x/listings/${FOLDER}/full.webp`],
+    ['a query string', `${good()}?v=1`],
+    ['an empty query string', `${good()}?`],
+    ['a fragment', `${good()}#x`],
+    ['a .. segment', `https://media.lero.al/${OTHER}/../${OWNER}/listings/${FOLDER}/full.webp`],
+    ['an encoded dot', `https://media.lero.al/${OWNER}/listings/%2e%2e/${FOLDER}/full.webp`],
+    ['an encoded slash', `https://media.lero.al/${OWNER}%2flistings/${FOLDER}/full.webp`],
+    ['a backslash', `https://media.lero.al/${OWNER}\listings\${FOLDER}\full.webp`],
+    ['another host', `https://evil.example/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['a host that only starts like the media host', `https://media.lero.al.evil.example/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['the media host as user-info', `https://media.lero.al@evil.example/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['a sub-domain', `https://cdn.media.lero.al/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['the site itself', `https://lero.al/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['plain http', `http://media.lero.al/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['a port', `https://media.lero.al:8443/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['credentials', `https://user:pw@media.lero.al/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['a protocol-relative address', `//media.lero.al/${OWNER}/listings/${FOLDER}/full.webp`],
+  ])('[SEC-R2URL-OWNER-DENY] refuses %s', (_label, url) => {
+    expect(isOwnedListingImageUrl(url, OWNER, CLOUD)).toBe(false)
+  })
+
+  it('[SEC-R2URL-OWNER-DENY] the general rule has no owner to compare but still refuses every other shape', () => {
+    expect(isTrustedImageUrl(good(OTHER), CLOUD)).toBe(true)                       // an address of someone's folder is a trusted shape; the owner rule above decides whose
+    expect(isTrustedImageUrl(good(OWNER, 'thumb.webp'), CLOUD)).toBe(false)
+    expect(isTrustedImageUrl('https://media.lero.al/anything.webp', CLOUD)).toBe(false)
+    expect(isTrustedImageUrl('https://media.lero.al/', CLOUD)).toBe(false)
+    expect(isTrustedImageUrl(`${good()}?x=1`, CLOUD)).toBe(false)
+  })
+
+  it('[SEC-R2URL-OWNER-DENY] the owner id is compared as text, never used as a pattern', () => {
+    expect(isOwnedListingImageUrl(good(), '', CLOUD)).toBe(false)
+    expect(isOwnedListingImageUrl(good(), '.*', CLOUD)).toBe(false)
+    expect(isOwnedListingImageUrl(good(), `${OWNER}/listings`, CLOUD)).toBe(false)
+  })
+
+  it('[SEC-R2URL-OWNER-ALLOW] the payload takes the owner\'s R2 photos next to Cloudinary ones and refuses another owner\'s', () => {
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = CLOUD
+    const cloud = { url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/${OWNER}/listings/a.jpg`, is_cover: true, order: 0 }
+    const mine = { url: good(), is_cover: false, order: 1 }
+    const theirs = { url: good(OTHER), is_cover: false, order: 2 }
+    expect(isValidImagePayload([cloud, mine], OWNER)).toBe(true)
+    expect(isValidImagePayload([cloud, mine, theirs], OWNER)).toBe(false)
+    expect(allImagesTrusted([cloud, mine])).toBe(true)
+  })
+})

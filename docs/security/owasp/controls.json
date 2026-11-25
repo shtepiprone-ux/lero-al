@@ -482,8 +482,8 @@
      "evidence": "every server entry point authenticates or is public by design"
     }
    ],
-   "reviewedSha": "a4abb053fa5dc26746d70b3a66e98dea2cb10685",
-   "reviewedOn": "2026-11-16"
+   "reviewedSha": "9bc8bb6727576d45d522fbef1466e307f2b4d885",
+   "reviewedOn": "2026-11-25"
   },
   "Credential_Stuffing_Prevention": {
    "applies": true,
@@ -878,8 +878,8 @@
      "evidence": "least privilege, RLS on every table"
     }
    ],
-   "reviewedSha": "c36de8b79318bc82dfd772333d8e0ae73dd0a2bd",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "3b8e9e2887626415ad1950f6b84b49fb94d3a25a",
+   "reviewedOn": "2026-11-25"
   },
   "gRPC_Security": {
    "applies": false,
@@ -1166,8 +1166,8 @@
   "Laravel": {
    "applies": false,
    "why": "no PHP or Laravel code exists in the project",
-   "reviewedSha": "253357dcf3e04401a1437426e5a51b715329ee68",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "2f41bf876cf7ea831ed55e1c2d56b3efb5eaf1d0",
+   "reviewedOn": "2026-11-25"
   },
   "LDAP_Injection_Prevention": {
    "applies": false,
@@ -1314,10 +1314,14 @@
      "quote": "Enforce spending limits in the component that makes payments, outside the model's context",
      "control": ".claude/settings.json",
      "evidence": "\"mcp__plugin_vercel_vercel__buy_domain\""
+    },
+    {
+     "quote": "Enforce read-only access at the data source, with a read-only database role or API token, instead of filtering the queries or requests the model sends.",
+     "task": "961"
     }
    ],
-   "reviewedSha": "814a73d4fa8b5ff043487a9047c0a39a3edd5abe",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "606872b7a46ac9b57b8f496f6deb3c492623dc80",
+   "reviewedOn": "2026-11-25"
   },
   "Micro_Frontend_Security": {
    "applies": false,
@@ -1531,8 +1535,8 @@
      "evidence": "ignore-scripts=true"
     }
    ],
-   "reviewedSha": "e8af8f041370c40debd239614df791bb6d86ea6b",
-   "reviewedOn": "2026-11-23"
+   "reviewedSha": "ee3f44e3c7d83910da8c633dbe4b3481dbcdb14d",
+   "reviewedOn": "2026-11-25"
   },
   "OAuth2": {
    "applies": true,
@@ -1748,10 +1752,15 @@
      "quote": "the access control decision should be taken locally by REST endpoints",
      "control": "src/__tests__/security/serverEntryGuards.test.ts",
      "evidence": "every server entry point authenticates or is public by design"
+    },
+    {
+     "quote": "Return 401 for a missing or invalid key, and 403 for a valid key that lacks access to the resource.",
+     "control": "src/lib/cron/__tests__/verifyCronRequest.security.test.ts",
+     "evidence": "expect(r.response.status).toBe(401)"
     }
    ],
-   "reviewedSha": "4572f92d8c4d2585981795d78e34035e23b027e0",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "5d1743082562eaa789b31d709890dd70aebde4ce",
+   "reviewedOn": "2026-11-25"
   },
   "Ruby_on_Rails": {
    "applies": false,
@@ -1762,8 +1771,8 @@
   "SAML_Security": {
    "applies": false,
    "why": "no SAML identity provider or service provider is used",
-   "reviewedSha": "9958308ace7f70d1ef628d983088c401a20196e2",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "d0af118ff6baa563626c7a8ccc04cbb4faed186f",
+   "reviewedOn": "2026-11-25"
   },
   "Secrets_Management": {
    "applies": true,

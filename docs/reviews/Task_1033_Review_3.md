@@ -1,6 +1,6 @@
 # Task 1033 — Review 3
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json) · Previous: [Review 2](Task_1033_Review_2.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json) · Previous: [Review 2](Task_1033_Review_2.md)
 
 Review 3 of pull request #75 at 195f08ea4 (V14: CI run 45495618495) — NEEDS REVISION
 Scope: no change since Review 2; this review reads the CI result.

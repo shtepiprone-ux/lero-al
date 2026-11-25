@@ -5,6 +5,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import { STATIC_BLUR, VARIANTS, buildBlurUrl, buildSrcset, insertTransform } from '../appImageConfig'
+import { GALLERY_MAIN_SIZES, buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 
 const CLOUD = 'https://res.cloudinary.com/demo/image/upload/v123/listings/a.jpg'
 
@@ -83,5 +84,72 @@ describe('the variants', () => {
 
   it('the gallery main variant keeps the widths the preload helper assumes', () => {
     expect(VARIANTS['gallery-main'].srcsetEntries.map((e) => `${e.w}x${e.h}`)).toEqual(['640x360', '960x540', '1200x675', '1600x900'])
+  })
+})
+
+// Task 1038 (AC7): a listing photo on the platform's own media host has two objects, `full` (1920 px) and `thumb` (640 px). Cards and tiles use `thumb`; the gallery and the lightbox
+// get a `srcset` of `thumb 640w, full 1920w`; Cloudinary addresses are built exactly as before.
+describe('an R2 listing photo', () => {
+  const OWNER = '22222222-2222-4222-8222-222222222222'
+  const FOLDER = '44444444-4444-4444-8444-444444444444'
+  const FULL = `https://media.lero.al/${OWNER}/listings/${FOLDER}/full.webp`
+  const THUMB = `https://media.lero.al/${OWNER}/listings/${FOLDER}/thumb.webp`
+  const FULL_JPG = `https://media.lero.al/${OWNER}/listings/${FOLDER}/full.jpg`
+  const THUMB_JPG = `https://media.lero.al/${OWNER}/listings/${FOLDER}/thumb.jpg`
+
+  it.each(['listing', 'listing-thumb', 'gallery-strip', 'upload'] as const)('[AC7] the %s variant renders the thumb object, and has no srcset (the thumb is the one picture)', (name) => {
+    const v = VARIANTS[name]
+    expect(insertTransform(FULL, v.cloudinaryTransform)).toBe(THUMB)
+    expect(insertTransform(FULL_JPG, v.cloudinaryTransform)).toBe(THUMB_JPG)
+    expect(buildSrcset(FULL, v.srcsetBase, v.srcsetEntries)).toBe('')
+  })
+
+  it.each(['gallery-main', 'lightbox'] as const)('[AC7] the %s variant gets a srcset of the thumb at 640w and the full object at 1920w, and the full object as its fallback address', (name) => {
+    const v = VARIANTS[name]
+    expect(buildSrcset(FULL, v.srcsetBase, v.srcsetEntries)).toBe(`${THUMB} 640w, ${FULL} 1920w`)
+    expect(buildSrcset(FULL_JPG, v.srcsetBase, v.srcsetEntries)).toBe(`${THUMB_JPG} 640w, ${FULL_JPG} 1920w`)
+    expect(insertTransform(FULL, v.cloudinaryTransform)).toBe(FULL)
+  })
+
+  it('[AC7] the address is never given a Cloudinary transformation, whatever the variant', () => {
+    for (const [name, v] of Object.entries(VARIANTS)) {
+      expect(insertTransform(FULL, v.cloudinaryTransform), name).not.toMatch(/w_\d|c_fill|f_auto|\/upload\//)
+      expect(buildSrcset(FULL, v.srcsetBase, v.srcsetEntries), name).not.toMatch(/w_\d|c_fill|f_auto|\/upload\//)
+    }
+  })
+
+  it('[AC7] the blur placeholder is the static picture, with no request', () => {
+    expect(buildBlurUrl(FULL)).toBe(STATIC_BLUR)
+  })
+
+  it.each([
+    ['a thumb address', THUMB],
+    ['another host', `https://evil.example/${OWNER}/listings/${FOLDER}/full.webp`],
+    ['a query', `${FULL}?v=1`],
+    ['a folder that is not a UUID', `https://media.lero.al/${OWNER}/listings/x/full.webp`],
+    ['another extension', `https://media.lero.al/${OWNER}/listings/${FOLDER}/full.png`],
+  ])('[AC7] %s is not an R2 listing photo: it is returned as it is and has no srcset', (_label, src) => {
+    expect(insertTransform(src, VARIANTS.listing.cloudinaryTransform)).toBe(src)
+    expect(buildSrcset(src, VARIANTS['gallery-main'].srcsetBase, VARIANTS['gallery-main'].srcsetEntries)).toBe('')
+  })
+
+  it('[AC7] a Cloudinary address is built exactly as before for every variant', () => {
+    for (const v of Object.values(VARIANTS)) {
+      expect(insertTransform(CLOUD, v.cloudinaryTransform)).toBe(`https://res.cloudinary.com/demo/image/upload/${v.cloudinaryTransform}/v123/listings/a.jpg`)
+      expect(buildSrcset(CLOUD, v.srcsetBase, v.srcsetEntries)).toBe(
+        v.srcsetEntries.map(({ w, h }) => `https://res.cloudinary.com/demo/image/upload/${h !== undefined ? `w_${w},h_${h}` : `w_${w}`},${v.srcsetBase}/v123/listings/a.jpg ${w}w`).join(', '),
+      )
+    }
+  })
+
+  it('[AC7] the preload of the gallery main image: a srcset of thumb 640w and full 1920w, the full object as href', () => {
+    expect(buildGalleryMainPreloadAttrs(FULL)).toEqual({ href: FULL, imageSrcSet: `${THUMB} 640w, ${FULL} 1920w`, imageSizes: GALLERY_MAIN_SIZES })
+  })
+
+  it('[AC7] the preload of a Cloudinary photo is as before, and of any other address is null', () => {
+    expect(buildGalleryMainPreloadAttrs(CLOUD)?.href).toBe('https://res.cloudinary.com/demo/image/upload/w_960,h_540,c_fill,g_auto,f_auto,q_auto/v123/listings/a.jpg')
+    expect(buildGalleryMainPreloadAttrs('https://example.com/a.jpg')).toBeNull()
+    expect(buildGalleryMainPreloadAttrs(`${FULL}?v=1`)).toBeNull()
+    expect(buildGalleryMainPreloadAttrs(null)).toBeNull()
   })
 })

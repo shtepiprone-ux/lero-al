@@ -7,8 +7,7 @@ import { getUser } from '@/lib/auth/server'
 import { getBlockedError } from '@/lib/auth/blockCheck'
 import { hasPermission } from '@/lib/auth/permissions'
 import { routing } from '@/i18n/routing'
-import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
-import { deleteAsset } from '@/lib/cloudinaryDelete'
+import { deleteListingPhotos } from '@/lib/media/listingPhoto'
 import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 /**
@@ -63,18 +62,10 @@ export async function deleteListingAction(
     return { error: 'delete_failed' }
   }
 
-  // H.5: clean up Cloudinary assets for all images that belonged to this listing.
+  // H.5: clean up the files of all images that belonged to this listing: Cloudinary assets, and both objects of an R2 photo and then their CDN purge (Task 1038).
   if (imagesToDelete?.length) {
-    const publicIds = imagesToDelete
-      .map(i => publicIdFromUrl(i.url))
-      .filter((pid): pid is string => pid !== null)
-    await Promise.allSettled(
-      publicIds.map(pid =>
-        deleteAsset(pid, { reason: 'listing_deleted' }).catch(err =>
-          console.error('[deleteListingAction] image cleanup failed:', err),
-        ),
-      ),
-    )
+    const cleanup = await deleteListingPhotos(imagesToDelete.map(i => i.url), 'listing_deleted').catch(err => ({ errors: [err] }))
+    for (const err of cleanup.errors) console.error('[deleteListingAction] image cleanup failed:', err)
   }
 
   updateTag('site-stats')

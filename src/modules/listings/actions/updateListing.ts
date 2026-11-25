@@ -16,9 +16,8 @@ import { computeNextPriceOld } from '@/modules/listings/domain/priceOld'
 import { isListingVisible } from '@/modules/listings/domain/listingSemanticHelpers'
 import type { ListingStatus } from '@/types/database'
 import { routing } from '@/i18n/routing'
-import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
-import { deleteAsset } from '@/lib/cloudinaryDelete'
-import { isValidImagePayload } from '@/lib/uploads/imageUrl'
+import { deleteListingPhotos, verifyListingPhotos } from '@/lib/media/listingPhoto'
+import { isValidImagePayload, parseR2ListingPhotoUrl } from '@/lib/uploads/imageUrl'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 
 interface UpdateListingPayload extends ListingInput {
@@ -112,6 +111,19 @@ export async function updateListing(
   const refusal = await catalogueRefusal(supabase, parsed.data.property_type, parsed.data.currency)
   if (refusal) return { error: refusal }
 
+  // An R2 photo that is not on the listing yet is read back before anything is written (Task 1038): both objects exist, are small enough, are of the type of their extension and really are
+  // that image, in the folder of the LISTING OWNER. A photo the listing already holds was checked when it was attached. A failed read of the current photos refuses.
+  const r2Urls = payload.images.map((img) => img.url).filter((url) => parseR2ListingPhotoUrl(url) !== null)
+  if (r2Urls.length > 0) {
+    const { data: current, error: currentError } = await writer.from('listing_images').select('url').eq('listing_id', listingId)
+    if (currentError || !current) {
+      console.error('Failed to read listing images', { error: currentError, listingId })
+      return { error: 'images_failed' }
+    }
+    const held = new Set(current.map((row) => row.url))
+    if (!(await verifyListingPhotos(r2Urls.filter((url) => !held.has(url)), existing.user_id))) return { error: 'images_invalid' }
+  }
+
   // Moderation of an edit (Task 923 R74, owner decision D53): the OWNER's edit of an ACTIVE listing is published only after staff approve it. The listing moves to
   // `pending` FIRST, through the one status gateway (its compare-and-set holds, R67 (e)), and only then is the content written, so no moment exists in which new content
   // is visible. A failed move writes nothing and returns `transition_failed`; a content write that fails afterwards leaves the listing `pending` (it never goes back to
@@ -186,23 +198,15 @@ export async function updateListing(
     }
   }
 
-  // H.5: delete Cloudinary assets for images that are no longer in the listing.
-  // New images are now in DB — reference check in deleteAsset will skip any that are re-used.
+  // H.5: delete the files of images that are no longer in the listing (a Cloudinary asset, or both objects of an R2 photo and then their CDN purge, Task 1038).
+  // New images are now in DB — the reference check of the delete will skip any that are re-used.
   // DB update is fully committed before any delete (order enforced by await above).
   const newUrlSet = new Set(payload.images.map(i => i.url))
-  const orphanedPublicIds = oldUrls
-    .filter(url => !newUrlSet.has(url))
-    .map(publicIdFromUrl)
-    .filter((pid): pid is string => pid !== null)
+  const orphanedUrls = oldUrls.filter(url => !newUrlSet.has(url))
 
-  if (orphanedPublicIds.length > 0) {
-    await Promise.allSettled(
-      orphanedPublicIds.map(pid =>
-        deleteAsset(pid, { reason: 'listing_image_removed' }).catch(err =>
-          console.error('[updateListing] image cleanup failed:', err),
-        ),
-      ),
-    )
+  if (orphanedUrls.length > 0) {
+    const cleanup = await deleteListingPhotos(orphanedUrls, 'listing_image_removed').catch(err => ({ errors: [err] }))
+    for (const err of cleanup.errors) console.error('[updateListing] image cleanup failed:', err)
   }
 
   // Invalidate the listing detail page AND the public listings index for every

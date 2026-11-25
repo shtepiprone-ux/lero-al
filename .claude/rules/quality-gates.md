@@ -38,7 +38,9 @@ in CI. Modes: `--all`, `--worktree`, `--staged`, `--changed <base>`, named paths
 ## 2. ESLint — every authored JavaScript/TypeScript file
 
 `eslint.config.mjs` lints `src/`, `scripts/`, `.storybook/` and the root configuration. Ignored only: build output,
-Git-ignored local folders and recorded evidence under `docs/sessions/` (evidence is still parsed and scanned by §1).
+Git-ignored local folders, recorded evidence under `docs/sessions/` (evidence is still parsed and scanned by §1), and
+byte copies of third-party files under `public/vendor/`, each held by a test of its sha256 against the installed package
+and of the version in `package-lock.json` (Task 1038, owner decision O1038-6, 2026-11-25).
 Security rules on every file: `no-eval`, `no-implied-eval`, `no-new-func`, `no-script-url`, `react/no-danger`,
 `no-irregular-whitespace` (strings, comments, regular expressions and templates included), `no-misleading-character-class`,
 `no-control-regex`, `no-unsafe-finally`, `no-unsafe-negation`, `no-unsafe-optional-chaining`, `no-prototype-builtins`,

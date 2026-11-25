@@ -1,6 +1,6 @@
 # Task 1033 — Review 6
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json) · Previous: [Review 5](Task_1033_Review_5.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json) · Previous: [Review 5](Task_1033_Review_5.md)
 
 Review 6 of the working tree on 3fe2aeff7 (Revision 3, uncommitted) — APPROVED
 Scope: `src/__tests__/reactHooksV7Behaviour.test.tsx`, four added lines (the double's `realtime.setAuth` and three waits): exactly R3-1. The other uncommitted files are Opus's: Review 5, the kickoff, the OWASP record and the checklist change D10, I8, V3 (owner decision 2026-11-24).

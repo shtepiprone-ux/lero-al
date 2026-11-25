@@ -1,6 +1,18 @@
 {
   "task": "1038",
   "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the diff changes checklist text A5, I8, V3 and one `.claude/rules/flow.md` row only (owner, 2026-11-25); no agent tool, permission, hook or settings file changes"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no model prompt or model input path changes in the diff"
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "no MCP server, tool or configuration changes in the diff"
+    },
     "Abuse_Case": {
       "verdict": "met",
       "quotes": [

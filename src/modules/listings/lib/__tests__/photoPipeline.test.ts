@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const lib =vi.hoisted(() => ({ calls: [] as { file: File; options: Record<string, unknown> }[], answer: (_file: File, _options: Record<string, unknown>): Promise<Blob> => Promise.resolve(new Blob()) }))
+const lib = vi.hoisted(() => ({ calls: [] as { file: File; options: Record<string, unknown> }[], answer: (_file: File, _options: Record<string, unknown>): Promise<Blob> => Promise.resolve(new Blob()) }))
 vi.mock('browser-image-compression', () => ({
   default: vi.fn((file: File, options: Record<string, unknown>) => { lib.calls.push({ file, options }); return lib.answer(file, options) }),
 }))

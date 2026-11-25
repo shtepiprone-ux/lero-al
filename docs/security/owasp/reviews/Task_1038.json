@@ -275,7 +275,7 @@
       "quotes": [
         "Treat each reachable action as a client-callable POST entry point."
       ],
-      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`; `src/lib/auth/__tests__/middlewareScope.security.test.ts`"
     },
     "Nodejs_Security": {
       "verdict": "met",
@@ -354,12 +354,14 @@
     },
     "Session_Management": {
       "verdict": "not applicable",
-      "reason": "no session creation, renewal or ending changes in this diff"
+      "reason": "no session creation or ending changes; `src/proxy.ts` only skips the session refresh on the static files directly under `/vendor/` ending in `.js` or `.txt`, which read no session"
     },
     "Software_Supply_Chain_Security": {
-      "verdict": "finding",
-      "finding": "F1",
-      "note": "the Web Worker of browser-image-compression loads its script from cdn.jsdelivr.net at run time (no libURL), outside the pinned lockfile"
+      "verdict": "met",
+      "quotes": [
+        "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "`src/modules/listings/lib/__tests__/photoPipeline.test.ts`"
     },
     "Subdomain_Takeover_Prevention": {
       "verdict": "not applicable",
@@ -381,9 +383,11 @@
       "reason": "every site and R2 address is https already; no TLS setting changes."
     },
     "User_Privacy_Protection": {
-      "verdict": "finding",
-      "finding": "F1",
-      "note": "every photo upload makes the browser request cdn.jsdelivr.net, a third party that sees the visitor's address"
+      "verdict": "met",
+      "quotes": [
+        "Preventing leakage of user IP addresses is of great significance when user protection is in scope."
+      ],
+      "evidence": "`src/modules/listings/lib/__tests__/photoPipeline.test.ts`; `src/lib/auth/__tests__/middlewareScope.security.test.ts`"
     },
     "Verifying_Third_Party_Agent_Execution_Evidence": {
       "verdict": "met",

@@ -90,6 +90,17 @@ describe('middlewareScope', () => {
     }
   })
 
+  it('[Task 1038 R3-1] the vendored Worker script and its licence are left out of the proxy, and nothing that only resembles them is', async () => {
+    // the files directly under /vendor/ that end in .js or .txt read no session, and a language prefix sent them to /sq/vendor/..., a 404
+    for (const path of ['/vendor/browser-image-compression-2.0.2.js', '/vendor/browser-image-compression-2.0.2.LICENSE.txt']) {
+      expect(await matcherMatches(path), `${path} is left out`).toBe(false)
+    }
+    // every other path keeps its session refresh and language routing
+    for (const path of ['/vendor', '/vendor/', '/vendor/a/b.js', '/vendorx/a.js', '/vendor/x.json', '/sq/vendor/browser-image-compression-2.0.2.js', '/sq/listings', '/admin']) {
+      expect(await matcherMatches(path), `${path} is still matched`).toBe(true)
+    }
+  })
+
   it('the default language set by staff drives the locale routing, is cached for five minutes and is checked against the four languages', async () => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2026-10-20T10:00:00Z'))

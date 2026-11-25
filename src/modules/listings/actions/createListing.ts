@@ -7,7 +7,8 @@ import { listingSchema } from '@/modules/listings/validations'
 import type { ListingInput } from '@/modules/listings/validations'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
 import { computeExpiresAt } from '@/modules/listings/domain/listingConstants'
-import { isValidImagePayload } from '@/lib/uploads/imageUrl'
+import { isValidImagePayload, parseR2ListingPhotoUrl } from '@/lib/uploads/imageUrl'
+import { verifyListingPhotos } from '@/lib/media/listingPhoto'
 import { generateSlug } from '@/modules/listings/lib/generateSlug'
 
 interface CreateListingPayload extends ListingInput {
@@ -57,6 +58,9 @@ export async function createListing(
   if (!isValidImagePayload(payload.images, user.id)) return { error: 'invalid_image' }
   const refusal = await catalogueRefusal(supabase, parsed.data.property_type, parsed.data.currency)
   if (refusal) return { error: refusal }
+  // an R2 photo is read back before it is attached (Task 1038): both objects exist, are small enough, are of the type of their extension and really are that image. Nothing is written before.
+  const r2Photos = payload.images.map((img) => img.url).filter((url) => parseR2ListingPhotoUrl(url) !== null)
+  if (r2Photos.length > 0 && !(await verifyListingPhotos(r2Photos, user.id))) return { error: 'images_invalid' }
 
   const data = parsed.data
   const slug = generateSlug(data.title)

@@ -6,11 +6,49 @@
  * many megabytes. A listing photo goes from the browser straight to Cloudinary, signed by the server (`POST /api/listings/upload-signature`, Task 957): the signature fixes the
  * folder, so the only address that is ever legitimate is an https address on Cloudinary's delivery host, inside this project's own cloud and inside the folder of the LISTING
  * OWNER (`<owner>/listings/...`). `isOwnedListingImageUrl` is that rule; the trigger `listing_images_owner_folder` repeats it in the database.
+ * Task 1038: a photo may also be the `full` object of the owner's folder on the platform's media host (`https://media.lero.al/<owner>/listings/<uuid>/full.webp|jpg`, the public
+ * address of the R2 bucket); the rule and the database accept both forms.
  */
 const CLOUDINARY_HOST = 'res.cloudinary.com'
 
+/**
+ * Task 1038 (owner decision O1038-1): listing photos are served from the platform's own media host, the public address of the R2 bucket. The host is a constant here because this
+ * file also runs in the browser, which cannot read the server's `R2_PUBLIC_URL`; the server module `src/lib/media/r2.ts` reads that variable for its own checks.
+ */
+export const MEDIA_HOST = 'media.lero.al'
+
+/** `/<owner>/listings/<folder uuid>/full.<webp|jpg>`: the one object whose address a listing stores; `thumb` is derived from it (`r2ThumbUrl`) */
+const R2_PHOTO_PATH = /^\/([^/]+)\/listings\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/full\.(webp|jpg)$/
+
+/**
+ * The parts of an address of an R2 listing photo, or null when the text is not exactly one: https on the media host, no port, credentials, query or fragment, no backslash and no
+ * encoded dot or separator (read from the text as written: the URL parser folds `..` and `\` away and would hide them), and a path of the form above.
+ */
+export function parseR2ListingPhotoUrl(raw: unknown): { ownerId: string; folder: string; ext: 'webp' | 'jpg' } | null {
+  if (typeof raw !== 'string' || raw.length === 0 || raw.length > 2048) return null
+  if (/[?#\\]|%2e|%2f|%5c/i.test(raw)) return null
+  let url: URL
+  try {
+    url = new URL(raw)
+  } catch {
+    return null
+  }
+  if (url.protocol !== 'https:' || url.hostname !== MEDIA_HOST || url.username || url.password || url.port) return null
+  if (raw !== `https://${MEDIA_HOST}${url.pathname}`) return null
+  const match = R2_PHOTO_PATH.exec(url.pathname)
+  if (!match || match[1] === '.' || match[1] === '..') return null
+  return { ownerId: match[1], folder: match[2], ext: match[3] as 'webp' | 'jpg' }
+}
+
+/** the address of the small object of a photo, from the address of its `full` object; null when the address is not an R2 listing photo */
+export function r2ThumbUrl(fullUrl: unknown): string | null {
+  const parts = parseR2ListingPhotoUrl(fullUrl)
+  return parts ? `https://${MEDIA_HOST}/${parts.ownerId}/listings/${parts.folder}/thumb.${parts.ext}` : null
+}
+
 export function isTrustedImageUrl(raw: unknown, cloudName: string | undefined = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME): boolean {
   if (typeof raw !== 'string' || raw.length === 0 || raw.length > 2048) return false
+  if (parseR2ListingPhotoUrl(raw)) return true
   let url: URL
   try {
     url = new URL(raw)
@@ -29,6 +67,9 @@ export function isTrustedImageUrl(raw: unknown, cloudName: string | undefined = 
  */
 export function isOwnedListingImageUrl(raw: unknown, ownerId: string, cloudName: string | undefined = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME): boolean {
   if (typeof ownerId !== 'string' || ownerId.length === 0 || ownerId.includes('/')) return false
+  // an R2 photo (Task 1038): the owner is the first segment of the address, compared as text
+  const r2 = parseR2ListingPhotoUrl(raw)
+  if (r2) return r2.ownerId === ownerId
   if (!isTrustedImageUrl(raw, cloudName)) return false
   const text = raw as string
   if (/[?#\\]|%2e|%2f|%5c/i.test(text)) return false

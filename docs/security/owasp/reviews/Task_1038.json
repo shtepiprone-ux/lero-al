@@ -1,0 +1,408 @@
+{
+  "task": "1038",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "met",
+      "quotes": [
+        "it is important to identify the attacks which the application must defend against"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`; `src/lib/media/__tests__/cdnPurge.security.test.ts`"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "no sign-in, password or credential code changes in this diff"
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the routes reuse requireViewer unchanged; no authentication pattern changes"
+    },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": [
+        "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "met",
+      "quotes": [
+        "Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "Authorization_Patterns": {
+      "verdict": "met",
+      "quotes": [
+        "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/listingR2Images.integration.test.ts`"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": [
+        "Relying on UI hiding is insufficient; the API layer must enforce the check"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "met",
+      "quotes": [
+        "Integration test cases validate the correct implementation of the authorization matrix."
+      ],
+      "evidence": "`src/modules/listings/actions/listingR2Images.integration.test.ts`; `src/tests/integration/r2SignedUpload.integration.test.ts`"
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "met",
+      "quotes": [
+        "Per endpoint — the login endpoint deserves a tighter limit than the home page."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "Business_Logic_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always re-derive security-relevant values (prices, permissions, ownership) on the server. Client state is input, not truth."
+      ],
+      "evidence": "src/app/api/listings/upload-url/route.ts:63-77 (owner from the session or the listing); src/app/api/listings/upload-url/__tests__/route.security.test.ts"
+    },
+    "CI_CD_Security": {
+      "verdict": "not applicable",
+      "reason": "no workflow, pipeline or CI configuration file changes in this diff"
+    },
+    "CORS_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Authenticate and authorize every request on the server as if CORS didn't exist."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts` (the route authorizes every request); `src/lib/media/__tests__/r2.security.test.ts` (R2 accepts only a signed PUT); the bucket CORS rule is the owner's configuration"
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "the frame headers of `headers.ts` are not changed by this task."
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the policy has no `img-src` or `connect-src` and is not changed here."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie is set, read differently or changed by this diff"
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no sign-in, password or credential check is added or changed here."
+    },
+    "Cross-Site_Request_Forgery_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "First, check if your framework has built-in CSRF protection and use it"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts` (no session → 401); the session cookie is sameSite \"lax\" (`@supabase/ssr` constants), so a cross-site POST carries no session"
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+      ],
+      "evidence": "`src/design-system/media/__tests__/appImageConfig.test.ts`"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "met",
+      "quotes": [
+        "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+      ],
+      "evidence": "`src/modules/listings/lib/__tests__/uploadQueue.test.ts`"
+    },
+    "Database_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Configured with the minimum permissions required as discussed in the permissions section below."
+      ],
+      "evidence": "`src/modules/listings/actions/listingR2Images.integration.test.ts`"
+    },
+    "Denial_of_Service": {
+      "verdict": "met",
+      "quotes": [
+        "Using validation that is cheap in resources first"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "the existing CI SBOM job lists the two new production packages unchanged."
+    },
+    "Error_Handling": {
+      "verdict": "met",
+      "quotes": [
+        "Unhandled errors can assist an attacker in this initial phase, which is very important for the rest of the attack."
+      ],
+      "evidence": "src/app/api/listings/upload-url/route.ts:98-105 (generic codes, details only in the server log); src/app/api/listings/upload-url/__tests__/route.security.test.ts"
+    },
+    "File_Upload": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the file type, don't trust the Content-Type header as it can be spoofed"
+      ],
+      "evidence": "`src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "no GitHub Actions workflow file changes in this diff"
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "the project exposes no GraphQL endpoint and the migration adds none."
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "the task adds no postMessage receiver or sender of its own; the worker messaging belongs to the library"
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "no response header of the site changes; the new route uses the existing `no-store` answer."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "HSTS of `headers.ts` stays exactly as on `main`."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no identity is passed between services; R2 calls use the server key only"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
+      ],
+      "evidence": "`src/modules/listings/actions/listingR2Images.integration.test.ts`"
+    },
+    "Input_Validation": {
+      "verdict": "met",
+      "quotes": [
+        "Validate on the server even when the browser checks the same fields."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "implement access control checks for each object that users try to access"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/lib/uploads/__tests__/imageUrl.security.test.ts`"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Never pass untrusted input to a recursive merge or set-by-path helper"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "Key_Management": {
+      "verdict": "met",
+      "quotes": [
+        "a single key should be used for only one purpose"
+      ],
+      "evidence": "`src/lib/media/__tests__/r2.security.test.ts`"
+    },
+    "Logging": {
+      "verdict": "met",
+      "quotes": [
+        "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+      ],
+      "evidence": "`src/lib/media/__tests__/r2.security.test.ts`; `src/lib/media/__tests__/cdnPurge.security.test.ts`"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the security-event helper is Task 1026; this task adds no security event."
+    },
+    "Mass_Assignment": {
+      "verdict": "met",
+      "quotes": [
+        "DTOs and field allowlists restrict writable properties; they do not replace authorization for the requested object and operation."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Treat client-supplied tenant identifiers as selectors only."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no second factor or sign-in step changes in this diff"
+    },
+    "NPM_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."
+      ],
+      "evidence": "`gh pr checks <n>`"
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Treat each reachable action as a client-callable POST entry point."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Nodejs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "some third-party rulesets can be used to flag dangerous patterns such as eval()"
+      ],
+      "evidence": "`gh pr checks <n>`"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object is built from client-supplied keys; the schema is strict."
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "the migration has no dynamic SQL and every query goes through supabase-js."
+    },
+    "REST_Security": {
+      "verdict": "met",
+      "quotes": [
+        "the access control decision should be taken locally by REST endpoints"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "React_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Without sanitization, it allows injected scripts to execute in the browser."
+      ],
+      "evidence": "`src/design-system/media/__tests__/appImageConfig.test.ts`"
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no SQL is built from input; the migration is static text."
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": [
+        "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR"
+      ],
+      "evidence": "`src/lib/media/__tests__/r2.security.test.ts`; `gh pr checks <n>`"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "`gh pr checks <n>`"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "AI coding assistants frequently suggest package names that do not exist on public registries"
+      ],
+      "evidence": "`gh pr checks <n>`"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": [
+        "Threat Modeling - which results in security related stories being added during"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`; `src/lib/uploads/__tests__/imageUrl.security.test.ts`; `src/modules/listings/actions/listingR2Images.integration.test.ts`; `src/design-system/media/__tests__/appImageConfig.test.ts`; `src/lib/media/__tests__/listingPhoto.security.test.ts`; `src/lib/media/__tests__/r2.security.test.ts`"
+    },
+    "Server_Side_Request_Forgery_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Application can send request only to identified and trusted applications"
+      ],
+      "evidence": "`src/lib/media/__tests__/listingPhoto.security.test.ts`; `src/lib/media/__tests__/r2.security.test.ts`"
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`"
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "no session creation, renewal or ending changes in this diff"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "finding",
+      "finding": "F1",
+      "note": "the Web Worker of browser-image-compression loads its script from cdn.jsdelivr.net at run time (no libURL), outside the pinned lockfile"
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no DNS record is created by the code; media.lero.al is bound to the owner's own bucket (Active)"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`; `src/lib/uploads/__tests__/imageUrl.security.test.ts`; `src/modules/listings/actions/listingR2Images.integration.test.ts`; `src/design-system/media/__tests__/appImageConfig.test.ts`; `src/lib/media/__tests__/listingPhoto.security.test.ts`; `src/lib/media/__tests__/r2.security.test.ts`"
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "no payment or transaction confirmation step exists in this diff"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "every site and R2 address is https already; no TLS setting changes."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "finding",
+      "finding": "F1",
+      "note": "every photo upload makes the browser request cdn.jsdelivr.net, a third party that sees the visitor's address"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "`src/modules/listings/lib/__tests__/photoPipeline.test.ts`; `src/modules/listings/lib/__tests__/uploadQueue.test.ts`; `src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/modules/listings/actions/__tests__/listingPhotoVerify.security.test.ts`; `src/lib/uploads/__tests__/imageUrl.security.test.ts`; `src/modules/listings/actions/listingR2Images.integration.test.ts`; `src/design-system/media/__tests__/appImageConfig.test.ts`; `src/lib/media/__tests__/listingPhoto.security.test.ts`; `src/lib/media/__tests__/r2.security.test.ts`; `src/tests/integration/r2SignedUpload.integration.test.ts`; `gh pr checks <n>`"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": [
+        "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+      ],
+      "evidence": "`gh pr checks <n>`"
+    },
+    "Web_Cache_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Default to preventing shared caching for authenticated, personalized, tenant-specific, or otherwise sensitive responses."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "`src/design-system/media/__tests__/appImageConfig.test.ts`"
+    },
+    "Web_Service_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Schema validation enforces constraints and syntax defined by the schema."
+      ],
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+    }
+  }
+}

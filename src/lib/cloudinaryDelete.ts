@@ -72,7 +72,7 @@ const PAGES_PER_READ = 500
  * Now every read is checked: ANY error (or a read that throws) keeps the file (`SKIP_LOOKUP_FAILED`, logged), never deletes it.
  * Task 923 R145: seven reads. `listing_images` has no id column (its columns are id, listing_id, url, order, is_cover), so a read filtered on one always answered an error and every file was kept.
  */
-async function checkIsReferenced(publicId: string): Promise<{ referenced: boolean; tables: string[]; lookupFailed: string | null }> {
+export async function checkIsReferenced(publicId: string): Promise<{ referenced: boolean; tables: string[]; lookupFailed: string | null }> {
   const db = createAdminClient()
   const tables: string[] = []
   let lookupFailed: string | null = null

@@ -239,3 +239,5 @@ processing, uploading, failed and partial states.
 6. Report: each command, exit code, relevant output, each failing-first and break output, the measurement table.
 
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1038_Review_1.md)

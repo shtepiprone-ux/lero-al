@@ -2,6 +2,8 @@ import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
 import { deleteAsset, purgeAccountFolder } from '@/lib/cloudinaryDelete'
+import { deleteListingPhotos } from '@/lib/media/listingPhoto'
+import { parseR2ListingPhotoUrl } from '@/lib/uploads/imageUrl'
 
 export type DeleteAccountResult = { ok: true; filesNotRemoved: number } | { ok: false; error: 'delete_failed' }
 
@@ -34,6 +36,7 @@ export async function deleteAccount(userId: string, options: { reason: 'staff' |
   const { reason } = options
   let db: Db
   let publicIds: string[]
+  let listingPhotos: string[]
   try {
     db = createAdminClient()
     const collected = await collectPublicIds(db, userId)
@@ -42,6 +45,7 @@ export async function deleteAccount(userId: string, options: { reason: 'staff' |
       return { ok: false, error: 'delete_failed' }
     }
     publicIds = collected.publicIds
+    listingPhotos = collected.listingPhotos
     const { error } = await db.auth.admin.deleteUser(userId)
     if (error) {
       console.error('deleteAccount: auth deletion failed', { userId, reason, code: error.code ?? error.status ?? 'error' })
@@ -65,6 +69,21 @@ export async function deleteAccount(userId: string, options: { reason: 'staff' |
     }
   })
 
+  // the listing photos on R2 (Task 1038): both objects of each, then their CDN purge; the Cloudinary ones were released above
+  if (listingPhotos.length > 0) {
+    try {
+      const photos = await deleteListingPhotos(listingPhotos, 'account_deleted')
+      filesNotRemoved += photos.failed
+      if (photos.purge !== 'not_run' && photos.purge.outcome === 'purge_failed') {
+        filesNotRemoved += 1
+        console.error('deleteAccount: the CDN purge of the listing photos failed', { userId, reason })
+      }
+    } catch (err) {
+      filesNotRemoved += listingPhotos.length
+      console.error('deleteAccount: the listing photos were not removed', { userId, reason, code: errorCode(err) })
+    }
+  }
+
   filesNotRemoved += await removeAvatarObjects(db, userId, reason)
 
   try {
@@ -81,11 +100,12 @@ export async function deleteAccount(userId: string, options: { reason: 'staff' |
   return { ok: true, filesNotRemoved }
 }
 
-type Collected = { ok: true; publicIds: string[] } | { ok: false; source: string; code: string }
+type Collected = { ok: true; publicIds: string[]; listingPhotos: string[] } | { ok: false; source: string; code: string }
 
-/** The Cloudinary public id of every file the account holds, unique; the URLs that are not Cloudinary's are not ids and are dropped. */
+/** The Cloudinary public id of every file the account holds, unique (the URLs that are not Cloudinary's are not ids and are dropped), and the addresses of its R2 listing photos (Task 1038). */
 async function collectPublicIds(db: Db, userId: string): Promise<Collected> {
   const urls: (string | null)[] = []
+  const listingPhotos: string[] = []
   const rows = (data: unknown) => (Array.isArray(data) ? (data as Record<string, string | null>[]) : [])
   /** Reads one collection page by page, each page ordered by `id`, until a page has no row, so any number of rows is read; an error on any page fails the whole read. */
   const read = async (source: string, page: (from: number, to: number) => PromiseLike<ReadResult>, take: (batch: Record<string, string | null>[]) => void): Promise<Collected | null> => {
@@ -105,7 +125,7 @@ async function collectPublicIds(db: Db, userId: string): Promise<Collected> {
 
   // the images are read through their listing, so the number of listings the person holds does not grow the request
   failed = await read('listing_images', (from, to) => db.from('listing_images').select('url, listings!inner(user_id)').eq('listings.user_id', userId).order('id').range(from, to),
-    (batch) => batch.forEach((row) => urls.push(row.url)))
+    (batch) => batch.forEach((row) => { urls.push(row.url); if (parseR2ListingPhotoUrl(row.url) !== null) listingPhotos.push(row.url as string) }))
   if (failed) return failed
 
   failed = await read('companies', (from, to) => db.from('companies').select('logo_url').eq('created_by', userId).order('id').range(from, to),
@@ -117,7 +137,7 @@ async function collectPublicIds(db: Db, userId: string): Promise<Collected> {
   if (failed) return failed
 
   const ids = urls.map((url) => publicIdFromUrl(url)).filter((id): id is string => id !== null)
-  return { ok: true, publicIds: [...new Set(ids)] }
+  return { ok: true, publicIds: [...new Set(ids)], listingPhotos: [...new Set(listingPhotos)] }
 }
 
 /** Removes the person's objects of the `avatars` bucket; returns how many objects it could not remove (a failed listing counts one). */

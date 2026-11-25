@@ -15,11 +15,23 @@ export type UploadFailure =
   | 'rejected'           // the photo service refused the upload (401 / 403 from it)
   | 'provider_busy'      // the photo service's own rate limit (420 / 429 from it)
   | 'failed'             // anything else
+  | 'processing'         // the browser could not read or re-encode the file (Task 1038)
 
-/** The longest window of our two limits: a `Retry-After` of at least this many seconds is the daily limit (`src/app/api/listings/upload-signature/route.ts` `LIMITS`). */
+/** The longest window of our two limits: a `Retry-After` of at least this many seconds is the daily limit (`src/app/api/listings/upload-signature/route.ts` and `upload-url/route.ts` `LIMITS`). */
 export const DAY_WINDOW_SECONDS = 86_400
 
-/** What our own signature route answered. `retryAfterSeconds` is the `Retry-After` header on a 429. */
+/**
+ * What R2 answered to the browser's PUT of one version of a photo (Task 1038): `0` is no answer at all (offline, a timeout, an abort), a 403 is an address that expired or was refused
+ * (the queue asks the route again once, then tells the person), a 413 a file above the signed length, a 5xx R2 failing; anything else is a refusal of the upload.
+ */
+export function classifyPutFailure(status: number): UploadFailure {
+  if (status === 0) return 'network'
+  if (status === 413) return 'too_large'
+  if (status >= 500) return 'unavailable'
+  return 'rejected'
+}
+
+/** What our own signature route (`upload-signature`) or address route (`upload-url`) answered; they answer alike. `retryAfterSeconds` is the `Retry-After` header on a 429. */
 export function classifySignatureRefusal(status: number, errorCode: string | undefined, retryAfterSeconds: number | undefined): UploadFailure {
   if (status === 401) return 'session'
   if (status === 403) return 'forbidden'

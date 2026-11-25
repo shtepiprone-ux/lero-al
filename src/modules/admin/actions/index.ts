@@ -20,8 +20,7 @@ import { resolveLinkTarget } from '@/lib/security/safeUrl'
 import { isE164, isProfileCompanyFieldWithinBound, isProfileNameWithinBound, MAX_PROFILE_WEBSITE_LENGTH } from '@/lib/security/inputs'
 import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
 import { syncAccountAccess } from '@/lib/auth/accountAccess'
-import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
-import { deleteAsset } from '@/lib/cloudinaryDelete'
+import { deleteListingPhotos } from '@/lib/media/listingPhoto'
 import { deleteAccount } from '@/lib/account/deleteAccount'
 import { trustedAppOrigin, trustedRedirectUrl } from '@/lib/auth/trustedOrigin'
 
@@ -159,12 +158,10 @@ export async function deleteListing(listingId: string): Promise<{ error?: string
     return { error: 'delete_failed' }
   }
 
-  // The files of the deleted listing are released through the one deletion wrapper (a file that something else still references is kept by it). A failure here is
-  // logged, not returned: the listing is already gone.
-  const publicIds = (images ?? []).map((i) => publicIdFromUrl(i.url)).filter((id): id is string => id !== null)
-  await Promise.allSettled(
-    publicIds.map((id) => deleteAsset(id, { reason: 'listing_deleted_by_staff' }).catch((err) => console.error('[deleteListing] image cleanup failed:', err))),
-  )
+  // The files of the deleted listing are released through the one deletion wrapper (a file that something else still references is kept by it): a Cloudinary asset, or both
+  // objects of an R2 photo and then their CDN purge (Task 1038). A failure here is logged, not returned: the listing is already gone.
+  const cleanup = await deleteListingPhotos((images ?? []).map((i) => i.url), 'listing_deleted_by_staff').catch((err) => ({ errors: [err] }))
+  for (const err of cleanup.errors) console.error('[deleteListing] image cleanup failed:', err)
 
   updateTag('site-stats')
   // Task 964 R1-2: the deleted listing leaves the sitemap files at once (only after the one row was deleted)

@@ -1,28 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { ImageUpload, type ListingImage } from '@/modules/listings/components/ImageUpload'
-import type { CloudinaryWidgetConfig } from '@/modules/listings/lib/cloudinaryWidgetConfig'
+import type { PendingPhoto } from '@/modules/listings/lib/uploadQueue'
 import { StoryPageGutter } from '@/stories/_StoryPageGutter'
 import { fixturePhotos } from '@/stories/fixtures/listingPhotos.fixture'
 
-// Task 957 (owner rule 2026-11-19): the listing photo widget on canonical Mantine (`SimpleGrid`, `Card`, `ActionIcon`, `MantineBadge`, `AppImage` `upload`).
-// The component is props-only; this Story owns the list in local state so the order, cover and delete controls work. The Cloudinary widget itself opens only from a click and is
-// not exercised here (it needs the signature route and the Cloudinary script). The photos are the photographs of the listing card Stories (`fixturePhotos`, Revision 3, Review 3 F20), so
-// every tile shows a photo. Viewport and locale come from the Storybook toolbar.
+// Task 957 (owner rule 2026-11-19): the listing photo section on canonical Mantine (`SimpleGrid`, `Card`, `ActionIcon`, `MantineBadge`, `AppImage` `upload`, `MantineProgress`).
+// The component is props-only; this Story owns the list in local state so the order, cover and delete controls work. Task 1038: the photos the person chooses are made smaller in the browser and
+// uploaded straight to R2 by a queue that opens only from a click on the file picker, so it is not exercised here; the states of the tiles that are still being made, being uploaded or that
+// failed are drawn from `pendingPreview` (the component's Stories-only prop), with nothing uploaded. The photos are the photographs of the listing card Stories (`fixturePhotos`, Revision 3,
+// Review 3 F20), so every stored tile shows a photo. Viewport and locale come from the Storybook toolbar.
 // GR-3d (Revision 3, F17): the component has no gutter of its own (it sits inside a form section card on the page), so every export is wrapped in `StoryPageGutter` on all four sides.
 
-// Labelled fixture: the widget needs an API key (not a secret) and a cloud name when it is built, and a Storybook build has no environment. The Story never opens the widget, so no upload is made;
-// Storybook resolves `next-cloudinary` to an inert stub (`.storybook/stubs/next-cloudinary.ts`), so Cloudinary's script does not load and no request is made (it used to ask Cloudinary about the
-// fixture cloud name, which answered 400, and its frame took the focus from an open picker in the rendered state census).
-const STORY_CLOUDINARY: CloudinaryWidgetConfig = { apiKey: 'story-api-key', cloudName: 'story-cloud' }
-/** The upload that cannot be built: the page read no API key and no cloud name (Review 2 F5). */
-const NO_CLOUDINARY: CloudinaryWidgetConfig = { apiKey: '', cloudName: '' }
-
-function Demo({ initial, maxImages, disabled, listingId, cloudinary = STORY_CLOUDINARY }: { initial: ListingImage[]; maxImages?: number; disabled?: boolean; listingId?: string; cloudinary?: CloudinaryWidgetConfig }) {
+function Demo({ initial, maxImages, disabled, listingId, pendingPreview }: { initial: ListingImage[]; maxImages?: number; disabled?: boolean; listingId?: string; pendingPreview?: readonly PendingPhoto[] }) {
   const [images, setImages] = useState(initial)
   return (
     <StoryPageGutter>
-      <ImageUpload images={images} onChange={setImages} maxImages={maxImages} disabled={disabled} listingId={listingId} cloudinary={cloudinary} />
+      <ImageUpload images={images} onChange={setImages} maxImages={maxImages} disabled={disabled} listingId={listingId} pendingPreview={pendingPreview} />
     </StoryPageGutter>
   )
 }
@@ -62,7 +56,37 @@ export const Saving: Story = {
   render: () => <Demo initial={fixturePhotos(2)} disabled />,
 }
 
-/** The upload cannot be built (no API key or cloud name on the server): the error state says so in place of the upload button (Review 2 F5). */
-export const UploadUnavailable: Story = {
-  render: () => <Demo initial={fixturePhotos(2)} cloudinary={NO_CLOUDINARY} />,
+/** Task 1038: a photo just chosen is being made smaller in the browser (the number on the empty frame, the state text under it). */
+export const Processing: Story = {
+  render: () => <Demo initial={fixturePhotos(2)} pendingPreview={[{ id: 'p1', state: 'processing', progress: 0 }]} />,
+}
+
+/** Task 1038: a photo is being sent to R2 (the state text with the percent, the progress bar under the frame). */
+export const Uploading: Story = {
+  render: () => <Demo initial={fixturePhotos(2)} pendingPreview={[{ id: 'p1', state: 'uploading', progress: 60 }]} />,
+}
+
+/** Task 1038: a photo failed (the reason, a retry button and a remove control on the frame). */
+export const Failed: Story = {
+  render: () => <Demo initial={fixturePhotos(2)} pendingPreview={[{ id: 'p1', state: 'failed', progress: 0, failure: 'processing' }]} />,
+}
+
+/** Task 1038: a batch where one photo is stored, one is processing, one is uploading and two failed for different reasons (a network failure and a photo the browser cannot read). */
+export const Partial: Story = {
+  render: () => (
+    <Demo
+      initial={fixturePhotos(1)}
+      pendingPreview={[
+        { id: 'p1', state: 'processing', progress: 0 },
+        { id: 'p2', state: 'uploading', progress: 35 },
+        { id: 'p3', state: 'failed', progress: 0, failure: 'network' },
+        { id: 'p4', state: 'failed', progress: 0, failure: 'format' },
+      ]}
+    />
+  ),
+}
+
+/** Task 1038: the limit counts the photos still in progress: three slots, one stored and two in progress leave none, so there is no upload button. */
+export const LimitWithPending: Story = {
+  render: () => <Demo initial={fixturePhotos(1)} maxImages={3} pendingPreview={[{ id: 'p1', state: 'uploading', progress: 20 }, { id: 'p2', state: 'failed', progress: 0, failure: 'too_large' }]} />,
 }

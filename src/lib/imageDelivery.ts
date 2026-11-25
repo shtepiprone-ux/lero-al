@@ -7,7 +7,7 @@
 // URL construction mirrors the gallery-main variant config in appImageConfig.ts.
 // Keep in sync if the variant's srcsetBase or srcsetEntries change.
 
-import { isCloudinaryDeliveryUrl } from '@/design-system/media/appImageConfig'
+import { isCloudinaryDeliveryUrl, r2GallerySrcset } from '@/design-system/media/appImageConfig'
 
 const CLOUDINARY_UPLOAD_MARKER = '/upload/'
 const GALLERY_MAIN_SRCSET_BASE = 'c_fill,g_auto,f_auto,q_auto'
@@ -31,7 +31,8 @@ function insertCloudinaryTransform(src: string, transform: string): string {
 
 /**
  * Returns href + imageSrcSet + imageSizes for a <link rel="preload" as="image">
- * pointing at the gallery-main LCP candidate. Returns null for non-Cloudinary URLs.
+ * pointing at the gallery-main LCP candidate. Returns null for URLs that are neither Cloudinary
+ * nor an R2 listing photo (Task 1038: its `full` object as href, `thumb 640w, full 1920w` as srcset).
  *
  * Emit in a page Server Component so the browser starts fetching the LCP image
  * while still parsing the HTML, before AppImage hydrates client-side.
@@ -41,6 +42,10 @@ export function buildGalleryMainPreloadAttrs(src: string | null | undefined): {
   imageSrcSet: string
   imageSizes: string
 } | null {
+  if (src) {
+    const r2 = r2GallerySrcset(src)
+    if (r2 !== null) return { href: src, imageSrcSet: r2, imageSizes: GALLERY_MAIN_SIZES }
+  }
   if (!src || !isCloudinaryDeliveryUrl(src)) return null
   const href = insertCloudinaryTransform(src, `w_960,h_540,${GALLERY_MAIN_SRCSET_BASE}`)
   const imageSrcSet = GALLERY_MAIN_ENTRIES

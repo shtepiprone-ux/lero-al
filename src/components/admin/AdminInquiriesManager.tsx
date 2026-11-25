@@ -8,7 +8,7 @@ import { AdminInquiriesView, type InquiryMailboxFilter, type InquiryStatusFilter
 import { InquiryDetailDialogView } from '@/components/admin/InquiryDetailDialogView'
 import type { StatusSelectOption } from '@/components/admin/StatusChangeSelect'
 import { updateInquiryStatus, sendInquiryReply } from '@/modules/contacts/actions'
-import type { ContactStatus } from '@/types/database'
+import type { ContactInquirySource, ContactReplyDirection, ContactStatus, InquiryAttachment } from '@/types/database'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -24,6 +24,10 @@ export interface InquiryRow {
   status: ContactStatus
   reply_count: number
   handled_at: string | null
+  /** Task 1044: the contact form or a received mail (a row read before the column existed has none: a form inquiry) */
+  source?: ContactInquirySource
+  /** Task 1044: names and sizes of the received mail's attachments, never their content */
+  attachments?: InquiryAttachment[]
 }
 
 export interface ReplyRow {
@@ -31,8 +35,14 @@ export interface ReplyRow {
   inquiry_id: string
   body: string
   created_at: string
-  replied_by: string
+  /** null for a customer's answer received by mail (Task 1044) */
+  replied_by: string | null
   replier: { name: string | null } | null
+  /** Task 1044: a staff reply (`outbound`, also when absent) or a customer's answer received by mail (`inbound`) */
+  direction?: ContactReplyDirection
+  /** Task 1044: the sender of an inbound answer */
+  from_email?: string | null
+  attachments?: InquiryAttachment[]
 }
 
 const CONTACT_STATUSES: ContactStatus[] = ['new', 'in_progress', 'closed']

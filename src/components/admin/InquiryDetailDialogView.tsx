@@ -8,10 +8,11 @@ import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
 import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { StatusChangeSelect, type StatusSelectOption } from '@/components/admin/StatusChangeSelect'
 import { formatDate } from '@/lib/formatters'
 import type { InquiryRow, ReplyRow } from '@/components/admin/AdminInquiriesManager'
-import type { ContactStatus } from '@/types/database'
+import type { ContactStatus, InquiryAttachment } from '@/types/database'
 
 export interface InquiryDetailDialogViewProps {
   inquiry: InquiryRow
@@ -37,6 +38,22 @@ function renderLines(text: string): ReactNode {
       {line}
     </Fragment>
   ))
+}
+
+/**
+ * Task 1044: the attachment names of a received mail, as plain text lines "<name> (<size> KB)" under the "not kept" title (O1044-4: only the name, size and type
+ * are stored, never the content). Nothing is rendered without attachments.
+ */
+function AttachmentNames({ attachments, title }: { attachments: InquiryAttachment[] | undefined; title: string }) {
+  if (!attachments || attachments.length === 0) return null
+  return (
+    <Stack gap="xs">
+      <Text size="xs" fw={500}>{title}</Text>
+      {attachments.map((file, index) => (
+        <Text key={index} size="sm">{`${file.filename} (${Math.ceil(file.size / 1024)} KB)`}</Text>
+      ))}
+    </Stack>
+  )
 }
 
 /**
@@ -112,6 +129,7 @@ export function InquiryDetailDialogView({
 
         <MantineDialogSection title={t('detail_message')}>
           <Text size="sm">{renderLines(inquiry.message)}</Text>
+          <AttachmentNames attachments={inquiry.attachments} title={t('attachments_not_kept')} />
         </MantineDialogSection>
 
         {replies.length === 0 && inquiry.reply_count > 0 ? (
@@ -125,10 +143,18 @@ export function InquiryDetailDialogView({
                 <Paper key={r.id} withBorder p="md" radius="md">
                   <Stack gap="xs">
                     <Group justify="space-between" gap="xs">
-                      <Text size="xs" fw={500}>{r.replier?.name ?? t('from_label')}</Text>
+                      {r.direction === 'inbound' ? (
+                        <Group gap="xs">
+                          <MantineBadge variant="tone" tone="neutral">{t('customer_message')}</MantineBadge>
+                          <Text size="xs" fw={500}>{r.from_email}</Text>
+                        </Group>
+                      ) : (
+                        <Text size="xs" fw={500}>{r.replier?.name ?? t('from_label')}</Text>
+                      )}
                       <Text size="xs" c="dimmed">{formatDate(r.created_at, locale)}</Text>
                     </Group>
                     <Text size="sm">{renderLines(r.body)}</Text>
+                    <AttachmentNames attachments={r.attachments} title={t('attachments_not_kept')} />
                   </Stack>
                 </Paper>
               ))}

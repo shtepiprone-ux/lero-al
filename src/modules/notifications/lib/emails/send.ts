@@ -25,6 +25,24 @@ const isSingleAddress = (value: string): boolean => value.length <= MAX_ADDRESS_
 /** a header value on one line: any line or paragraph break becomes a space */
 const oneLine = (value: string) => value.replace(/[\r\n\u2028\u2029]+/g, ' ').trim()
 
+/**
+ * One message id `<local@domain>` (Task 1044 AC11): no whitespace or angle bracket anywhere and no "@" in the local part, each half at most 128 characters, so the
+ * match stays linear. The threading headers carry ids stored from received mail and from Resend: a value of 1-20 such tokens separated by one space, nothing else,
+ * so a stored id can never add a header or a recipient.
+ */
+const MESSAGE_ID_TOKEN = '<[^<>\\s@]{1,128}@[^<>\\s]{1,128}>'
+const MESSAGE_ID = new RegExp(`^${MESSAGE_ID_TOKEN}$`)
+const MESSAGE_ID_LIST = new RegExp(`^${MESSAGE_ID_TOKEN}(?: ${MESSAGE_ID_TOKEN}){0,19}$`)
+/** the longest list of 20 tokens of 259 characters and 19 spaces; a longer value is refused before any pattern runs */
+const MAX_MESSAGE_ID_LIST_LENGTH = 20 * 259 + 19
+export const isMessageId = (value: unknown): value is string => typeof value === 'string' && value.length <= 259 && MESSAGE_ID.test(value)
+const isMessageIdList = (value: string): boolean => value.length <= MAX_MESSAGE_ID_LIST_LENGTH && MESSAGE_ID_LIST.test(value)
+
+export interface ThreadingHeaders {
+  'In-Reply-To'?: string
+  References?: string
+}
+
 interface SendEmailParams {
   to: string
   subject: string
@@ -39,6 +57,8 @@ interface SendEmailParams {
    * Defaults to FROM_ADDRESS (noreply@lero.al).
    */
   from?: string
+  /** Task 1044: the threading headers of a staff reply; passed to Resend only when given, each value checked as message-id tokens. */
+  headers?: ThreadingHeaders
 }
 
 export type SendEmailErrorCode =
@@ -80,6 +100,18 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
     return { error: 'send_failed' }
   }
 
+  // Header-injection guard of the threading headers (Task 1044 AC11): a value that is not 1-20 message-id tokens refuses the whole send.
+  const headers: Record<string, string> = {}
+  for (const name of ['In-Reply-To', 'References'] as const) {
+    const value = params.headers?.[name]
+    if (value === undefined) continue
+    if (typeof value !== 'string' || !isMessageIdList(value)) {
+      console.error('[email] sendEmail: refused an unsafe threading header', { header: name })
+      return { error: 'send_failed' }
+    }
+    headers[name] = value
+  }
+
   const html = params.react
     ? await render(params.react)
     : params.html!
@@ -91,6 +123,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
     subject: oneLine(params.subject),
     html,
     ...(params.replyTo ? { replyTo: params.replyTo } : {}),
+    ...(Object.keys(headers).length > 0 ? { headers } : {}),
   })
 
   if (error) {
@@ -115,4 +148,26 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
   }
 
   return { id: data?.id }
+}
+
+/**
+ * The `Message-ID` Resend gave a sent mail (Task 1044 AC11), read with `GET /emails/{id}`: a staff reply stores it so the customer's answer, which names it in
+ * In-Reply-To, can join its inquiry. Only a value that is one message-id token is returned; anything else, a missing key or id, or a failed read is `null`. Never throws.
+ */
+export async function getSentMessageId(id: string): Promise<string | null> {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey || !id) return null
+  try {
+    const { data, error } = await new Resend(apiKey).emails.get(id)
+    if (error || !data) {
+      console.error('[email] the message id of a sent mail was not read')
+      return null
+    }
+    // the response of `GET /emails/{id}` carries `message_id` (Resend changelog 2026-07-08); resend@6.12.3 does not declare it
+    const value = (data as { message_id?: unknown }).message_id
+    return isMessageId(value) ? value : null
+  } catch {
+    console.error('[email] the message id of a sent mail was not read')
+    return null
+  }
 }

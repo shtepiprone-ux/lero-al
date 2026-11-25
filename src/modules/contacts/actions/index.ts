@@ -4,10 +4,8 @@ import { headers } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { checkStaff } from '@/lib/auth/staff'
 import { isPlainEmail } from '@/lib/security/inputs'
-import {
-  sendContactInquiryNotification,
-  sendContactInquiryReply,
-} from '@/modules/notifications/lib/emails/contactInquiry'
+import { sendContactInquiryReply } from '@/modules/notifications/lib/emails/contactInquiry'
+import { getSentMessageId, type ThreadingHeaders } from '@/modules/notifications/lib/emails/send'
 import type { ContactStatus } from '@/types/database'
 
 // ── Topic → mailbox routing ───────────────────────────────────────────────────
@@ -43,12 +41,14 @@ const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
 // Task 923 R67 (b): the limit never fails open. A request with no address at all used to skip the check ("never limited") and a failed count read as zero, so an
 // attacker who hid the address, or a database hiccup, removed the limit. Requests without an address now share ONE bucket (the rows stored with no address) with the
 // same limit, and a count that cannot be read refuses the request.
+// Task 1044: only form rows count. Mail received at support@ / sales@ is stored with no address too, and must never fill the bucket of the visitors whose address is unknown.
 async function isRateLimited(ip: string): Promise<boolean> {
   const db = createAdminClient()
   const since = new Date(Date.now() - RATE_LIMIT_WINDOW_MS).toISOString()
   const base = db
     .from('contact_inquiries')
     .select('id', { count: 'exact', head: true })
+    .eq('source', 'form')
   const scoped = ip === 'unknown' ? base.is('requester_ip', null) : base.eq('requester_ip', ip)
   const { count, error } = await scoped.gte('created_at', since)
   if (error || count === null || count === undefined) {
@@ -108,6 +108,7 @@ export async function submitContactInquiry(
   const db = createAdminClient()
 
   const { error: insertError } = await db.from('contact_inquiries').insert({
+    source: 'form',
     topic,
     custom_subject: customSubject,
     name,
@@ -123,28 +124,7 @@ export async function submitContactInquiry(
     return { error: 'save_failed' }
   }
 
-  // Staff notification — DB inserted first; email second; failures surface to caller
-  const displaySubject = topic === 'other' && customSubject ? customSubject : topic
-  const emailResult = await sendContactInquiryNotification({
-    to: targetMailbox,
-    replyTo: email,
-    name,
-    email,
-    topic,
-    displaySubject,
-    message,
-    locale: 'sq', // Albanian-only policy (Task 251)
-  })
-
-  if (!emailResult.ok) {
-    if (emailResult.reason === 'unverified_sender') {
-      console.error('[contact-inquiry] sender not verified in Resend', { targetMailbox })
-      return { error: 'mailbox_unverified' }
-    }
-    console.error('[contact-inquiry] email notification failed', { reason: emailResult.reason })
-    return { error: 'email_transient' }
-  }
-
+  // Task 1044 (Task 1045, O1044-1): no staff e-mail. Staff read every message in the admin panel, so a saved message is a success.
   return {}
 }
 
@@ -209,11 +189,23 @@ export async function sendInquiryReply(
   // Load inquiry to get target_mailbox, email, topic, custom_subject
   const { data: inquiry, error: fetchError } = await db
     .from('contact_inquiries')
-    .select('id, email, topic, custom_subject, target_mailbox')
+    .select('id, email, topic, custom_subject, target_mailbox, source, message_id')
     .eq('id', inquiryId)
     .single()
 
   if (fetchError || !inquiry) return { error: 'not_found' }
+
+  // Task 1044 AC11: the thread's stored message ids, oldest first (the inquiry's own, then its replies' of both directions), so the customer's mail program groups
+  // this reply with the conversation and the customer's answer names an id we know. A failed read sends the reply without threading headers.
+  const { data: threadRows } = await db
+    .from('contact_inquiry_replies')
+    .select('message_id, created_at')
+    .eq('inquiry_id', inquiryId)
+    .order('created_at', { ascending: true })
+  const threadIds = [inquiry.message_id, ...(threadRows ?? []).map((r) => r.message_id)].filter((id): id is string => typeof id === 'string' && id.length > 0)
+  const headers: ThreadingHeaders | undefined = threadIds.length > 0
+    ? { 'In-Reply-To': threadIds[threadIds.length - 1], References: threadIds.slice(-20).join(' ') }
+    : undefined
 
   // Insert reply record and return the inserted row
   const { data: insertedRows, error: insertError } = await db
@@ -270,6 +262,9 @@ export async function sendInquiryReply(
     displaySubject,
     replyBody: trimmedBody,
     locale: 'sq', // Albanian-only policy (Task 251)
+    // Task 1044 AC11: an inquiry that came by mail is answered as "Re: <its subject>"; a form inquiry keeps the template's subject
+    ...(inquiry.source === 'email' && inquiry.custom_subject ? { subject: `Re: ${inquiry.custom_subject}` } : {}),
+    ...(headers ? { headers } : {}),
   })
 
   if (!replyEmailResult.ok) {
@@ -278,6 +273,15 @@ export async function sendInquiryReply(
       reason: replyEmailResult.reason,
     })
     return { error: 'reply_email_failed', reply: newReply }
+  }
+
+  // Task 1044 AC11: the id Resend gave the sent reply is stored, so the customer's answer can join this inquiry; a failed read leaves it empty and the reply stays sent
+  if (replyEmailResult.id) {
+    const sentMessageId = await getSentMessageId(replyEmailResult.id)
+    if (sentMessageId) {
+      const { error: idError } = await db.from('contact_inquiry_replies').update({ message_id: sentMessageId }).eq('id', insertedRow.id)
+      if (idError) console.error('[contact-inquiry] the sent message id was not stored', { code: idError.code })
+    }
   }
 
   return { reply: newReply }

@@ -698,6 +698,60 @@ export const FIXTURE_INQUIRY_REPLIES: ReplyRow[] = [
   },
 ]
 
+// ── Task 1044: an inquiry received by mail, with attachment names and a customer's answer (labelled fixture data) ──
+
+export const FIXTURE_EMAIL_INQUIRY: InquiryRow = {
+  id: 'inq-mail-1',
+  created_at: '2026-11-20T09:10:00Z',
+  topic: 'other',
+  custom_subject: 'Apartament me qira në Tiranë',
+  name: 'Ardit Leka',
+  email: 'ardit.leka@example.com',
+  message: 'Përshëndetje,\nA është ende i lirë apartamenti në rrugën e Durrësit?\nBashkëngjit kontratën time të mëparshme.',
+  target_mailbox: 'support@lero.al',
+  status: 'new',
+  reply_count: 1,
+  handled_at: null,
+  source: 'email',
+  attachments: [
+    { filename: 'kontrata-e-meparshme.pdf', size: 248_320, content_type: 'application/pdf' },
+    { filename: 'dokument-identifikimi.jpg', size: 1_203_456, content_type: 'image/jpeg' },
+  ],
+}
+
+export const FIXTURE_EMAIL_INQUIRY_REPLIES: ReplyRow[] = [
+  {
+    id: 'rep-mail-1',
+    inquiry_id: 'inq-mail-1',
+    body: 'Faleminderit për mesazhin. Apartamenti është ende i lirë.',
+    created_at: '2026-11-20T10:00:00Z',
+    replied_by: 'u-admin',
+    replier: { name: 'Elira Dervishi' },
+    direction: 'outbound',
+    from_email: null,
+    attachments: [],
+  },
+  {
+    id: 'rep-mail-2',
+    inquiry_id: 'inq-mail-1',
+    body: 'Shumë mirë. Mund ta shoh nesër në orën 17:00?\nJu dërgoj edhe planimetrinë.',
+    created_at: '2026-11-20T11:25:00Z',
+    replied_by: null,
+    replier: null,
+    direction: 'inbound',
+    from_email: 'ardit.leka@example.com',
+    attachments: [{ filename: 'planimetria.png', size: 512_000, content_type: 'image/png' }],
+  },
+]
+
+/** a 200-character file name without a space (the longest the route keeps), to show it wraps and is never clipped */
+export const FIXTURE_LONG_ATTACHMENT_INQUIRY: InquiryRow = {
+  ...FIXTURE_EMAIL_INQUIRY,
+  id: 'inq-mail-2',
+  reply_count: 0,
+  attachments: [{ filename: `${'kontrata-e-qirase-per-apartamentin-'.repeat(6).slice(0, 196)}.pdf`, size: 96_256, content_type: 'application/pdf' }],
+}
+
 // ── Task 859 additions: /admin/support Views (labelled fixture data) ─────────
 
 export const FIXTURE_SUPPORT_TICKETS_EXTRA: SupportTicketRow[] = [

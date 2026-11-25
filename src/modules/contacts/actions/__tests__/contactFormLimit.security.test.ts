@@ -58,7 +58,8 @@ describe('contactFormLimit', () => {
     for (let i = 0; i < 5; i++) expect(await submitContactInquiry(valid), `request ${i + 1}`).toEqual({})
     expect(await submitContactInquiry(valid)).toEqual({ error: 'rate_limited' })
     expect(db.tables.contact_inquiries).toHaveLength(5)
-    expect(notified).toHaveLength(5)
+    expect(notified).toEqual([])                                                      // Task 1044 AC6: no staff notification
+    expect(db.tables.contact_inquiries.every((r) => r.source === 'form')).toBe(true)
     expect(db.tables.contact_inquiries.every((r) => r.requester_ip === null)).toBe(true)
 
     // the window moves: rows older than an hour leave the bucket
@@ -73,6 +74,14 @@ describe('contactFormLimit', () => {
     headerValues = { 'x-forwarded-for': '203.0.113.7' }
     expect(await submitContactInquiry(valid)).toEqual({ error: 'rate_limited' })
     expect(db.tables.contact_inquiries).toEqual([])
+    expect(notified).toEqual([])
+  })
+
+  it('[SEC-1045-FORM-LIMIT] only form rows count: received mail (stored with no address) never fills the bucket of the visitors with no address (Task 1044 AC6)', async () => {
+    for (let i = 0; i < 20; i++) db.tables.contact_inquiries.push({ id: `mail-${i}`, source: 'email', requester_ip: null, created_at: new Date().toISOString() })
+    for (let i = 0; i < 5; i++) expect(await submitContactInquiry(valid), `request ${i + 1}`).toEqual({})
+    expect(await submitContactInquiry(valid)).toEqual({ error: 'rate_limited' })
+    expect(db.tables.contact_inquiries.filter((r) => r.source === 'form')).toHaveLength(5)
     expect(notified).toEqual([])
   })
 

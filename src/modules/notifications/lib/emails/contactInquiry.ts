@@ -8,7 +8,7 @@
  */
 import { BRAND_PRIMARY } from '@/design-system/brand'
 import { escapeHtml, escapeHtmlWithBreaks } from '@/lib/security/escapeHtml'
-import { sendEmail } from './send'
+import { sendEmail, type ThreadingHeaders } from './send'
 
 const STRINGS: Record<string, {
   subject: (topic: string) => string
@@ -248,6 +248,10 @@ export async function sendContactInquiryReply(opts: {
   displaySubject: string
   replyBody: string
   locale?: string
+  /** Task 1044: `Re: <subject>` of an inquiry that came by mail; without it the template's subject, as before */
+  subject?: string
+  /** Task 1044: In-Reply-To and References from the thread's stored message ids */
+  headers?: ThreadingHeaders
 }): Promise<{ ok: true; id?: string } | { ok: false; reason: string }> {
   const locale = opts.locale ?? 'sq'
   const s = getReplyStrings(locale)
@@ -256,7 +260,8 @@ export async function sendContactInquiryReply(opts: {
     from: `Lero.al <${opts.fromMailbox}>`,
     to: opts.to,
     replyTo: opts.fromMailbox,
-    subject: s.subject(opts.displaySubject),
+    subject: opts.subject ?? s.subject(opts.displaySubject),
+    ...(opts.headers ? { headers: opts.headers } : {}),
     html: buildReplyHtml({
       replyBody: opts.replyBody,
       displaySubject: opts.displaySubject,

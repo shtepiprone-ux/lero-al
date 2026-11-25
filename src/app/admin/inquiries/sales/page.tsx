@@ -23,7 +23,7 @@ export default async function AdminInquiriesSalesPage() {
   const { data: rawInquiries, count } = await db
     .from('contact_inquiries')
     .select(
-      'id, created_at, topic, custom_subject, name, email, message, target_mailbox, status, reply_count, handled_at',
+      'id, created_at, topic, custom_subject, name, email, message, target_mailbox, status, reply_count, handled_at, source, attachments',
       { count: 'exact' },
     )
     .ilike('target_mailbox', '%sales%')

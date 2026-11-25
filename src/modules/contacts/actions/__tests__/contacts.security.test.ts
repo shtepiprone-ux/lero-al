@@ -23,6 +23,10 @@ vi.mock('@/modules/notifications/lib/emails/contactInquiry', () => ({
   sendContactInquiryNotification: async (o: Record<string, unknown>) => { notified.push(o); return notifyResult },
   sendContactInquiryReply: async (o: Record<string, unknown>) => { replied.push(o); return replyResult },
 }))
+// Task 1044 AC11: the message id of a sent reply is read back from the provider
+let sentMessageId: string | null = '<sent-1@eu-west-1.amazonses.com>'
+const readIds: string[] = []
+vi.mock('@/modules/notifications/lib/emails/send', () => ({ getSentMessageId: async (id: string) => { readIds.push(id); return sentMessageId } }))
 
 import { sendInquiryReply, submitContactInquiry, updateInquiryStatus } from '../index'
 
@@ -41,22 +45,24 @@ beforeEach(() => {
   currentUser = null
   headerValues = { 'x-forwarded-for': '203.0.113.7, 10.0.0.1' }
   notifyResult = { ok: true }
-  replyResult = { ok: true }
+  replyResult = { ok: true, id: 'resend-1' }
+  sentMessageId = '<sent-1@eu-west-1.amazonses.com>'
+  readIds.length = 0
   notified.length = 0
   replied.length = 0
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 
 describe('submitContactInquiry: input', () => {
-  it('stores a clean row and notifies the topic\'s mailbox with the visitor as Reply-To', async () => {
+  it('[SEC-1045-FORM-SAVED] stores a clean form row, answers {} and e-mails nobody (Task 1044 AC6, O1044-1)', async () => {
     expect(await submitContactInquiry(valid)).toEqual({})
-    expect(db.tables.contact_inquiries.at(-1)).toMatchObject({ topic: 'general', name: 'Ana Hoxha', email: 'ana@example.com', target_mailbox: 'support@lero.al', requester_ip: '203.0.113.7', status: 'new' })
-    expect(notified[0]).toMatchObject({ to: 'support@lero.al', replyTo: 'ana@example.com', locale: 'sq' })
+    expect(db.tables.contact_inquiries.at(-1)).toMatchObject({ source: 'form', topic: 'general', name: 'Ana Hoxha', email: 'ana@example.com', target_mailbox: 'support@lero.al', requester_ip: '203.0.113.7', status: 'new' })
+    expect(notified).toEqual([])
   })
 
   it.each([['sales', 'sales@lero.al'], ['partnership', 'sales@lero.al'], ['press', 'sales@lero.al'], ['support', 'support@lero.al'], ['other', 'support@lero.al']])('topic %s goes to %s', async (topic, mailbox) => {
     await submitContactInquiry({ ...valid, topic, customSubject: 'Subject' })
-    expect(notified[0].to).toBe(mailbox)
+    expect(db.tables.contact_inquiries.at(-1)?.target_mailbox).toBe(mailbox)
   })
 
   it.each([[''], ['unknown'], ['GENERAL'], ['general '.repeat(2)], ['__proto__'], ['constructor']])('refuses the topic %j', async (topic) => {
@@ -102,10 +108,11 @@ describe('submitContactInquiry: input', () => {
     expect((row.custom_subject as string).length).toBe(200)
   })
 
-  it('the subject shown to staff is the custom one only for "other"', async () => {
+  it('no topic and no subject sends a staff notification (Task 1044 AC6, O1044-1)', async () => {
     await submitContactInquiry({ ...valid, topic: 'other', customSubject: 'My subject' })
     await submitContactInquiry({ ...valid, topic: 'sales', customSubject: 'Ignored' })
-    expect(notified.map((n) => n.displaySubject)).toEqual(['My subject', 'sales'])
+    expect(db.tables.contact_inquiries.slice(-2).map((r) => r.custom_subject)).toEqual(['My subject', 'Ignored'])
+    expect(notified).toEqual([])
   })
 
   it('text with markup is stored as typed, to be escaped when it is shown or mailed', async () => {
@@ -117,7 +124,7 @@ describe('submitContactInquiry: input', () => {
 
 describe('submitContactInquiry: abuse limits and failures', () => {
   const makeInquiries = (n: number, ip: string, ageMs = 0) =>
-    Array.from({ length: n }, (_, i) => ({ id: `old-${ip}-${i}`, requester_ip: ip, created_at: new Date(Date.now() - ageMs).toISOString() }))
+    Array.from({ length: n }, (_, i) => ({ id: `old-${ip}-${i}`, source: 'form', requester_ip: ip, created_at: new Date(Date.now() - ageMs).toISOString() }))
 
   it('refuses the sixth message in an hour from one address, and stores nothing', async () => {
     db.tables.contact_inquiries.push(...makeInquiries(5, '203.0.113.7'))
@@ -161,10 +168,10 @@ describe('submitContactInquiry: abuse limits and failures', () => {
   it('sales falls back to the support mailbox', async () => {
     delete process.env.CONTACT_SALES_EMAIL
     await submitContactInquiry({ ...valid, topic: 'sales' })
-    expect(notified[0].to).toBe('support@lero.al')
+    expect(db.tables.contact_inquiries.at(-1)?.target_mailbox).toBe('support@lero.al')
   })
 
-  it('a database failure is "save_failed" and nobody is e-mailed', async () => {
+  it('[SEC-1045-SAVE-FAILED] a database failure is "save_failed" and nobody is e-mailed', async () => {
     const real = db.client.from
     db.client.from = ((t: string) => {
       const c = real(t) as Record<string, unknown>
@@ -175,11 +182,19 @@ describe('submitContactInquiry: abuse limits and failures', () => {
     expect(notified).toEqual([])
   })
 
-  it('an unverified sender and a transient failure are told apart', async () => {
-    notifyResult = { ok: false, reason: 'unverified_sender' }
-    expect(await submitContactInquiry(valid)).toEqual({ error: 'mailbox_unverified' })
-    notifyResult = { ok: false, reason: 'transient' }
-    expect(await submitContactInquiry(valid)).toEqual({ error: 'email_transient' })
+  it('[SEC-1045-NO-NOTIFY] a saved message answers {} whatever the mail provider would answer: the form never depends on a staff e-mail (Task 1044 AC6)', async () => {
+    for (const result of [{ ok: false as const, reason: 'unverified_sender' }, { ok: false as const, reason: 'transient' }]) {
+      notifyResult = result
+      expect(await submitContactInquiry(valid)).toEqual({})
+    }
+    expect(db.tables.contact_inquiries).toHaveLength(3)
+    expect(notified).toEqual([])
+  })
+
+  it('received mail (source email) does not count toward the form limit of the visitors with no address (Task 1044 AC6)', async () => {
+    headerValues = {}
+    for (let i = 0; i < 10; i++) db.tables.contact_inquiries.push({ id: `mail-${i}`, source: 'email', requester_ip: null, created_at: new Date().toISOString() })
+    expect(await submitContactInquiry(valid)).toEqual({})
   })
 })
 
@@ -244,6 +259,65 @@ describe('staff tools: only admin and moderator', () => {
     await sendInquiryReply('q2', 'A long enough reply')
     expect(replied[0].displaySubject).toBe('Billing')
     expect(db.tables.contact_inquiries.find((q) => q.id === 'q2')).toMatchObject({ status: 'in_progress', reply_count: 3 })
+  })
+})
+
+// Task 1044 AC11: a staff reply joins the customer's conversation in the customer's mail program, and its own id is stored so the customer's answer can join back.
+describe('staff reply threading (Task 1044 AC11)', () => {
+  const at = (m: number) => new Date(Date.parse('2026-11-20T10:00:00Z') + m * 60_000).toISOString()
+
+  beforeEach(() => {
+    currentUser = { id: 'adm' }
+    db.tables.contact_inquiries.push({ id: 'qm', source: 'email', email: 'ana@example.com', topic: 'other', custom_subject: 'Flat in Tiranë', target_mailbox: 'support@lero.al', status: 'new', reply_count: 0, message_id: '<origin@example.com>', created_at: at(0) })
+  })
+
+  it('[SEC-1044-THREAD] In-Reply-To is the newest stored id of the thread, References every stored id oldest first; the sent id is stored', async () => {
+    db.tables.contact_inquiry_replies.push(
+      { id: 'r-b', inquiry_id: 'qm', direction: 'inbound', from_email: 'ana@example.com', message_id: '<answer@example.com>', created_at: at(20) },
+      { id: 'r-a', inquiry_id: 'qm', direction: 'outbound', replied_by: 'adm', message_id: '<staff-a@eu-west-1.amazonses.com>', created_at: at(10) },
+      { id: 'r-n', inquiry_id: 'qm', direction: 'outbound', replied_by: 'adm', message_id: null, created_at: at(15) },
+      { id: 'r-x', inquiry_id: 'other', direction: 'outbound', replied_by: 'adm', message_id: '<foreign@eu-west-1.amazonses.com>', created_at: at(30) },
+    )
+    const res = await sendInquiryReply('qm', 'Yes, it is still free.')
+    expect(res.error).toBeUndefined()
+    expect(replied[0]).toMatchObject({
+      to: 'ana@example.com', fromMailbox: 'support@lero.al', subject: 'Re: Flat in Tiranë',
+      headers: { 'In-Reply-To': '<answer@example.com>', References: '<origin@example.com> <staff-a@eu-west-1.amazonses.com> <answer@example.com>' },
+    })
+    expect(readIds).toEqual(['resend-1'])
+    const stored = db.tables.contact_inquiry_replies.find((r) => r.id === res.reply?.id)
+    expect(stored?.message_id).toBe('<sent-1@eu-west-1.amazonses.com>')
+  })
+
+  it('References carries the last 20 stored ids only', async () => {
+    for (let i = 1; i <= 25; i++) db.tables.contact_inquiry_replies.push({ id: `r-${i}`, inquiry_id: 'qm', direction: 'outbound', replied_by: 'adm', message_id: `<id-${i}@example.com>`, created_at: at(i) })
+    await sendInquiryReply('qm', 'Yes, it is still free.')
+    const refs = (replied[0].headers as { References: string }).References.split(' ')
+    expect(refs).toHaveLength(20)
+    expect(refs[0]).toBe('<id-6@example.com>')
+    expect(refs.at(-1)).toBe('<id-25@example.com>')
+    expect((replied[0].headers as Record<string, string>)['In-Reply-To']).toBe('<id-25@example.com>')
+  })
+
+  it('a thread with no stored id sends no threading header; a form inquiry keeps the template subject', async () => {
+    await sendInquiryReply('q1', 'Thanks, we will call you.')
+    expect('headers' in replied[0]).toBe(false)
+    expect('subject' in replied[0]).toBe(false)
+    expect(replied[0]).toMatchObject({ displaySubject: 'sales' })
+  })
+
+  it('a failed read of the sent id leaves it empty and the reply stays sent', async () => {
+    sentMessageId = null
+    const res = await sendInquiryReply('qm', 'Yes, it is still free.')
+    expect(res.error).toBeUndefined()
+    expect(db.tables.contact_inquiry_replies.find((r) => r.id === res.reply?.id)?.message_id ?? null).toBeNull()
+  })
+
+  it('a reply whose e-mail failed reads no id', async () => {
+    replyResult = { ok: false, reason: 'transient' }
+    const res = await sendInquiryReply('qm', 'Yes, it is still free.')
+    expect(res.error).toBe('reply_email_failed')
+    expect(readIds).toEqual([])
   })
 })
 

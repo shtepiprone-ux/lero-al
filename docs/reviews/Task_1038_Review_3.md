@@ -1,6 +1,6 @@
 # Task 1038 — Review 3
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
 
 Review 3 of Revision 1 step 2 with Revision 2 (R1-1, R1-2, R2-1 to R2-5) on b4760c9fd, uncommitted — NEEDS REVISION
 Scope: `git diff --stat b4760c9fd`: `eslint.config.mjs`, `src/__tests__/eslintConfig.test.ts`, `ImageUpload.test.tsx`, `ImageUpload.widgetOptions.test.tsx`, `photoPipeline.test.ts`, `photoPipeline.ts`, new `public/vendor/browser-image-compression-2.0.2.js` and `.LICENSE.txt` — the files of [Review 2](Task_1038_Review_2.md) "Revision 2"; plus Opus's `.claude/rules/quality-gates.md` and the Review 2 file.

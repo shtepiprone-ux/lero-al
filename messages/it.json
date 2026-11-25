@@ -1177,7 +1177,9 @@
       "status_updated": "Stato aggiornato",
       "status_error": "Aggiornamento stato fallito. Riprova.",
       "reply_email_failed": "Risposta salvata, ma la consegna dell'email non è riuscita. Puoi contattare l'utente manualmente.",
-      "reply_history_load_failed": "Impossibile caricare la cronologia delle risposte. Le risposte potrebbero esistere ancora nel database."
+      "reply_history_load_failed": "Impossibile caricare la cronologia delle risposte. Le risposte potrebbero esistere ancora nel database.",
+      "customer_message": "Messaggio del cliente",
+      "attachments_not_kept": "Allegati (non conservati)"
     },
     "support": {
       "new_complaint_btn": "Nuovo reclamo",

@@ -67,14 +67,37 @@ export interface ContactInquiry {
   handled_by: string | null
   handled_at: string | null
   reply_count: number
+  /** Task 1044: the contact form, or a mail received at support@ / sales@ */
+  source: ContactInquirySource
+  /** Task 1044: the Message-ID of the received mail (unique where set) */
+  message_id: string | null
+  /** Task 1044: names, sizes and declared types of the received mail's attachments; their content is never kept (O1044-4) */
+  attachments: InquiryAttachment[]
+}
+
+export type ContactInquirySource = 'form' | 'email'
+export type ContactReplyDirection = 'outbound' | 'inbound'
+
+export interface InquiryAttachment {
+  filename: string
+  size: number
+  content_type: string
 }
 
 export interface ContactInquiryReply {
   id: string
   inquiry_id: string
-  replied_by: string
+  /** null for an inbound answer (Task 1044: a check refuses an inbound row with a staff author) */
+  replied_by: string | null
   body: string
   created_at: string
+  /** Task 1044: a staff reply, or a customer's answer received by mail */
+  direction: ContactReplyDirection
+  /** Task 1044: the sender of an inbound answer */
+  from_email: string | null
+  /** Task 1044: the Message-ID of a received answer, or the one Resend gave a staff reply (unique where set) */
+  message_id: string | null
+  attachments: InquiryAttachment[]
 }
 
 export interface ListingInquiry {

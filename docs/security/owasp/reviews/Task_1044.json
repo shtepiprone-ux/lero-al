@@ -1,0 +1,363 @@
+{
+ "task": "1044",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "\"## Attack surface\" T1-T9 of the kickoff, each with its test: `src/app/api/email/inbound/__tests__/route.security.test.ts`, `src/modules/contacts/lib/__tests__/inboundEmail.security.test.ts`, `cloudflare/email-inbound/worker.test.ts`"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the new entry point `src/app/api/email/inbound/route.ts`, the Worker `cloudflare/email-inbound/worker.js` and the service-role writes of `src/modules/contacts/lib/inboundEmail.ts` are each covered by `route.security.test.ts`, `worker.test.ts` and `inboundEmail.security.test.ts`; the reviewer reran the 14 breaks (each exit 1)"
+  },
+  "Authorization": {
+   "verdict": "met",
+   "quotes": [
+    "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+   ],
+   "evidence": "`src/app/api/email/inbound/route.ts:42` checks the bearer before the body is read; `[SEC-1044-INBOUND-DENY]` fails when the check is removed (break B1, exit 1)"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "met",
+   "quotes": [
+    "Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."
+   ],
+   "evidence": "`src/app/api/email/inbound/route.ts:41` answers 503 without INBOUND_EMAIL_SECRET; `route.security.test.ts` \"without INBOUND_EMAIL_SECRET every call answers 503 and nothing is read\""
+  },
+  "Authorization_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+   ],
+   "evidence": "the secret and the recipient are checked in the route itself (`src/app/api/email/inbound/route.ts:41-48`), the join proof next to the write (`src/modules/contacts/lib/inboundEmail.ts:216-219`)"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "met",
+   "quotes": [
+    "Automated tests should specifically target the ways authorization usually degrades over time."
+   ],
+   "evidence": "`[SEC-1044-INBOUND-DENY]`, `[SEC-1044-RECIPIENT]`, `[SEC-1044-JOIN-DENY]`: breaks B1, B11, B3a-B3c each exit 1 in the reviewer's rerun"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Integration test cases validate the correct implementation of the authorization matrix."
+   ],
+   "evidence": "the matrix row of the kickoff runs per bearer case in `route.security.test.ts`; the database half `src/tests/integration/inboundEmail.integration.test.ts` is BLOCKED until the owner applies `task1044.sql` (AC9)"
+  },
+  "Business_Logic_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Rate-limit and monitor at the feature level, not just at authentication."
+   ],
+   "evidence": "5 per sender per hour and 100 per 24 hours before any write (`src/modules/contacts/lib/inboundEmail.ts:144-158`); `[SEC-1044-LIMIT-SENDER]`, `[SEC-1044-LIMIT-ALL]`; the form limit counts form rows only, `[SEC-1045-FORM-LIMIT]` (break B9, exit 1)"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+   ],
+   "evidence": "HTML flattened to text before storage (`src/modules/contacts/lib/inboundEmail.ts:118-125`, `[SEC-1044-TEXT]`, break B8 exit 1) and rendered as React text (`src/components/admin/InquiryDetailDialogView.tsx:131-157`, `[SEC-1044-DIALOG-TEXT]`)"
+  },
+  "Cryptographic_Storage": {
+   "verdict": "not applicable",
+   "reason": "nothing is encrypted, hashed or stored as a secret in this diff; the shared secret lives only in the Vercel and Worker settings and is compared in constant time"
+  },
+  "DOM_Clobbering_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering."
+   ],
+   "evidence": "`sanitizeHtml(email.html, { allowedTags: [], allowedAttributes: {} })` at `src/modules/contacts/lib/inboundEmail.ts:121`; no HTML is rendered (`[SEC-1044-DIALOG-TEXT]`)"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+   ],
+   "evidence": "mail text, addresses and file names reach only React text children (`src/components/admin/InquiryDetailDialogView.tsx:47-56`, `:146-157`); no sink, link or `dangerouslySetInnerHTML` in the diff"
+  },
+  "Database_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Configured with the minimum permissions required as discussed in the permissions section below."
+   ],
+   "evidence": "`supabase/sql_migrations/task1044/task1044.sql` adds columns, checks and indexes only, no grant or policy; `task1044-verify.sql` rows 5-6; `node scripts/quality/db-catalog-audit.mjs` exit 0 (before the apply)"
+  },
+  "Denial_of_Service": {
+   "verdict": "met",
+   "quotes": [
+    "Using validation that is cheap in resources first"
+   ],
+   "evidence": "secret, declared size and recipient before the body is read (`src/app/api/email/inbound/route.ts:40-48`), the 4 MB Worker check (`cloudflare/email-inbound/worker.js:9`, break B10 exit 1), the limits before any write"
+  },
+  "Dependency_Graph_SBOM": {
+   "verdict": "met",
+   "quotes": [
+    "Validate the document against its format's schema before publication or ingestion"
+   ],
+   "evidence": "`package-lock.json` adds `postal-mime@4.2.1` with its integrity hash and keeps `resend`'s nested 2.7.4; the SBOM job runs on the pull request (AC10, read with `gh pr checks`)"
+  },
+  "File_Upload": {
+   "verdict": "met",
+   "quotes": [
+    "Validate the file type, don't trust the Content-Type header as it can be spoofed"
+   ],
+   "evidence": "attachment content is never stored or served; only name, size and declared type as text (`src/modules/contacts/lib/inboundEmail.ts:127-133`, \"keeps no attachment content\" in `inboundEmail.security.test.ts`)"
+  },
+  "GraphQL": {
+   "verdict": "met",
+   "quotes": [
+    "Ensure that the API has proper access control checks."
+   ],
+   "evidence": "no grant change on either table (`task1044.sql`; `task1044-verify.sql` row 5); `db-catalog-audit.mjs` exit 0"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff sets no response header and changes no site transport configuration; the Worker posts to the owner's HTTPS route address"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Each receiving service must still authorize the requested action and resource."
+   ],
+   "evidence": "the route authorizes the Worker by its own secret before the service role writes (`src/app/api/email/inbound/route.ts:42`, `[SEC-1044-INBOUND-DENY]`)"
+  },
+  "Injection_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
+   ],
+   "evidence": "every write and read goes through the Supabase client (`src/modules/contacts/lib/inboundEmail.ts:196-254`); the header values pass the token pattern (`src/modules/notifications/lib/emails/send.ts:103-113`, `[SEC-1044-HEADERS]`, break B7a exit 1)"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": [
+    "Reject invalid requests with a clear error; do not continue with partially validated data."
+   ],
+   "evidence": "recipient 422 (`route.ts:47-48`), sender `isPlainEmail` 422 (`inboundEmail.ts:188-189`), size 413, threading headers `send_failed`; `[SEC-1044-RECIPIENT]`, `[SEC-1044-HEADERS]`"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "implement access control checks for each object that users try to access"
+   ],
+   "evidence": "an answer joins only the inquiry whose address is the sender's (`src/modules/contacts/lib/inboundEmail.ts:175`); `[SEC-1044-JOIN-DENY]` \"another sender address\" (break B3a exit 1)"
+  },
+  "JSON_Web_Token": {
+   "verdict": "not applicable",
+   "reason": "no token is issued, parsed or verified in this diff; the route compares a static shared bearer secret"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+   ],
+   "evidence": "the token patterns are anchored, bounded and delimited by characters they exclude (`src/modules/notifications/lib/emails/send.ts:33-39`), inputs cut first (`inboundEmail.ts:55`, `:110`)"
+  },
+  "Key_Management": {
+   "verdict": "met",
+   "quotes": [
+    "a single key should be used for only one purpose"
+   ],
+   "evidence": "`INBOUND_EMAIL_SECRET` authenticates only the Worker (`docs/env.md`, `src/app/api/email/inbound/route.ts:40-42`)"
+  },
+  "Logging": {
+   "verdict": "met",
+   "quotes": [
+    "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+   ],
+   "evidence": "log lines carry outcomes and codes only (`src/modules/contacts/lib/inboundEmail.ts:64-72`); \"log lines carry the outcome and codes only\" in `inboundEmail.security.test.ts`; the Worker logs the status only (`worker.test.ts`)"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "the shared security-event helper is Task 1026; this diff logs outcome codes only"
+  },
+  "Mass_Assignment": {
+   "verdict": "met",
+   "quotes": [
+    "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable."
+   ],
+   "evidence": "each row is built from named fields (`src/modules/contacts/lib/inboundEmail.ts:223-230`, `:241-253`); no spread of the parsed mail"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Treat client-supplied tenant identifiers as selectors only."
+   ],
+   "evidence": "In-Reply-To and References only select candidates; the sender and the trusted `dmarc=pass` decide (`src/modules/contacts/lib/inboundEmail.ts:160-176`, `:216`); `[SEC-1044-JOIN-DENY]`"
+  },
+  "NPM_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."
+   ],
+   "evidence": "`postal-mime@4.2.1`: first release 2021, no dependencies, MIT-0, `prepare` script not run (`.npmrc` `ignore-scripts=true`); the lockfile diff changes only this package"
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Treat each reachable action as a client-callable POST entry point."
+   ],
+   "evidence": "`src/app/api/email/inbound/route.ts` exports `POST` only and checks its secret first; `inboundEmail.ts:1` imports `server-only`"
+  },
+  "Nodejs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "When logging untrusted input, sanitize or encode newline characters and control sequences to mitigate log injection attacks"
+   ],
+   "evidence": "no received text is logged (`src/modules/contacts/lib/inboundEmail.ts:64-72`; `route.ts:57`)"
+  },
+  "OAuth2": {
+   "verdict": "not applicable",
+   "reason": "no OAuth or OpenID flow, client or token handling changes in this diff"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "triggered by the path of scripts/rendered-interaction-states.json, a JSON registry the census reads (two rows added in Revision 1); no file of this diff starts a process"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "If objects have to be used then they should be created using the Object.create(null) API"
+   ],
+   "evidence": "parsed headers are read by name into a `Map` (`src/modules/contacts/lib/inboundEmail.ts:80-84`), never merged into an object"
+  },
+  "Query_Parameterization": {
+   "verdict": "met",
+   "quotes": [
+    "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure."
+   ],
+   "evidence": "no SQL is built from mail text; the Supabase client binds values; `task1044.sql` is static DDL"
+  },
+  "REST_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Return 401 for a missing or invalid key, and 403 for a valid key that lacks access to the resource."
+   ],
+   "evidence": "`src/app/api/email/inbound/route.ts:42` answers 401; `[SEC-1044-INBOUND-DENY]` (9 bearer cases)"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Without sanitization, it allows injected scripts to execute in the browser."
+   ],
+   "evidence": "`src/components/admin/InquiryDetailDialogView.tsx:47-56`, `:146-157` render text only; `[SEC-1044-DIALOG-TEXT]` (the View reverted to `main`: 3 failed)"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "use parameterized queries for dynamic data values"
+   ],
+   "evidence": "the Supabase client binds every value (`src/modules/contacts/lib/inboundEmail.ts:196-254`)"
+  },
+  "Secrets_Management": {
+   "verdict": "met",
+   "quotes": [
+    "prevent them from leaking and compromising the organization"
+   ],
+   "evidence": "the secret is server-only, never logged or returned (`route.ts`, `worker.js:32`; `worker.test.ts` \"logs the status only\"), listed in `docs/env.md`"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Diff-Based Reviews focus on code changes only."
+   ],
+   "evidence": "`docs/reviews/Task_1044_Review_1.md`: the diff against `c126db3e4` read in full, V1-V10 with exit codes"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "AI coding assistants frequently suggest package names that do not exist on public registries"
+   ],
+   "evidence": "the one package `postal-mime@4.2.1` is in `package-lock.json` from registry.npmjs.org with its integrity hash; the owner installed it"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "T1-T9 of the kickoff each became an acceptance criterion with its test (`route.security.test.ts`, `inboundEmail.security.test.ts`, `worker.test.ts`, `send.security.test.ts`); breaks B1-B11 exit 1"
+  },
+  "Serverless_FaaS_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)."
+   ],
+   "evidence": "the route accepts only the Worker's secret (`route.ts:42`); the Worker rejects on any non-2xx (`worker.js:33`, `[SEC-1044-WORKER-FAIL]`)"
+  },
+  "Software_Supply_Chain_Security": {
+   "verdict": "met",
+   "quotes": [
+    "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
+   ],
+   "evidence": "`package.json` pins `\"postal-mime\": \"4.2.1\"` exactly"
+  },
+  "Subdomain_Takeover_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no CNAME is added by this diff; the owner's MX records point at Cloudflare's own mail hosts, and DNS monitoring is Task 961"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "the threat modeling process should answer the following four questions"
+   ],
+   "evidence": "\"## Attack surface\" of the kickoff answers the four questions; each mitigation has its test (`route.security.test.ts`, `inboundEmail.security.test.ts`, `worker.test.ts`; breaks B1-B11 exit 1)"
+  },
+  "Transport_Layer_Security": {
+   "verdict": "not applicable",
+   "reason": "no TLS setting changes in the diff; Vercel and Cloudflare terminate TLS as before and the Worker posts to an HTTPS address the owner sets"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "verdict": "not applicable",
+   "reason": "the diff produces no redirect; the Worker never follows one (`redirect: 'manual'`, cloudflare/email-inbound/worker.js line 26)"
+  },
+  "User_Privacy_Protection": {
+   "verdict": "met",
+   "quotes": [
+    "Preventing leakage of user IP addresses is of great significance when user protection is in scope."
+   ],
+   "evidence": "`requester_ip: null` for mail (`src/modules/contacts/lib/inboundEmail.ts:249`); no address or IP logged (`inboundEmail.security.test.ts` log case)"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "the reviewer reran the Route's 107 files (exit 1: 3 known failures), typecheck exit 0, ESLint exit 0, the 14 breaks and 3 reverts to `main` (each exit 1, md5 restored)"
+  },
+  "Vulnerable_Dependency_Management": {
+   "verdict": "met",
+   "quotes": [
+    "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+   ],
+   "evidence": "the audit job of `.github/workflows/ci.yml` checks the new package on the pull request (AC10, `gh pr checks`)"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "met",
+   "quotes": [
+    "The fundamental security rule is to never use innerHTML with untrusted data."
+   ],
+   "evidence": "received text is rendered as React text (`src/components/admin/InquiryDetailDialogView.tsx:146-157`, `[SEC-1044-DIALOG-TEXT]`)"
+  },
+  "Web_Service_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Schema validation enforces constraints and syntax defined by the schema."
+   ],
+   "evidence": "the envelope headers, the size and the parsed fields are checked before use (`route.ts:44-53`, `inboundEmail.ts:186-192`); `[SEC-1044-RECIPIENT]`"
+  },
+  "XSS_Filter_Evasion": {
+   "verdict": "met",
+   "quotes": [
+    "input filtering is an incomplete defense for XSS"
+   ],
+   "evidence": "the sanitizer only flattens HTML to text; the defence is text rendering (`InquiryDetailDialogView.tsx`, `[SEC-1044-DIALOG-TEXT]`)"
+  }
+ }
+}

@@ -1,6 +1,6 @@
 # Task 1038 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
 
 Review 2 of Revision 1 step 1 (item R1-3 only) on b6de0f8ab, `ImageUpload.tsx` uncommitted — NEEDS REVISION (R1-1 and R1-2 of [Review 1](Task_1038_Review_1.md) are open; R1-3 is fixed)
 Scope: `src/modules/listings/components/ImageUpload.tsx`, the one file the pre-commit hook refused (Review 1 "Order"); its whole diff against b6de0f8ab is the version Review 1 reviewed plus R1-3: `openFileChooser` (line 115), `triggerButton` without an argument and `onClick={disabled ? undefined : openFileChooser}` on both buttons (lines 150-160), `{canUploadMore && triggerButton()}` (line 246).

@@ -74,6 +74,7 @@ export const TABLE_TYPES = {
 export const NOT_TABLE_TYPES = {
   CollectionWithCount: 'Collection plus item_count',
   FooterLink: 'one element of the SiteFooter link arrays',
+  InquiryAttachment: 'one element of the ContactInquiry and ContactInquiryReply attachments arrays (Task 1044)',
   LocationRequest: 'the shape of User.location_request',
   PageContent: 'the shape of Page.content',
   PageLocaleContent: 'one locale of PageContent',

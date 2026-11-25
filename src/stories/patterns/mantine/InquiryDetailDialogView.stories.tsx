@@ -4,7 +4,14 @@ import { InquiryDetailDialogView } from '@/components/admin/InquiryDetailDialogV
 import type { InquiryRow, ReplyRow } from '@/components/admin/AdminInquiriesManager'
 import type { StatusSelectOption } from '@/components/admin/StatusChangeSelect'
 import type { ContactStatus } from '@/types/database'
-import { FIXTURE_INQUIRIES, FIXTURE_INQUIRY_REPLIES } from '@/stories/fixtures/admin.fixtures'
+import {
+  FIXTURE_EMAIL_INQUIRY,
+  FIXTURE_EMAIL_INQUIRY_REPLIES,
+  FIXTURE_INQUIRIES,
+  FIXTURE_INQUIRY_REPLIES,
+  FIXTURE_LONG_ATTACHMENT_INQUIRY,
+  FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES,
+} from '@/stories/fixtures/admin.fixtures'
 
 // Task 894 — presentational View of the inquiry detail dialog (Container/Presentational split of
 // `AdminInquiriesManager`). GR-3a: CREATE — no canonical Story imported this View. Overlay-only Story (GR-3d: no
@@ -66,6 +73,16 @@ export const WithReplies: Story = {
 
 export const RepliesLoadFailed: Story = {
   render: () => <DialogDemo inquiry={FIXTURE_INQUIRIES[1]} replies={[]} />,
+}
+
+// Task 1044: an inquiry received by mail, its two attachment names, a staff reply and the customer's answer (neutral badge and address, its attachment name).
+export const EmailThread: Story = {
+  render: () => <DialogDemo inquiry={FIXTURE_EMAIL_INQUIRY} replies={FIXTURE_EMAIL_INQUIRY_REPLIES} />,
+}
+
+// Task 1044: a 200-character file name without a space and the customer's answer from a long address wrap inside the dialog and are never clipped.
+export const LongAttachmentName: Story = {
+  render: () => <DialogDemo inquiry={FIXTURE_LONG_ATTACHMENT_INQUIRY} replies={FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES} />,
 }
 
 export const Sending: Story = {

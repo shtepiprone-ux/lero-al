@@ -9,14 +9,25 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const sent: Record<string, unknown>[] = []
 let providerAnswer: { data?: { id: string }; error?: { statusCode?: number; message?: string } } = { data: { id: 'm1' } }
-vi.mock('resend', () => ({ Resend: class { emails = { send: async (p: Record<string, unknown>) => { sent.push(p); return providerAnswer } } } }))
+const read: string[] = []
+let readAnswer: { data?: Record<string, unknown> | null; error?: { message?: string } | null } | Error = { data: { id: 'm1', message_id: '<0102019a.abc-def@eu-west-1.amazonses.com>' }, error: null }
+vi.mock('resend', () => ({
+  Resend: class {
+    emails = {
+      send: async (p: Record<string, unknown>) => { sent.push(p); return providerAnswer },
+      get: async (id: string) => { read.push(id); if (readAnswer instanceof Error) throw readAnswer; return readAnswer },
+    }
+  },
+}))
 vi.mock('@react-email/render', () => ({ render: async () => '<p>rendered</p>' }))
 
-import { FROM_ADDRESS, sendEmail } from '../send'
+import { FROM_ADDRESS, getSentMessageId, sendEmail } from '../send'
 
 const ENV = { ...process.env }
 beforeEach(() => {
   sent.length = 0
+  read.length = 0
+  readAnswer = { data: { id: 'm1', message_id: '<0102019a.abc-def@eu-west-1.amazonses.com>' }, error: null }
   providerAnswer = { data: { id: 'm1' } }
   process.env.RESEND_API_KEY = 're_key'
   vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -31,6 +42,8 @@ describe('recipients', () => {
     expect(await sendEmail(base)).toEqual({ id: 'm1' })
     expect(sent[0]).toMatchObject({ from: FROM_ADDRESS, to: 'ana@example.com', subject: 'Hello', html: '<p>x</p>' })
     expect('replyTo' in sent[0]).toBe(false)
+    expect('headers' in sent[0]).toBe(false)                                            // Task 1044 AC11: a call without headers sends exactly as before
+    expect(Object.keys(sent[0]).sort()).toEqual(['from', 'html', 'subject', 'to'])
   })
 
   it.each([
@@ -138,6 +151,68 @@ describe('provider failures are mapped, never thrown', () => {
   ])('%j becomes %s', async (error, code) => {
     providerAnswer = { error }
     expect(await sendEmail(base)).toEqual({ error: code })
+  })
+})
+
+// Task 1044 AC11: the threading headers of a staff reply. Their values are message ids stored from received mail and from Resend, so each is checked
+// as 1-20 tokens `<local@domain>` separated by one space; anything else refuses the whole send (header injection).
+describe('threading headers (Task 1044 AC11)', () => {
+  const ID1 = '<a1.b@example.com>'
+  const ID2 = '<0102019a.abc-def@eu-west-1.amazonses.com>'
+
+  it('[SEC-1044-HEADERS] In-Reply-To and References are passed to the provider as given', async () => {
+    expect(await sendEmail({ ...base, headers: { 'In-Reply-To': ID2, References: `${ID1} ${ID2}` } })).toEqual({ id: 'm1' })
+    expect(sent[0].headers).toEqual({ 'In-Reply-To': ID2, References: `${ID1} ${ID2}` })
+    await sendEmail({ ...base, headers: { References: ID1 } })
+    expect(sent[1].headers).toEqual({ References: ID1 })
+    await sendEmail({ ...base, headers: {} })
+    expect('headers' in sent[2]).toBe(false)
+    const twenty = Array.from({ length: 20 }, (_, i) => `<id${i}@example.com>`).join(' ')
+    expect(await sendEmail({ ...base, headers: { References: twenty } })).toEqual({ id: 'm1' })
+  })
+
+  it.each([
+    ['a line break', `${ID1}\r\nBcc: spy@evil.com`],
+    ['a line feed between tokens', `${ID1}\n${ID2}`],
+    ['a space inside a token', '<a b@example.com>'],
+    ['two spaces between tokens', `${ID1}  ${ID2}`],
+    ['a comma between tokens', `${ID1},${ID2}`],
+    ['more than 20 tokens', Array.from({ length: 21 }, (_, i) => `<id${i}@example.com>`).join(' ')],
+    ['no angle brackets', 'a1.b@example.com'],
+    ['no at sign', '<a1.example.com>'],
+    ['an empty local part', '<@example.com>'],
+    ['an empty value', ''],
+    ['a leading space', ` ${ID1}`],
+    ['a local part over 128 characters', `<${'a'.repeat(129)}@example.com>`],
+  ])('[SEC-1044-HEADERS] refuses %s and sends nothing', async (_l, value) => {
+    expect(await sendEmail({ ...base, headers: { 'In-Reply-To': value } })).toEqual({ error: 'send_failed' })
+    expect(await sendEmail({ ...base, headers: { References: value } })).toEqual({ error: 'send_failed' })
+    expect(sent).toEqual([])
+  })
+
+  it('getSentMessageId reads the message id of a sent mail', async () => {
+    expect(await getSentMessageId('m1')).toBe(ID2)
+    expect(read).toEqual(['m1'])
+  })
+
+  it.each([
+    ['a value with a line break', { data: { message_id: `${ID2}\r\nBcc: x@y.z` }, error: null }],
+    ['a value without brackets', { data: { message_id: 'abc@example.com' }, error: null }],
+    ['two ids', { data: { message_id: `${ID1} ${ID2}` }, error: null }],
+    ['no value', { data: { id: 'm1' }, error: null }],
+    ['a number', { data: { message_id: 5 }, error: null }],
+    ['a provider error', { data: null, error: { message: 'not found' } }],
+    ['a thrown error', new Error('network')],
+  ])('[SEC-1044-SENT-ID] getSentMessageId answers null for %s', async (_l, answer) => {
+    readAnswer = answer as typeof readAnswer
+    expect(await getSentMessageId('m1')).toBeNull()
+  })
+
+  it('getSentMessageId reads nothing without a key or without an id', async () => {
+    expect(await getSentMessageId('')).toBeNull()
+    delete process.env.RESEND_API_KEY
+    expect(await getSentMessageId('m1')).toBeNull()
+    expect(read).toEqual([])
   })
 })
 

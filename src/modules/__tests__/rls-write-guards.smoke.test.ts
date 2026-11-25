@@ -110,7 +110,13 @@ describe('Archetype A — submitContactInquiry (anon-allowed, validation + rate-
         if (table === 'contact_inquiries') {
           return {
             insert: mockContactInsert,
-            select: () => ({ eq: () => ({ gte: mockRateLimitSelect }) }),
+            // Task 1044: the limit counts form rows only — `.eq('source', 'form')`, then `.eq('requester_ip', …)` or `.is('requester_ip', null)`, then `.gte(…)`.
+            select: () => ({
+              eq: () => ({
+                eq: () => ({ gte: mockRateLimitSelect }),
+                is: () => ({ gte: mockRateLimitSelect }),
+              }),
+            }),
           }
         }
         return { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(), single: vi.fn().mockResolvedValue({ data: null }) }
@@ -122,7 +128,7 @@ describe('Archetype A — submitContactInquiry (anon-allowed, validation + rate-
     mockRateLimitSelect.mockResolvedValue({ count: 0 })
   })
 
-  it('positive — valid payload → insert called + email fired → {}', async () => {
+  it('positive — valid payload → form row inserted, no staff notification (Task 1044 AC6) → {}', async () => {
     const { submitContactInquiry } = await import('@/modules/contacts/actions/index')
     const result = await submitContactInquiry({
       topic: 'support',
@@ -133,12 +139,13 @@ describe('Archetype A — submitContactInquiry (anon-allowed, validation + rate-
 
     expect(result).toEqual({})
     expect(mockContactInsert).toHaveBeenCalledWith(expect.objectContaining({
+      source: 'form',
       topic: 'support',
       name: 'Test User',
       email: 'test@example.com',
       status: 'new',
     }))
-    expect(mockSendContactNotification).toHaveBeenCalled()
+    expect(mockSendContactNotification).not.toHaveBeenCalled()
   })
 
   it('negative — invalid topic → { error: "validation" }, no insert', async () => {

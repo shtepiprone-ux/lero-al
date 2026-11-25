@@ -1,23 +1,21 @@
 /**
- * Task 952 (AC5): the listing photo upload keeps its contract after `next-cloudinary` 6 -> 7.
+ * The listing photo upload: the contract of the form's photo section (Task 952 AC5, Task 957, Task 1038).
  *
- * The v7 release removed `onUpload` from `CldUploadWidget`; `onSuccess(results, { widget })` is the only success callback. `next-cloudinary` is replaced here by a
- * double that has the v7 shape (a component that calls its children with `{ open }` and exposes the props it was given), so these tests prove what the form
- * relies on, not what Cloudinary's script does:
- *  - the widget is given `onSuccess` and NOT the removed `onUpload`;
- *  - Task 957 (AC5): the widget is given NO public preset and NO folder; `prepareUploadParams` asks the server route for one signature per photo ({ listingId } or {}) and
- *    hands the answer to the widget, and a refused or failed request cancels that upload;
- *  - Task 957 Revision 1 (AC5): the widget's cloud config is the API key and the cloud name of the prop, and no widget is offered when either is empty (the real library, with every
- *    Cloudinary variable unset, is run in `ImageUpload.widgetOptions.test.tsx`);
- *  - a successful upload calls the form's change handler with the Cloudinary URL and public id, the first photo is the cover, and an upload session keeps the photos
- *    that were already in the form (and the ones added earlier in the same session);
- *  - events that are not a success, and a result without a file, change nothing.
- * Every value is synthetic.
+ * Task 1038 replaced the Cloudinary widget with a file input: the browser makes the photos smaller and uploads them straight to R2 through a queue (`uploadQueue.ts`, tested in `uploadQueue.test.ts`;
+ * `photoPipeline.ts`, tested in `photoPipeline.test.ts`). Revision 1 (R1-2, Review 1 F2) rewrote this file for the file input. The queue is the one double here (`createUploadQueue`): it records what the
+ * component hands it (`add`, `retry`, `remove`) and lets a test emit the list of photos in progress, so these tests prove what the form relies on, not what the pipeline or the network does:
+ *  - the file input takes JPEG, PNG and WebP, several at once, and the files chosen go to the queue, never more than the room that is left (the 20-photo limit counts the photos still in progress);
+ *  - a photo the queue finished joins the form's list with its address, the first photo is the cover, a session keeps the photos that were already in the form (and the ones added earlier in the same session),
+ *    and a photo that is not finished or has no address changes nothing;
+ *  - every reason a photo is not uploaded has its own text under the tile, with retry and remove, and the controls are disabled while the form is saved;
+ *  - the upload button opens the file input, and while the form is saved it is disabled and opens nothing (Revision 1 R1-3);
+ *  - the grid keeps its controls, order, cover, delete and disabled-while-saving behaviour of `main`.
+ * What `main` asserted about the widget has its counterpart for the file input in each case above; the `cloudinary` prop is no longer read. Every value is synthetic.
  */
-import React from 'react'
+import React, { useState } from 'react'
 import { MantineProvider } from '@mantine/core'
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 
 vi.mock('next-intl', () => ({
   useLocale: () => 'uk',
@@ -26,183 +24,247 @@ vi.mock('next-intl', () => ({
 const toastMock = vi.hoisted(() => ({ error: vi.fn(), success: vi.fn() }))
 vi.mock('@/lib/toast', () => ({ toast: toastMock }))
 
-type SuccessResults = { event: string; info?: unknown }
-interface WidgetProps {
-  uploadPreset?: string
-  config?: { cloud?: { apiKey?: string; cloudName?: string } }
-  options?: Record<string, unknown>
-  onSuccess?: (results: SuccessResults, widget: { widget: { close: () => void } }) => void
-  onError?: (error: unknown, widget: unknown) => void
-  onUpload?: unknown
-  children?: (api: { open: () => void }) => React.JSX.Element
-}
-const widget = vi.hoisted(() => ({ props: null as unknown, opened: 0 }))
-vi.mock('next-cloudinary', () => ({
-  CldUploadWidget: (props: WidgetProps) => {
-    widget.props = props
-    return props.children?.({ open: () => { widget.opened++ } }) ?? null
+type QueueOptions = { listingId?: string; onChange: (items: readonly PendingPhoto[]) => void }
+const queue = vi.hoisted(() => ({ created: [] as unknown[], add: vi.fn(), retry: vi.fn(), remove: vi.fn() }))
+vi.mock('@/modules/listings/lib/uploadQueue', () => ({
+  createUploadQueue: (options: unknown) => {
+    queue.created.push(options)
+    return { add: queue.add, retry: queue.retry, remove: queue.remove, items: () => [], idle: () => Promise.resolve() }
   },
 }))
 
 import { theme } from '@/design-system/mantine/theme'
 import { BADGE_COUNT_EMPHASIS, BADGE_STATUS_REGISTRY } from '@/design-system/mantine/badgeTones'
 import { setViewport } from '@/design-system/mantine/patterns/__tests__/viewportKit'
+import type { PendingPhoto } from '@/modules/listings/lib/uploadQueue'
+import type { UploadFailure } from '@/modules/listings/lib/uploadFailure'
 import { ImageUpload, type ListingImage } from '../ImageUpload'
 
-const props = () => widget.props as WidgetProps
 const image = (n: number, over: Partial<ListingImage> = {}): ListingImage => ({ url: `https://res.cloudinary.com/demo/image/upload/p${n}.jpg`, public_id: `folder/p${n}`, is_cover: n === 1, order: n - 1, ...over })
-const success = (n: number): SuccessResults => ({ event: 'success', info: { secure_url: `https://res.cloudinary.com/demo/image/upload/new${n}.jpg`, public_id: `folder/new${n}` } })
-const closeWidget = { widget: { close: () => undefined } }
+const stored = (id: string) => `https://media.lero.al/user-7/listings/${id}/full.webp`
+const storedId = (id: string) => `user-7/listings/${id}/full.webp`
 
 function mount(images: ListingImage[], onChange = vi.fn(), extra: Partial<React.ComponentProps<typeof ImageUpload>> = {}) {
-  render(<MantineProvider theme={theme} env="test"><ImageUpload images={images} onChange={onChange} cloudinary={{ apiKey: 'key-957', cloudName: 'demo-cloud' }} {...extra} /></MantineProvider>)
+  render(<MantineProvider theme={theme} env="test"><ImageUpload images={images} onChange={onChange} {...extra} /></MantineProvider>)
   return onChange
+}
+
+/** the form that owns the list: what `onChange` hands over comes back as `images`, as in the real form */
+function Form({ initial, spy }: { initial: ListingImage[]; spy: (images: ListingImage[]) => void }) {
+  const [images, setImages] = useState(initial)
+  return <MantineProvider theme={theme} env="test"><ImageUpload images={images} onChange={(next) => { spy(next); setImages(next) }} /></MantineProvider>
 }
 
 /** the upload button (its text is the key of the empty state or of the add-more state) */
 const uploadButton = () => screen.getByText(/^(upload_photos|add_more_photos( \(\d+\/\d+\))?)$/).closest('button') as HTMLButtonElement
+const fileInput = () => screen.getByTestId('photo-file-input') as HTMLInputElement
+const file = (name: string, type = 'image/jpeg') => new File([new Uint8Array(4)], name, { type })
+const choose = (...files: File[]) => fireEvent.change(fileInput(), { target: { files } })
+const photo = (id: string, state: PendingPhoto['state'], over: Partial<PendingPhoto> = {}): PendingPhoto => ({ id, state, progress: state === 'uploading' ? 60 : state === 'done' ? 100 : 0, ...over })
+/** the queue tells the form what is in progress (the list `createUploadQueue`'s `onChange` receives) */
+const emit = (items: readonly PendingPhoto[]) => act(() => { (queue.created.at(-1) as QueueOptions).onChange(items) })
 
-beforeEach(() => { setViewport(1024); widget.props = null; widget.opened = 0; toastMock.error.mockReset() })   // Mantine's provider reads matchMedia, which jsdom lacks
+beforeEach(() => {
+  setViewport(1024)   // Mantine's provider reads matchMedia, which jsdom lacks
+  queue.created = []
+  queue.add.mockReset()
+  queue.retry.mockReset()
+  queue.remove.mockReset()
+  toastMock.error.mockReset()
+})
 afterEach(() => { vi.unstubAllEnvs() })
 
-describe('ImageUpload with next-cloudinary 7', () => {
-  it('[AC5] gives the widget onSuccess, never the removed onUpload, no public preset and no folder, and the upload options of the form', () => {
+describe('ImageUpload with the file input (Task 1038)', () => {
+  it('[AC5] gives the browser a hidden file input for JPEG, PNG and WebP, several files at once, and nothing else: no widget, no preset, no folder', () => {
     mount([image(1)])
-    expect(typeof props().onSuccess).toBe('function')
-    expect('onUpload' in (props() as object)).toBe(false)
-    expect('uploadPreset' in (props() as object)).toBe(false)
-    expect('signatureEndpoint' in (props() as object)).toBe(false)
-    expect(props().options).toMatchObject({ multiple: true, resourceType: 'image', maxFiles: 19, cropping: false, maxFileSize: 10_000_000, clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'] })
-    expect(typeof props().options?.prepareUploadParams).toBe('function')
-    expect('folder' in (props().options ?? {})).toBe(false)
-    expect('uploadPreset' in (props().options ?? {})).toBe(false)
+    const input = fileInput()
+    expect(input.type).toBe('file')
+    expect(input.accept).toBe('image/jpeg,image/png,image/webp')
+    expect(input.multiple).toBe(true)
+    expect(input.hidden).toBe(true)
+    expect(input.getAttribute('capture')).toBeNull()
+    expect(document.querySelector('script[src*="cloudinary"]')).toBeNull()
+    expect('cloudinary' in window).toBe(false)
   })
 
-  describe('prepareUploadParams (Task 957)', () => {
-    const answer = (n: number) => ({ signature: `sig${n}`, apiKey: 'key', uploadSignatureTimestamp: 1700000000 + n, uploadPreset: 'signed', folder: 'u/listings/l1', publicId: `id${n}`, overwrite: false, tags: ['user-7'], context: 'user=7|listing=l1' })
-    const prepare = () => props().options!.prepareUploadParams as (cb: (p: unknown) => void, params: unknown) => Promise<void> | void
-    const fetchMock = vi.fn()
-    beforeEach(() => { fetchMock.mockReset(); vi.stubGlobal('fetch', fetchMock) })
-    afterEach(() => { vi.unstubAllGlobals() })
-
-    it('[AC5] asks the route once per photo with { listingId } and hands each answer to the widget', async () => {
-      fetchMock.mockImplementation(async () => { const n = fetchMock.mock.calls.length; return { ok: true, json: async () => answer(n) } })
-      mount([], vi.fn(), { listingId: 'l1' })
-      const cb = vi.fn()
-      await prepare()(cb, [{ source: 'uw' }, { source: 'uw' }])
-      expect(fetchMock).toHaveBeenCalledTimes(2)
-      for (const call of fetchMock.mock.calls) {
-        expect(call[0]).toBe('/api/listings/upload-signature')
-        expect(call[1]).toMatchObject({ method: 'POST', credentials: 'same-origin' })
-        expect(JSON.parse(call[1].body as string)).toEqual({ listingId: 'l1' })
-      }
-      expect(cb).toHaveBeenCalledTimes(1)
-      expect(cb.mock.calls[0][0]).toEqual([answer(1), answer(2)])
-    })
-
-    it('[AC5] a single parameter object gets a single answer; without a listing the body is {}', async () => {
-      fetchMock.mockResolvedValue({ ok: true, json: async () => answer(1) })
-      mount([])
-      const cb = vi.fn()
-      await prepare()(cb, { source: 'uw' })
-      expect(JSON.parse(fetchMock.mock.calls[0][1].body as string)).toEqual({})
-      expect(cb).toHaveBeenCalledWith(answer(1))
-    })
-
-    it('[AC5] only the allow-listed keys reach the widget; whatever else the answer carries is dropped', async () => {
-      fetchMock.mockResolvedValue({ ok: true, json: async () => ({ ...answer(1), upload_preset: 'x', secret: 's', timestamp: 1 }) })
-      mount([])
-      const cb = vi.fn()
-      await prepare()(cb, { source: 'uw' })
-      expect(cb).toHaveBeenCalledWith(answer(1))
-    })
-
-    it.each([
-      ['a refused request', async () => ({ ok: false, status: 429, json: async () => ({ error: 'rate_limited' }) })],
-      ['an answer that is not JSON', async () => ({ ok: true, json: async () => { throw new Error('bad') } })],
-      ['an answer without a signature', async () => ({ ok: true, json: async () => ({ publicId: 'x' }) })],
-      ['a network failure', async () => { throw new Error('offline') }],
-    ])('[AC5] %s cancels the upload instead of sending it unsigned', async (_label, reply) => {
-      fetchMock.mockImplementation(reply)
-      mount([])
-      const cb = vi.fn()
-      await prepare()(cb, { source: 'uw' })
-      expect(cb).toHaveBeenCalledTimes(1)
-      expect(cb).toHaveBeenCalledWith({ cancel: true })
-    })
+  it('[AC5] the queue is created once, for the listing being edited (its photos go into that listing\'s folder), and for no listing on a new one', () => {
+    mount([], vi.fn(), { listingId: 'l1' })
+    expect(queue.created).toHaveLength(1)
+    expect((queue.created[0] as QueueOptions).listingId).toBe('l1')
+    cleanup()
+    queue.created = []
+    mount([])
+    expect(queue.created).toHaveLength(1)
+    expect((queue.created[0] as QueueOptions).listingId).toBeUndefined()
   })
 
-  // Revision 1 (R1-1): the widget is signed, so the library needs the API key and the cloud name at creation (`url-loader/dist/index.js:1590-1602`); both come from the page as a prop
-  it('[AC5] the widget gets the API key and the cloud name of the prop as its cloud config, and an uploadSignature that refuses, so no unsigned upload and no public preset is needed', () => {
+  it('[AC5] the files chosen go to the queue as they are, and the input is cleared so the same file can be chosen again', () => {
+    mount([image(1)])
+    const a = file('a.jpg')
+    const b = file('b.webp', 'image/webp')
+    choose(a, b)
+    expect(queue.add).toHaveBeenCalledTimes(1)
+    expect(queue.add).toHaveBeenCalledWith([a, b])
+    expect(fileInput().value).toBe('')
+    expect(toastMock.error).not.toHaveBeenCalled()
+  })
+
+  it('[AC5] a closed file dialog (no file) adds nothing and says nothing', () => {
+    mount([])
+    choose()
+    expect(queue.add).not.toHaveBeenCalled()
+    expect(toastMock.error).not.toHaveBeenCalled()
+  })
+
+  it('[AC5] more files than the room that is left: the first ones that fit go to the queue and the limit is told once', () => {
+    mount(Array.from({ length: 18 }, (_, i) => image(i + 1)))
+    const files = [file('a.jpg'), file('b.jpg'), file('c.jpg')]
+    choose(...files)
+    expect(queue.add).toHaveBeenCalledWith([files[0], files[1]])
+    expect(toastMock.error).toHaveBeenCalledTimes(1)
+    expect(toastMock.error).toHaveBeenCalledWith('upload_widget_max_files')
+  })
+
+  it('[AC5] the 20-photo limit counts the photos still in progress: stored and pending photos together leave the room that is left, and no button when none is', () => {
+    mount([image(1)], vi.fn(), { maxImages: 4 })
+    emit([photo('p1', 'processing'), photo('p2', 'uploading')])
+    expect(uploadButton().textContent).toBe('add_more_photos (3/4)')
+    const files = [file('a.jpg'), file('b.jpg')]
+    choose(...files)
+    expect(queue.add).toHaveBeenLastCalledWith([files[0]])
+    expect(toastMock.error).toHaveBeenCalledWith('upload_widget_max_files')
+    emit([photo('p1', 'processing'), photo('p2', 'uploading'), photo('p3', 'failed', { failure: 'network' })])
+    expect(screen.queryByText(/^add_more_photos/)).toBeNull()
+    expect(screen.getByText('photos_hint')).toBeTruthy()
+  })
+
+  it('[AC5] the limit defaults to 20 photos', () => {
+    mount(Array.from({ length: 19 }, (_, i) => image(i + 1)))
+    expect(uploadButton().textContent).toBe('add_more_photos (19/20)')
+    emit([photo('p1', 'processing')])
+    expect(screen.queryByText(/^add_more_photos/)).toBeNull()
+  })
+
+  it('[AC5] the Cloudinary configuration of the page is no longer read: the file input and the button show, and no "unavailable" message, whatever the prop holds', () => {
     vi.stubEnv('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME', 'from-the-environment')
-    mount([image(1)], vi.fn(), { cloudinary: { apiKey: 'key-957', cloudName: 'cloud-957' } })
-    expect(props().config).toEqual({ cloud: { apiKey: 'key-957', cloudName: 'cloud-957' } })   // the environment is not read
-    expect(typeof props().options?.uploadSignature).toBe('function')
-    const callback = vi.fn()
-    ;(props().options!.uploadSignature as (cb: (s: unknown, e?: Error) => void, p: unknown) => void)(callback, {})
-    expect(callback).toHaveBeenCalledWith(null, expect.any(Error))
-  })
-
-  it.each([
-    ['the API key', { apiKey: '', cloudName: 'demo-cloud' }],
-    ['the cloud name', { apiKey: 'key-957', cloudName: '' }],
-    ['both', { apiKey: '', cloudName: '' }],
-  ])('[AC5] without %s no widget is offered (it would throw when built); the grid and its controls still show', (_label, cloudinary) => {
-    mount([image(1)], vi.fn(), { cloudinary })
-    expect(widget.props).toBeNull()
+    mount([image(1)], vi.fn(), { cloudinary: { apiKey: '', cloudName: '' } })
+    expect(fileInput()).toBeTruthy()
+    expect(uploadButton().disabled).toBe(false)
     expect(screen.getAllByRole('button', { name: 'remove_photo#1' })).toHaveLength(1)
+    expect(screen.queryByText('upload_unavailable_title')).toBeNull()
   })
 
-  it('[AC5] a successful upload calls the change handler with the Cloudinary URL and public id; the first photo is the cover', () => {
+  it('[AC5] when the limit is reached the file input is still rendered but there is no button, and the grid and its controls still show', () => {
+    mount(Array.from({ length: 3 }, (_, i) => image(i + 1)), vi.fn(), { maxImages: 3 })
+    expect(screen.queryByText(/^add_more_photos/)).toBeNull()
+    expect(screen.getAllByRole('button', { name: /^remove_photo#/ })).toHaveLength(3)
+  })
+})
+
+describe('the upload button opens the file input (Task 1038 R1-3)', () => {
+  let clicked: MockInstance<HTMLInputElement['click']>
+  // the browser would open its file dialog: the spy records the click and stops it there
+  beforeEach(() => { clicked = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => undefined) })
+  afterEach(() => { clicked.mockRestore() })
+
+  it('[AC5] the button of the empty state opens the file input once, and starts no upload by itself', () => {
+    mount([])
+    expect(uploadButton().textContent).toBe('upload_photos')
+    fireEvent.click(uploadButton())
+    expect(clicked).toHaveBeenCalledTimes(1)
+    expect(clicked.mock.contexts[0]).toBe(fileInput())
+    expect(queue.add).not.toHaveBeenCalled()
+  })
+
+  it('[AC5] the add-more button of a form with photos opens the file input once', () => {
+    mount([image(1), image(2)])
+    expect(uploadButton().textContent).toBe('add_more_photos (2/20)')
+    fireEvent.click(uploadButton())
+    expect(clicked).toHaveBeenCalledTimes(1)
+    expect(clicked.mock.contexts[0]).toBe(fileInput())
+  })
+
+  it('[AC5] while the form is saved the button is shown disabled and opens nothing, for both states of the button', () => {
+    mount([], vi.fn(), { disabled: true })
+    expect(uploadButton().disabled).toBe(true)
+    fireEvent.click(uploadButton())
+    cleanup()
+    mount([image(1)], vi.fn(), { disabled: true })
+    expect(uploadButton().disabled).toBe(true)
+    fireEvent.click(uploadButton())
+    expect(clicked).not.toHaveBeenCalled()
+    expect(queue.add).not.toHaveBeenCalled()
+  })
+
+  it('[AC5] the button of a form that is not saved is enabled (the check above is not vacuous)', () => {
+    mount([image(1)])
+    expect(uploadButton().disabled).toBe(false)
+  })
+})
+
+describe('a photo the queue finished joins the form (Task 1038)', () => {
+  it('[AC5] a finished photo calls the change handler with its address and its stored path as the id; the first photo is the cover; the queue forgets it', () => {
     const onChange = mount([])
-    fireEvent.click(uploadButton())
-    expect(widget.opened).toBe(1)
-    props().onSuccess!(success(1), closeWidget)
+    emit([photo('p1', 'done', { publicUrl: stored('u1') })])
     expect(onChange).toHaveBeenCalledTimes(1)
-    expect(onChange).toHaveBeenLastCalledWith([{ url: 'https://res.cloudinary.com/demo/image/upload/new1.jpg', public_id: 'folder/new1', is_cover: true, order: 0 }])
+    expect(onChange).toHaveBeenLastCalledWith([{ url: stored('u1'), public_id: storedId('u1'), is_cover: true, order: 0 }])
+    expect(queue.remove).toHaveBeenCalledWith('p1')
   })
 
-  it('[AC5] an upload session keeps the photos already in the form and the ones uploaded before it in the same session; none of them takes the cover', () => {
-    const onChange = mount([image(1), image(2)])
-    fireEvent.click(uploadButton())
-    props().onSuccess!(success(1), closeWidget)
-    props().onSuccess!(success(2), closeWidget)
-    expect(onChange).toHaveBeenCalledTimes(2)
-    const last = onChange.mock.calls[1][0] as ListingImage[]
-    expect(last.map((i) => i.public_id)).toEqual(['folder/p1', 'folder/p2', 'folder/new1', 'folder/new2'])
+  it('[AC5] a session keeps the photos already in the form and the ones added earlier in the same session; none of them takes the cover', () => {
+    const spy = vi.fn()
+    render(<Form initial={[image(1), image(2)]} spy={spy} />)
+    emit([photo('p1', 'done', { publicUrl: stored('u1') })])
+    emit([photo('p2', 'done', { publicUrl: stored('u2') })])
+    expect(spy).toHaveBeenCalledTimes(2)
+    const last = spy.mock.calls[1][0] as ListingImage[]
+    expect(last.map((i) => i.public_id)).toEqual(['folder/p1', 'folder/p2', storedId('u1'), storedId('u2')])
     expect(last.map((i) => i.order)).toEqual([0, 1, 2, 3])
     expect(last.filter((i) => i.is_cover).map((i) => i.public_id)).toEqual(['folder/p1'])
+    expect(queue.remove.mock.calls.map((c) => c[0])).toEqual(['p1', 'p2'])
   })
 
-  it('[AC5] an event that is not a success, a result without a file and a text result change nothing', () => {
+  it('[AC5] two photos finished together join together, in the order the queue lists them', () => {
+    const onChange = mount([image(1)])
+    emit([photo('p1', 'done', { publicUrl: stored('u1') }), photo('p2', 'done', { publicUrl: stored('u2') })])
+    const last = onChange.mock.calls.at(-1)![0] as ListingImage[]
+    expect(last.map((i) => i.public_id)).toEqual(['folder/p1', storedId('u1'), storedId('u2')])
+    expect(last.map((i) => i.order)).toEqual([0, 1, 2])
+  })
+
+  it('[AC5] a photo that is not finished, and a finished one without an address, change nothing', () => {
     const onChange = mount([])
-    fireEvent.click(uploadButton())
-    props().onSuccess!({ event: 'queues-end', info: { secure_url: 'https://res.cloudinary.com/demo/x.jpg', public_id: 'x' } }, closeWidget)
-    props().onSuccess!({ event: 'success' }, closeWidget)
-    props().onSuccess!({ event: 'success', info: 'text' }, closeWidget)
+    emit([photo('p1', 'processing'), photo('p2', 'uploading'), photo('p3', 'failed', { failure: 'network' }), photo('p4', 'done')])
     expect(onChange).not.toHaveBeenCalled()
+    expect(queue.remove).not.toHaveBeenCalled()
   })
 
-  it('[AC5] no widget is offered when the limit is reached', () => {
-    mount(Array.from({ length: 3 }, (_, i) => image(i + 1)), vi.fn(), { maxImages: 3 })
-    expect(widget.props).toBeNull()
+  it('[AC5] a finished photo that is listed again is attached once', () => {
+    const onChange = mount([])
+    emit([photo('p1', 'done', { publicUrl: stored('u1') })])
+    emit([photo('p1', 'done', { publicUrl: stored('u1') })])
+    expect(onChange).toHaveBeenCalledTimes(1)
   })
 
-  it('[AC5] no widget is offered when the form is disabled', () => {
-    mount([image(1)], vi.fn(), { disabled: true })
-    expect(widget.props).toBeNull()
+  it('[AC5] while the form is saved a finished photo waits, and joins when the form can be edited again', () => {
+    const onChange = vi.fn()
+    const tree = (disabled: boolean) => <MantineProvider theme={theme} env="test"><ImageUpload images={[]} onChange={onChange} disabled={disabled} /></MantineProvider>
+    const view = render(tree(true))
+    emit([photo('p1', 'done', { publicUrl: stored('u1') })])
+    expect(onChange).not.toHaveBeenCalled()
+    view.rerender(tree(false))
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange.mock.calls[0][0]).toEqual([{ url: stored('u1'), public_id: storedId('u1'), is_cover: true, order: 0 }])
   })
 
-  // Task 953 (refs): the callback of the latest render receives the upload result, not the one the widget was opened with.
-  it('[AC5] an upload that finishes after a re-render reports to the latest change handler only', () => {
+  // Task 953 (refs): the callback of the latest render receives the result, not the one of the render the photo was started in.
+  it('[AC5] a photo that finishes after a re-render reports to the latest change handler only', () => {
     const first = vi.fn()
     const second = vi.fn()
-    const tree = (onChange: typeof first) => <MantineProvider theme={theme} env="test"><ImageUpload images={[]} onChange={onChange} cloudinary={{ apiKey: 'key-957', cloudName: 'demo-cloud' }} /></MantineProvider>
+    const tree = (onChange: typeof first) => <MantineProvider theme={theme} env="test"><ImageUpload images={[]} onChange={onChange} /></MantineProvider>
     const view = render(tree(first))
-    fireEvent.click(uploadButton())
-    const handler = props().onSuccess!
     view.rerender(tree(second))
-    handler(success(1), closeWidget)
+    emit([photo('p1', 'done', { publicUrl: stored('u1') })])
     expect(first).not.toHaveBeenCalled()
     expect(second).toHaveBeenCalledTimes(1)
   })
@@ -252,23 +314,22 @@ describe('ImageUpload controls', () => {
   })
 })
 
-
-// Task 957 Revision 2 (R2-4, AC21; Review 2 F5): an upload that cannot be built is explained, not silently missing
-describe('ImageUpload when the upload cannot be built', () => {
+// Task 957 Revision 2 (R2-4, AC21; Review 2 F5), for the file input: the button shows with both texts of its state and without the "unavailable" message, whatever the Cloudinary configuration is
+describe('ImageUpload shows its upload button without any Cloudinary configuration', () => {
   it.each([
     ['the API key', { apiKey: '', cloudName: 'c' }],
     ['the cloud name', { apiKey: 'k', cloudName: '' }],
-  ])('[AC21] without %s the photo section shows the error state with both texts and no upload button', (_label, cloudinary) => {
+    ['both', { apiKey: '', cloudName: '' }],
+  ])('[AC21] without %s the photo section shows the upload button and no error state', (_label, cloudinary) => {
     mount([], vi.fn(), { cloudinary })
-    expect(widget.props).toBeNull()
-    expect(screen.getByText('upload_unavailable_title')).toBeTruthy()
-    expect(screen.getByText('upload_unavailable_description')).toBeTruthy()
-    expect(screen.queryByText('upload_photos')).toBeNull()
-    expect(screen.queryByText(/^add_more_photos/)).toBeNull()
+    expect(screen.getByText('upload_photos')).toBeTruthy()
+    expect(screen.getByText('photos_hint')).toBeTruthy()
+    expect(screen.queryByText('upload_unavailable_title')).toBeNull()
+    expect(screen.queryByText('upload_unavailable_description')).toBeNull()
   })
 
   it('[AC21] with both values the button shows and the message does not', () => {
-    mount([])
+    mount([], vi.fn(), { cloudinary: { apiKey: 'k', cloudName: 'c' } })
     expect(screen.getByText('upload_photos')).toBeTruthy()
     expect(screen.queryByText('upload_unavailable_title')).toBeNull()
     expect(screen.queryByText('upload_unavailable_description')).toBeNull()
@@ -282,119 +343,106 @@ describe('ImageUpload when the upload cannot be built', () => {
     expect(screen.queryByText('upload_unavailable_title')).toBeNull()
   })
 
-  it('[AC21] the photos already in the form still show with the message (the grid and its controls stay)', () => {
+  it('[AC21] the photos already in the form still show with the button (the grid and its controls stay)', () => {
     mount([image(1)], vi.fn(), { cloudinary: { apiKey: '', cloudName: '' } })
     expect(screen.getByRole('button', { name: 'remove_photo#1' })).toBeTruthy()
-    expect(screen.getByText('upload_unavailable_title')).toBeTruthy()
+    expect(screen.getByText('add_more_photos (1/20)')).toBeTruthy()
+    expect(screen.queryByText('upload_unavailable_title')).toBeNull()
   })
 })
 
-// Task 957 Revision 2 (R2-6, AC22; Review 2 F10): a refused signature is explained through the canonical toast, one message per case
-describe('ImageUpload when the signature is refused', () => {
-  const prepare = () => props().options!.prepareUploadParams as (cb: (p: unknown) => void, params: unknown) => Promise<void>
-  const fetchMock = vi.fn()
-  beforeEach(() => { fetchMock.mockReset(); vi.stubGlobal('fetch', fetchMock) })
-  afterEach(() => { vi.unstubAllGlobals() })
+// Task 957 Revision 2 (R2-6, AC22; Review 2 F10; owner decision O997-2, 2026-11-21: every refused photo names its reason), for the tiles of Task 1038: the reason of each failure is told under its tile, not in a toast
+describe('ImageUpload tells why a photo was not uploaded', () => {
+  const REASONS: Record<UploadFailure, string> = {
+    session: 'upload_error_session',
+    forbidden: 'upload_error_forbidden',
+    rate_limited: 'upload_error_rate_limited',
+    rate_limited_day: 'upload_error_rate_limited_day',
+    not_configured: 'upload_error_not_configured',
+    unavailable: 'upload_error_unavailable',
+    network: 'upload_error_network',
+    too_large: 'upload_error_too_large',
+    format: 'upload_error_format',
+    rejected: 'upload_error_rejected',
+    provider_busy: 'upload_error_provider_busy',
+    failed: 'upload_error_failed',
+    processing: 'upload_error_processing',
+  }
+  const tiles = () => screen.getAllByTestId('pending-photo')
 
-  it.each([
-    [401, 'upload_error_session'],
-    [403, 'upload_error_forbidden'],
-    [429, 'upload_error_rate_limited'],
-    [503, 'upload_error_unavailable'],
-    [500, 'upload_error_unavailable'],
-  ])('[AC22] a %s answer cancels the upload and raises toast.error once with %s', async (status, key) => {
-    fetchMock.mockResolvedValue({ ok: false, status, json: async () => ({ error: 'x' }) })
-    mount([])
-    const cb = vi.fn()
-    await prepare()(cb, { source: 'uw' })
-    expect(cb).toHaveBeenCalledWith({ cancel: true })
-    expect(toastMock.error).toHaveBeenCalledTimes(1)
-    expect(toastMock.error).toHaveBeenCalledWith(key)
-  })
-
-  it('[AC22] a network failure cancels the upload and raises toast.error once with the network message (O997-2: not the general one)', async () => {
-    fetchMock.mockImplementation(async () => { throw new Error('offline') })
-    mount([])
-    const cb = vi.fn()
-    await prepare()(cb, { source: 'uw' })
-    expect(cb).toHaveBeenCalledWith({ cancel: true })
-    expect(toastMock.error).toHaveBeenCalledTimes(1)
-    expect(toastMock.error).toHaveBeenCalledWith('upload_error_network')
-  })
-
-  // Owner decision O997-2 (2026-11-21): every refused photo names its reason
-  it('[AC22] a 429 with a daily Retry-After names the daily limit, one with the 10-minute window the short one', async () => {
-    mount([])
-    fetchMock.mockResolvedValue({ ok: false, status: 429, headers: new Headers({ 'Retry-After': '86400' }), json: async () => ({ error: 'rate_limited', retryAfterSeconds: 86400 }) })
-    await prepare()(vi.fn(), { source: 'uw' })
-    expect(toastMock.error).toHaveBeenLastCalledWith('upload_error_rate_limited_day')
-    fetchMock.mockResolvedValue({ ok: false, status: 429, headers: new Headers({ 'Retry-After': '600' }), json: async () => ({ error: 'rate_limited', retryAfterSeconds: 600 }) })
-    await prepare()(vi.fn(), { source: 'uw' })
-    expect(toastMock.error).toHaveBeenLastCalledWith('upload_error_rate_limited')
-  })
-
-  it('[AC22] a server that is not set up for uploads says so (500 not_configured), a server error without that code is the general server message', async () => {
-    mount([])
-    fetchMock.mockResolvedValue({ ok: false, status: 500, json: async () => ({ error: 'not_configured' }) })
-    await prepare()(vi.fn(), { source: 'uw' })
-    expect(toastMock.error).toHaveBeenLastCalledWith('upload_error_not_configured')
-    fetchMock.mockResolvedValue({ ok: false, status: 500, json: async () => ({ error: 'x' }) })
-    await prepare()(vi.fn(), { source: 'uw' })
-    expect(toastMock.error).toHaveBeenLastCalledWith('upload_error_unavailable')
-  })
-
-  it.each([
-    [{ status: 0, statusText: '' }, 'upload_error_network'],
-    [{ status: 413, statusText: 'Payload Too Large' }, 'upload_error_too_large'],
-    [{ status: 400, statusText: 'Invalid image file' }, 'upload_error_format'],
-    [{ status: 403, statusText: 'Forbidden' }, 'upload_error_rejected'],
-    [{ status: 420, statusText: 'Rate Limited' }, 'upload_error_provider_busy'],
-    [{ status: 502, statusText: 'Bad Gateway' }, 'upload_error_unavailable'],
-    ['something unexpected', 'upload_error_failed'],
-  ])('[AC22] an upload the photo service refuses (%j) raises toast.error once with %s', (error, key) => {
-    mount([])
-    props().onError!(error, {})
-    expect(toastMock.error).toHaveBeenCalledTimes(1)
-    expect(toastMock.error).toHaveBeenCalledWith(key)
-  })
-
-  it('[AC22] the validation lines of the widget come in the page language: language and text are set for the locale, with the placeholders of the widget', () => {
-    mount([])
-    expect(props().options).toMatchObject({ language: 'uk' })
-    const text = (props().options as { text: Record<string, { uploader: { errors: Record<string, string> }; notifications: Record<string, string> }> }).text
-    expect(Object.keys(text)).toEqual(['uk'])
-    expect(text.uk.uploader.errors).toEqual({
-      file_too_large: 'upload_widget_file_too_large:{{size}}:{{allowed}}',
-      max_file_size: 'upload_widget_max_file_size',
-      allowed_formats: 'upload_widget_allowed_formats',
-      max_number_of_files: 'upload_widget_max_files',
-    })
-    expect(text.uk.notifications.general_error).toBe('upload_widget_general_error')
-  })
-
-  it('[AC22] several queued photos refused raise one toast, not one per photo', async () => {
-    fetchMock.mockResolvedValue({ ok: false, status: 429, json: async () => ({}) })
-    mount([])
-    const cb = vi.fn()
-    await prepare()(cb, [{ source: 'uw' }, { source: 'uw' }, { source: 'uw' }])
-    expect(cb).toHaveBeenCalledWith({ cancel: true })
-    expect(toastMock.error).toHaveBeenCalledTimes(1)
-  })
-
-  it('[AC22] an answer without a valid signature cancels with the unavailable message', async () => {
-    fetchMock.mockResolvedValue({ ok: true, status: 200, json: async () => ({ publicId: 'x' }) })
-    mount([])
-    const cb = vi.fn()
-    await prepare()(cb, { source: 'uw' })
-    expect(cb).toHaveBeenCalledWith({ cancel: true })
-    expect(toastMock.error).toHaveBeenCalledWith('upload_error_unavailable')
-  })
-
-  it('[AC22] a signed answer raises no toast', async () => {
-    fetchMock.mockResolvedValue({ ok: true, status: 200, json: async () => ({ signature: 's', apiKey: 'k', uploadSignatureTimestamp: 1, uploadPreset: 'p', folder: 'f', publicId: 'i', overwrite: false, tags: [], context: 'c' }) })
-    mount([])
-    await prepare()(vi.fn(), { source: 'uw' })
+  it.each(Object.entries(REASONS))('[AC22] a photo that failed with "%s" shows its own text %s, the photo number, and a retry and a remove control', (failure, key) => {
+    mount([image(1)])
+    emit([photo('p1', 'failed', { failure: failure as UploadFailure })])
+    const tile = tiles()[0]
+    expect(tile.getAttribute('data-state')).toBe('failed')
+    expect(within(tile).getByText('photo_state_failed#2')).toBeTruthy()
+    expect(within(tile).getByRole('alert').textContent).toBe(key)
+    expect(within(tile).getByRole('button', { name: 'photo_retry#2' })).toBeTruthy()
+    expect(within(tile).getByRole('button', { name: 'remove_photo#2' })).toBeTruthy()
     expect(toastMock.error).not.toHaveBeenCalled()
+  })
+
+  it('[AC22] a failure without a reason is the general one', () => {
+    mount([])
+    emit([photo('p1', 'failed')])
+    expect(within(tiles()[0]).getByRole('alert').textContent).toBe('upload_error_failed')
+  })
+
+  it('[AC22] several photos that failed each show their own reason under their own tile, numbered after the stored photos, and no toast is raised for them', () => {
+    mount([image(1), image(2)])
+    emit([photo('p1', 'failed', { failure: 'rate_limited' }), photo('p2', 'failed', { failure: 'rate_limited_day' }), photo('p3', 'failed', { failure: 'format' })])
+    expect(tiles()).toHaveLength(3)
+    expect(tiles().map((t) => within(t).getByText(/^photo_state_failed#/).textContent)).toEqual(['photo_state_failed#3', 'photo_state_failed#4', 'photo_state_failed#5'])
+    expect(tiles().map((t) => within(t).getByRole('alert').textContent)).toEqual(['upload_error_rate_limited', 'upload_error_rate_limited_day', 'upload_error_format'])
+    expect(toastMock.error).not.toHaveBeenCalled()
+  })
+
+  it('[AC22] retry asks the queue to run that photo again, remove drops it from the queue; neither changes the form\'s list', () => {
+    const onChange = mount([image(1)])
+    emit([photo('p1', 'failed', { failure: 'network' }), photo('p2', 'failed', { failure: 'format' })])
+    fireEvent.click(screen.getByRole('button', { name: 'photo_retry#3' }))
+    expect(queue.retry).toHaveBeenCalledTimes(1)
+    expect(queue.retry).toHaveBeenCalledWith('p2')
+    fireEvent.click(screen.getByRole('button', { name: 'remove_photo#2' }))
+    expect(queue.remove).toHaveBeenCalledTimes(1)
+    expect(queue.remove).toHaveBeenCalledWith('p1')
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  it('[AC22] a photo being made smaller shows its state text, and a photo being sent shows a progress bar with its percent; neither has a retry or a remove control', () => {
+    mount([image(1)])
+    emit([photo('p1', 'processing'), photo('p2', 'uploading', { progress: 60 })])
+    const [processing, uploading] = tiles()
+    expect(processing.getAttribute('data-state')).toBe('processing')
+    expect(within(processing).getByText('photo_state_processing#2')).toBeTruthy()
+    expect(uploading.getAttribute('data-state')).toBe('uploading')
+    expect(within(uploading).getByText('photo_state_uploading#3')).toBeTruthy()
+    expect(within(uploading).getByRole('progressbar').getAttribute('aria-valuenow')).toBe('60')
+    for (const tile of [processing, uploading]) {
+      expect(within(tile).queryByRole('button')).toBeNull()
+      expect(within(tile).queryByRole('alert')).toBeNull()
+    }
+  })
+
+  it('[AC22] the retry and remove controls of a failed photo are disabled while the form is saved, and do nothing', () => {
+    mount([image(1)], vi.fn(), { disabled: true })
+    emit([photo('p1', 'failed', { failure: 'network' })])
+    const retry = screen.getByRole('button', { name: 'photo_retry#2' }) as HTMLButtonElement
+    const remove = screen.getByRole('button', { name: 'remove_photo#2' }) as HTMLButtonElement
+    expect(retry.disabled).toBe(true)
+    expect(remove.disabled).toBe(true)
+    fireEvent.click(retry)
+    fireEvent.click(remove)
+    expect(queue.retry).not.toHaveBeenCalled()
+    expect(queue.remove).not.toHaveBeenCalled()
+  })
+
+  it('[AC22] the tiles for the Stories (`pendingPreview`) are drawn like the queue\'s, and nothing is uploaded', () => {
+    mount([image(1)], vi.fn(), { pendingPreview: [photo('s1', 'failed', { failure: 'too_large' }), photo('s2', 'uploading', { progress: 35 })] })
+    expect(tiles()).toHaveLength(2)
+    expect(within(tiles()[0]).getByRole('alert').textContent).toBe('upload_error_too_large')
+    expect(within(tiles()[1]).getByRole('progressbar').getAttribute('aria-valuenow')).toBe('35')
+    expect(queue.add).not.toHaveBeenCalled()
   })
 })
 
@@ -521,15 +569,21 @@ describe('ImageUpload names and disables its controls', () => {
     expect(new Set(photoControls).size).toBe(photoControls.length)
   })
 
-  it('[AC23] disabled: the upload button is shown disabled and builds no widget, and every photo control is disabled; the clicks change nothing', () => {
-    const onChange = mount(three(), vi.fn(), { disabled: true })
-    expect(uploadButton().disabled).toBe(true)
-    expect(widget.props).toBeNull()
-    const controls = screen.getAllByRole('button').filter((b) => /#\d$/.test(b.getAttribute('aria-label') ?? '')) as HTMLButtonElement[]
-    expect(controls.length).toBe(11)
-    expect(controls.filter((b) => !b.disabled).map((b) => b.getAttribute('aria-label'))).toEqual([])
-    for (const b of controls) fireEvent.click(b)
-    expect(onChange).not.toHaveBeenCalled()
+  it('[AC23] disabled: the upload button is shown disabled and opens no file dialog, and every photo control is disabled; the clicks change nothing', () => {
+    const clicked = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => undefined)
+    try {
+      const onChange = mount(three(), vi.fn(), { disabled: true })
+      expect(uploadButton().disabled).toBe(true)
+      fireEvent.click(uploadButton())
+      expect(clicked).not.toHaveBeenCalled()
+      const controls = screen.getAllByRole('button').filter((b) => /#\d$/.test(b.getAttribute('aria-label') ?? '')) as HTMLButtonElement[]
+      expect(controls.length).toBe(11)
+      expect(controls.filter((b) => !b.disabled).map((b) => b.getAttribute('aria-label'))).toEqual([])
+      for (const b of controls) fireEvent.click(b)
+      expect(onChange).not.toHaveBeenCalled()
+    } finally {
+      clicked.mockRestore()
+    }
   })
 
   it('[AC23] not disabled: the same controls are enabled (the check above is not vacuous)', () => {

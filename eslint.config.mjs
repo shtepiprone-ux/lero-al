@@ -136,6 +136,9 @@ const eslintConfig = defineConfig([
     "playwright-report/**",
     "tech-materials/**",
     "docs/chat-gpt-reports/**",
+    // Byte copies of third-party files (Task 1038, owner decision O1038-6): not authored code. Each is held by its sha256 test in
+    // src/modules/listings/lib/__tests__/photoPipeline.test.ts against the installed package and the version in package-lock.json.
+    "public/vendor/**",
   ]),
   // ── Import governance ─────────────────────────────────────────────────────
   //

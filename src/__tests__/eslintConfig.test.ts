@@ -79,3 +79,18 @@ describe('no suppression hides a React Compiler finding', () => {
     expect(comment.test(`// eslint-${'disable'}-next-line react-hooks/exhaustive-deps`)).toBe(false)
   })
 })
+
+/**
+ * Task 1038 Revision 2 (R2-4, owner decision O1038-6, 2026-11-25): `public/vendor/` holds byte copies of third-party files, not authored code; they are held by the sha256 tests of `photoPipeline.test.ts`
+ * and ESLint ignores that folder and nothing wider. Asked of ESLint itself (`isPathIgnored`), not read from the text of `eslint.config.mjs`.
+ */
+describe('ESLint ignores the third-party copies under public/vendor and nothing else of public/', () => {
+  it('[AC1] the Worker script copy is ignored; another file of public/, a script outside public/vendor and the pipeline are not', async () => {
+    const eslint = new ESLint()
+    expect(await eslint.isPathIgnored('public/vendor/browser-image-compression-2.0.2.js')).toBe(true)
+    expect(await eslint.isPathIgnored('public/vendor/anything/else.js')).toBe(true)
+    expect(await eslint.isPathIgnored('public/other.js')).toBe(false)
+    expect(await eslint.isPathIgnored('public/vendorish/other.js')).toBe(false)
+    expect(await eslint.isPathIgnored('src/modules/listings/lib/photoPipeline.ts')).toBe(false)
+  })
+})

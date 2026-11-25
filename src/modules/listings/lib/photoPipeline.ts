@@ -35,12 +35,19 @@ export class PhotoProcessingError extends Error {
   }
 }
 
-const COMMON = { initialQuality: 0.85, useWebWorker: true, preserveExif: false } as const
+/**
+ * The Worker's script is the package's own file served by this site (`public/vendor/`, a byte copy of `node_modules/browser-image-compression/dist/browser-image-compression.js`, held by `photoPipeline.test.ts`):
+ * without `libURL` the library loads it from cdn.jsdelivr.net at run time. The Worker is made from a blob, where `importScripts` refuses a site-relative path ("The URL ... is invalid") and the library then
+ * compresses on the main thread without a word, so the address is absolute, built from the page's own origin when a photo is processed (no host is written in the code; owner decision O1038-6).
+ */
+const WORKER_SCRIPT_PATH = '/vendor/browser-image-compression-2.0.2.js'
+const commonOptions = () => ({ initialQuality: 0.85, useWebWorker: true, preserveExif: false, libURL: new URL(WORKER_SCRIPT_PATH, window.location.origin).href }) as const
 
 /** both versions in one type: one after the other, so a phone holds one decoded photo at a time */
 async function encode(file: File, type: PhotoType): Promise<{ full: Blob; thumb: Blob }> {
-  const full = await imageCompression(file, { ...COMMON, maxWidthOrHeight: FULL_MAX_SIDE, maxSizeMB: 0.5, fileType: type })
-  const thumb = await imageCompression(file, { ...COMMON, maxWidthOrHeight: THUMB_MAX_SIDE, fileType: type })
+  const common = commonOptions()
+  const full = await imageCompression(file, { ...common, maxWidthOrHeight: FULL_MAX_SIDE, maxSizeMB: 0.5, fileType: type })
+  const thumb = await imageCompression(file, { ...common, maxWidthOrHeight: THUMB_MAX_SIDE, fileType: type })
   return { full, thumb }
 }
 

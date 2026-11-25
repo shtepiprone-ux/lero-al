@@ -9,6 +9,10 @@
       "verdict": "not applicable",
       "reason": "no model prompt or model input path changes in the diff"
     },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the trigger is `postMessage` in the vendored copy `public/vendor/browser-image-compression-2.0.2.js`: the page and its own same-origin Worker made from a blob exchange the photo; no cross-site frame, window, cookie or response changes"
+    },
     "MCP_Security": {
       "verdict": "not applicable",
       "reason": "no MCP server, tool or configuration changes in the diff"

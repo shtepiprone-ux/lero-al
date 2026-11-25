@@ -1,6 +1,6 @@
 # Task 1038 — Review 6
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
 
 Review 6 of Revision 4 (R4-1) on c404b4c83, uncommitted — APPROVED
 Scope: `git diff --stat c404b4c83 -- src`: `src/lib/media/cdnPurge.ts` (3 lines), `src/lib/media/__tests__/cdnPurge.security.test.ts` (2 rows) — exactly the Files of [Review 5](Task_1038_Review_5.md) "Revision 4"; plus Opus's documentation of Reviews 5 and 6 (the two kickoffs' mobile records, the review links, this file, one evidence line of the OWASP record).

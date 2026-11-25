@@ -1,6 +1,6 @@
 # Task 1038 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
 
 Review 1 of the working tree on a44708037 (first implementation, uncommitted) — NEEDS REVISION
 Scope: the 18 changed and 17 new files of the executor's report against a44708037: `src/lib/media/{r2,cdnPurge,listingPhoto}.ts`, `POST /api/listings/upload-url`, `photoPipeline.ts`, `uploadQueue.ts`, `ImageUpload.tsx`, the create, update, delete and account-delete paths, `appImageConfig.ts`, `imageDelivery.ts`, `imageUrl.ts`, `supabase/sql_migrations/task1038/`, the four message files, the ImageUpload Stories. Every file is in the kickoff's Scope (`cloudinaryDelete.ts`: the one word `export` the Scope names; the Stories: "## UI").

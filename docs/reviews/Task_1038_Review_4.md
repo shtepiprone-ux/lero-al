@@ -1,6 +1,6 @@
 # Task 1038 — Review 4
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
 
 Review 4 of Revision 3 (R3-1, R3-2) on 4826746e6, uncommitted — APPROVED
 Scope: `git diff --stat 4826746e6`: `src/proxy.ts`, `middlewareScope.security.test.ts`, `photoPipeline.test.ts` — exactly [Review 3](Task_1038_Review_3.md) "Revision 3" Files; plus Opus's documentation and rules of this review (below).

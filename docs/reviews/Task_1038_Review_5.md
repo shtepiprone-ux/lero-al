@@ -1,6 +1,6 @@
 # Task 1038 — Review 5
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1038_Listing_Photos_Optimised_In_The_Browser_Stored_In_R2.md) · OWASP record: [Task_1038.json](../security/owasp/reviews/Task_1038.json)
 
 Review 5 of pull request #76 at c404b4c83 (checklist V14, CI run 45636903009) — NEEDS REVISION
 Scope: every check of the pull request, all concluded; the tree is the one [Review 4](Task_1038_Review_4.md) read, committed unchanged.

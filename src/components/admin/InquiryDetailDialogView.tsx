@@ -144,15 +144,13 @@ export function InquiryDetailDialogView({
                   <Stack gap="xs">
                     <Group justify="space-between" gap="xs">
                       {r.direction === 'inbound' ? (
-                        <Group gap="xs">
-                          <MantineBadge variant="tone" tone="neutral">{t('customer_message')}</MantineBadge>
-                          <Text size="xs" fw={500}>{r.from_email}</Text>
-                        </Group>
+                        <MantineBadge variant="tone" tone="neutral">{t('customer_message')}</MantineBadge>
                       ) : (
                         <Text size="xs" fw={500}>{r.replier?.name ?? t('from_label')}</Text>
                       )}
                       <Text size="xs" c="dimmed">{formatDate(r.created_at, locale)}</Text>
                     </Group>
+                    {r.direction === 'inbound' && <Text size="xs" fw={500}>{r.from_email}</Text>}
                     <Text size="sm">{renderLines(r.body)}</Text>
                     <AttachmentNames attachments={r.attachments} title={t('attachments_not_kept')} />
                   </Stack>

@@ -10,6 +10,7 @@ import {
   FIXTURE_INQUIRIES,
   FIXTURE_INQUIRY_REPLIES,
   FIXTURE_LONG_ATTACHMENT_INQUIRY,
+  FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES,
 } from '@/stories/fixtures/admin.fixtures'
 
 // Task 894 — presentational View of the inquiry detail dialog (Container/Presentational split of
@@ -79,9 +80,9 @@ export const EmailThread: Story = {
   render: () => <DialogDemo inquiry={FIXTURE_EMAIL_INQUIRY} replies={FIXTURE_EMAIL_INQUIRY_REPLIES} />,
 }
 
-// Task 1044: a 200-character file name without a space wraps inside the dialog and is never clipped.
+// Task 1044: a 200-character file name without a space and the customer's answer from a long address wrap inside the dialog and are never clipped.
 export const LongAttachmentName: Story = {
-  render: () => <DialogDemo inquiry={FIXTURE_LONG_ATTACHMENT_INQUIRY} />,
+  render: () => <DialogDemo inquiry={FIXTURE_LONG_ATTACHMENT_INQUIRY} replies={FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES} />,
 }
 
 export const Sending: Story = {

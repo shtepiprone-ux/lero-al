@@ -744,13 +744,32 @@ export const FIXTURE_EMAIL_INQUIRY_REPLIES: ReplyRow[] = [
   },
 ]
 
+/** a long sender address (Task 1044 Revision 1, F1), to show it wraps inside its row and is never clipped */
+const FIXTURE_LONG_SENDER_EMAIL = 'ardit.leka.customer.with.a.very.long.mailbox.name@subdomain.of-a-long-example-domain.com'
+
 /** a 200-character file name without a space (the longest the route keeps), to show it wraps and is never clipped */
 export const FIXTURE_LONG_ATTACHMENT_INQUIRY: InquiryRow = {
   ...FIXTURE_EMAIL_INQUIRY,
   id: 'inq-mail-2',
-  reply_count: 0,
+  email: FIXTURE_LONG_SENDER_EMAIL,
+  reply_count: 1,
   attachments: [{ filename: `${'kontrata-e-qirase-per-apartamentin-'.repeat(6).slice(0, 196)}.pdf`, size: 96_256, content_type: 'application/pdf' }],
 }
+
+/** the customer's answer from the long address (Task 1044 Revision 1, F1) */
+export const FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES: ReplyRow[] = [
+  {
+    id: 'rep-mail-3',
+    inquiry_id: 'inq-mail-2',
+    body: 'Faleminderit. Ju dërgova kontratën edhe një herë.',
+    created_at: '2026-11-20T12:05:00Z',
+    replied_by: null,
+    replier: null,
+    direction: 'inbound',
+    from_email: FIXTURE_LONG_SENDER_EMAIL,
+    attachments: [],
+  },
+]
 
 // ── Task 859 additions: /admin/support Views (labelled fixture data) ─────────
 

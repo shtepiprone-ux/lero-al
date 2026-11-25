@@ -95,6 +95,19 @@ describe('AC7 the dialog renders received mail as text', () => {
     expect(within(dialog).getAllByText(t.customer_message)).toHaveLength(1)
   })
 
+  it('Revision 1 (F1): the sender address is its own line under the header row, outside the Group of the badge and the date, so a long address wraps', () => {
+    renderView(INQUIRY, [STAFF, INBOUND])
+    const dialog = screen.getByRole('dialog')
+    const badge = within(dialog).getByText(t.customer_message)
+    const header = badge.closest('.mantine-Group-root') as HTMLElement
+    expect(header).not.toBeNull()
+    const inboundRow = badge.closest('.mantine-Paper-root') as HTMLElement
+    const address = within(inboundRow).getByText('ana@example.com')
+    expect(header.contains(address)).toBe(false)
+    expect(address.closest('.mantine-Group-root')).toBeNull()
+    expect(address.parentElement).toBe(header.parentElement)
+  })
+
   it('lists the message\'s attachment names with their sizes under the "not kept" title', () => {
     renderView(INQUIRY, [STAFF, INBOUND])
     const dialog = screen.getByRole('dialog')

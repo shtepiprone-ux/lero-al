@@ -8,8 +8,8 @@ import { loadInquiryReplies } from '../inquiryReplies'
  */
 
 const ROWS = [
-  { id: 'r1', inquiry_id: 'i1', body: 'First answer', created_at: '2026-11-01T10:00:00Z', replied_by: 'u1', replied_by_name: 'Ana Staff' },
-  { id: 'r2', inquiry_id: 'i1', body: 'Second answer', created_at: '2026-11-02T10:00:00Z', replied_by: 'u2', replied_by_name: null },
+  { id: 'r1', inquiry_id: 'i1', body: 'First answer', created_at: '2026-11-01T10:00:00Z', replied_by: 'u1', replied_by_name: 'Ana Staff', direction: 'outbound', from_email: null, attachments: [] },
+  { id: 'r2', inquiry_id: 'i1', body: 'Second answer', created_at: '2026-11-02T10:00:00Z', replied_by: 'u2', replied_by_name: null, direction: 'outbound', from_email: null, attachments: [] },
 ]
 
 interface Calls { selects: string[]; filters: Array<[string, unknown]>; orders: Array<[string, unknown]>; tables: string[] }
@@ -47,11 +47,11 @@ describe('loadInquiryReplies', () => {
     const replies = await loadInquiryReplies(db, ['i1'])
 
     expect(replies).toEqual([
-      { id: 'r1', inquiry_id: 'i1', body: 'First answer', created_at: '2026-11-01T10:00:00Z', replied_by: 'u1', replier: { name: 'Ana Staff' } },
-      { id: 'r2', inquiry_id: 'i1', body: 'Second answer', created_at: '2026-11-02T10:00:00Z', replied_by: 'u2', replier: null },
+      { id: 'r1', inquiry_id: 'i1', body: 'First answer', created_at: '2026-11-01T10:00:00Z', replied_by: 'u1', replier: { name: 'Ana Staff' }, direction: 'outbound', from_email: null, attachments: [] },
+      { id: 'r2', inquiry_id: 'i1', body: 'Second answer', created_at: '2026-11-02T10:00:00Z', replied_by: 'u2', replier: null, direction: 'outbound', from_email: null, attachments: [] },
     ])
     expect(calls.tables).toEqual(['contact_inquiry_replies'])
-    expect(calls.selects).toEqual(['id, inquiry_id, body, created_at, replied_by, replied_by_name'])
+    expect(calls.selects).toEqual(['id, inquiry_id, body, created_at, replied_by, replied_by_name, direction, from_email, attachments'])
     expect(calls.selects[0]).not.toContain('!')
     expect(calls.filters).toEqual([['inquiry_id', ['i1']]])
     expect(calls.orders).toEqual([['created_at', { ascending: true }]])

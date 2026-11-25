@@ -117,9 +117,7 @@ customer's messages and their attachment names.
 ## Attack surface
 
 Changed: a public route, service-role writes of stranger text shown to staff, an outside Worker holding a secret, two tables' columns.
-1. **What are we working on?** Anyone can POST to `/api/email/inbound`; only the Worker knows the secret. Cloudflare's MX accepts mail for
-   the routed addresses, checks SPF, DKIM, DMARC and block lists, and runs the Worker. The route writes with the service role; staff (admin,
-   moderator with `inquiries.manage`) read the rows.
+1. **What are we working on?** Anyone can POST to `/api/email/inbound`; only the Worker knows the secret. Cloudflare's MX accepts mail for the routed addresses, checks SPF, DKIM, DMARC and block lists, and runs the Worker. The route writes with the service role; staff (admin, moderator with `inquiries.manage`) read the rows.
 2. **What can go wrong?**
    - T1 S: a forged POST creates inquiries → mitigate: the bearer secret compared in constant time before the body is read; no secret 503 → AC1, `SEC-1044-INBOUND-DENY`.
    - T2 T: a retried or repeated delivery is stored twice → mitigate: unique `message_id` → AC2.
@@ -233,8 +231,7 @@ text, not colour; no new control.
 
 ## Route
 
-0. Owner first: `task1044.sql` once written and read by the reviewer (AC9 waits). The Worker, Cloudflare and the live verification come after
-   the merge (the plan).
+0. Owner first: `task1044.sql` once written and read by the reviewer (AC9 waits). The Worker, Cloudflare and the live verification come after the merge (the plan).
 1. Work on the branch the owner created from `main` (checklist H1).
 2. Tests first (AC1-AC8); save each failing output.
 3. The owner stops Storybook and runs `npm install --save-exact postal-mime@4.2.1` (`project-facts.md`); then the SQL files,
@@ -249,3 +246,6 @@ text, not colour; no new control.
    command, exit code, relevant output, each failing-first and break output.
 
 ## Review
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1044_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_1044_Review_2.md)
+- [Review 3 — APPROVED WITH NOTES](../../docs/reviews/Task_1044_Review_3.md)

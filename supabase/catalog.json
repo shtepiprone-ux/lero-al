@@ -2633,11 +2633,31 @@
    "auth_exec": false
   },
   {
+   "name": "account_status_by_email",
+   "args": "p_email text",
+   "definer": true,
+   "config": [
+    "search_path=\"\""
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
    "name": "admin_search_users_by_email",
    "args": "q text",
    "definer": true,
    "config": [
     "search_path=auth, public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "auth_password_matches",
+   "args": "p_email text, p_password text",
+   "definer": true,
+   "config": [
+    "search_path=\"\""
    ],
    "anon_exec": false,
    "auth_exec": false
@@ -2976,8 +2996,23 @@
   },
   {
    "table": "contact_inquiries",
+   "name": "contact_inquiries_source_check",
+   "def": "CHECK ((source = ANY (ARRAY['form'::text, 'email'::text])))"
+  },
+  {
+   "table": "contact_inquiries",
    "name": "contact_inquiries_status_check",
    "def": "CHECK ((status = ANY (ARRAY['new'::text, 'in_progress'::text, 'closed'::text])))"
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "name": "contact_inquiry_replies_direction_check",
+   "def": "CHECK ((direction = ANY (ARRAY['outbound'::text, 'inbound'::text])))"
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "name": "contact_inquiry_replies_inbound_no_staff_check",
+   "def": "CHECK (((direction = 'outbound'::text) OR (replied_by IS NULL)))"
   },
   {
    "table": "email_templates",
@@ -3022,7 +3057,7 @@
   {
    "table": "listing_images",
    "name": "listing_images_url_prefix_check",
-   "def": "CHECK (starts_with(url, 'https://res.cloudinary.com/die7okukn/'::text))"
+   "def": "CHECK ((starts_with(url, 'https://res.cloudinary.com/die7okukn/'::text) OR starts_with(url, 'https://media.lero.al/'::text)))"
   },
   {
    "table": "listing_inquiries",
@@ -3850,6 +3885,39 @@
    "enum_values": null
   },
   {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "source",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "message_id",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "attachments",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
    "table": "contact_inquiry_replies",
    "kind": "r",
    "name": "id",
@@ -3912,6 +3980,50 @@
    "udt": "text",
    "typtype": "b",
    "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "direction",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "from_email",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "message_id",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "attachments",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
    "is_array": false,
    "enum_values": null
   },

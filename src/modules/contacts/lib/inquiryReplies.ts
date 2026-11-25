@@ -11,7 +11,7 @@ export async function loadInquiryReplies(db: SupabaseClient, inquiryIds: string[
 
   const { data, error } = await db
     .from('contact_inquiry_replies')
-    .select('id, inquiry_id, body, created_at, replied_by, replied_by_name')
+    .select('id, inquiry_id, body, created_at, replied_by, replied_by_name, direction, from_email, attachments')
     .in('inquiry_id', inquiryIds)
     .order('created_at', { ascending: true })
 
@@ -26,5 +26,9 @@ export async function loadInquiryReplies(db: SupabaseClient, inquiryIds: string[
     created_at: row.created_at,
     replied_by: row.replied_by,
     replier: row.replied_by_name ? { name: row.replied_by_name } : null,
+    // Task 1044: a customer's answer received by mail, with its sender and attachment names
+    direction: row.direction,
+    from_email: row.from_email,
+    attachments: row.attachments,
   }))
 }

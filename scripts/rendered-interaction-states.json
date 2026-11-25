@@ -6581,6 +6581,28 @@
       "closeSelector": ".mantine-Notification-closeButton, .mantine-CloseButton-root"
     },
     {
+      "id": "patterns-mantine-inquirydetaildialogview--email-thread",
+      "story": "patterns-mantine-inquirydetaildialogview--email-thread",
+      "open": {
+        "kind": "mount"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [],
+      "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
+    },
+    {
+      "id": "patterns-mantine-inquirydetaildialogview--long-attachment-name",
+      "story": "patterns-mantine-inquirydetaildialogview--long-attachment-name",
+      "open": {
+        "kind": "mount"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [],
+      "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
+    },
+    {
       "id": "patterns-mantine-inquirydetaildialogview--new",
       "story": "patterns-mantine-inquirydetaildialogview--new",
       "open": {

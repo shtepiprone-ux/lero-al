@@ -1,6 +1,6 @@
 # Task 1033 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json)
 
 Review 1 of the working tree on f1959d0b5 (uncommitted) — NEEDS REVISION
 Scope: `src/lib/auth/browser.ts` `signOut`, the Realtime effect of `useNotifications.ts`, and the two AC tests: exactly the Scope.

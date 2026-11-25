@@ -1,6 +1,6 @@
 # Task 1033 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json) · Previous: [Review 1](Task_1033_Review_1.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1033_The_Notifications_Channel_Never_Joins_As_Anon.md) · OWASP record: [Task_1033.json](../security/owasp/reviews/Task_1033.json) · Previous: [Review 1](Task_1033_Review_1.md)
 
 Review 2 of the working tree on a806f9b0b (Revision 1, uncommitted) — APPROVED
 Scope: `src/lib/auth/browser.ts` (one line and a comment line) and `src/lib/auth/__tests__/browser.smoke.test.ts`: exactly R1-1.

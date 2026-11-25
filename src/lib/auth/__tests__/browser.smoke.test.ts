@@ -25,9 +25,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 const mockSignInWithPassword = vi.fn()
 const mockSignOut = vi.fn()
 const mockSignInWithIdToken = vi.fn()
+const mockGetChannels = vi.fn()
+const mockRemoveChannel = vi.fn()
 
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
+    getChannels: (...args: unknown[]) => mockGetChannels(...args),
+    removeChannel: (...args: unknown[]) => mockRemoveChannel(...args),
     auth: {
       signInWithPassword: (...args: unknown[]) => mockSignInWithPassword(...args),
       signOut: (...args: unknown[]) => mockSignOut(...args),
@@ -41,6 +45,10 @@ vi.mock('@/lib/supabase/client', () => ({
 describe('browser auth — signIn / signOut smoke tests (Guard, Task 441)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockGetChannels.mockReset()
+    mockGetChannels.mockReturnValue([])
+    mockRemoveChannel.mockReset()
+    mockSignOut.mockReset()
   })
 
   // ── Login (email/password) ─────────────────────────────────────────────────
@@ -91,5 +99,72 @@ describe('browser auth — signIn / signOut smoke tests (Guard, Task 441)', () =
     await signOut('global')
 
     expect(mockSignOut).toHaveBeenCalledWith({ scope: 'global' })
+  })
+
+  // ── Task 1033 AC1: the Realtime channels are removed before the session ends ─
+  // Supabase pushes the anonymous key to every joined channel on a sign-out, and Realtime then checks the
+  // notifications filter as `anon`, which may not read `notifications.user_id`.
+  // Revision 1: the channels are removed one by one (`removeChannel`), not with `removeAllChannels()`, which always closes the socket and leaves a 10 s timer.
+
+  const channelA = { topic: 'channel-a' }
+  const channelB = { topic: 'channel-b' }
+
+  it('signOut() removes each Realtime channel before auth.signOut (call order recorded)', async () => {
+    const order: string[] = []
+    mockGetChannels.mockReturnValue([channelA, channelB])
+    mockRemoveChannel.mockImplementation(async (channel: { topic: string }) => { order.push(`removeChannel:${channel.topic}`); return 'ok' })
+    mockSignOut.mockImplementation(async () => { order.push('auth.signOut'); return { error: null } })
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut()
+
+    expect(mockRemoveChannel).toHaveBeenCalledTimes(2)
+    expect(mockRemoveChannel).toHaveBeenCalledWith(channelA)
+    expect(mockRemoveChannel).toHaveBeenCalledWith(channelB)
+    expect(order).toEqual(['removeChannel:channel-a', 'removeChannel:channel-b', 'auth.signOut'])
+    expect(mockSignOut).toHaveBeenCalledWith(undefined)
+    expect(result).toEqual({ error: null })
+  })
+
+  it("signOut('local') removes each Realtime channel before auth.signOut (call order recorded)", async () => {
+    const order: string[] = []
+    mockGetChannels.mockReturnValue([channelA, channelB])
+    mockRemoveChannel.mockImplementation(async (channel: { topic: string }) => { order.push(`removeChannel:${channel.topic}`); return 'ok' })
+    mockSignOut.mockImplementation(async () => { order.push('auth.signOut'); return { error: null } })
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut('local')
+
+    expect(mockRemoveChannel).toHaveBeenCalledTimes(2)
+    expect(order).toEqual(['removeChannel:channel-a', 'removeChannel:channel-b', 'auth.signOut'])
+    expect(mockSignOut).toHaveBeenCalledWith({ scope: 'local' })
+    expect(result).toEqual({ error: null })
+  })
+
+  it('with no channel no removeChannel call is made and auth.signOut still runs', async () => {
+    mockGetChannels.mockReturnValue([])
+    mockSignOut.mockResolvedValue({ error: null })
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut()
+
+    expect(mockGetChannels).toHaveBeenCalledOnce()
+    expect(mockRemoveChannel).not.toHaveBeenCalled()
+    expect(mockSignOut).toHaveBeenCalledOnce()
+    expect(result).toEqual({ error: null })
+  })
+
+  it('a rejecting removeChannel still ends the session and returns the auth.signOut result', async () => {
+    const authResult = { error: { message: 'logout request failed' } }
+    mockGetChannels.mockReturnValue([channelA, channelB])
+    mockRemoveChannel.mockRejectedValue(new Error('channel already closed'))
+    mockSignOut.mockResolvedValue(authResult)
+
+    const { signOut } = await import('@/lib/auth/browser')
+    const result = await signOut()
+
+    expect(mockRemoveChannel).toHaveBeenCalled()
+    expect(mockSignOut).toHaveBeenCalledOnce()
+    expect(result).toBe(authResult)
   })
 })

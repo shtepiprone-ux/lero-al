@@ -25,6 +25,7 @@ vi.mock('@/modules/companies/lib/queries', () => ({ getCompanies: () => state.co
 vi.mock('@/modules/auth/context/AuthContext', () => ({ useAuth: () => ({ user: state.user }) }))
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
+    realtime: { setAuth: async () => {} },
     channel: (name: string) => {
       const entry = { name, handler: (_payload: unknown) => {} }
       state.channels.push(entry)
@@ -359,6 +360,7 @@ describe('useNotifications', () => {
     await waitFor(() => expect(result.current.loading).toBe(false))
     expect(result.current.notifications).toEqual([])
     expect(result.current.unreadCount).toBe(0)
+    await waitFor(() => expect(state.channels).toHaveLength(0))
     expect(state.channels).toEqual([])
   })
 
@@ -369,6 +371,7 @@ describe('useNotifications', () => {
     await waitFor(() => expect(result.current.loading).toBe(false))
     expect(result.current.notifications.map(n => n.id)).toEqual(['a', 'b', 'c'])
     expect(result.current.unreadCount).toBe(2)
+    await waitFor(() => expect(state.channels).toHaveLength(1))
     expect(state.channels.map(c => c.name)).toEqual(['user-notifications:user:u1'])
   })
 
@@ -381,6 +384,7 @@ describe('useNotifications', () => {
     state.notificationRows.mockResolvedValueOnce({ data: null, error: { message: 'x' } })
     await act(async () => { await result.current.refetch() })
     expect(result.current.notifications.map(n => n.id)).toEqual(['a'])
+    await waitFor(() => expect(state.channels).toHaveLength(1))
     state.notificationRows.mockResolvedValueOnce({ data: [note('a', false), note('z', false)], error: null })
     await act(async () => { state.channels[0].handler({}); await Promise.resolve() })
     await waitFor(() => expect(result.current.notifications.map(n => n.id)).toEqual(['a', 'z']))

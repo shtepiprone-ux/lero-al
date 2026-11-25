@@ -1,6 +1,6 @@
 # Task 1035 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md) · OWASP record: [Task_1035.json](../security/owasp/reviews/Task_1035.json) · Previous: [Review 1](Task_1035_Review_1.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1035_Synthetic_Listings_Are_Never_Public_Or_Indexed.md) · OWASP record: [Task_1035.json](../security/owasp/reviews/Task_1035.json) · Previous: [Review 1](Task_1035_Review_1.md)
 
 Review 2 of pull request #74 at 9cb38f45e (V14: CI run 45479979660) — NEEDS REVISION
 Scope: no change since Review 1; this review reads the CI result.

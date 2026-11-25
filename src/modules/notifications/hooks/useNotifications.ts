@@ -91,32 +91,42 @@ export function useNotifications() {
     // fetchAll() above already ran.
     let hadNonSubscribed = false
 
+    let channel: ReturnType<typeof supabase.channel> | null = null
+
     // Subscribe to this user's own notifications via Realtime.
     // The filter scopes the subscription; Supabase RLS enforces it server-side too.
-    const channel = supabase
-      .channel(`user-notifications:user:${userId}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` },
-        () => { fetchAll() },
-      )
-      .subscribe((status: string, err?: Error) => {
-        if (cancelled) return
+    // Task 1033: a channel joins with the token the Realtime client holds at that moment, and Realtime checks the filter with the role in it. The client gets the user's
+    // token asynchronously, so it is set here first; with the anonymous key the check fails ("invalid column for filter user_id").
+    const join = async () => {
+      await supabase.realtime.setAuth()
+      if (cancelled) return
 
-        if (status === 'SUBSCRIBED') {
-          if (hadNonSubscribed) {
-            fetchAll()
+      channel = supabase
+        .channel(`user-notifications:user:${userId}`)
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` },
+          () => { fetchAll() },
+        )
+        .subscribe((status: string, err?: Error) => {
+          if (cancelled) return
+
+          if (status === 'SUBSCRIBED') {
+            if (hadNonSubscribed) {
+              fetchAll()
+            }
+            return
           }
-          return
-        }
 
-        console.warn(`[notifications] realtime ${status}`, err)
-        hadNonSubscribed = true
-      })
+          console.warn(`[notifications] realtime ${status}`, err)
+          hadNonSubscribed = true
+        })
+    }
+    void join()
 
     return () => {
       cancelled = true
-      supabase.removeChannel(channel)
+      if (channel) supabase.removeChannel(channel)
     }
   }, [userId, fetchAll, loadFor])
 

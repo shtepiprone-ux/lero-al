@@ -57,12 +57,15 @@ const onSpy = vi.fn((event: string, filterObj: Record<string, string>, handler: 
 })
 const channelSpy = vi.fn((name: string) => { void name; return { on: onSpy } })
 const removeChannelSpy = vi.fn()
+// Task 1033: the Realtime client takes the signed-in user's token through setAuth() before a channel joins.
+const setAuthSpy = vi.fn((): Promise<void> => Promise.resolve())
 
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
     from: fromSpy,
     channel: channelSpy,
     removeChannel: removeChannelSpy,
+    realtime: { setAuth: setAuthSpy },
   }),
 }))
 
@@ -83,6 +86,7 @@ beforeEach(() => {
   onSpy.mockClear()
   subscribeSpy.mockClear()
   removeChannelSpy.mockClear()
+  setAuthSpy.mockClear()
   capturedStatusCallback = undefined
   capturedOnArgs = undefined
   fetchData = []
@@ -161,6 +165,61 @@ describe('useNotifications — subscription is scoped to the signed-in user (Tas
     expect(removeChannelSpy).toHaveBeenCalledWith(handleA)
     expect(channelSpy.mock.calls[1][0]).toEqual(expect.stringContaining('user-b'))
     expect(channelSpy.mock.calls[1][0]).not.toEqual(expect.stringContaining('user-a'))
+  })
+})
+
+describe('useNotifications — the channel joins with the user\'s token (Task 1033 AC2)', () => {
+  // Realtime checks the channel filter with the role in the token the client holds when the channel joins;
+  // with the anonymous key it raises "invalid column for filter user_id".
+
+  it('realtime.setAuth resolves before channel(...).subscribe is called', async () => {
+    mockUser = { id: 'user-token' }
+    const order: string[] = []
+
+    let resolveSetAuth: () => void = () => {}
+    setAuthSpy.mockImplementationOnce(() => new Promise<void>(resolve => {
+      resolveSetAuth = () => { order.push('setAuth resolved'); resolve() }
+    }))
+    channelSpy.mockImplementationOnce((name: string) => { order.push('channel'); void name; return { on: onSpy } })
+    subscribeSpy.mockImplementationOnce((cb?: StatusCallback) => {
+      order.push('subscribe')
+      capturedStatusCallback = cb
+      return { __handle: Symbol('channel-handle') }
+    })
+
+    renderHook(() => useNotifications())
+
+    await waitFor(() => expect(setAuthSpy).toHaveBeenCalledTimes(1))
+    // While setAuth is pending, nothing has joined.
+    await act(async () => { await new Promise(resolve => setTimeout(resolve, 0)) })
+    expect(channelSpy).not.toHaveBeenCalled()
+    expect(subscribeSpy).not.toHaveBeenCalled()
+
+    await act(async () => { resolveSetAuth() })
+
+    await waitFor(() => expect(subscribeSpy).toHaveBeenCalledTimes(1))
+    expect(order).toEqual(['setAuth resolved', 'channel', 'subscribe'])
+  })
+
+  it('an unmount while setAuth is pending creates no channel', async () => {
+    mockUser = { id: 'user-unmount' }
+
+    let resolveSetAuth: () => void = () => {}
+    setAuthSpy.mockImplementationOnce(() => new Promise<void>(resolve => { resolveSetAuth = resolve }))
+
+    const { unmount } = renderHook(() => useNotifications())
+
+    await waitFor(() => expect(setAuthSpy).toHaveBeenCalledTimes(1))
+    unmount()
+
+    await act(async () => {
+      resolveSetAuth()
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    expect(channelSpy).not.toHaveBeenCalled()
+    expect(subscribeSpy).not.toHaveBeenCalled()
+    expect(removeChannelSpy).not.toHaveBeenCalled()
   })
 })
 

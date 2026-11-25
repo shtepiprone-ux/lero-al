@@ -225,7 +225,7 @@
       "quotes": [
         "Never pass untrusted input to a recursive merge or set-by-path helper"
       ],
-      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`"
+      "evidence": "`src/app/api/listings/upload-url/__tests__/route.security.test.ts`; `src/lib/media/__tests__/cdnPurge.security.test.ts` (Review 6: the purge prefix is checked by a plain host comparison and a regular expression literal; no regular expression is built from a value)"
     },
     "Key_Management": {
       "verdict": "met",

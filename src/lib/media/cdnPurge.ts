@@ -24,8 +24,8 @@ const BACKOFF_MS = [1_000, 4_000]
 /** a `Retry-After` longer than this is waited for only this long: the delete runs inside a request, and the caller has the failure to report */
 const MAX_RETRY_AFTER_MS = 30_000
 
-/** `media.lero.al/<owner>/listings/<uuid>/`: no scheme, query, fragment, wildcard or `..` */
-const PREFIX = new RegExp(`^${MEDIA_HOST.replace(/\./g, '\\.')}/[A-Za-z0-9_-]+/listings/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/$`)
+/** `media.lero.al/<owner>/listings/<uuid>/`: no scheme, query, fragment, wildcard or `..`. A prefix is valid only when both halves hold: it starts with `MEDIA_HOST` (a plain string check, no regular expression is built from the host), and the rest, `prefix.slice(MEDIA_HOST.length)`, matches this literal `/<owner>/listings/<uuid>/` */
+const PREFIX = /^\/[A-Za-z0-9_-]+\/listings\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/$/
 
 type Attempt = { ok: true } | { ok: false; retry: boolean; retryAfterMs: number | null; codes: (string | number)[] }
 
@@ -71,7 +71,7 @@ export async function purgePhotoFolders(prefixes: readonly string[]): Promise<Pu
     return { outcome: 'purge_failed', prefixes: list, codes }
   }
 
-  const invalid = unique.filter((prefix) => typeof prefix !== 'string' || !PREFIX.test(prefix))
+  const invalid = unique.filter((prefix) => typeof prefix !== 'string' || !prefix.startsWith(MEDIA_HOST) || !PREFIX.test(prefix.slice(MEDIA_HOST.length)))
   if (invalid.length > 0) return failed(invalid, ['invalid_prefix'])
 
   const zone = process.env.CLOUDFLARE_ZONE_ID

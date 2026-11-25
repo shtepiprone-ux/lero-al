@@ -182,7 +182,7 @@ processing, uploading, failed and partial states.
 ## Mobile adaptation record
 - Scope: visible
 - Surfaces: src/modules/listings/components/ImageUpload.tsx — the photo tiles with their progress and failure state
-- Component families: form-picker-and-choice, media-gallery-and-listing-contact
+- Component families: form-picker-and-choice, media-gallery-and-listing-contact, inline-status-and-utility-control
 - Pattern IDs: form-stack, grid-media-reflow
 - Standards: w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, android-common-layouts, android-adapt-layouts
 - Mantine mechanism: responsive-props
@@ -244,3 +244,5 @@ processing, uploading, failed and partial states.
 - [Review 2 — NEEDS REVISION](../../docs/reviews/Task_1038_Review_2.md)
 - [Review 3 — NEEDS REVISION](../../docs/reviews/Task_1038_Review_3.md)
 - [Review 4 — APPROVED](../../docs/reviews/Task_1038_Review_4.md)
+- [Review 5 — NEEDS REVISION](../../docs/reviews/Task_1038_Review_5.md)
+- [Review 6 — APPROVED](../../docs/reviews/Task_1038_Review_6.md)

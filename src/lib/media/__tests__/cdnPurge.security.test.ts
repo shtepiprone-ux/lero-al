@@ -103,6 +103,8 @@ describe('what is asked of Cloudflare', () => {
     ['a fragment', `${folder(1)}#x`],
     ['a .. segment', `media.lero.al/${OWNER}/listings/../x/`],
     ['another host', `evil.example/${OWNER}/listings/00000001-4444-4444-8444-444444444444/`],
+    ['a host of the same length that differs in one character (mediaxlero.al)', `mediaxlero.al/${OWNER}/listings/00000001-4444-4444-8444-444444444444/`],
+    ['a host that only begins with the media host (media.lero.al.evil.example)', `media.lero.al.evil.example/${OWNER}/listings/00000001-4444-4444-8444-444444444444/`],
     ['the bare host', 'media.lero.al/'],
     ['no trailing slash', folder(1).slice(0, -1)],
     ['a wildcard', 'media.lero.al/*'],

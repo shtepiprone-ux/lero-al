@@ -199,7 +199,7 @@ text, not colour; no new control.
 - Surfaces: src/components/admin/InquiryDetailDialogView.tsx — the replies section's inbound rows and the attachment name lists under the message and the rows
 - Component families: overlay-and-disclosure, record-list-and-data
 - Pattern IDs: overlay-adaptive, linear-flow
-- Standards: apple-hig-sheets, android-adapt-layouts, w3c-reflow, w3c-focus-order
+- Standards: apple-hig-sheets, android-adapt-layouts, w3c-reflow, w3c-focus-order, w3c-hover-focus, android-common-layouts, w3c-meaningful-sequence, apple-hig-layout, android-layout-basics
 - Mantine mechanism: responsive-props
 - Mantine owner: src/design-system/mantine/patterns/MantineModal.tsx, src/design-system/mantine/patterns/MantineDialogSections.tsx
 - Mobile range and switches: below 640px (theme.other.mobileGate / sm) the structured `MantineModal` is its bottom sheet and each file name

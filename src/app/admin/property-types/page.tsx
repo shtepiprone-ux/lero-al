@@ -6,7 +6,13 @@ import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminPropertyTypesManager } from '@/components/admin/AdminPropertyTypesManager'
 import { getAllPropertyTypesAdmin } from '@/modules/admin/actions/propertyTypes'
 
-export const metadata = { title: 'Property Types — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.property_types' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.property_types')
+  return { title: `${t('title')} — Admin` }
+}
 
 export default async function AdminPropertyTypesPage({
   searchParams,

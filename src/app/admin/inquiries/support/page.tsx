@@ -10,7 +10,13 @@ import {
 } from '@/components/admin/AdminInquiriesManager'
 import { loadInquiryReplies } from '@/modules/contacts/lib/inquiryReplies'
 
-export const metadata = { title: 'Support Inquiries — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.inquiries_support' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('inquiries_support_title')} — Admin` }
+}
 
 export default async function AdminInquiriesSupportPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it

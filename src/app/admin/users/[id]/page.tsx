@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation'
 import { requireStaffPage } from '@/lib/auth/staff'
-import { getLocale } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { requireViewer } from '@/lib/auth/requireViewer'
+import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
 import { formatDate, formatDateTime } from '@/lib/formatters'
@@ -13,16 +14,19 @@ import { userLocation } from '@/modules/admin/lib/userLocation'
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
   await requireStaffPage({ page: 'page.users' })
+  await getAdminLocale()   // Task 988: the fallback title in the admin language
+  const t = await getTranslations('admin.user_profile')
   const { id } = await params
   const db = createAdminClient()
   const { data } = await db.from('users').select('name, last_name').eq('id', id).single()
-  const name = [data?.name, data?.last_name].filter(Boolean).join(' ') || 'Профіль'
+  const name = [data?.name, data?.last_name].filter(Boolean).join(' ') || t('header.title_fallback')
   return { title: `${name} — Admin` }
 }
 
 export default async function AdminUserProfilePage({ params }: { params: Promise<{ id: string }> }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
   await requireStaffPage({ page: 'page.users' })
+  await getAdminLocale()   // Task 988: the dates below are formatted in the admin language, not the site default
   const { id } = await params
   const db = createAdminClient()
 

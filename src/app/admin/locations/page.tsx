@@ -6,7 +6,13 @@ import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminLocationsManager, type Location } from '@/components/admin/AdminLocationsManager'
 
-export const metadata = { title: 'Населені пункти — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.locations' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('locations_title')} — Admin` }
+}
 
 export default async function AdminLocationsPage({
   searchParams,

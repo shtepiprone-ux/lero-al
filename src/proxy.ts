@@ -6,6 +6,7 @@ import { carriesScriptReportOnly, newScriptNonce, scriptReportOnlyPolicy } from 
 
 const SUPPORTED = ['sq', 'en', 'uk', 'it'] as const
 type Locale = typeof SUPPORTED[number]
+const isLocale = (value: string | undefined): value is Locale => (SUPPORTED as readonly string[]).includes(value ?? '')
 
 // Request gate of the site. Next 16 renamed the `middleware` convention to `proxy` (Task 952): this file is `src/proxy.ts`, the only gate, and it exports `proxy` and `config`.
 // Default locale (Task 923 R72 (e); until Task 952 an older copy sat in a `src/proxy.ts` that Next 15 never ran, so a staff change of the site's default
@@ -71,7 +72,22 @@ export async function proxy(request: NextRequest) {
   // 2. No locale routing on /admin and /api (no locale prefix, no redirect)
   if (carriesNoLocale(request.nextUrl.pathname)) return withPolicy(sessionResponse)
 
-  // 3. next-intl locale routing with the staff-chosen default locale
+  // 3. Task 988: an address without a language opens in the language the visitor last used, next-intl's NEXT_LOCALE cookie (detection stays off, so next-intl alone
+  //    would send it to the default). Only the four exact codes steer it, the target is this request's own path, and a shared cache never keeps the cookie-dependent answer.
+  const remembered = request.cookies.get('NEXT_LOCALE')?.value
+  const { pathname } = request.nextUrl
+  if (isLocale(remembered) && !isLocale(pathname.split('/')[1])) {
+    const target = request.nextUrl.clone()
+    target.pathname = `/${remembered}${pathname === '/' ? '' : pathname}`
+    const redirect = NextResponse.redirect(target, 307)
+    redirect.headers.set('Cache-Control', 'private, no-store')
+    for (const { name, value, ...options } of sessionResponse.cookies.getAll()) {
+      redirect.cookies.set(name, value, options)
+    }
+    return withPolicy(redirect)
+  }
+
+  // 4. next-intl locale routing with the staff-chosen default locale
   const handleI18n = await getI18nMiddleware()
   const response = handleI18n(request) as NextResponse
 

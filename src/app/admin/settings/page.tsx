@@ -8,7 +8,13 @@ import { getAllSettings } from '@/modules/admin/lib/settings'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { ARCHIVED_NOINDEX_DAYS } from '@/modules/listings/constants'
 
-export const metadata = { title: 'Налаштування — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.settings' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('settings_title')} — Admin` }
+}
 
 const DEFAULTS: AllSettings = {
   site_name:            'Lero.al',

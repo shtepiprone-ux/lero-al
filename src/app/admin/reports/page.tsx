@@ -8,7 +8,13 @@ import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminReportsManager, type ReportRow } from '@/components/admin/AdminReportsManager'
 import { parseReportStatusParam } from '@/components/admin/reportStatusFilter'
 
-export const metadata = { title: 'Reports — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.reports' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('reports_title')} — Admin` }
+}
 
 export default async function AdminReportsPage({
   searchParams,

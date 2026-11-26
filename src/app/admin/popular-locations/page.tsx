@@ -7,7 +7,13 @@ import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminPopularLocationsManager } from '@/components/admin/AdminPopularLocationsManager'
 import type { Location } from '@/types/database'
 
-export const metadata = { title: 'Popular Locations — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.popular_locations' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('popular_locations_title')} — Admin` }
+}
 
 export default async function AdminPopularLocationsPage() {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it

@@ -11,7 +11,13 @@ import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/component
 import { theme } from '@/design-system/mantine/theme'
 import { orContains } from '@/lib/postgrest/escape'
 
-export const metadata = { title: 'Users — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.users' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('users_title')} — Admin` }
+}
 
 // Server Component: tokens are read straight from the theme object (precedent `src/app/admin/reports/page.tsx`);
 // `!` because `createTheme()`'s return type is deep-partial.

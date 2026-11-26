@@ -1622,7 +1622,8 @@
         "new_user_subtitle": "Fill in the fields below to create a profile",
         "verified_badge": "Verified",
         "copy_account_id": "Copy account ID",
-        "account_id_copied": "Account ID copied"
+        "account_id_copied": "Account ID copied",
+        "title_fallback": "Profile"
       },
       "location_request": {
         "title": "Location addition request"

@@ -152,3 +152,24 @@ describe('NotificationItem — Task 880 producers (listing_report_filed / listin
     expect(screen.getByText('stub-stored-body')).toBeInTheDocument()
   })
 })
+
+describe('NotificationItem — the link opens in the reader\'s language (Task 988 AC1)', () => {
+  it('a stored path without a language renders under the provider\'s locale', () => {
+    const { container } = renderNotification('uk', makeNotification({ link: '/listings/flat-1' }))
+    expect(container.querySelector('a')?.getAttribute('href')).toBe('/uk/listings/flat-1')
+  })
+
+  it('a stored Albanian path renders under the provider\'s locale', () => {
+    const { container } = renderNotification('en', makeNotification({ link: '/sq/cabinet?tab=listings' }))
+    expect(container.querySelector('a')?.getAttribute('href')).toBe('/en/cabinet?tab=listings')
+  })
+
+  it('[SEC-988-NOTIF-LINK-DENY] a foreign or script link renders the item without an anchor', () => {
+    for (const link of ['https://evil.com/x', 'javascript:alert(1)', '//evil.com']) {
+      const { container, unmount } = renderNotification('uk', makeNotification({ link }))
+      expect(container.querySelector('a'), link).toBeNull()
+      expect(screen.getByText('Скарга на ваш акаунт')).toBeInTheDocument()
+      unmount()
+    }
+  })
+})

@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { requireStaffPage } from '@/lib/auth/staff'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
@@ -5,7 +6,13 @@ import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminSupportManager, type SupportTicketRow, type SupportTicketEventRow } from '@/components/admin/AdminSupportManager'
 import { parseSupportFilters } from '@/components/admin/supportFilters'
 
-export const metadata = { title: 'Support — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.support' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('support_title')} — Admin` }
+}
 
 export default async function AdminSupportPage({
   searchParams,

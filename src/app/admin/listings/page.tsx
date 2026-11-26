@@ -9,7 +9,13 @@ import { applyPublicEligibleButHidden } from '@/modules/listings/lib/visibility'
 import { applyAdminListingsVisibility } from './visibilityFilter'
 import { ilikeContains, orContains } from '@/lib/postgrest/escape'
 
-export const metadata = { title: 'Listings — Admin' }
+// Task 988: the tab title is the page heading in the admin language; the viewer is checked first, as in the page (Task 923 R68 (a))
+export async function generateMetadata() {
+  await requireStaffPage({ page: 'page.listings' })
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+  return { title: `${t('listings_title')} — Admin` }
+}
 
 export default async function AdminListingsPage({
   searchParams,

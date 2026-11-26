@@ -60,9 +60,10 @@ vi.mock('@/modules/notifications/lib/emails/passwordChanged', () => ({ sendPassw
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async () => ({ ok: true }) }))
 
 import {
-  changeCabinetPassword, consumeEmailChangeToken, deleteAllSavedSearches, deleteSavedSearch, initiateEmailChange as realInitiateEmailChange, saveSavedSearch, updateLastViewed,
+  changeCabinetPassword, consumeEmailChangeToken, deleteAllSavedSearches, deleteSavedSearch, initiateEmailChange as realInitiateEmailChange, updateLastViewed,
   updateSavedSearchFrequency, updateSavedSearchNotify,
 } from '../index'
+import { saveSavedSearch } from '@/modules/listings/actions/savedSearchActions'
 
 // Since Task 923 R70 (a) the e-mail change needs the current password; the account of these tests has one and sends it.
 const initiateEmailChange = (data: Parameters<typeof realInitiateEmailChange>[0]) => realInitiateEmailChange({ currentPassword: 'Right-Passw0rd!', ...data })

@@ -100,7 +100,7 @@ export function Header() {
       mobileOpen={mobileOpen}
       onOpenMobile={() => setMobileOpen(true)}
       onCloseMobile={() => setMobileOpen(false)}
-      notificationSlot={headerUser ? <NotificationBell /> : undefined}
+      notificationSlot={headerUser ? <NotificationBell userId={user?.id ?? null} /> : undefined}
       authSheetSlot={
         <AuthSheet
           open={authOpen}

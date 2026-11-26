@@ -6,6 +6,13 @@
  */
 import type { DateString } from '@/lib/dashboard/period'
 
+/**
+ * The id of a signed-in user whose `users.role` is `agent`. It can only be produced by
+ * `getAgentStatisticsAccess()` — the single cast lives there — so a data function that asks for
+ * this type can never be handed an id that came from a URL or a client.
+ */
+export type AgentOwnerId = string & { readonly __brand: 'AgentOwnerId' }
+
 type ActivityRefreshCadence = 'hourly' | 'daily'
 
 /**

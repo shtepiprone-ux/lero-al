@@ -94,3 +94,49 @@ describe('ESLint ignores the third-party copies under public/vendor and nothing 
     expect(await eslint.isPathIgnored('src/modules/listings/lib/photoPipeline.ts')).toBe(false)
   })
 })
+
+/**
+ * Task 1053 (owner decisions O1053-1, O1053-2, 2026-11-26): the modules of src/modules depend on each other in one direction. Each module sits on one layer of
+ * `MODULE_LAYERS` (eslint.config.mjs) and its production files may import only modules of a lower layer; `import/no-restricted-paths` refuses the rest.
+ * Asked of ESLint itself (`calculateConfigForFile`, `lintText`), not read from the text of the configuration.
+ */
+const MODULE_FOLDERS = readdirSync('src/modules').filter((name) => name !== '__tests__' && statSync(join('src/modules', name)).isDirectory())
+
+async function restrictedPathErrors(text: string, filePath: string): Promise<string[]> {
+  const [result] = await new ESLint().lintText(text, { filePath })
+  return result.messages.filter((m) => m.ruleId === 'import/no-restricted-paths').map((m) => m.message)
+}
+
+describe('the modules of src/modules depend on each other in one direction (Task 1053)', () => {
+  it('[AC1] import/no-restricted-paths is an error for a production file of each module, and no-restricted-imports still is', async () => {
+    const eslint = new ESLint()
+    expect(MODULE_FOLDERS.length).toBeGreaterThan(0)
+    for (const folder of MODULE_FOLDERS) {
+      for (const file of [`src/modules/${folder}/X.ts`, `src/modules/${folder}/components/X.tsx`]) {
+        const config = await eslint.calculateConfigForFile(file) as { rules: Record<string, unknown> }
+        expect(isError(config.rules['import/no-restricted-paths']), `${file}: import/no-restricted-paths`).toBe(true)
+        expect(isError(config.rules['no-restricted-imports']), `${file}: no-restricted-imports`).toBe(true)
+      }
+    }
+  })
+
+  it('[AC1] the three reverse imports of the Cause are refused; cabinet importing listings is not', async () => {
+    expect(await restrictedPathErrors("import { saveSavedSearch } from '@/modules/cabinet/actions'\nvoid saveSavedSearch\n", 'src/modules/listings/components/X.tsx')).not.toEqual([])
+    expect(await restrictedPathErrors("import type { AgentOwnerId } from '@/modules/cabinet/statistics/types'\nexport type T = AgentOwnerId\n", 'src/modules/analytics/activity/X.ts')).not.toEqual([])
+    expect(await restrictedPathErrors("import { useAuth } from '@/modules/auth/context/AuthContext'\nvoid useAuth\n", 'src/modules/notifications/hooks/X.ts')).not.toEqual([])
+    expect(await restrictedPathErrors("import { ListingCard } from '@/modules/listings/components/ListingCard'\nvoid ListingCard\n", 'src/modules/cabinet/components/X.tsx')).toEqual([])
+  })
+
+  it('[AC1] next/image is still refused in a module file by no-restricted-imports', async () => {
+    const [result] = await new ESLint().lintText("import Image from 'next/image'\nvoid Image\n", { filePath: 'src/modules/cabinet/components/X.tsx' })
+    expect(result.messages.some((m) => m.ruleId === 'no-restricted-imports')).toBe(true)
+  })
+
+  it('[AC2] MODULE_LAYERS names every folder of src/modules except __tests__ exactly once', async () => {
+    const { MODULE_LAYERS } = await import('../../eslint.config.mjs') as { MODULE_LAYERS?: readonly (readonly string[])[] }
+    expect(Array.isArray(MODULE_LAYERS)).toBe(true)
+    const named = (MODULE_LAYERS ?? []).flat()
+    expect(named.length).toBe(new Set(named).size)
+    expect([...named].sort()).toEqual([...MODULE_FOLDERS].sort())
+  })
+})

@@ -9,7 +9,7 @@ import { toast } from '@/lib/toast'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
 import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
-import { saveSavedSearch } from '@/modules/cabinet/actions'
+import { saveSavedSearch } from '@/modules/listings/actions/savedSearchActions'
 import { canonicalizeFilters } from '@/modules/listings/lib/savedSearchCanonicalize'
 
 export function SaveSearchButton() {

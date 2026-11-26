@@ -4,16 +4,11 @@
  */
 import type { BlockResult } from '@/lib/dashboard/blockResult'
 import type { Period } from '@/lib/dashboard/period'
-import type { ActivityByListingRow } from '@/modules/analytics/activity/types'
+import type { ActivityByListingRow, AgentOwnerId } from '@/modules/analytics/activity/types'
 import type { HiddenReason } from '@/modules/listings/lib/visibility'
 import type { ListingStatus, ListingType } from '@/types/database'
 
-/**
- * The id of a signed-in user whose `users.role` is `agent`. It can only be produced by
- * `getAgentStatisticsAccess()` — the single cast lives there — so a data function that asks for
- * this type can never be handed an id that came from a URL or a client.
- */
-export type AgentOwnerId = string & { readonly __brand: 'AgentOwnerId' }
+export type { AgentOwnerId } from '@/modules/analytics/activity/types'
 
 export type AgentStatisticsAccess =
   | { kind: 'ok'; ownerId: AgentOwnerId }

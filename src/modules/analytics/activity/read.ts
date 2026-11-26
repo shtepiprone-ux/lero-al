@@ -2,10 +2,10 @@ import 'server-only'
 import { blockFail, blockOk, type BlockResult } from '@/lib/dashboard/blockResult'
 import type { Period } from '@/lib/dashboard/period'
 import { createAdminClient } from '@/lib/supabase/admin'
-import type { AgentOwnerId } from '@/modules/cabinet/statistics/types'
 import {
   STALE_AFTER_MS,
   type ActivityByListingRow,
+  type AgentOwnerId,
   type ActivityFreshness,
   type ActivityPoint,
 } from './types'

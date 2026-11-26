@@ -1,6 +1,6 @@
 # Task 1047 — Staff open the attachments of a received mail from the inquiry dialog
 
-Sprint 94. Priority P1. After Task 1046 (it builds on its mail store in `r2.ts`). Owner decisions 2026-11-25 ([plan](Sprint_94_Task_1044_Plan_And_Owner_Settings.md),
+Sprint 94. Priority P1. After Task 1046 (it builds on its mail store in `r2.ts`). Owner decisions 2026-11-25 ([plan](../Sprints/Sprint_94_Task_1044_Plan_And_Owner_Settings.md),
 "Owner decisions"), translated: "what is the point of testing attachments if they are not kept and nobody in the administration can even open
 them"; O1046-1 "a new private R2 bucket"; O1047-1 "preview of photos and PDF", every other file is downloaded. 1048 and 1049 delete these files
 with their conversation, so every file of one conversation sits under one prefix. Implementer: Sonnet. Reviewer: Opus. Human owner of the

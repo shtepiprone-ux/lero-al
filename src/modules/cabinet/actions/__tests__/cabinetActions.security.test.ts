@@ -52,8 +52,9 @@ vi.mock('@/lib/account/deleteAccount', () => ({ deleteAccount: async (userId: st
 
 import {
   changeCabinetPassword, consumeEmailChangeToken, deleteAllSavedSearches, deleteOwnAccount as realDeleteOwnAccount, deleteSavedSearch, initiateEmailChange as realInitiateEmailChange,
-  resendEmailVerification, saveSavedSearch, updateCabinetProfile, updateLastViewed, updateSavedSearchFrequency, updateSavedSearchNotify,
+  resendEmailVerification, updateCabinetProfile, updateLastViewed, updateSavedSearchFrequency, updateSavedSearchNotify,
 } from '../index'
+import { saveSavedSearch } from '@/modules/listings/actions/savedSearchActions'
 
 // Since Task 923 R70 (a) the e-mail change and the deletion need the current password; the account of these tests has one and sends it (the re-authentication itself is
 // proved in reauth.security.test.ts).

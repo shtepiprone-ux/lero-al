@@ -2,16 +2,13 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useAuth } from '@/modules/auth/context/AuthContext'
 import { useResetOnChange } from '@/hooks/useStateFromProp'
 import type { Notification } from '@/types/database'
 
 const PAGE_SIZE = 30
 
-export function useNotifications() {
-  const { user } = useAuth()
-  const userId = user?.id ?? null
-
+// The caller passes the live session's user id (Task 1053: notifications may not import auth, MODULE_LAYERS in eslint.config.mjs); `null` is signed out.
+export function useNotifications(userId: string | null) {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   // Nothing to load for a visitor with no session, so there is nothing to wait for either.

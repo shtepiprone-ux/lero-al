@@ -1,6 +1,6 @@
 # Task 1047 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md) · OWASP record: [Task_1047.json](../security/owasp/reviews/Task_1047.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md) · OWASP record: [Task_1047.json](../security/owasp/reviews/Task_1047.json)
 
 Review 1 of the working tree on d2164bf4e — NEEDS REVISION
 Scope: diff-based; `git diff --stat d2164bf4e` → 14 files (559+, 36−) and two new files: `src/app/api/admin/inquiry-attachment/route.ts` (new Route Handler, audience administrator and moderator with the mailbox's page key) with its test, `src/modules/contacts/lib/inboundEmail.ts` (the Worker-fed mail path, now writes to R2), `src/lib/media/r2.ts` (server-only R2 client), `src/components/admin/InquiryDetailDialogView.tsx`, `src/types/database.ts`, the four message files, the fixture, the Story, the census row and three changed test files.

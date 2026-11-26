@@ -192,6 +192,13 @@ Starts from the owner's local commit "Task 988: the reviewed tree of Review 3, b
 Starts from the owner's local commit "Task 988: the reviewed tree of Review 4, before Revision 4". One item per finding of [Review 4](../../docs/reviews/Task_988_Review_4.md); the exact edits are its "Revision 4 (executor)" item. Checklist A4, for a hole in what the move of Scope 5 changes:
 - R4-1 (F7): the UI section's "the admin shell, sidebar and header must render exactly as on `main`" gains the Stories: `AdminSidebar` and `AdminHeader` read the route after the language slug (`adminRouteOf`), so every Story `pathname` of an admin address carries the Storybook locale's slug (`'/admin…'` → `'/en/admin…'`, 22 rows in 15 Story files); `src/lib/auth/__tests__/adminPages.test.ts` gains a case that reads every Story file and fails for an admin `pathname` that `adminRouteOf` does not resolve.
 
+## Revision 5 (Review 6, 2026-11-26)
+
+Starts from the pushed commit 7ba9ef38d (pull request #83). One item per finding of [Review 6](../../docs/reviews/Task_988_Review_6.md), which reads the red jobs of CI run 45877879937 (checklist V14). Its "Revision 5 (executor)" item holds the exact edits. Checklist A4 applies, for what the move of Scope 5 reaches:
+- R5-1 (F8): the admin under `/sq/…` makes the permissions page format its dates in a browser with no Albanian date data, and React fails hydration (#418). The page formats the dates on the server with `getFormatter()` (`next-intl/server`) and passes them to `AdminPermissionsView`, which renders them verbatim and no longer calls `useFormatter`. The look stays: each locale shows the text Node renders today. A test renders the view in `sq` with `Intl.DateTimeFormat` throwing.
+- R5-2 (F9): `src/components/layout/Header.tsx` keeps 7ba9ef38d's `window.open(adminHref(locale, '/admin'), '_blank', 'noopener,noreferrer')`. A variable there fails `client-sinks.mjs` K7, and a hand-built address fails `adminSlug.test.tsx` [AC6]. Instead, the checker in `src/__tests__/security/clientSinks.test.ts:36` reads one level of nested parentheses, and a planted case proves it still flags a nested call without `noopener`. The permissions page's test mock of `next-intl/server` gains `getFormatter` (R5-1).
+- R5-3 (F10): the 20 doc lines that name the files Scope 5 moved point to the current files. The 2026-11-06 audit record keeps its paths and adds "(moved by Task 988 to …)".
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_988_Review_1.md)
@@ -199,3 +206,5 @@ Starts from the owner's local commit "Task 988: the reviewed tree of Review 4, b
 - [Review 3 — NEEDS REVISION](../../docs/reviews/Task_988_Review_3.md)
 - [Review 4 — NEEDS REVISION](../../docs/reviews/Task_988_Review_4.md)
 - [Review 5 — APPROVED](../../docs/reviews/Task_988_Review_5.md)
+- [Review 6 — NEEDS REVISION](../../docs/reviews/Task_988_Review_6.md)
+- [Review 7 — APPROVED](../../docs/reviews/Task_988_Review_7.md)

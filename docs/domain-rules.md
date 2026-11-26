@@ -118,7 +118,7 @@ Never hardcode the threshold (e.g. `7`, `sevenDaysAgo`) inline in components or 
 
 **Consumers:**
 - `src/modules/listings/components/ListingCard.tsx` — `getBadges()` function
-- `src/app/[locale]/listings/[slug]/page.tsx` — `isNew` derived field
+- `src/app/[locale]/(site)/listings/[slug]/page.tsx` — `isNew` derived field
 
 ## Listing Status Helpers — Canonical API (Epic I.2 / Task 149)
 

@@ -66,6 +66,24 @@ const PAGE_EVENT: PermissionEvent = {
   created_at: '2026-06-17T08:00:00Z',
 }
 
+/** Task 988 R5-1: the page formats the dates on the server; these are Node's `en` texts at `timeZone: 'UTC'` for the fixture dates */
+const DATE_TEXT: Record<string, string> = {
+  '2026-06-18T10:00:00Z': 'Jun 18, 2026',
+  '2026-06-17T08:00:00Z': 'Jun 17, 2026',
+}
+
+const updatedDatesOf = (permissions: Record<AccessKey, PermissionData>): Partial<Record<AccessKey, string>> =>
+  Object.fromEntries(
+    (Object.entries(permissions) as [AccessKey, PermissionData][])
+      .filter(([, p]) => p.updated_at)
+      .map(([key, p]) => [key, DATE_TEXT[p.updated_at as string]]),
+  )
+
+const EVENT_DATES: Record<string, string> = {
+  'ev-1': 'Jun 18, 2026, 10:00 AM',
+  'ev-2': 'Jun 17, 2026, 8:00 AM',
+}
+
 const meta: Meta<typeof AdminPermissionsView> = {
   title: 'Patterns/Mantine/AdminPermissionsView',
   component: AdminPermissionsView,
@@ -84,6 +102,8 @@ const meta: Meta<typeof AdminPermissionsView> = {
   args: {
     permissions: FIXTURE_PERMISSIONS,
     events: FIXTURE_EVENTS,
+    updatedDates: updatedDatesOf(FIXTURE_PERMISSIONS),
+    eventDates: EVENT_DATES,
     allowedCount: 2,
     allowedPagesCount: 0,
     savingKey: null,
@@ -102,13 +122,13 @@ const render: Story['render'] = (args) => (
 export const Default: Story = { render }
 
 export const AllAllowed: Story = {
-  args: { permissions: ALL_ALLOWED, allowedCount: PERMISSION_KEYS.length, allowedPagesCount: ADMIN_PAGE_KEYS.length },
+  args: { permissions: ALL_ALLOWED, updatedDates: updatedDatesOf(ALL_ALLOWED), allowedCount: PERMISSION_KEYS.length, allowedPagesCount: ADMIN_PAGE_KEYS.length },
   render,
 }
 
 /** The "Admin panel pages" section: some pages on, some off, one page saving. */
 export const WithPagesSection: Story = {
-  args: { permissions: PAGES_PERMISSIONS, events: [...FIXTURE_EVENTS, PAGE_EVENT], allowedCount: 2, allowedPagesCount: 4, savingKey: 'page.users' },
+  args: { permissions: PAGES_PERMISSIONS, updatedDates: updatedDatesOf(PAGES_PERMISSIONS), events: [...FIXTURE_EVENTS, PAGE_EVENT], allowedCount: 2, allowedPagesCount: 4, savingKey: 'page.users' },
   render,
 }
 

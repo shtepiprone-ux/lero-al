@@ -557,7 +557,7 @@ UI governance docs.
 | `src/app/admin/layout.tsx` | Admin layout | RSC, auth guard | None | n/a | KEEP TEMPORARILY AS LEGACY | No migration needed (auth layer) | n/a | — |
 | `src/app/[locale]/page.tsx` | Home page | Tailwind layout | P0 risk: listing grid | No story | MIGRATE TO MANTINE | Mantine layout (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | — |
 | `src/app/[locale]/listings/page.tsx` | Listings search | Tailwind layout + filters | P0 risk: filter controls | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | Complex: URL state + filters |
-| `src/app/[locale]/listings/[slug]/page.tsx` | Listing detail | Tailwind 2-col layout | P0 risk: detail layout collapse | No story | MIGRATE TO MANTINE | MantineListingDetailPattern | Phase 4 | — |
+| `src/app/[locale]/(site)/listings/[slug]/page.tsx` | Listing detail | Tailwind 2-col layout | P0 risk: detail layout collapse | No story | MIGRATE TO MANTINE | MantineListingDetailPattern | Phase 4 | — |
 | `src/app/[locale]/(auth)/**/*.tsx` | Auth pages | Tailwind centered forms | P0 risk: form width | No story | MIGRATE TO MANTINE | MantineAuthFormPattern | Phase 3 | — |
 | `src/app/[locale]/cabinet/**/*.tsx` | Cabinet/profile pages | Tailwind forms | P0 risk: form layout | No story | MIGRATE TO MANTINE | MantineFormSectionStack + MantineTwoColumnForm | Phase 4 | — |
 | `src/app/admin/**/*.tsx` (≈15 files) | Admin pages | Tailwind + shadcn | P0 risk varies | Varies | MIGRATE TO MANTINE | MantineAdminSurfacePattern variants | Phase 3–4 | Per-page owner review |
@@ -670,7 +670,7 @@ per migration phase will be established in each phase's kickoff document.*
 | Form shell | Various form wrappers | MantineFormSectionStack + MantineTwoColumnForm | Replace | All forms | Phase 3 | Medium |
 | Action footer | Inline form submit rows | MantineResponsiveActionFooter | Replace | All forms with actions | Phase 3 | Medium |
 | Listing card | `src/modules/listings/components/**` | MantineListingCardPattern | Replace | Public listings | Phase 4 | High — main product surface |
-| Listing detail | `src/app/[locale]/listings/[slug]/page.tsx` | MantineListingDetailPattern | Replace | Public listing detail | Phase 4 | High |
+| Listing detail | `src/app/[locale]/(site)/listings/[slug]/page.tsx` | MantineListingDetailPattern | Replace | Public listing detail | Phase 4 | High |
 | Listing gallery | Listing detail image section | BLOCKED — owner architecture decision | Cloudinary integration decision needed | Listing detail | Phase 4 | Blocked |
 | Notification center | `src/modules/notifications/**` | MantineNotificationPattern + Mantine Drawer | Replace | All pages | Phase 3 | Medium |
 | Auth forms | `src/app/[locale]/(auth)/**` + `src/modules/auth/**` | MantineAuthFormPattern | Replace | Auth pages | Phase 3 | High — auth flow |

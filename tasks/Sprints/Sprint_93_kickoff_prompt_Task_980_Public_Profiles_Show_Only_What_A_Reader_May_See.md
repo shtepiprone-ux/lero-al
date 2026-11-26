@@ -17,6 +17,7 @@ warning ends), and `db-catalog-audit.mjs` reports any view that does unless it i
 
 ## Cause
 
+Read at `aacf6ebce`
 - The view runs with its owner's rights and admits every active session:
   `select c.reloptions, pg_get_userbyid(c.relowner) as owner, c.relacl from pg_class c where c.oid = 'public.public_user_profiles'::regclass` → `{security_invoker=false}`, `postgres`, `{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres}` (2026-11-16, read-only; Review 11 of Task 956, F31);
   its filter (`pg_get_viewdef`, same day) admits a caller whose `CURRENT_USER` is neither `authenticated` nor `anon`, or

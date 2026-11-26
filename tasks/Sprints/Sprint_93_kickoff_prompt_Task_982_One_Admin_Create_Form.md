@@ -12,6 +12,8 @@ translates every code: Task 956 AC14) and nothing names the removed one.
 
 ## Cause
 
+Read at `aacf6ebce`
+
 `src/app/admin/users/new/page.tsx:29` renders `AdminUserProfile`; `grep -rn "AdminUserCreate" src` → 7 lines: the file, the two comments of Scope
 and its own test (`src/components/admin/__tests__/AdminUserCreate.watch.test.tsx:20`), so the old form was left behind
 when the page moved, and it still calls `createAdminUser` and puts its code on screen

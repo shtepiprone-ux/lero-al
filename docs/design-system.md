@@ -1457,7 +1457,7 @@ a condition this gate evaluates on every run, not one an author writes once and 
 (`docs/backlog.md` corollary 724 ②).
 
 **The runtime TSX input list is closed and fixed (Task 767, hardened Task 769).** The two files
-`src/app/[locale]/page.tsx` and `src/components/shared/HeroSearchView.tsx` are a hardcoded,
+`src/app/[locale]/(site)/page.tsx` and `src/components/shared/HeroSearchView.tsx` are a hardcoded,
 closed list — never a route-graph inventory and never widened by a glob. A clean run makes no claim
 about any other TSX file in the repository; only Task 667's route-level inventory can certify a
 route. A configured entry that is renamed or deleted is **fatal** in every mode (default, `--report`,
@@ -1503,7 +1503,7 @@ is a fixed-manifest ownership check — not a route-graph parser, not a director
 hardcoded repository-relative paths**, resolved before any scanning; a missing one is fatal in every
 mode, naming every missing path:
 
-- Eleven migration inputs: `src/app/[locale]/layout.tsx`, `src/app/[locale]/page.tsx`,
+- Eleven migration inputs: `src/app/[locale]/layout.tsx`, `src/app/[locale]/(site)/page.tsx`,
   `src/components/layout/{FooterView,HeaderView}.module.css`,
   `src/components/shared/HeroSearchView.module.css`,
   `src/design-system/mantine/patterns/{MantineCopyIdButton.module.css,MantineHomeSection.tsx,MantineListingCardPattern.module.css}`,

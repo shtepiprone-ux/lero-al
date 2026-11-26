@@ -20,7 +20,7 @@ vi.mock('next/cache', () => ({ revalidatePath: (p: string) => { paths.push(p) } 
 // the page of the switches (SEC-X-SRV-PERMS-ADMIN-ONLY): the real page and the real staff-page guard; Next's redirect and not-found, the cookie jar, i18n and the three view components are doubles
 vi.mock('next/navigation', () => ({ notFound: () => { throw new Error('NEXT_NOT_FOUND') }, redirect: (to: string) => { throw new Error(`NEXT_REDIRECT ${to}`) } }))
 vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined }) }))
-vi.mock('next-intl/server', () => ({ getTranslations: async () => (key: string) => key, getLocale: async () => 'en' }))   // Task 988: the sign-in redirect takes the request locale
+vi.mock('next-intl/server', () => ({ getTranslations: async () => (key: string) => key, getLocale: async () => 'en', getFormatter: async () => ({ dateTime: (d: Date) => d.toISOString() }) }))   // Task 988: the sign-in redirect takes the request locale
 vi.mock('@/lib/admin/getAdminLocale', () => ({ getAdminLocale: async () => 'en' }))
 vi.mock('@/components/admin/AdminPageHeader', () => ({ AdminPageHeader: () => null }))
 vi.mock('@/components/admin/AdminPageFrame', () => ({ AdminPageFrame: () => null }))

@@ -1,7 +1,8 @@
-import { getTranslations } from 'next-intl/server'
+import { getFormatter, getTranslations } from 'next-intl/server'
 import { requireStaffPage } from '@/lib/auth/staff'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
-import { getModeratorPermissions, getPermissionEvents } from '@/modules/admin/actions/permissions'
+import { getModeratorPermissions, getPermissionEvents, type PermissionData } from '@/modules/admin/actions/permissions'
+import type { AccessKey } from '@/lib/auth/adminPages'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminPermissionsManager } from '@/components/admin/AdminPermissionsManager'
@@ -24,10 +25,19 @@ export default async function AdminPermissionsPage() {
     getModeratorPermissions(),
     getPermissionEvents(),
   ])
+  // Task 988 R5-1: the dates are formatted here, on the server: a browser without the locale's date data (Chrome has no `sq`) would render other text and fail hydration (React #418)
+  const format = await getFormatter()
+  const updatedDates: Partial<Record<AccessKey, string>> = {}
+  for (const [key, { updated_at }] of Object.entries(permissions) as [AccessKey, PermissionData][]) {
+    if (updated_at) updatedDates[key] = format.dateTime(new Date(updated_at), { dateStyle: 'medium' })
+  }
+  const eventDates: Record<string, string> = Object.fromEntries(
+    (events ?? []).map(ev => [ev.id, format.dateTime(new Date(ev.created_at), { dateStyle: 'medium', timeStyle: 'short' })]),
+  )
   return (
     <AdminPageFrame>
       <AdminPageHeader title={t('title')} subtitle={t('description')} />
-      <AdminPermissionsManager permissions={permissions} events={events} />
+      <AdminPermissionsManager permissions={permissions} events={events} updatedDates={updatedDates} eventDates={eventDates} />
     </AdminPageFrame>
   )
 }

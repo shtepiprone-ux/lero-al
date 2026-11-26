@@ -227,14 +227,14 @@
    "quotes": [
     "Diff-Based Reviews focus on code changes only."
    ],
-   "evidence": "`docs/reviews/Task_988_Review_5.md` reviews the Revision 4 diff only (`git diff 0179d9298`), after Review 4 on `git diff 4250862d8`, Review 3 on `git diff 913e9c65d` and Review 2 on `git diff 9dfb730b8`"
+   "evidence": "`docs/reviews/Task_988_Review_7.md` reviews the Revision 5 diff only (`git diff 7ba9ef38d`), after Review 6 on the red CI of pull request #83 (run 45877879937), Review 5 on `git diff 0179d9298`, Review 4 on `git diff 4250862d8`, Review 3 on `git diff 913e9c65d` and Review 2 on `git diff 9dfb730b8`"
   },
   "Secure_Coding_with_AI": {
    "verdict": "met",
    "quotes": [
     "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
    ],
-   "evidence": "no dependency added (`package.json` unchanged); every claim of the reports rerun in Reviews 2 to 5 (V3), and every break in V8"
+   "evidence": "no dependency added (`package.json` unchanged); every claim of the reports rerun in Reviews 2 to 5 and 7 (V3), and every break in V8; the BLOCKED items of the Revision 5 report reproduced before the revision was amended (Review 6)"
   },
   "Secure_Product_Design": {
    "verdict": "met",

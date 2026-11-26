@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment } from 'react'
-import { useTranslations, useFormatter } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { Alert, Box, Divider, Group, Stack, Switch, Text, useMantineTheme } from '@mantine/core'
 import { ShieldCheck, ShieldX, AlertTriangle } from 'lucide-react'
 import { MantineFormSection } from '@/design-system/mantine/patterns'
@@ -14,6 +14,10 @@ export interface AdminPermissionsViewProps {
   permissions: Record<AccessKey, PermissionData>
   /** `null` = the audit read failed (shows the "unavailable" alert). */
   events: PermissionEvent[] | null
+  /** Task 988 R5-1: each key's `updated_at`, formatted on the server (only the keys that have one); rendered as it is. */
+  updatedDates: Partial<Record<AccessKey, string>>
+  /** Task 988 R5-1: each event's `created_at`, formatted on the server, by event id; rendered as it is. */
+  eventDates: Record<string, string>
   /** The action keys that are on (counted over `PERMISSION_KEYS`). */
   allowedCount: number
   /** The admin pages that are on (counted over `ADMIN_PAGE_KEYS`), shown apart from the actions (Task 1007). */
@@ -31,6 +35,8 @@ export interface AdminPermissionsViewProps {
 export function AdminPermissionsView({
   permissions,
   events,
+  updatedDates,
+  eventDates,
   allowedCount,
   allowedPagesCount,
   savingKey,
@@ -38,7 +44,6 @@ export function AdminPermissionsView({
 }: AdminPermissionsViewProps) {
   const t = useTranslations('admin.permissions')
   const tSidebar = useTranslations('admin.sidebar')
-  const format = useFormatter()
   const { iconSize } = useMantineTheme().other
 
   // the audit log names an action key by its permission label and a page key by its sidebar label (Task 1007)
@@ -100,7 +105,7 @@ export function AdminPermissionsView({
                     {updated_at && (
                       <Text size="xs" c="dimmed">
                         {t('column_last_updated')}:{' '}
-                        {format.dateTime(new Date(updated_at), { dateStyle: 'medium' })}
+                        {updatedDates[key]}
                         {updated_by_name && (
                           <>
                             {' '}
@@ -167,7 +172,7 @@ export function AdminPermissionsView({
                     {updated_at && (
                       <Text size="xs" c="dimmed">
                         {t('column_last_updated')}:{' '}
-                        {format.dateTime(new Date(updated_at), { dateStyle: 'medium' })}
+                        {updatedDates[page.key]}
                         {updated_by_name && (
                           <>
                             {' '}
@@ -235,7 +240,7 @@ export function AdminPermissionsView({
                       </Text>
                       <Text size="xs" c="dimmed">
                         {t('audit_by')} {ev.actor_name ?? t('audit_unknown_actor')} ·{' '}
-                        {format.dateTime(new Date(ev.created_at), { dateStyle: 'medium', timeStyle: 'short' })}
+                        {eventDates[ev.id]}
                       </Text>
                     </Stack>
                   </Group>

@@ -15,9 +15,12 @@ import { ADMIN_PAGE_KEYS, type AccessKey } from '@/lib/auth/adminPages'
 interface Props {
   permissions: Record<AccessKey, PermissionData>
   events: PermissionEvent[] | null
+  /** Task 988 R5-1: the dates formatted on the server, passed to the view as they are */
+  updatedDates: Partial<Record<AccessKey, string>>
+  eventDates: Record<string, string>
 }
 
-export function AdminPermissionsManager({ permissions: initial, events }: Props) {
+export function AdminPermissionsManager({ permissions: initial, events, updatedDates, eventDates }: Props) {
   const t = useTranslations('admin.permissions')
   const [permissions, setPermissions] = useState(initial)
   const [pending, startTransition] = useTransition()
@@ -52,6 +55,8 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
     <AdminPermissionsView
       permissions={permissions}
       events={events}
+      updatedDates={updatedDates}
+      eventDates={eventDates}
       allowedCount={allowedCount}
       allowedPagesCount={allowedPagesCount}
       savingKey={saving && pending ? saving : null}

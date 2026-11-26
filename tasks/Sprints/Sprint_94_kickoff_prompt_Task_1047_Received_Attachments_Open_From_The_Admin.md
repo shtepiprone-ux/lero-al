@@ -14,13 +14,15 @@ inquiry open it from the dialog: a photo (JPEG, PNG, WebP) or a PDF opens in a n
 
 ## Cause
 
-Read at `1bf37a166`
+Read at `56f3f8318` (Task 1046 merged; of the files below only `r2.ts` changed since `1bf37a166`)
 - `src/modules/contacts/lib/inboundEmail.ts:127-133` (`attachmentList`) keeps `filename`, `size`, `content_type` and drops `a.content`; `:17`
   "attachments keep their name, size and declared type, never their content (O1044-4)"; the rows are written at `:223-230` and `:241-253`.
 - `src/types/database.ts:81-85`: `InquiryAttachment` has no field for a stored object.
 - `src/components/admin/InquiryDetailDialogView.tsx:47-57` (`AttachmentNames`) prints plain text lines; `:132`, `:155` the title
   `attachments_not_kept` (`messages/en.json:1182` "Attachments (not kept)").
-- `src/lib/media/r2.ts:33-37` one store (the listing bucket); `:62-63` the only presign is a PUT for WebP or JPEG; no GET is ever signed.
+- `src/lib/media/r2.ts:47-57` two stores since Task 1046, `'listing'` and `'mail'`; the mail store only reads (`getMailObject` `:145`, a
+  GET the server signs and makes itself) and deletes (`deleteMailObjects` `:137`); `:82-83` the only presign is a PUT for WebP or JPEG on
+  the listing store; no mail object is ever put by the app or presigned for a browser.
 - `ls src/app/api/admin` → "No such file or directory": no route hands staff a file.
 - Cloudflare (read 2026-11-25): S3 API PutObject "✅ Content-Type", "✅ Content-Disposition", "✅ Cache-Control"; presigned URLs support "`GET`:
   Fetch an object from a bucket", "Timeout from 1 second to 7 days"; the `response-content-*` overrides of GetObject are not listed, so the
@@ -191,13 +193,14 @@ text and underline, not colour alone; focus is Mantine's visible ring.
 
 ## Route
 
-0. Task 1046 is merged and deployed first; the bucket, its token and `R2_MAIL_*` exist (owner, 2026-11-25, in the plan).
+0. Task 1046 is merged and deployed first; the bucket, its token and `R2_MAIL_*` exist (owner, 2026-11-25, in the plan). Done 2026-11-26:
+   PR #79 (`56f3f8318`), Vercel Production and the Worker version `3adacb0f` live, V1 passed (the plan).
 1. Work on the branch the owner created from `main` (checklist H1).
 2. Tests first (AC1-AC4); save each failing output.
 3. `r2.ts`, `inboundEmail.ts`, `database.ts`, the route, the dialog, the messages, the fixture, the Story, the census row.
 4. Run: `npm run typecheck`; ESLint on the changed code files (the pre-commit hook's command); `npm test --` with every file of
    `src/modules/contacts/lib/__tests__/inboundEmail.security.test.ts src/app/api/admin/inquiry-attachment/__tests__/route.security.test.ts` and
-   the files found 2026-11-25 by import of `r2.ts`, `inboundEmail.ts`, `InquiryDetailDialogView`, `@/types/database`, `admin.fixtures`,
+   the files found 2026-11-25, and again 2026-11-26 at `56f3f8318` (the same 85), by import of `r2.ts`, `inboundEmail.ts`, `InquiryDetailDialogView`, `@/types/database`, `admin.fixtures`,
    `messages/*.json` and `rendered-interaction-states.json` (checklist D10):
    scripts/__tests__/responsive-screenshots.test.ts src/__tests__/reactHooksV7Components.test.tsx src/__tests__/reactHooksV7Shells.test.tsx src/app/[locale]/auth/verified/__tests__/page.test.tsx src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx src/app/api/email/inbound/__tests__/route.security.test.ts src/components/admin/__tests__/AdminCompaniesManager.logo.security.test.tsx src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx src/components/admin/__tests__/AdminPagesView.test.tsx src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx src/components/admin/__tests__/AdminShell.pages.test.tsx src/components/admin/__tests__/AdminSidebar.pages.test.tsx src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx src/components/admin/__tests__/AdminUserCreate.watch.test.tsx src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx src/components/admin/__tests__/InquiryDetailDialogView.inbound.test.tsx src/components/admin/__tests__/StackedConfirmDialogs.test.tsx src/components/admin/__tests__/StatusChangeSelect.test.tsx src/components/admin/__tests__/adminDeleteDialog.security.test.tsx src/components/admin/__tests__/adminPagesContent.test.ts src/components/admin/__tests__/adminPagesHydration.test.tsx src/components/admin/__tests__/savedRowRelativeTime.test.tsx
    src/components/layout/__tests__/FooterView.security.test.tsx src/components/layout/__tests__/Header.google.security.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx src/components/layout/__tests__/sessionEnded.security.test.tsx src/components/shared/__tests__/Combobox.portal.test.tsx src/components/ui/__tests__/overlays.test.tsx src/components/ui/__tests__/primitives.test.tsx src/components/ui/__tests__/uiPrimitivesExtra.test.tsx src/design-system/mantine/__tests__/badgeTones.test.ts src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx src/lib/auth/__tests__/controller.test.ts src/lib/media/__tests__/listingPhoto.security.test.ts src/lib/media/__tests__/r2.security.test.ts src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts src/modules/admin/dashboard/components/__tests__/AdminDashboardView.axis.test.tsx src/modules/auth/__tests__/AuthContext.test.tsx src/modules/auth/components/AuthSheet.banned.security.test.tsx src/modules/auth/components/ResetPasswordClient.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.registerAgent.test.tsx src/modules/auth/components/__tests__/AuthSheet.test.tsx src/modules/auth/components/__tests__/authClientParts.test.tsx src/modules/auth/components/__tests__/resetPassword.test.tsx src/modules/auth/components/__tests__/staleSession.security.test.tsx

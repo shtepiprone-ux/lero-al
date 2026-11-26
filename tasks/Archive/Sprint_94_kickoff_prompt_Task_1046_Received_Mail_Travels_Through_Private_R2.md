@@ -1,6 +1,6 @@
 # Task 1046 — A received mail travels to the route through a private R2 bucket, up to 25 MB
 
-Sprint 94. Priority P1. Owner decisions 2026-11-25 ([plan](Sprint_94_Task_1044_Plan_And_Owner_Settings.md), "Owner decisions"): on the V1
+Sprint 94. Priority P1. Owner decisions 2026-11-25 ([plan](../Sprints/Sprint_94_Task_1044_Plan_And_Owner_Settings.md), "Owner decisions"): on the V1
 results (translated) "staff cannot open the attachment, so what is the point" → attachments become openable from the admin, the Worker
 streams the raw message to R2 and hands the route its key, "which removes the 4 MB cap and the CPU risk"; O1046-1 "a new private R2 bucket
 with no public domain and an API token for that bucket only"; O1046-2 "the message limit becomes 25 MB, Cloudflare Email Routing's own

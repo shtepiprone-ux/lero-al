@@ -136,7 +136,19 @@ Multipart Abort Rule" (abort uploads after 7 days). Lifecycle rule added the sam
 `delete-raw-inbound-after-1-day`, prefix `inbound/`, "Delete objects after 1 day(s)", Enabled. Token created by the owner the same day,
 read by Opus: Account API token `lero-inbound-mail-api`, applied to `lero-inbound-mail` only, Object Read & Write, Active; Vercel Production
 has `R2_MAIL_ACCESS_KEY_ID`, `R2_MAIL_SECRET_ACCESS_KEY`, `R2_MAIL_BUCKET_NAME` (Sensitive, Production only; names read, values not
-decrypted). Separate from the listing-photo `R2_*` variables of 2026-11-24 (`lero-media-api`, `lero-media`). Only the binding is still open.
+decrypted). Separate from the listing-photo `R2_*` variables of 2026-11-24 (`lero-media-api`, `lero-media`). Binding added 2026-11-26 by Opus at
+the owner's request ("Ти сам можеш додати всі ці налаштування"), after Opus re-read the bucket, its lifecycle rule, the token and the three
+Vercel names the same day: Worker `lero-email-inbound` → Bindings → R2 bucket `INBOUND_BUCKET` → `lero-inbound-mail`, deployed with the
+Task 1044 code (which does not read it); `INBOUND_EMAIL_SECRET` and `INBOUND_URL` unchanged. Task 1046 merged (PR #79, `56f3f8318`) and
+deployed to Vercel Production the same day; the owner pasted the new `worker.js` at 06:49 UTC (version `3adacb0f`); Opus read it back through
+the dashboard: its one module equals `cloudflare/email-inbound/worker.js` of `main` (SHA-256 of the LF text), bindings `INBOUND_BUCKET` →
+`lero-inbound-mail`, `INBOUND_EMAIL_SECRET`, `INBOUND_URL`. V1 for Task 1046, 2026-11-26, by Opus at the owner's request ("ти сам можеш
+провести ці тести", Gmail in the owner's Chrome, `mtwserv@gmail.com` → `support@mailtest.lero.al`; attachments of zero bytes): a 24 MB
+attachment cannot pass, since base64 makes the message about a third larger than Email Routing's 25 MiB, so the sizes were 1, 10 and 17 MB.
+Workers Logs (version `3adacb0f`): `rawSize` 1 442 485, 14 356 556 and 24 400 785; each `outcome` ok, "inbound status 200"; `cpuTimeMs` 0,
+1 and 0 (wall 3.4-5.2 s; the 4.17 MB mail of the Task 1044 verification took 7 ms); the three inquiries are on `/admin/inquiries/support`
+with their attachment name and size; `lero-inbound-mail` lists 0 objects afterwards. The same three sent first to `support@lero.al` by
+mistake reached nothing (root MX `0 lero.al`, read with `nslookup`).
 
 Pass: V1-V4 and V6-V9 as expected, and V1's CPU times well under 10 ms. V5 decides how a crash looks to a sender; the owner accepts the MVP
 without automatic retries only after V2-V5 show that the sender is told the mail was not delivered (owner, 2026-11-25).

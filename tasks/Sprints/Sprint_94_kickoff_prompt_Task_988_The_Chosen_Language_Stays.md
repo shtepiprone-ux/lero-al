@@ -16,6 +16,9 @@ Owner decisions of 2026-11-26 (translated), which replace the first design of th
 - O988-5: "if a guest is on the site and opens a link, for example from a social network, in the same browser, the
   language must stay the one in their other tab: a temporary cookie keeps the interface language current, even when the
   user pastes a link into the address bar".
+- O988-6 (2026-11-26, Review 8, the owner's choice of "Record in the baseline (Recommended)"): the census blocks of
+  `src/app/[locale]/(site)/layout.tsx` and `src/app/[locale]/(site)/cabinet/statistics/page.tsx` are recorded in
+  `scripts/surface-census-baseline.json` as existing debt; their Stories and enrolment are Task 1069.
 
 ## Goal
 
@@ -199,6 +202,13 @@ Starts from the pushed commit 7ba9ef38d (pull request #83). One item per finding
 - R5-2 (F9): `src/components/layout/Header.tsx` keeps 7ba9ef38d's `window.open(adminHref(locale, '/admin'), '_blank', 'noopener,noreferrer')`. A variable there fails `client-sinks.mjs` K7, and a hand-built address fails `adminSlug.test.tsx` [AC6]. Instead, the checker in `src/__tests__/security/clientSinks.test.ts:36` reads one level of nested parentheses, and a planted case proves it still flags a nested call without `noopener`. The permissions page's test mock of `next-intl/server` gains `getFormatter` (R5-1).
 - R5-3 (F10): the 20 doc lines that name the files Scope 5 moved point to the current files. The 2026-11-06 audit record keeps its paths and adds "(moved by Task 988 to …)".
 
+## Revision 6 (Review 8, 2026-11-26)
+
+Starts from the pushed commit bbabe3d45 (pull request #83). One item per finding of [Review 8](../../docs/reviews/Task_988_Review_8.md), which reads the red product checks and changed-line coverage of CI run 45898290625 (checklist V14). Its "Revision 6 (executor)" item holds the exact edits. Checklist A4 applies, for what the move of Scope 5 reaches:
+- R6-1 (F11): `src/components/admin/__tests__/AdminLocaleSwitcher.locale.test.tsx` stubs `matchMedia` with `vi.stubGlobal`, as nine admin tests do, in place of a `typeof window` guard that the SSR scanner reports (the scanner's reading of test files is Task 1070).
+- R6-2 (F12): `scripts/surface-census-baseline.json` follows the move, as R2-1 did. The 7 keys of the site frame move from `src/app/[locale]/layout.tsx` to `src/app/[locale]/(site)/layout.tsx`, and the two blocks of O988-6 are added (Task 1069).
+- R6-3 (F13): tests that run the changed lines of `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/[locale]/layout.tsx` and `src/app/[locale]/(site)/layout.tsx`.
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_988_Review_1.md)
@@ -208,3 +218,5 @@ Starts from the pushed commit 7ba9ef38d (pull request #83). One item per finding
 - [Review 5 — APPROVED](../../docs/reviews/Task_988_Review_5.md)
 - [Review 6 — NEEDS REVISION](../../docs/reviews/Task_988_Review_6.md)
 - [Review 7 — APPROVED](../../docs/reviews/Task_988_Review_7.md)
+- [Review 8 — NEEDS REVISION](../../docs/reviews/Task_988_Review_8.md)
+- [Review 9 — APPROVED](../../docs/reviews/Task_988_Review_9.md)

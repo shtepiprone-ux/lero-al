@@ -27,9 +27,7 @@ import { AdminLocaleSwitcher } from '../AdminLocaleSwitcher'
 
 beforeEach(() => {
   // jsdom has no matchMedia; Mantine's colour-scheme effect asks it once
-  if (typeof window.matchMedia !== 'function') {
-    window.matchMedia = ((query: string) => ({ matches: false, media: query, onchange: null, addListener: () => undefined, removeListener: () => undefined, addEventListener: () => undefined, removeEventListener: () => undefined, dispatchEvent: () => false })) as unknown as typeof window.matchMedia
-  }
+  vi.stubGlobal('matchMedia', vi.fn().mockImplementation((query: string) => ({ matches: false, media: query, onchange: null, addListener: vi.fn(), removeListener: vi.fn(), addEventListener: vi.fn(), removeEventListener: vi.fn(), dispatchEvent: vi.fn() })))
   push.mockReset()
   refresh.mockReset()
   state.release = null

@@ -130,25 +130,25 @@
     "src/app/[locale]/layout.tsx :: src/app/[locale]/layout.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/components/layout/Footer.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/components/layout/Footer.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/components/layout/Header.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/components/layout/Header.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/components/shared/PerfDevOverlay.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/components/shared/PerfDevOverlay.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/components/shared/PerformanceStoreInit.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/components/shared/PerformanceStoreInit.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/components/shared/WebVitalsReporter.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/components/shared/WebVitalsReporter.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/modules/auth/context/AuthContext.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/modules/auth/context/AuthContext.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/modules/notifications/components/NotificationBell.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/modules/notifications/components/NotificationBell.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/(site)/listings/[slug]/edit/page.tsx :: src/app/[locale]/(site)/listings/[slug]/edit/page.tsx :: tier1-unenrolled-or-unstoried": {
@@ -797,6 +797,12 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/notifications/lib/emails/VerifyEmail.tsx :: src/modules/notifications/lib/emails/VerifyEmail.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/[locale]/(site)/layout.tsx :: src/app/[locale]/(site)/layout.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/[locale]/(site)/cabinet/statistics/page.tsx :: src/app/[locale]/(site)/cabinet/statistics/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     }
   }

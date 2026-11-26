@@ -5,13 +5,15 @@
  *  - SEC-R2-SIGN: a presigned PUT address is signed with the `R2_*` values (an independent AWS Signature V4 computation gives the same signature), expires in 300 s, signs
  *    `Content-Type`, `Content-Length` and the `Cache-Control` of the cache policy, and carries neither the secret key nor any other header value in its text.
  *  - SEC-R2-SSRF: every server call goes to `R2_ENDPOINT` only; `keyFromPublicUrl` accepts an address of `R2_PUBLIC_URL` only, in the exact form of a key.
+ *  - SEC-1046-R2-MAIL (Task 1046 AC3): the mail functions sign with `R2_MAIL_*` and address `R2_MAIL_BUCKET_NAME` only; the listing functions never use a mail variable; a missing
+ *    mail variable throws `R2ConfigError` before any call; a declared or real length above the limit throws `R2TooLargeError` without keeping the body.
  * The code under test is the real module. The only double is the network (`fetch`). Every value is synthetic.
  */
 import { createHash, createHmac } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { CACHE_CONTROL, PRESIGN_EXPIRES_SECONDS, deleteObjects, headObject, keyFromPublicUrl, presignPut, publicUrl, readHead } from '../r2'
+import { CACHE_CONTROL, PRESIGN_EXPIRES_SECONDS, R2ConfigError, R2TooLargeError, deleteMailObjects, deleteObjects, getMailObject, headObject, keyFromPublicUrl, presignPut, publicUrl, readHead } from '../r2'
 
 const ENV = {
   R2_ACCESS_KEY_ID: 'AKTESTACCESSKEY1038',
@@ -20,6 +22,9 @@ const ENV = {
   R2_BUCKET_NAME: 'lero-test-bucket',
   R2_PUBLIC_URL: 'https://media.lero.al',
   R2_ACCOUNT_ID: '0123456789abcdef',
+  R2_MAIL_ACCESS_KEY_ID: 'AKTESTMAILKEY1046',
+  R2_MAIL_SECRET_ACCESS_KEY: 'test-mail-secret-1046-never-real',
+  R2_MAIL_BUCKET_NAME: 'lero-test-mail',
 } as const
 const OWNER = '22222222-2222-4222-8222-222222222222'
 const FOLDER = '44444444-4444-4444-8444-444444444444'
@@ -235,5 +240,136 @@ describe('publicUrl and keyFromPublicUrl', () => {
   it('[SEC-R2-SSRF] without R2_PUBLIC_URL no address is accepted', () => {
     delete process.env.R2_PUBLIC_URL
     expect(keyFromPublicUrl(`https://media.lero.al/${KEY}`)).toBeNull()
+  })
+})
+
+describe('the mail bucket (Task 1046)', () => {
+  const MAIL_KEY = 'inbound/0f8e4c1a-2b3d-4e5f-9a6b-7c8d9e0f1a2b.eml'
+  const MAIL_VARIABLES = ['R2_MAIL_ACCESS_KEY_ID', 'R2_MAIL_SECRET_ACCESS_KEY', 'R2_MAIL_BUCKET_NAME'] as const
+  const LISTING_VARIABLES = ['R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET_NAME'] as const
+
+  function stubFetch(handler: (request: Request) => Response | Promise<Response>) {
+    const seen: Request[] = []
+    vi.stubGlobal('fetch', vi.fn(async (input: Request) => { seen.push(input); return handler(input) }))
+    return seen
+  }
+
+  /** a body of `chunks` chunks of `size` bytes that counts what was pulled from it and whether it was cancelled */
+  function countedBody(chunks: number, size: number) {
+    const state = { pulled: 0, cancelled: false }
+    const body = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        if (state.pulled >= chunks) { controller.close(); return }
+        state.pulled += 1
+        controller.enqueue(new Uint8Array(size))
+      },
+      cancel() { state.cancelled = true },
+    }, { highWaterMark: 0 })
+    return { body, state }
+  }
+
+  it('[SEC-1046-R2-MAIL] getMailObject GETs the key from R2_MAIL_BUCKET_NAME on R2_ENDPOINT with the mail key id and returns the bytes', async () => {
+    const seen = stubFetch(() => new Response(new TextEncoder().encode('RAW-MIME'), { status: 200 }))
+    const bytes = await getMailObject(MAIL_KEY, 100)
+    expect(new TextDecoder().decode(bytes as Uint8Array)).toBe('RAW-MIME')
+    expect(seen).toHaveLength(1)
+    expect(seen[0].method).toBe('GET')
+    expect(new URL(seen[0].url).origin).toBe(ENV.R2_ENDPOINT)
+    expect(new URL(seen[0].url).pathname).toBe(`/${ENV.R2_MAIL_BUCKET_NAME}/${MAIL_KEY}`)
+    expect(seen[0].headers.get('authorization')).toContain(`Credential=${ENV.R2_MAIL_ACCESS_KEY_ID}/`)
+    expect(seen[0].headers.get('authorization')).not.toContain(ENV.R2_ACCESS_KEY_ID)
+  })
+
+  it('[SEC-1046-R2-MAIL] the mail signature comes from R2_MAIL_SECRET_ACCESS_KEY and never from the listing secret', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-11-25T10:00:00Z'))
+    const seen = stubFetch(() => new Response(new Uint8Array(1), { status: 200 }))
+    await getMailObject(MAIL_KEY, 100)
+    process.env.R2_SECRET_ACCESS_KEY = 'another-listing-secret'
+    await getMailObject(MAIL_KEY, 100)
+    process.env.R2_MAIL_SECRET_ACCESS_KEY = 'another-mail-secret'
+    await getMailObject(MAIL_KEY, 100)
+    const [a, b, c] = seen.map((r) => r.headers.get('authorization'))
+    expect(b).toBe(a)
+    expect(c).not.toBe(a)
+  })
+
+  it('[SEC-1046-R2-MAIL] the mail functions work without the listing variables', async () => {
+    for (const name of LISTING_VARIABLES) delete process.env[name]
+    const seen = stubFetch(() => new Response(new Uint8Array(1), { status: 200 }))
+    await expect(getMailObject(MAIL_KEY, 100)).resolves.toHaveLength(1)
+    await expect(deleteMailObjects([MAIL_KEY])).resolves.toBeUndefined()
+    expect(seen).toHaveLength(2)
+  })
+
+  it('[SEC-1046-R2-MAIL] the listing functions never use a mail variable: without the listing variables they throw and call nothing', async () => {
+    for (const name of LISTING_VARIABLES) delete process.env[name]
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await expect(presignPut(KEY, 'image/webp', 1234)).rejects.toBeInstanceOf(R2ConfigError)
+    await expect(headObject(KEY)).rejects.toBeInstanceOf(R2ConfigError)
+    await expect(readHead(KEY, 16)).rejects.toBeInstanceOf(R2ConfigError)
+    await expect(deleteObjects([KEY])).rejects.toBeInstanceOf(R2ConfigError)
+    expect(seen).toHaveLength(0)
+  })
+
+  it('[SEC-1046-R2-MAIL] the listing functions keep the listing key id and bucket while the mail variables are set', async () => {
+    const seen = stubFetch(() => new Response(null, { status: 204 }))
+    await deleteObjects([KEY])
+    expect(new URL(seen[0].url).pathname).toBe(`/${ENV.R2_BUCKET_NAME}/${KEY}`)
+    expect(seen[0].headers.get('authorization')).toContain(`Credential=${ENV.R2_ACCESS_KEY_ID}/`)
+  })
+
+  it.each([...MAIL_VARIABLES, 'R2_ENDPOINT'])('[SEC-1046-R2-MAIL] without %s the mail functions throw R2ConfigError before any call', async (name) => {
+    delete process.env[name]
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await expect(getMailObject(MAIL_KEY, 100)).rejects.toBeInstanceOf(R2ConfigError)
+    await expect(deleteMailObjects([MAIL_KEY])).rejects.toBeInstanceOf(R2ConfigError)
+    expect(seen).toHaveLength(0)
+  })
+
+  it('[SEC-1046-R2-MAIL] getMailObject answers null for a missing object and throws for any other failure', async () => {
+    stubFetch(() => new Response(null, { status: 404 }))
+    await expect(getMailObject(MAIL_KEY, 100)).resolves.toBeNull()
+    stubFetch(() => new Response(null, { status: 403 }))
+    await expect(getMailObject(MAIL_KEY, 100)).rejects.toThrow()
+  })
+
+  it('[SEC-1046-R2-MAIL] a declared length above the limit throws R2TooLargeError without reading the body', async () => {
+    const { body, state } = countedBody(10, 64)
+    stubFetch(() => new Response(body, { status: 200, headers: { 'content-length': '101' } }))
+    await expect(getMailObject(MAIL_KEY, 100)).rejects.toBeInstanceOf(R2TooLargeError)
+    expect(state.pulled).toBe(0)
+    expect(state.cancelled).toBe(true)
+  })
+
+  it('[SEC-1046-R2-MAIL] a real length above the limit throws R2TooLargeError and stops reading; exactly the limit is returned', async () => {
+    const over = countedBody(1000, 64)
+    stubFetch(() => new Response(over.body, { status: 200 }))
+    await expect(getMailObject(MAIL_KEY, 100)).rejects.toBeInstanceOf(R2TooLargeError)
+    expect(over.state.pulled).toBeLessThanOrEqual(3)
+    expect(over.state.cancelled).toBe(true)
+    const edge = countedBody(2, 50)
+    stubFetch(() => new Response(edge.body, { status: 200 }))
+    await expect(getMailObject(MAIL_KEY, 100)).resolves.toHaveLength(100)
+  })
+
+  it('[SEC-1046-R2-MAIL] deleteMailObjects sends one DELETE per key to the mail bucket with the mail key id; a missing object is not a failure; any other failure throws', async () => {
+    const seen = stubFetch(() => new Response(null, { status: 204 }))
+    await deleteMailObjects([MAIL_KEY])
+    expect(seen.map((r) => r.method)).toEqual(['DELETE'])
+    expect(new URL(seen[0].url).origin).toBe(ENV.R2_ENDPOINT)
+    expect(new URL(seen[0].url).pathname).toBe(`/${ENV.R2_MAIL_BUCKET_NAME}/${MAIL_KEY}`)
+    expect(seen[0].headers.get('authorization')).toContain(`Credential=${ENV.R2_MAIL_ACCESS_KEY_ID}/`)
+    stubFetch(() => new Response(null, { status: 404 }))
+    await expect(deleteMailObjects([MAIL_KEY])).resolves.toBeUndefined()
+    stubFetch(() => new Response(null, { status: 403 }))
+    await expect(deleteMailObjects([MAIL_KEY])).rejects.toThrow()
+  })
+
+  it.each([['a .. segment', 'inbound/../x.eml'], ['a leading slash', `/${MAIL_KEY}`], ['an empty key', '']])('[SEC-1046-R2-MAIL] the mail functions refuse a key with %s and call nothing', async (_l, key) => {
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await expect(getMailObject(key, 100)).rejects.toThrow()
+    await expect(deleteMailObjects([key])).rejects.toThrow()
+    expect(seen).toHaveLength(0)
   })
 })

@@ -1,6 +1,6 @@
 # Task 1047 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md) · OWASP record: [Task_1047.json](../security/owasp/reviews/Task_1047.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1047_Received_Attachments_Open_From_The_Admin.md) · OWASP record: [Task_1047.json](../security/owasp/reviews/Task_1047.json)
 
 Review 2 of the working tree on d23137521 — APPROVED
 Scope: diff-based, Revision 1 only; `git diff --stat d23137521` → 9 files (49+, 10−), no new file: `src/modules/contacts/lib/inboundEmail.ts` (`cut`, used by `oneLine` and `bodyText`), `src/components/admin/InquiryDetailDialogView.tsx:62` (the unnamed file's link text), `messages/{sq,en,uk,it}.json` (`admin.inquiries.attachment_unnamed`), `src/stories/fixtures/admin.fixtures.ts` (a fourth stored file without a name) and the two changed test files.

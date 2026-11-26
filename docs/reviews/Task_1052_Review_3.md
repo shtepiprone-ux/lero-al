@@ -1,6 +1,6 @@
 # Task 1052 — Review 3
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md) · OWASP record: [Task_1052.json](../security/owasp/reviews/Task_1052.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md) · OWASP record: [Task_1052.json](../security/owasp/reviews/Task_1052.json)
 
 Review 3 of Revisions 2 and 3, the working tree on 2bdcb8de4 — APPROVED
 Scope: diff-based; `git diff --stat 2bdcb8de4` → 4 files (116+, 16−): the executor's `docs/security/owasp/controls.json` (R2-1, R2-2, R3-1 to R3-3) and `docs/security/owasp/sheets.json` (the tool's output at `5254440ecf1a`); Opus's `docs/backlog.md` (row 1065) and the kickoff's "## Revision 2" and "## Revision 3", carried as documentation (checklist H1). No entry point, code or configuration.

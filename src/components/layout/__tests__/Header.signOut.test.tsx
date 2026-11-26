@@ -29,9 +29,10 @@ import type { User } from '@/types/database'
 
 // ── External boundary mocks ────────────────────────────────────────────────────
 
-const { mockCoreSignOut, mockUnsubscribe } = vi.hoisted(() => ({
+const { mockCoreSignOut, mockUnsubscribe, bellUserIds } = vi.hoisted(() => ({
   mockCoreSignOut: vi.fn(),
   mockUnsubscribe: vi.fn(),
+  bellUserIds: [] as Array<string | null | undefined>,
 }))
 
 vi.mock('@/lib/auth/browser', () => ({
@@ -47,7 +48,7 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('@/modules/notifications/components/NotificationBell', () => ({
-  NotificationBell: () => null,
+  NotificationBell: ({ userId }: { userId?: string | null }) => { bellUserIds.push(userId); return null },
 }))
 vi.mock('@/modules/auth/components/AuthSheet', () => ({
   AuthSheet: () => null,
@@ -126,6 +127,7 @@ function renderHeader() {
 
 beforeEach(() => {
   vi.clearAllMocks()
+  bellUserIds.length = 0
   stubMatchMedia(false)
 })
 
@@ -199,4 +201,31 @@ it('[SEC-927-FE-REMEMBER-KEEP] a sign-out keeps the remembered Google account on
   await waitFor(() => expect(refreshMock).toHaveBeenCalledTimes(1))
   expect(localStorage.getItem('lero:google-account')).toBe(record)
   localStorage.clear()
+})
+
+// Task 1053 AC4: the bell takes the live session's user id from the header. While the header still holds the signed-out user (isSigningOut), the bell is given
+// `null`, so useNotifications empties the list at once instead of keeping the previous user's rows.
+it('[AC4] the bell gets the signed-in user id, and null while the header holds the signed-out user', async () => {
+  let resolveCoreSignOut!: (r: { error: null }) => void
+  mockCoreSignOut.mockImplementation(() => new Promise(resolve => { resolveCoreSignOut = resolve }))
+
+  renderHeader()
+  expect(bellUserIds.at(-1)).toBe(MOCK_USER.id)
+
+  await act(async () => {
+    fireEvent.click(screen.getByRole('button', { name: /Dritan Gjoka/ }))
+  })
+  const logoutItem = await screen.findByText('Logout')
+  await act(async () => {
+    fireEvent.click(logoutItem)
+  })
+
+  // The header still shows the held user while the sign-out request is pending; the bell is rendered with no user.
+  expect(screen.getByText('Dritan Gjoka')).toBeInTheDocument()
+  expect(bellUserIds.at(-1)).toBeNull()
+
+  await act(async () => {
+    resolveCoreSignOut({ error: null })
+    await new Promise(r => setTimeout(r, 0))
+  })
 })

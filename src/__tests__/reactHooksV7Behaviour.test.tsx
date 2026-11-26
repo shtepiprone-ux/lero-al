@@ -22,7 +22,6 @@ const state = vi.hoisted(() => ({
 vi.mock('next-intl', () => ({ useLocale: () => state.locale }))
 vi.mock('@/modules/currency/lib/queries', () => ({ getActiveCurrencies: () => state.currencies() }))
 vi.mock('@/modules/companies/lib/queries', () => ({ getCompanies: () => state.companies() }))
-vi.mock('@/modules/auth/context/AuthContext', () => ({ useAuth: () => ({ user: state.user }) }))
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
     realtime: { setAuth: async () => {} },
@@ -356,7 +355,7 @@ describe('useNotifications', () => {
   const note = (id: string, read: boolean) => ({ id, user_id: 'u1', type: 't', title: id, body: '', link: null, is_read: read, created_at: '2026-01-01', template_id: null, template_params: null })
 
   it('shows nothing and does not load for a visitor with no session', async () => {
-    const { result } = renderHook(() => useNotifications())
+    const { result } = renderHook(() => useNotifications(state.user?.id ?? null))
     await waitFor(() => expect(result.current.loading).toBe(false))
     expect(result.current.notifications).toEqual([])
     expect(result.current.unreadCount).toBe(0)
@@ -367,7 +366,7 @@ describe('useNotifications', () => {
   it('loads the signed-in user\'s notifications, counts the unread ones and subscribes to their channel', async () => {
     state.user = { id: 'u1' }
     state.notificationRows.mockResolvedValue({ data: [note('a', false), note('b', true), note('c', false)], error: null })
-    const { result } = renderHook(() => useNotifications())
+    const { result } = renderHook(() => useNotifications(state.user?.id ?? null))
     await waitFor(() => expect(result.current.loading).toBe(false))
     expect(result.current.notifications.map(n => n.id)).toEqual(['a', 'b', 'c'])
     expect(result.current.unreadCount).toBe(2)
@@ -379,7 +378,7 @@ describe('useNotifications', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {})
     state.user = { id: 'u1' }
     state.notificationRows.mockResolvedValueOnce({ data: [note('a', false)], error: null })
-    const { result } = renderHook(() => useNotifications())
+    const { result } = renderHook(() => useNotifications(state.user?.id ?? null))
     await waitFor(() => expect(result.current.loading).toBe(false))
     state.notificationRows.mockResolvedValueOnce({ data: null, error: { message: 'x' } })
     await act(async () => { await result.current.refetch() })
@@ -394,7 +393,7 @@ describe('useNotifications', () => {
   it('clears the list when the user signs out', async () => {
     state.user = { id: 'u1' }
     state.notificationRows.mockResolvedValue({ data: [note('a', false)], error: null })
-    const { result, rerender } = renderHook(() => useNotifications())
+    const { result, rerender } = renderHook(() => useNotifications(state.user?.id ?? null))
     await waitFor(() => expect(result.current.notifications).toHaveLength(1))
     state.user = null
     rerender()
@@ -409,7 +408,7 @@ describe('useNotifications', () => {
     let resolveFirst: (value: unknown) => void = () => {}
     state.notificationRows.mockReturnValueOnce(new Promise(resolve => { resolveFirst = resolve }))
     state.notificationRows.mockResolvedValueOnce({ data: [note('mine', false)], error: null })
-    const { result, rerender } = renderHook(() => useNotifications())
+    const { result, rerender } = renderHook(() => useNotifications(state.user?.id ?? null))
     state.user = { id: 'u2' }
     rerender()
     await waitFor(() => expect(result.current.notifications.map(n => n.id)).toEqual(['mine']))

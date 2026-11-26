@@ -69,11 +69,8 @@ vi.mock('@/lib/supabase/client', () => ({
   }),
 }))
 
-// ── Auth mock — controls the signed-in user id per test ─────────────────────────────
+// ── The signed-in user per test; its id is what the hook's caller passes (Task 1053) ─
 let mockUser: { id: string } | null = { id: 'default-user-id' }
-vi.mock('@/modules/auth/context/AuthContext', () => ({
-  useAuth: () => ({ user: mockUser }),
-}))
 
 import { useNotifications } from '../useNotifications'
 
@@ -100,7 +97,7 @@ afterEach(() => {
 
 describe('useNotifications — .select() must fetch the template columns NotificationItem needs to localize', () => {
   it('calls .select() with a column list containing BOTH template_id AND template_params', async () => {
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(limitSpy).toHaveBeenCalled())
 
@@ -112,7 +109,7 @@ describe('useNotifications — .select() must fetch the template columns Notific
   })
 
   it('chain integrity: .order("created_at", desc) and .limit(PAGE_SIZE=30) are still invoked unchanged', async () => {
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(limitSpy).toHaveBeenCalled())
 
@@ -127,7 +124,7 @@ describe('useNotifications — .select() must fetch the template columns Notific
 describe('useNotifications — subscription is scoped to the signed-in user (Task 882 R1)', () => {
   it('no user: channel is never called', async () => {
     mockUser = null
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     // Task 883: with no user, there is no read at all, so there is nothing to wait for.
     // Wait a tick instead of for limitSpy — waiting for limitSpy would hang forever now
@@ -142,7 +139,7 @@ describe('useNotifications — subscription is scoped to the signed-in user (Tas
 
   it('with a user: channel is called with a name containing the id, and on is called with filter user_id=eq.<id>', async () => {
     mockUser = { id: 'user-abc' }
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(subscribeSpy).toHaveBeenCalled())
 
@@ -153,7 +150,7 @@ describe('useNotifications — subscription is scoped to the signed-in user (Tas
 
   it('the user changes from A to B: removeChannel is called for A\'s channel and a new one is created for B', async () => {
     mockUser = { id: 'user-a' }
-    const { rerender } = renderHook(() => useNotifications())
+    const { rerender } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(subscribeSpy).toHaveBeenCalledTimes(1))
     const handleA = subscribeSpy.mock.results[0].value
@@ -187,7 +184,7 @@ describe('useNotifications — the channel joins with the user\'s token (Task 10
       return { __handle: Symbol('channel-handle') }
     })
 
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(setAuthSpy).toHaveBeenCalledTimes(1))
     // While setAuth is pending, nothing has joined.
@@ -207,7 +204,7 @@ describe('useNotifications — the channel joins with the user\'s token (Task 10
     let resolveSetAuth: () => void = () => {}
     setAuthSpy.mockImplementationOnce(() => new Promise<void>(resolve => { resolveSetAuth = resolve }))
 
-    const { unmount } = renderHook(() => useNotifications())
+    const { unmount } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(setAuthSpy).toHaveBeenCalledTimes(1))
     unmount()
@@ -228,7 +225,7 @@ describe('useNotifications — realtime status recovery (Task 882 R2)', () => {
     mockUser = { id: 'user-status' }
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(subscribeSpy).toHaveBeenCalled())
     await waitFor(() => expect(fromSpy).toHaveBeenCalledTimes(1)) // initial mount fetch only
@@ -247,7 +244,7 @@ describe('useNotifications — realtime status recovery (Task 882 R2)', () => {
 
   it('the very first SUBSCRIBED (no prior error) does not trigger an extra refetch', async () => {
     mockUser = { id: 'user-first-subscribe' }
-    renderHook(() => useNotifications())
+    renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(subscribeSpy).toHaveBeenCalled())
     await waitFor(() => expect(fromSpy).toHaveBeenCalledTimes(1))
@@ -263,7 +260,7 @@ describe('useNotifications — realtime status recovery (Task 882 R2)', () => {
 describe('useNotifications — tab visibility recovery (Task 882 R3)', () => {
   it('visibilitychange to visible triggers one extra fetch; none after unmount', async () => {
     mockUser = { id: 'user-vis' }
-    const { unmount } = renderHook(() => useNotifications())
+    const { unmount } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(fromSpy).toHaveBeenCalledTimes(1))
 
@@ -290,7 +287,7 @@ describe('useNotifications — a failed fetch keeps the previous list (Task 882 
     fetchData = [{ id: '1', is_read: false }] as unknown[]
     fetchError = null
 
-    const { result } = renderHook(() => useNotifications())
+    const { result } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(result.current.notifications).toHaveLength(1))
 
@@ -316,7 +313,7 @@ describe('useNotifications — no read without a user (Task 883)', () => {
     fetchData = [{ id: '1', is_read: false }] as unknown[]
     fetchError = null
 
-    const { result, rerender } = renderHook(() => useNotifications())
+    const { result, rerender } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(result.current.notifications).toHaveLength(1))
     const fromCallCountAtSignOut = fromSpy.mock.calls.length
@@ -333,7 +330,7 @@ describe('useNotifications — no read without a user (Task 883)', () => {
 
   it('no user: visibility refetch and refetch() both issue no read (R5 c)', async () => {
     mockUser = null
-    const { result } = renderHook(() => useNotifications())
+    const { result } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0))
@@ -358,7 +355,7 @@ describe('useNotifications — no read without a user (Task 883)', () => {
     })
     limitSpy.mockImplementationOnce(() => deferred)
 
-    const { result, rerender } = renderHook(() => useNotifications())
+    const { result, rerender } = renderHook(() => useNotifications(mockUser?.id ?? null))
 
     await waitFor(() => expect(limitSpy).toHaveBeenCalled())
 

@@ -45,7 +45,7 @@ vi.mock('@/hooks/usePropertyTypes', () => ({
 }))
 
 const saveSavedSearchMock = vi.fn()
-vi.mock('@/modules/cabinet/actions', () => ({
+vi.mock('@/modules/listings/actions/savedSearchActions', () => ({
   saveSavedSearch: (...args: unknown[]) => saveSavedSearchMock(...args),
 }))
 

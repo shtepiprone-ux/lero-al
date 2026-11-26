@@ -141,7 +141,7 @@ function HeaderTreeUnderTest({ bellPresent }: { bellPresent: boolean }) {
           mobileOpen={false}
           onOpenMobile={noop}
           onCloseMobile={noop}
-          notificationSlot={bellPresent ? <NotificationBell /> : undefined}
+          notificationSlot={bellPresent ? <NotificationBell userId={null} /> : undefined}
         />
       </MantineProvider>
     </NextIntlClientProvider>

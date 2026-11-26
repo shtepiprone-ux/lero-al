@@ -1,6 +1,6 @@
 # Task 1052 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md) · OWASP record: [Task_1052.json](../security/owasp/reviews/Task_1052.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1052_OWASP_Mapping_Follows_The_Sheets_Of_2026_11_26.md) · OWASP record: [Task_1052.json](../security/owasp/reviews/Task_1052.json)
 
 Review 1 of the working tree on 639929db2 — APPROVED
 Scope: diff-based; `git diff --stat 639929db2` → 5 files (29+, 14−) and the new kickoff: the executor's `docs/security/owasp/controls.json` and `docs/security/owasp/sheets.json` (the tool's output); Opus's `.claude/rules/checklists/handoff.md` (H1a), `.claude/rules/flow.md` (its owner-decision row), `docs/backlog.md` (rows 1047 and 1052) and the kickoff, carried as documentation (checklist H1). No entry point, code or configuration.

@@ -50,7 +50,7 @@ describe('saveSavedSearch — dedup via canonical hash', () => {
     mockMaybeSingle.mockResolvedValue({ data: { id: 'existing-123' }, error: null })
 
     // Import the action after mocks are in place.
-    const { saveSavedSearch } = await import('@/modules/cabinet/actions')
+    const { saveSavedSearch } = await import('@/modules/listings/actions/savedSearchActions')
 
     // Call with reversed order — should produce the same canonical hash.
     const result = await saveSavedSearch({ condition: 'new_build,good' }, 'My Search')
@@ -66,7 +66,7 @@ describe('saveSavedSearch — dedup via canonical hash', () => {
     mockMaybeSingle.mockResolvedValue({ data: null, error: null })
     mockInsertSelect.mockResolvedValue({ data: { id: 'new-saved-id' }, error: null })
 
-    const { saveSavedSearch } = await import('@/modules/cabinet/actions')
+    const { saveSavedSearch } = await import('@/modules/listings/actions/savedSearchActions')
     const result = await saveSavedSearch({ condition: 'good' }, 'New Search')
 
     expect(result.code).not.toBe('already_exists')

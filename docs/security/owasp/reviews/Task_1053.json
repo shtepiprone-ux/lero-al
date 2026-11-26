@@ -1,0 +1,221 @@
+{
+ "task": "1053",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "the two abuse cases of the threat model are tested: a call without a session gets `unauthorized` (`cabinetActions.security.test.ts` against `src/modules/listings/actions/savedSearchActions.ts:15-16`), and the bell is given `null` while the header holds the signed-out user (`Header.signOut.test.tsx` [AC4], break `headerUser?.id` → exit 1, Review 1)"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the diff adds no entry point: `saveSavedSearch` leaves `src/modules/cabinet/actions/index.ts` and lives only in `src/modules/listings/actions/savedSearchActions.ts:11` (`grep -rn saveSavedSearch src`, Review 1); `serverEntryGuards.test.ts` scans the new file (break: `getUser()` removed → exit 1)"
+  },
+  "Authorization": {
+   "verdict": "met",
+   "quotes": [
+    "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+   ],
+   "evidence": "`src/modules/listings/actions/savedSearchActions.ts:15-16` reads the session through `getUser()` on every call, the same call `resolveAuthUser()` made on `main` (`src/modules/cabinet/actions/index.ts:22-25`)"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "the move keeps the action's single session check and adds no authorization decision or output branch"
+  },
+  "Authorization_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+   ],
+   "evidence": "the check is the first statement of the action (`src/modules/listings/actions/savedSearchActions.ts:15-16`), next to the insert into the caller's own rows (`:36-46`)"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "met",
+   "quotes": [
+    "Automated tests should specifically target the ways authorization usually degrades over time."
+   ],
+   "evidence": "`serverEntryGuards.test.ts` fails with `savedSearchActions.ts#saveSavedSearch` unguarded when `getUser()` is replaced by an argument (break 3, exit 1, restored byte for byte, Review 1)"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Integration test cases validate the correct implementation of the authorization matrix."
+   ],
+   "evidence": "the anonymous and signed-in cases of `cabinetActions.security.test.ts` and `cabinetSessions.security.test.ts` import the moved action and pass (Route 41 files, 450 tests, exit 0); on `main`'s product code they fail with the new path missing (Review 1)"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "not applicable",
+   "reason": "no anonymous entry point is added or changed by this task"
+  },
+  "Business_Logic_Security": {
+   "verdict": "met",
+   "quotes": [
+    "The identity of the acting user always comes from the server-side session or token, never from a field the user can edit."
+   ],
+   "evidence": "`user_id` of the dedup read and the insert is the session's id (`src/modules/listings/actions/savedSearchActions.ts:15,30,39`); the dedup read plus the 23505 branch (`:48-50`) are byte for byte `main`'s (`diff` against `git show main:src/modules/cabinet/actions/index.ts` lines 242-290, Review 1)"
+  },
+  "Content_Security_Policy": {
+   "verdict": "not applicable",
+   "reason": "a type and an action move between files; no header, script source or policy changes"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no login, password or account step is touched by this diff"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "not applicable",
+   "reason": "SaveSearchButton changes one import line and the bell one prop; nothing rendered changes"
+  },
+  "Cryptographic_Storage": {
+   "verdict": "not applicable",
+   "reason": "the dedup hash function is imported from the same module, not changed"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no client sink is added; the changed client files change an import and a prop"
+  },
+  "Database_Security": {
+   "verdict": "not applicable",
+   "reason": "the action keeps the caller's RLS client, the same table and columns; db-catalog-audit exit 0, no finding"
+  },
+  "Denial_of_Service": {
+   "verdict": "not applicable",
+   "reason": "no new request path, loop or input size is introduced here"
+  },
+  "GraphQL": {
+   "verdict": "not applicable",
+   "reason": "the project has no GraphQL endpoint and this task adds none"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": [
+    "Validate on the server even when the browser checks the same fields."
+   ],
+   "evidence": "the 100-character name bound (`src/modules/listings/actions/savedSearchActions.ts:22`) and the server-side canonicalizer (`:18-19`) move unchanged; `cabinetSessions.security.test.ts` name-bound cases pass"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "implement access control checks for each object that users try to access"
+   ],
+   "evidence": "`user_id` comes from the session, never from the arguments (`src/modules/listings/actions/savedSearchActions.ts:15,30,39`); the bell's realtime filter is the id the header passes, the live session's (`src/components/layout/Header.tsx:103`)"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+   ],
+   "evidence": "the new block `task-1053/module-layers` (`eslint.config.mjs:202-224`) uses directory zones and no regular expression; `eslintConfig.test.ts` still finds `no-restricted-imports` an error on every module file"
+  },
+  "Key_Management": {
+   "verdict": "not applicable",
+   "reason": "no key is read, created or used by the moved code"
+  },
+  "Logging": {
+   "verdict": "not applicable",
+   "reason": "the one log line of the action moves unchanged; no log event, field or sink is added"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "no security event is added, renamed or removed; the moved log line is unchanged"
+  },
+  "Mass_Assignment": {
+   "verdict": "met",
+   "quotes": [
+    "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable."
+   ],
+   "evidence": "the insert names its five fields (`src/modules/listings/actions/savedSearchActions.ts:38-44`); no argument object is spread into it"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths"
+   ],
+   "evidence": "the moved action uses `createClient()` from `@/lib/supabase/server` (`src/modules/listings/actions/savedSearchActions.ts:4,24`), never the admin client"
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Treat each reachable action as a client-callable POST entry point."
+   ],
+   "evidence": "the new file starts with `'use server'` (`src/modules/listings/actions/savedSearchActions.ts:1`), exports one async function, and `serverEntryGuards.test.ts` finds it guarded (break 3 → exit 1)"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no merge or set-by-path helper is added or changed"
+  },
+  "Query_Parameterization": {
+   "verdict": "not applicable",
+   "reason": "the query builder calls move unchanged; no SQL text is written"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "For protected operations, enforce authentication and authorization inside the function."
+   ],
+   "evidence": "the session check is the first statement of the moved action (`src/modules/listings/actions/savedSearchActions.ts:15-16`)"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no SQL string is built; the query builder calls are unchanged"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Security-Focused Review differs from functional code review by specifically targeting security concerns"
+   ],
+   "evidence": "the moved action was compared with `main`'s text by `diff` (only the session call form and the static canonicalizer import differ, as the Scope names), the new lint block was read against the existing rule keys (`eslint.config.mjs:202-224`), Review 1"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "AI coding assistants frequently suggest package names that do not exist on public registries"
+   ],
+   "evidence": "`git diff --stat 509fca14e` shows no `package.json` or lockfile change; `import/no-restricted-paths` comes from the installed `eslint-plugin-import` (`eslintConfig.test.ts` lints with it, exit 0)"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "the threat model's mitigations are AC3 and AC4, each with a test that fails without the change (`serverEntryGuards.test.ts` break 3, `Header.signOut.test.tsx` break 4, Review 1)"
+  },
+  "Third_Party_Javascript_Management": {
+   "verdict": "not applicable",
+   "reason": "no third-party script is loaded or changed by this task"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "Do not add techniques only to make the model appear comprehensive."
+   ],
+   "evidence": "the model names only the moved action, the bell's user id and the lint gate; each has its test (`serverEntryGuards.test.ts`, `Header.signOut.test.tsx`, `eslintConfig.test.ts`)"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "the reviewer reran every claim of the report: `npm run typecheck` 0, ESLint on the 19 changed code files 0, the Route's 41 files 450 tests 0, `node --test` 18/18, `deleteAccount.integration.test.ts` 6/6, the failing-first run on `main`'s product code (24 failed), the four breaks each exit 1 and restored byte for byte; CI is read with `gh pr checks` (V14)"
+  },
+  "WebSocket_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Don't assume WebSocket connection equals unlimited access. Check authorization for each action"
+   ],
+   "evidence": "the realtime channel stays filtered to `user_id=eq.<id>` of the id the hook is given (`useNotifications.smoke.test.ts`), and the header passes the live session's id, `null` during sign-out (`src/components/layout/Header.tsx:103`, `Header.signOut.test.tsx` [AC4])"
+  },
+  "Web_Cache_Security": {
+   "verdict": "not applicable",
+   "reason": "revalidatePath('/cabinet') moves unchanged; no cache key or header changes"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "not applicable",
+   "reason": "no markup, sink or browser storage is changed here"
+  }
+ }
+}

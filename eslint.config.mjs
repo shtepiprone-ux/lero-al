@@ -79,6 +79,19 @@ const IMAGE_RENDER_EXCEPTIONS = [
   "src/modules/listings/components/GalleryStaticFrame.tsx",
 ];
 
+// ── Module layers (Task 1053, owner decisions O1053-1 and O1053-2, 2026-11-26) ──
+//
+// The modules of src/modules depend on each other in one direction. Each module sits on one layer, lowest first; the production files of a module may
+// import only modules of a lower layer, never one of its own layer or a higher one. A new folder of src/modules is given a layer here
+// (src/__tests__/eslintConfig.test.ts fails while one is missing).
+export const MODULE_LAYERS = [
+  ["analytics", "cms", "companies", "currency", "locations", "notifications"],
+  ["auth", "contacts"],
+  ["listings"],
+  ["cabinet"],
+  ["admin"],
+];
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -182,6 +195,29 @@ const eslintConfig = defineConfig([
               message: "Non-lucide icon library. Use lucide-react only (governance-enforcement.md §4A).",
             },
           ],
+        },
+      ],
+    },
+  },
+  // ── Module layers (Task 1053) — one zone per module of MODULE_LAYERS above ──
+  // Tests and Stories may cross modules (out of scope of Task 1053).
+  {
+    name: "task-1053/module-layers",
+    files: ["src/modules/**/*.{ts,tsx}"],
+    ignores: ["**/__tests__/**", "**/*.test.{ts,tsx}", "**/*.stories.{ts,tsx}"],
+    rules: {
+      "import/no-restricted-paths": [
+        "error",
+        {
+          zones: MODULE_LAYERS.flatMap((layer, index) =>
+            layer.map((module) => ({
+              target: `./src/modules/${module}`,
+              from: MODULE_LAYERS.slice(index).flat().filter((other) => other !== module).map((other) => `./src/modules/${other}`),
+              message:
+                `src/modules/${module} may import only modules of a lower layer of MODULE_LAYERS in eslint.config.mjs ` +
+                `(lowest first: ${MODULE_LAYERS.map((names) => names.join(", ")).join(" → ")}).`,
+            })),
+          ),
         },
       ],
     },

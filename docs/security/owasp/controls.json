@@ -50,10 +50,26 @@
      "quote": "Require explicit tool authorization for sensitive operations.",
      "control": ".claude/settings.json",
      "evidence": "\"mcp__plugin_vercel_vercel__add_project_domain\""
+    },
+    {
+     "quote": "Run Git in untrusted workspaces, including any the agent can write to, inside the agent's sandbox, not on the host.",
+     "task": "1065"
+    },
+    {
+     "quote": "Do not auto-approve any Git command, including",
+     "task": "1065"
+    },
+    {
+     "quote": "Require approval before the agent's file tools write to",
+     "task": "1065"
+    },
+    {
+     "quote": "Check the path as the file system resolves it, including symlinks, letter case, and Windows short names.",
+     "task": "1065"
     }
    ],
-   "reviewedSha": "e70913f940cb89781282cd9e5c77587cb46b8571",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "07cd1f4acbc9af938feddc01cb3472d30e7a4304",
+   "reviewedOn": "2026-11-26"
   },
   "AI-Powered_Advertising_Systems_Security": {
    "applies": false,
@@ -362,8 +378,8 @@
   "Choosing_and_Using_Security_Questions": {
    "applies": false,
    "why": "the product never uses security questions for authentication or recovery",
-   "reviewedSha": "832f6e332b89c918681064b2d327a1239ed897b8",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "cec0c1d2aecaf3dc6c49595d925f0b4246b3e416",
+   "reviewedOn": "2026-11-26"
   },
   "CI_CD_Security": {
    "applies": true,
@@ -806,8 +822,8 @@
      "evidence": "const LISTING_FORMATS = ['jpg', 'jpeg', 'png', 'webp'];"
     }
    ],
-   "reviewedSha": "fff26e97a464a4e74092cdd666f79360ed53438f",
-   "reviewedOn": "2026-11-16"
+   "reviewedSha": "31e92fabd2fe7b5c326d515ecbf99d8ca5ac2e52",
+   "reviewedOn": "2026-11-26"
   },
   "Forgot_Password": {
    "applies": true,
@@ -1160,8 +1176,8 @@
   "Kubernetes_Security": {
    "applies": false,
    "why": "no Kubernetes cluster is used; Vercel and Supabase are managed",
-   "reviewedSha": "ecccad98012ef080b90b5087a6a571eb309d8532",
-   "reviewedOn": "2026-11-16"
+   "reviewedSha": "befe4915a81f5d8bef5edc1b5fd33070f2385610",
+   "reviewedOn": "2026-11-26"
   },
   "Laravel": {
    "applies": false,
@@ -1382,8 +1398,8 @@
      "evidence": "if (existing.user_id !== user.id)"
     }
    ],
-   "reviewedSha": "f2116329213cc51dcfe13f5273a42b4b84fe5f82",
-   "reviewedOn": "2026-11-19"
+   "reviewedSha": "0c4efa28621da5080a7de2eedadae44e7ef98976",
+   "reviewedOn": "2026-11-26"
   },
   "Multifactor_Authentication": {
    "applies": true,
@@ -1558,8 +1574,8 @@
      "evidence": "the URL the route would redirect to always stays on the site origin"
     }
    ],
-   "reviewedSha": "765d6e48772e36bc5e82c8a1452c2c6af665565b",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "11e383b988e14b6e5cd7946953d3694ee8a30649",
+   "reviewedOn": "2026-11-26"
   },
   "OS_Command_Injection_Defense": {
    "applies": true,
@@ -1808,6 +1824,12 @@
    "reviewedSha": "e6c02b6cfdf3b8d9b815d4ea6441893caf984dc2",
    "reviewedOn": "2026-11-07"
   },
+  "Secure_Application_Development": {
+   "applies": false,
+   "why": "an index page that only points to other cheat sheets, each of which is mapped on its own",
+   "reviewedSha": "f744b70c5bb0ac1426f68e884070051ef7d0ed1d",
+   "reviewedOn": "2026-11-26"
+  },
   "Secure_Cloud_Architecture": {
    "applies": false,
    "why": "no cloud account, network or IAM role is configured by the project; the managed services are covered by the Serverless and Database sheets",
@@ -1869,6 +1891,12 @@
    "reviewedSha": "e3b2fa4eca2bfc5f97e1b9e8c52ca0072f96e183",
    "reviewedOn": "2026-11-07"
   },
+  "Server_Side_Document_and_Media_Rendering": {
+   "applies": false,
+   "why": "the server converts no user content with a rendering engine: photos are compressed in the browser, Cloudinary transforms run at the provider, and no PDF, image, video or office engine runs in the app",
+   "reviewedSha": "b96b84420a3064c79b999df27fb27a1c1bfa17e4",
+   "reviewedOn": "2026-11-26"
+  },
   "Server_Side_Request_Forgery_Prevention": {
    "applies": true,
    "triggers": {
@@ -1889,8 +1917,8 @@
      "evidence": "fetch(`https://api.cloudinary.com/v1_1/"
     }
    ],
-   "reviewedSha": "69c84db039ce2bbd07f44582f50bde94717ae3e1",
-   "reviewedOn": "2026-11-11"
+   "reviewedSha": "f87d54aeb47bea85bf28c3aa7e9de570a9664b9e",
+   "reviewedOn": "2026-11-26"
   },
   "Server_Side_Template_Injection_Prevention": {
    "applies": true,
@@ -1960,8 +1988,8 @@
      "evidence": "asks Supabase for the user straight after creating the client"
     }
    ],
-   "reviewedSha": "a9eb4ecb8b60fc159151c00086938489bcbee6f0",
-   "reviewedOn": "2026-11-11"
+   "reviewedSha": "6d5502e5f8fd8677a61f2bd2101fb5b04582b0d8",
+   "reviewedOn": "2026-11-26"
   },
   "Software_Supply_Chain_Security": {
    "applies": true,

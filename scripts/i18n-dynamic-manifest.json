@@ -26,7 +26,7 @@
     },
     {
       "id": "listing-property-type",
-      "site": "src/app/[locale]/listings/[slug]/page.tsx:397",
+      "site": "src/app/[locale]/(site)/listings/[slug]/page.tsx:397",
       "namespace": "listing",
       "keys": ["property_type_apartment", "property_type_house", "property_type_room", "property_type_land", "property_type_commercial", "property_type_office", "property_type_garage", "property_type_parking", "property_type_warehouse", "property_type_other"],
       "note": "PropertyType (10) — audit §2 sites #2, 46, 48, 50."
@@ -173,14 +173,14 @@
     },
     {
       "id": "listing-type",
-      "site": "src/app/[locale]/listings/[slug]/page.tsx:396",
+      "site": "src/app/[locale]/(site)/listings/[slug]/page.tsx:396",
       "namespace": "listing",
       "keys": ["sale", "rent"],
       "note": "ListingType (2) — audit §2 sites #52, 65, 67, 68, 69, 70, 79, 83."
     },
     {
       "id": "listing-presentation-engine-labels",
-      "site": "src/app/[locale]/listings/[slug]/page.tsx:438",
+      "site": "src/app/[locale]/(site)/listings/[slug]/page.tsx:438",
       "namespace": "listing",
       "keys": ["rooms", "bedrooms", "bathrooms", "toilets", "floors_total", "area_gross_label", "area_net", "floor", "year_built"],
       "note": "presentationEngine card/detail labelKeys (FIELD_DEFAULTS, featureGroup:'primary') — audit §2 sites #53, 54. Includes the LABEL_KEYS bedrooms/bathrooms/toilets set (#63). 'floors_total' added by Task 320 — NumInputField.tsx:26 LABEL_KEYS gained a floors_total entry (was a raw-key leak, audit §1b Bucket 3)."

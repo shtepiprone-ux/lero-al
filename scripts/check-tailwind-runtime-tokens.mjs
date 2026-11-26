@@ -107,7 +107,7 @@
  *
  * ── Task 767 (Sprint 65, level 2) — two runtime TSX inputs, origin/line reporting, two new modes ─
  *
- * WHY: `src/app/[locale]/page.tsx` and `src/components/shared/HeroSearchView.tsx` each read
+ * WHY: `src/app/[locale]/(site)/page.tsx` and `src/components/shared/HeroSearchView.tsx` each read
  * Tailwind-owned runtime custom properties through a Mantine responsive-prop object
  * (`fz={{ base: 'var(--text-3xl)', … }}`) or a plain string prop (`maw="var(--container-3xl)"`),
  * outside any `.module.css` file this gate has ever scanned (measured, kickoff §3.5). The scan
@@ -224,7 +224,7 @@ const MANTINE_THEME_PROOF_KEY = '--button-padding-x';
 
 // Task 767 §6 — the closed, hardcoded two-file TSX input list. Never widened by a glob.
 const TSX_FILES_REL = [
-  'src/app/[locale]/page.tsx',
+  'src/app/[locale]/(site)/page.tsx',
   'src/components/shared/HeroSearchView.tsx',
 ];
 

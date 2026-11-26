@@ -68,7 +68,7 @@ describe('account language', () => {
     expect(await localeAfterSignUp('signup-locale-it', { preferred_locale: 'it' }), 'it is stored').toBe('it')
     expect(await localeAfterSignUp('signup-locale-xx', { preferred_locale: 'xx' }), 'xx is not a code').toBe('sq')
     expect(await localeAfterSignUp('signup-locale-upper', { preferred_locale: 'UK' }), 'UK is not a code').toBe('sq')
-    expect(await localeAfterSignUp('signup-locale-crafted', { preferred_locale: "uk'; drop table users; --" }), 'a crafted value').toBe('sq')
+    expect(await localeAfterSignUp('signup-locale-crafted', { preferred_locale: "uk'; --" }), 'a crafted value (quote, semicolon, comment)').toBe('sq')
     expect(await localeAfterSignUp('signup-locale-none', {}), 'no language').toBe('sq')
   })
 })

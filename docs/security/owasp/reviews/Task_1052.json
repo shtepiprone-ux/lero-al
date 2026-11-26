@@ -18,14 +18,14 @@
    "quotes": [
     "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
    ],
-   "evidence": "the executor wrote only the seven values the kickoff names (`git diff 639929db2 -- docs/security/owasp/controls.json`: three reviewedSha, three reviewedOn, one new not-applicable entry); `owasp.mjs check` verifies every mapped quote against the cached sheet text, exit 0 (Review 1)"
+   "evidence": "the executor wrote only the seven values the kickoff names (`git diff 639929db2 -- docs/security/owasp/controls.json`: three reviewedSha, three reviewedOn, one new not-applicable entry); `owasp.mjs check` verifies every mapped quote against the cached sheet text, exit 0 (Review 1); Revision 1 wrote only the two OAuth2 version values of R1-1 (`git diff cfa0613d3 -- docs/security/owasp/controls.json`), `owasp.mjs check` exit 0 (Review 2)"
   },
   "Verifying_Third_Party_Agent_Execution_Evidence": {
    "verdict": "met",
    "quotes": [
     "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
    ],
-   "evidence": "the reviewer reran every command of the report: `owasp.mjs sync --verify` 0, `owasp.mjs check` 0, `node --test scripts/quality/owasp.test.mjs` 25/25, `check-files.mjs` on both files 0, three breaks each exit 1 with O3 or O2 and restored byte for byte (Review 1); CI is read with `gh pr checks` (V14)"
+   "evidence": "the reviewer reran every command of the report: `owasp.mjs sync --verify` 0, `owasp.mjs check` 0, `node --test scripts/quality/owasp.test.mjs` 25/25, `check-files.mjs` on both files 0, three breaks each exit 1 with O3 or O2 and restored byte for byte (Review 1); Revision 1: the same commands rerun, the OAuth2 break exit 1 with O3 and restored byte for byte (Review 2); CI is read with `gh pr checks` (V14)"
   }
  }
 }

@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "6b409f08d75396d300e05a0743db8636e051629a",
- "fetchedOn": "2026-11-26T09:29:04.715Z",
+ "commit": "7eb130bc64f5aebd708c0ed1d216fb9328a7e7c0",
+ "fetchedOn": "2026-11-26T10:04:01.983Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -596,7 +596,7 @@
    "name": "OAuth2",
    "file": "OAuth2_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/OAuth2_Cheat_Sheet.html",
-   "sha": "765d6e48772e36bc5e82c8a1452c2c6af665565b",
+   "sha": "11e383b988e14b6e5cd7946953d3694ee8a30649",
    "title": "OAuth 2.0 Protocol Cheatsheet"
   },
   {

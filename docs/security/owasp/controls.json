@@ -1558,8 +1558,8 @@
      "evidence": "the URL the route would redirect to always stays on the site origin"
     }
    ],
-   "reviewedSha": "765d6e48772e36bc5e82c8a1452c2c6af665565b",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "11e383b988e14b6e5cd7946953d3694ee8a30649",
+   "reviewedOn": "2026-11-26"
   },
   "OS_Command_Injection_Defense": {
    "applies": true,

@@ -108,6 +108,32 @@ No visible change.
    1 with O3; the new `Secure_Application_Development` entry removed → exits 1 with O2.
 6. Report: each command, exit code, relevant output; the failing run of step 2; the output of both breaks.
 
+## Revision 1
+
+Owner, 2026-11-26 (translated): "yes, add" — the OAuth2 remap goes into this task (checklist H1a). After Review 1 and the
+green CI of PR #81 (run 45794505047), H1a's `node scripts/quality/owasp.mjs sync --verify` → "141 sheets at
+7eb130bc64f5; 1 downloaded; added 0, changed 1, removed 0", "changed: OAuth2", exit 1; so no merge command was handed.
+What changed (Opus, 2026-11-26): `gh api repos/OWASP/CheatSheetSeries/git/blobs/765d6e48772e36bc5e82c8a1452c2c6af665565b`
+→ the old text (100 lines), `diff` with `.cache/owasp/OAuth2.md` (112 lines): a new section "Device Authorization Grant
+and Cross-Device Flows" (items 17-21, RFC 8628 and RFC 10027); the old items 17-19 renumbered 22-24 with the same text; two
+references added. The product offers no device or cross-device flow: `grep -rniE "device_code|device
+authorization|verification_uri|grant-type:device|oauth_server|user_code" src supabase` → no output; it signs in with Google
+as an OAuth client only. The mapped quote is still in the text (`grep -c` → 1). The entry holds `reviewedSha`
+`765d6e48772e36bc5e82c8a1452c2c6af665565b` (`docs/security/owasp/controls.json:1561`).
+
+- R1-1 `docs/security/owasp/controls.json`, `OAuth2` (`:1561-1562`): `reviewedSha` `11e383b988e14b6e5cd7946953d3694ee8a30649`,
+  `reviewedOn` `2026-11-26`; `applies`, `triggers` and `requirements` unchanged. `docs/security/owasp/sheets.json` written by
+  `owasp.mjs sync` at upstream `7eb130bc64f5` (already uncommitted in the working tree; the executor's sync writes it again).
+  Test: AC1, AC2, AC3 as above.
+
+Route of the revision: start from `cfa0613d3` (the reviewed and pushed tree); Opus's uncommitted files (`docs/backlog.md`,
+this kickoff, the Task 1053 kickoff, `docs/security/owasp/sheets.json`) stay as they are. (1) `node scripts/quality/owasp.mjs
+check` → exit 1 with one O3 for `OAuth2`; save it. (2) `node scripts/quality/owasp.mjs sync`: upstream `7eb130bc64f5`, only
+`OAuth2` changed; anything else: stop and report `BLOCKED`. (3) Write R1-1. (4) Run step 4 of the Route with the same
+commands. (5) Break: `reviewedSha` of `OAuth2` set back to `765d6e48…` → `owasp.mjs check` exits 1 with O3; restored.
+(6) Report as step 6.
+
 ## Review
 
 - [Review 1 — APPROVED](../../docs/reviews/Task_1052_Review_1.md)
+- [Review 2 — APPROVED](../../docs/reviews/Task_1052_Review_2.md)

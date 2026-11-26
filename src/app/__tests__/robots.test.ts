@@ -34,7 +34,7 @@ describe('robots.txt', () => {
   it('keeps the private areas out of the index and is rebuilt at most once an hour', async () => {
     const result = await robots()
     expect(result.rules).toEqual([
-      { userAgent: '*', allow: '/', disallow: ['/admin', '/*/admin', '/api', '/cabinet', '/auth', '/*/cabinet', '/*/auth'] },
+      { userAgent: '*', allow: '/', disallow: ['/admin', '/*/admin$', '/*/admin/', '/*/admin?', '/api', '/cabinet', '/auth', '/*/cabinet', '/*/auth'] },
     ])
     expect(revalidate).toBe(3600)
   })

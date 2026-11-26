@@ -18,8 +18,8 @@ import { safeNextPath } from '../auth/safeRedirect'
 
 describe('reserved slugs', () => {
   it('every static route under [locale] is reserved, so a CMS page can never be hidden behind it', () => {
-    const dir = join(process.cwd(), 'src', 'app', '[locale]')
-    const routes = readdirSync(dir).filter((n) => statSync(join(dir, n)).isDirectory() && !n.startsWith('[') && !n.startsWith('_') && !n.startsWith('('))
+    const dirs = [join(process.cwd(), 'src', 'app', '[locale]'), join(process.cwd(), 'src', 'app', '[locale]', '(site)')]
+    const routes = dirs.flatMap((dir) => readdirSync(dir).filter((n) => statSync(join(dir, n)).isDirectory() && !n.startsWith('[') && !n.startsWith('_') && !n.startsWith('(')))
     expect(routes.length).toBeGreaterThan(3)
     expect(routes.filter((r) => !isReservedSlug(r)), 'a static route that is not in RESERVED_SLUGS').toEqual([])
   })

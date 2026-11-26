@@ -1,0 +1,31 @@
+{
+ "task": "1052",
+ "sheets": {
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the carried rule H1a only adds a read-only owasp.mjs sync --verify before handed commands; no tool permission, hook or setting changes"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no prompt, tool boundary or text an agent reads as an instruction changes; the sheet texts stay data checked by the tool"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, its permissions or its tool descriptions are added, changed or used by this task"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "the executor wrote only the seven values the kickoff names (`git diff 639929db2 -- docs/security/owasp/controls.json`: three reviewedSha, three reviewedOn, one new not-applicable entry); `owasp.mjs check` verifies every mapped quote against the cached sheet text, exit 0 (Review 1)"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "the reviewer reran every command of the report: `owasp.mjs sync --verify` 0, `owasp.mjs check` 0, `node --test scripts/quality/owasp.test.mjs` 25/25, `check-files.mjs` on both files 0, three breaks each exit 1 with O3 or O2 and restored byte for byte (Review 1); CI is read with `gh pr checks` (V14)"
+  }
+ }
+}

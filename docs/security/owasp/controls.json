@@ -362,8 +362,8 @@
   "Choosing_and_Using_Security_Questions": {
    "applies": false,
    "why": "the product never uses security questions for authentication or recovery",
-   "reviewedSha": "832f6e332b89c918681064b2d327a1239ed897b8",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "cec0c1d2aecaf3dc6c49595d925f0b4246b3e416",
+   "reviewedOn": "2026-11-26"
   },
   "CI_CD_Security": {
    "applies": true,
@@ -1160,8 +1160,8 @@
   "Kubernetes_Security": {
    "applies": false,
    "why": "no Kubernetes cluster is used; Vercel and Supabase are managed",
-   "reviewedSha": "ecccad98012ef080b90b5087a6a571eb309d8532",
-   "reviewedOn": "2026-11-16"
+   "reviewedSha": "befe4915a81f5d8bef5edc1b5fd33070f2385610",
+   "reviewedOn": "2026-11-26"
   },
   "Laravel": {
    "applies": false,
@@ -1808,6 +1808,12 @@
    "reviewedSha": "e6c02b6cfdf3b8d9b815d4ea6441893caf984dc2",
    "reviewedOn": "2026-11-07"
   },
+  "Secure_Application_Development": {
+   "applies": false,
+   "why": "an index page that only points to other cheat sheets, each of which is mapped on its own",
+   "reviewedSha": "f744b70c5bb0ac1426f68e884070051ef7d0ed1d",
+   "reviewedOn": "2026-11-26"
+  },
   "Secure_Cloud_Architecture": {
    "applies": false,
    "why": "no cloud account, network or IAM role is configured by the project; the managed services are covered by the Serverless and Database sheets",
@@ -1960,8 +1966,8 @@
      "evidence": "asks Supabase for the user straight after creating the client"
     }
    ],
-   "reviewedSha": "a9eb4ecb8b60fc159151c00086938489bcbee6f0",
-   "reviewedOn": "2026-11-11"
+   "reviewedSha": "6d5502e5f8fd8677a61f2bd2101fb5b04582b0d8",
+   "reviewedOn": "2026-11-26"
   },
   "Software_Supply_Chain_Security": {
    "applies": true,

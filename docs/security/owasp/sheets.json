@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "05861f28ed88269db390afeb67486abc0adfc076",
- "fetchedOn": "2026-11-25T08:28:41.241Z",
+ "commit": "6b409f08d75396d300e05a0743db8636e051629a",
+ "fetchedOn": "2026-11-26T09:29:04.715Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -148,7 +148,7 @@
    "name": "Choosing_and_Using_Security_Questions",
    "file": "Choosing_and_Using_Security_Questions_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.html",
-   "sha": "832f6e332b89c918681064b2d327a1239ed897b8",
+   "sha": "cec0c1d2aecaf3dc6c49595d925f0b4246b3e416",
    "title": "Choosing and Using Security Questions Cheat Sheet"
   },
   {
@@ -449,7 +449,7 @@
    "name": "Kubernetes_Security",
    "file": "Kubernetes_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html",
-   "sha": "ecccad98012ef080b90b5087a6a571eb309d8532",
+   "sha": "befe4915a81f5d8bef5edc1b5fd33070f2385610",
    "title": "Kubernetes Security Cheat Sheet"
   },
   {
@@ -719,6 +719,13 @@
    "title": "Secure AI/ML Model Ops Cheat Sheet"
   },
   {
+   "name": "Secure_Application_Development",
+   "file": "Secure_Application_Development_Cheat_Sheet.md",
+   "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secure_Application_Development_Cheat_Sheet.html",
+   "sha": "f744b70c5bb0ac1426f68e884070051ef7d0ed1d",
+   "title": "Secure Application Development Cheat Sheet"
+  },
+  {
    "name": "Secure_Cloud_Architecture",
    "file": "Secure_Cloud_Architecture_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.html",
@@ -778,7 +785,7 @@
    "name": "Session_Management",
    "file": "Session_Management_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
-   "sha": "a9eb4ecb8b60fc159151c00086938489bcbee6f0",
+   "sha": "6d5502e5f8fd8677a61f2bd2101fb5b04582b0d8",
    "title": "Session Management Cheat Sheet"
   },
   {

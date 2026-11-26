@@ -13,7 +13,7 @@ mail to an existing inquiry use: the sender's address equal to the customer's ad
 the trusted Authentication-Results added by Cloudflare. Do not trust authentication headers added by the sender himself. Without sufficient
 proof do not join the mail automatically"; "check correct grouping in the visitor's mail client through In-Reply-To, References and
 Message-ID ... if it needs only minimal changes of the current reply sending, implement it within 1044". The plan, DNS changes, rollback and the owner's
-verification: [plan](Sprint_94_Task_1044_Plan_And_Owner_Settings.md). Implementer: Sonnet. Reviewer: Opus. Human owner of the change: the owner.
+verification: [plan](../Sprints/Sprint_94_Task_1044_Plan_And_Owner_Settings.md). Implementer: Sonnet. Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
 

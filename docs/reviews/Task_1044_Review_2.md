@@ -1,6 +1,6 @@
 # Task 1044 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md) · OWASP record: [Task_1044.json](../security/owasp/reviews/Task_1044.json) · Previous: [Review 1](Task_1044_Review_1.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md) · OWASP record: [Task_1044.json](../security/owasp/reviews/Task_1044.json) · Previous: [Review 1](Task_1044_Review_1.md)
 
 Review 2 of Revision 1 (working tree on 4faf138ba, the owner's commit of the Review 1 tree) — NEEDS REVISION
 Scope: the 7 files of Revision 1 against 4faf138ba: `InquiryDetailDialogView.tsx`, its inbound test, `admin.fixtures.ts`, the Story, `rls-write-guards.smoke.test.ts`, `inquiryReplies.test.ts`, `scripts/rendered-interaction-states.json`. Every file is a Scope line or one of the three files the owner added on 2026-11-25 (Review 1).

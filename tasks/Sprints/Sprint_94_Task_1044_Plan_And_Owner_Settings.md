@@ -1,6 +1,6 @@
 # Task 1044 — plan, DNS changes, rollback and the owner's verification
 
-Companion of [the kickoff](Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md). Architecture approved by the
+Companion of [the kickoff](../Archive/Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md). Architecture approved by the
 owner on 2026-11-25: Cloudflare Email Routing and Workers Free receive, Resend Free only sends; $0 a month; no R2 bucket, queue or mail cron.
 Facts read 2026-11-25 on developers.cloudflare.com and resend.com.
 
@@ -67,6 +67,17 @@ the Worker throws or exceeds its CPU.
 4. Routing rules (literal; catch-all stays off — "Catch-all rules are only available for the apex domain"): `support@mailtest.lero.al` and
    `sales@mailtest.lero.al` → Send to a Worker → `lero-email-inbound`.
 
+Done 2026-11-25. Steps 1-2 by the owner; the secret was generated again and set in both places, then Vercel was redeployed (route: 401
+without the secret). Steps 3-4 by Opus in the owner's Cloudflare at the owner's request ("ти ж сам можеш ці кроки зробити"): subdomain
+`mailtest.lero.al` Enabled (MX `route1-3.mx.cloudflare.net`, TXT SPF); rules `support@` and `sales@mailtest.lero.al` → `lero-email-inbound`
+Active, catch-all Disabled. Adding the subdomain also enabled Email Routing on `lero.al` and published two root records:
+`TXT lero.al v=spf1 include:_spf.mx.cloudflare.net ~all` and `TXT cf2024-1._domainkey.lero.al` (DKIM). The root MX is unchanged
+(`MX lero.al 0 lero.al`), so no mail to `@lero.al` is routed; `send.lero.al`, `resend._domainkey`, `_dmarc` are unchanged (public DNS read).
+
+Workers Logs (found on V1, 2026-11-25): with "Include invocation logs" on, Cloudflare stores the sender's address in every invocation
+(`mailFrom`, `trigger`). Owner decision, 2026-11-25: unchanged during the verification (the CPU time is only in these records, needed for V1
+and V5); "Include invocation logs" or all Workers Logs are turned off before the root MX is switched.
+
 ## Verification on `mailtest.lero.al` (before the root domain)
 
 | # | Scenario | How | Expected |
@@ -80,6 +91,52 @@ the Worker throws or exceeds its CPU.
 | V7 | Customer answer | close the V1 inquiry; staff reply from the dialog to the V1 sender; the sender answers it, To changed to `support@mailtest.lero.al` (the root is not routed yet) | the answer joins the V1 inquiry, which is `new` again; the staff reply and the answer are one conversation in the sender's mail program (Gmail, Outlook) |
 | V8 | Sending after routing | a password-reset mail and a staff reply after step 3 | both arrive; their headers show `dkim=pass` and `dmarc=pass` for `lero.al` |
 | V9 | Forged answer | from a second mailbox, an answer to the V7 thread with the same `In-Reply-To`/`References` (copy the headers, or reply from a forwarded copy); if a tool that sets `From` is at hand, also a mail with the V1 sender's address as `From` from another server | each opens a new inquiry or is rejected by Cloudflare; the V1 inquiry gains nothing |
+
+Results, 2026-11-25 (sent by Opus from the owner's Gmail at the owner's request; random-byte attachments, no personal data):
+
+| # | Mail | Raw size (Workers Logs) | Worker | Route | Admin |
+|---|---|---|---|---|---|
+| V1 | plain text | 7 334 B | CPU 0 ms, status 200 | `stored` | Support inquiry, `new` |
+| V1 | 1 MB attachment | 1 442 592 B | CPU 1 ms, status 200 | `stored` | Support inquiry, attachment `v1-test-1mb.bin (1024 KB)` |
+| V1 | 3.5 MB attachment | 5 029 837 B | CPU 0 ms, rejected before the POST | — | none; sender got `555 5.7.1 Message too large: the limit is 4 MB` |
+
+The 4 MB limit is on the raw message: base64 makes an attachment about 1.38 times larger (1 442 592 / 1 048 576), so the largest
+attachment that passes is about 3 MB. The 3.5 MB row of V1 cannot pass; it already shows the V2 rejection. In its place (owner, 2026-11-25):
+
+| V1 | 2.9 MB attachment | 4 168 923 B | **CPU 7 ms**, wall 3.7 s, status 200 | `stored` | Support inquiry, attachment `v1-test-2-9mb.bin (2970 KB)` |
+
+Open: 7 ms of the Workers Free 10 ms CPU limit for a message just under the 4 MB cap is not "well under 10 ms" (the pass condition
+below). One sample each; CPU grows with size (0 ms at 7 KB, 1 ms at 1.4 MB, 7 ms at 4.2 MB).
+
+Owner decision, 2026-11-25 (on "staff cannot open the attachment, so what is the point"): attachments become openable from the admin. A
+new task stores each received message and its attachments in private R2 (staff open them through short-lived links only); the Worker
+streams the raw message to R2 and hands the route its key, which removes the 4 MB cap and the CPU risk. This supersedes the "no R2
+bucket" part of the $0 decision; the cost stays $0 within the R2 free tier. V1 sizes and V5 are measured again after that task.
+
+Owner decisions, 2026-11-25 (answers to the design questions of the follow-up; split by checklist D4 into Tasks 1046, 1047, 1048):
+- O1046-1: a new private R2 bucket with no public domain and an API token for that bucket only; the existing listing-photo bucket is public
+  and is not used for mail.
+- O1046-2: the message limit becomes 25 MB, Cloudflare Email Routing's own maximum ("Inbound message size | 25 MiB").
+- O1047-1: staff preview images and PDF in the browser; every other file is downloaded.
+- O1048-1 (translated): "the admin also needs a function to delete conversations. When a conversation is deleted, the files kept in
+  Cloudflare R2 for that conversation are deleted too." A file lives as long as its conversation.
+- O1048-2: only an administrator deletes a conversation (inquiry, every reply, its R2 files), after a confirmation dialog; a moderator
+  reads and answers but has no delete control.
+- O1049-1 (translated): "also develop automatic deletion of a conversation after 180 days, from the admin and the files of that
+  conversation from Cloudflare R2"; the 180 days count from the conversation's last message, of the customer or of staff (Task 1049).
+
+Owner steps for Task 1046, after its merge and before the Worker is replaced: (1) Cloudflare → R2 → Create bucket `lero-inbound-mail`,
+no public access, no custom domain; its Settings → Object Lifecycle Rules → Add rule: prefix `inbound/`, delete after 1 day. (2) R2 → Manage
+API tokens → Create: Object Read & Write, this bucket only. (3) Vercel Production: `R2_MAIL_BUCKET_NAME`, `R2_MAIL_ACCESS_KEY_ID`,
+`R2_MAIL_SECRET_ACCESS_KEY` (Sensitive); redeploy. (4) Worker `lero-email-inbound` → Settings → Bindings → R2 bucket: `INBOUND_BUCKET` →
+`lero-inbound-mail`; then paste the new `worker.js` and deploy. Then V1 is repeated with 1 MB, 10 MB and 24 MB attachments.
+Bucket created 2026-11-25 by Opus at the owner's request ("ти ж сам можеш створити backet"): `lero-inbound-mail`, Eastern Europe (EEUR),
+Standard class, Public Access Disabled, no custom domain, Public Development URL disabled, no CORS policy; only Cloudflare's "Default
+Multipart Abort Rule" (abort uploads after 7 days). Lifecycle rule added the same day by Opus at the owner's request ("так, додай"):
+`delete-raw-inbound-after-1-day`, prefix `inbound/`, "Delete objects after 1 day(s)", Enabled. Token created by the owner the same day,
+read by Opus: Account API token `lero-inbound-mail-api`, applied to `lero-inbound-mail` only, Object Read & Write, Active; Vercel Production
+has `R2_MAIL_ACCESS_KEY_ID`, `R2_MAIL_SECRET_ACCESS_KEY`, `R2_MAIL_BUCKET_NAME` (Sensitive, Production only; names read, values not
+decrypted). Separate from the listing-photo `R2_*` variables of 2026-11-24 (`lero-media-api`, `lero-media`). Only the binding is still open.
 
 Pass: V1-V4 and V6-V9 as expected, and V1's CPU times well under 10 ms. V5 decides how a crash looks to a sender; the owner accepts the MVP
 without automatic retries only after V2-V5 show that the sender is told the mail was not delivered (owner, 2026-11-25).

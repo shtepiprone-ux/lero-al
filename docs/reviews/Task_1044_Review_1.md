@@ -1,6 +1,6 @@
 # Task 1044 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md) · OWASP record: [Task_1044.json](../security/owasp/reviews/Task_1044.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1044_Mail_To_Support_And_Sales_Reaches_The_Admin.md) · OWASP record: [Task_1044.json](../security/owasp/reviews/Task_1044.json)
 
 Review 1 of the working tree on c126db3e4 (first implementation, uncommitted) — NEEDS REVISION
 Scope: the 21 changed and 12 new files of the executor's report against c126db3e4: `POST /api/email/inbound`, `src/modules/contacts/lib/inboundEmail.ts`, `cloudflare/email-inbound/worker.js`, `submitContactInquiry` and `sendInquiryReply`, `send.ts` (`headers`, `getSentMessageId`), `contactInquiry.ts`, the replies loader, the two admin inquiry pages, `AdminInquiriesManager.tsx`, `InquiryDetailDialogView.tsx`, `database.ts`, `supabase/sql_migrations/task1044/`, the Story and fixtures, the four message files, `docs/env.md`, `package.json` and the lockfile. Every file is in the kickoff's Scope.

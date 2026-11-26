@@ -53,7 +53,7 @@ describe('exchangeProvidersRemoved', () => {
     expect(offenders, `these production lines still name the removed exchange-providers screen:\n${offenders.join('\n')}`).toEqual([])
 
     // the currency page renders the currencies list alone, under the page header, with no tab frame
-    const page = readFileSync(join(SRC, 'app/admin/currency/page.tsx'), 'utf8')
+    const page = readFileSync(join(SRC, 'app/[locale]/admin/currency/page.tsx'), 'utf8')
     expect(page).toContain('<AdminCurrenciesManager')
     expect(page).not.toMatch(/Tabs|Provider/)
   })

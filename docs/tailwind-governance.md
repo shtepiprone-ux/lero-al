@@ -403,7 +403,7 @@ overlap**. Eight files retain **18 (file, name) pairs / 27 uses**, including fou
 
 | File | Pairs / uses | Names |
 |---|---:|---|
-| `src/app/[locale]/listings/[slug]/loading.tsx` | 3 / 3 | `--listing-gallery-h-{mobile,tablet,desktop}` |
+| `src/app/[locale]/(site)/listings/[slug]/loading.tsx` | 3 / 3 | `--listing-gallery-h-{mobile,tablet,desktop}` |
 | `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx` | 3 / 6 | same three |
 | `src/modules/listings/components/GalleryStaticFrame.tsx` | 3 / 3 | same three |
 | `src/modules/listings/components/ListingGallery.tsx` | 3 / 3 | same three |

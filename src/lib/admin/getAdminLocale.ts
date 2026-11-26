@@ -1,15 +1,10 @@
-import { cookies } from 'next/headers'
-import { setRequestLocale } from 'next-intl/server'
+import { getLocale } from 'next-intl/server'
+import type { AppLocale } from '@/i18n/uiLocale'
 
-type Locale = 'sq' | 'en' | 'uk' | 'it'
-const SUPPORTED: Locale[] = ['sq', 'en', 'uk', 'it']
-const ADMIN_LOCALE_COOKIE = 'admin-locale'
-const DEFAULT: Locale = 'en'
-
-export async function getAdminLocale(): Promise<Locale> {
-  const jar = await cookies()
-  const raw = jar.get(ADMIN_LOCALE_COOKIE)?.value
-  const locale: Locale = SUPPORTED.includes(raw as Locale) ? (raw as Locale) : DEFAULT
-  setRequestLocale(locale)
-  return locale
+/**
+ * The language of an admin page (Task 988, owner decision O988-4): the admin lives under the language slug, so it is next-intl's request locale, the `[locale]`
+ * segment of the address (`src/i18n/request.ts` accepts only the four codes). No cookie is read.
+ */
+export async function getAdminLocale(): Promise<AppLocale> {
+  return (await getLocale()) as AppLocale
 }

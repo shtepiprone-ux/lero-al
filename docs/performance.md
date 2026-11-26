@@ -1241,7 +1241,7 @@ Components are serialized as RSC payload data — processed after hydration — 
 
 ### Server-Side LCP Image Preload
 
-The listing detail page (`src/app/[locale]/listings/[slug]/page.tsx`) calls React 19's
+The listing detail page (`src/app/[locale]/(site)/listings/[slug]/page.tsx`) calls React 19's
 `preload()` from `react-dom` during SSR to register the gallery cover image as a preload hint.
 This is complementary to the preconnect: the preconnect establishes the Cloudinary TCP/TLS
 connection, and the preload registers the specific image URL.

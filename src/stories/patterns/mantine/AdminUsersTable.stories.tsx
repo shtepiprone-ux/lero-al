@@ -18,7 +18,7 @@ import { storyT } from '@/stories/_storyI18n'
  * role, status, location request, page), so every control changes what is shown and nothing reaches a server action.
  *
  * GR-3b/§7.3 (Task 857): every export renders inside the real `AdminShell` and the route's `AdminPageFrame`
- * (full width, O1007-2, `src/app/admin/users/page.tsx`), so the tables have their production card width;
+ * (full width, O1007-2, `src/app/[locale]/admin/users/page.tsx`), so the tables have their production card width;
  * GR-3d: the frame is the page gutter.
  */
 const meta: Meta<typeof AdminUsersTableView> = {
@@ -28,7 +28,7 @@ const meta: Meta<typeof AdminUsersTableView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/users' } },
+    nextjs: { navigation: { pathname: '/en/admin/users' } },
     docs: {
       description: {
         component:

@@ -44,9 +44,9 @@ import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import messages from '../../../../messages/en.json'
 import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
-import { applyAdminListingsVisibility } from '@/app/admin/listings/visibilityFilter'
+import { applyAdminListingsVisibility } from '@/app/[locale]/admin/listings/visibilityFilter'
 import { AdminListingsTable, type AdminListing } from '../AdminListingsTable'
-import AdminListingsPage from '@/app/admin/listings/page'
+import AdminListingsPage from '@/app/[locale]/admin/listings/page'
 
 const mockPush = vi.fn()
 let mockSearch = ''

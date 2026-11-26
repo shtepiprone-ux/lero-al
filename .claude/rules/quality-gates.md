@@ -151,3 +151,41 @@ Evidence (the evidence is a test the reviewer reruns, not the agent's report).
 A test is deleted together with the behaviour it pins; a test that only watches a legacy component is not written —
 the component is migrated instead. Changed-line coverage is measured on `src/` (`vitest.config.ts` `coverage`);
 `scripts/quality/` is tested by `node --test` in the quality job.
+
+### 8.1 The tests a change reaches (D10, I8, V3)
+
+Owner, 2026-11-26 (translated): "extend the rules according to the workflow, the pipelines, OWASP security and the
+other best practices of 2026". Cause (Task 1053 Review 1, N1): the text search of D10, I8 and V3 matched a module's
+alias path and its exported names, never a relative import from another folder or a test that reaches the module through
+another one. Measured on the ten product files of Task 1053 at `aacf6ebce`: the Route's text search missed
+`src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts` (`import … from '../../actions'`) and three tests
+that reach `Header.tsx` through other modules; the import graph alone missed two tests that read source files as text
+(`serverEntryGuards.test.ts`, `publicListingsTag.test.ts`) and five that import only types (`import type` is erased).
+Practice: test impact analysis by the test runner's own module graph (Vitest `related`, the counterpart of Jest
+`--findRelatedTests`), a text search for what a graph cannot see, and the whole suite in CI (§5) as the backstop; OWASP
+basis as §8.
+
+The tests a change reaches are the union of two searches; neither alone is enough.
+
+1. **The import graph.** `npx vitest related --run --reporter=verbose <every changed or new file of the change>`
+   (source files, configuration such as `eslint.config.mjs` or `vitest.config.ts`, fixtures). Vitest resolves the
+   `@/` alias, relative paths, re-exports and transitive importers through the module graph its run uses
+   (https://vitest.dev/guide/cli#vitest-related), and runs the tests it finds; the test files are the paths of its
+   `✓` and `×` lines, its exit code is the run's. The integration collection (`*.integration.test.ts`, excluded from
+   the default one): the same command with `--config vitest.integration.config.ts` and the environment of
+   `project-facts.md` ("Supabase and test data"); it runs nothing when no integration test reaches the change. The
+   graph cannot see a dynamic import whose path is computed, a type-only import, a file read as text, or a module
+   named only in a `vi.mock` call.
+2. **The text search, for what the graph cannot see.** `grep -rlE "<pattern>" src scripts --include=*.test.ts
+   --include=*.test.tsx --include=*.test.mjs`, where the pattern joins, for each changed or new file: its path
+   without `src/` and without the extension (`modules/cabinet/actions/index` and, for an `index` file, its folder
+   `modules/cabinet/actions`), which matches the `@/` alias, a `src/…` path, a `vi.mock` path and a test that reads the
+   file as text; a root file by its name (`eslint\.config`); and each exported name the change adds, moves, renames or
+   removes (a type-only import of it). A match that is only a comment is named as such, never silently dropped. A
+   relative import needs no pattern of its own: the graph sees it, and a type-only relative import of an unchanged
+   name is held by `npm run typecheck` (`tsconfig.json` includes every test file), not by a test run.
+
+Then: a test of the default collection found only by the text search runs with `npm test -- <files>`; a
+`*.integration.test.ts` with `npm run test:security-integration -- <files>`; a `scripts/quality/*.test.mjs` with
+`node --test <files>`. This is not the full run that A5 forbids: it runs only what the change reaches, and CI still runs
+everything.

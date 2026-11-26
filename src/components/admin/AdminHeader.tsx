@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Burger, Group, Text } from '@mantine/core'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminRouteOf } from '@/lib/auth/adminPages'
 
 interface Props {
   opened: boolean
@@ -33,7 +34,8 @@ export function AdminHeader({ opened, onOpen, siteName = 'Lero.al' }: Props) {
     '/admin/popular-locations':  t('item_popular_locations'),
   }
 
-  const title = PAGE_TITLES[pathname] ?? 'Admin'
+  // Task 988: the titles are keyed by the admin route, the address after its language slug
+  const title = PAGE_TITLES[adminRouteOf(pathname) ?? ''] ?? 'Admin'
   const [brand, tld] = siteName.includes('.')
     ? [siteName.split('.')[0], '.' + siteName.split('.').slice(1).join('.')]
     : [siteName, '']

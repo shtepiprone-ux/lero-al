@@ -1616,7 +1616,7 @@ Session: `docs/sessions/2026-08-05-task710-assertion-liveness-meta-gate.md`.
 (`src/stories/mantine/primitives/HeroSearch.stories.tsx:53-54`/`:90-91`) rendered a hand-written
 `<section className="relative py-16 md:py-24">` wrapping `<div className="container-wide relative
 z-10">` — a raw-HTML replica standing in for the production composition
-(`src/app/[locale]/page.tsx:28-29`, `<Box component="section" bg pos py>` wrapping `<Box
+(`src/app/[locale]/(site)/page.tsx:28-29`, `<Box component="section" bg pos py>` wrapping `<Box
 className="container-wide …">`). This predates Task 712 and is exactly the cl. 16c "divergent
 demo stand-in" defect: the CI-blocking `--mantine-only` matrix (§14.9, 40 herosearch cells) proved
 the replica's geometry, never production's.
@@ -2281,7 +2281,7 @@ use sites, this is now the 2nd proven at ≥1440 (`PopularLocationsView` was alr
 nearest story, `System/LatestListings`) as candidates. Investigation found they are not symmetric:
 
 - **`System/LatestListings` cannot prove its associated heading at all.** `LatestListingsView.tsx` does not render
-  a `<Title>` — the `{tl('latest')}` heading lives directly in `src/app/[locale]/page.tsx:50`, structurally
+  a `<Title>` — the `{tl('latest')}` heading lives directly in `src/app/[locale]/(site)/page.tsx:50`, structurally
   identical to the Agent CTA heading at `page.tsx:78` (route-level, no story renders it, already named out-of-scope
   in the 678 kickoff §8, owned by Task 667's route inventory). Enrolling `System/LatestListings` would add cells
   and prove nothing — the story's render tree never includes that heading. Disposition: **out of scope, extends

@@ -150,7 +150,7 @@ describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge rem
     expect(text).toContain(t.open_profile)
 
     const profileLink = within(dialog).getByRole('link', { name: t.open_profile })
-    expect(profileLink.getAttribute('href')).toBe('/admin/users/u-owner')
+    expect(profileLink.getAttribute('href')).toBe('/uk/admin/users/u-owner')
 
     // Task 462: no profile_types raw key anywhere in the dialog
     expect(text).not.toMatch(/profile_types/)
@@ -178,7 +178,7 @@ describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge rem
     expect(dialog.textContent).not.toMatch(/profile_types/)
 
     const profileLink = within(dialog).getByRole('link', { name: t.open_profile })
-    expect(profileLink.getAttribute('href')).toBe('/admin/users/u-owner')
+    expect(profileLink.getAttribute('href')).toBe('/uk/admin/users/u-owner')
   })
 
   it('owner null (deleted) → shows owner_not_found fallback, no profile link', async () => {

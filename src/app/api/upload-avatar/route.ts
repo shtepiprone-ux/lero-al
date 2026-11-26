@@ -172,7 +172,7 @@ export async function POST(req: NextRequest) {
 
   // Cache invalidation
   if (targetUserId) {
-    revalidatePath(`/admin/users/${targetUserId}`)
+    revalidatePath('/[locale]/admin/users/[id]', 'page')
   } else {
     revalidatePath('/cabinet')
   }

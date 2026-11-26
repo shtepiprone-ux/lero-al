@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useMemo } from 'react'
 import { useStateFromProp } from '@/hooks/useStateFromProp'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Plus, Loader2, Star } from 'lucide-react'
 import { toast } from '@/lib/toast'
@@ -14,6 +14,7 @@ import { Combobox } from '@/components/shared/Combobox'
 import { createLocation, updateLocation, deleteLocation, toggleLocationFeatured } from '@/modules/admin/actions'
 import { AppImage } from '@/design-system/media/AppImage'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref } from '@/lib/auth/adminPages'
 
 function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -187,6 +188,7 @@ interface Props { locations: Location[]; parents: Location[]; activeType: string
 
 export function AdminLocationsManager({ locations: init, parents, activeType }: Props) {
   const t = useTranslations('admin.locations')
+  const locale = useLocale()
   const router = useRouter()
   const [, startTransition] = useTransition()
   const tc = useTranslations('common')
@@ -281,7 +283,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
             {typeFilters.map(([key, label]) => (
               <a
                 key={key}
-                href={`/admin/locations${key ? `?type=${key}` : ''}`}
+                href={adminHref(locale, `/admin/locations${key ? `?type=${key}` : ''}`)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
                   activeType === key
                     ? 'bg-primary text-primary-foreground border-primary'

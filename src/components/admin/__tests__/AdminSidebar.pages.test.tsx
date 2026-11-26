@@ -125,9 +125,9 @@ describe('AdminSidebar — allowedPaths (Task 1007)', () => {
 
 describe('AdminLayout — the list it passes to the shell (Task 1007)', () => {
   async function layoutPaths(): Promise<readonly string[]> {
-    const { default: AdminLayout } = await import('@/app/admin/layout')
-    const tree = (await AdminLayout({ children: null })) as React.ReactElement<{ children: React.ReactElement<{ allowedPaths?: readonly string[] }> }>
-    const shell = tree.props.children
+    const { default: AdminLayout } = await import('@/app/[locale]/admin/layout')
+    // Task 988: the layout takes its language from the [locale] segment and renders the shell itself (the message provider is the [locale] layout's)
+    const shell = (await AdminLayout({ children: null, params: Promise.resolve({ locale: 'en' }) })) as React.ReactElement<{ allowedPaths?: readonly string[] }>
     expect(shell.props.allowedPaths, 'the layout always passes a list').toBeDefined()
     return shell.props.allowedPaths as readonly string[]
   }

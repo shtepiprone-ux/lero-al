@@ -44,7 +44,7 @@ export function newScriptNonce(): string {
   return btoa(String.fromCharCode(...bytes))
 }
 
-/** the dynamic routes that carry the report-only script policy: `/admin` and the cabinet and auth pages, with or without a language prefix */
+/** the dynamic routes that carry the report-only script policy: the admin and the cabinet and auth pages, with or without a language prefix (the admin under it since Task 988) */
 export function carriesScriptReportOnly(pathname: string): boolean {
-  return /^\/admin(?:\/|$)/.test(pathname) || /^\/(?:(?:sq|en|uk|it)\/)?(?:cabinet|auth)(?:\/|$)/.test(pathname)
+  return /^\/(?:(?:sq|en|uk|it)\/)?(?:admin|cabinet|auth)(?:\/|$)/.test(pathname)
 }

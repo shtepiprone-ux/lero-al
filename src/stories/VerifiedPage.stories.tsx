@@ -14,7 +14,7 @@
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { storyT } from './_storyI18n'
-import { VerifiedCard } from '@/app/[locale]/auth/verified/VerifiedCard'
+import { VerifiedCard } from '@/app/[locale]/(site)/auth/verified/VerifiedCard'
 
 const meta: Meta = {
   title: 'Auth/VerifiedPage',

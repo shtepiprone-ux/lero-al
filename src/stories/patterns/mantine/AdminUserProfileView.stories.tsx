@@ -39,7 +39,7 @@ const meta: Meta<typeof AdminUserProfileView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/users/[id]' } },
+    nextjs: { navigation: { pathname: '/en/admin/users/[id]' } },
     docs: {
       description: {
         component:
@@ -216,9 +216,9 @@ export const EditErrors: Story = {
   },
 }
 
-// `/admin/users/new` renders in the narrower `form` frame (`src/app/admin/users/new/page.tsx`); every other export is `/admin/users/[id]`.
+// `/admin/users/new` renders in the narrower `form` frame (`src/app/[locale]/admin/users/new/page.tsx`); every other export is `/admin/users/[id]`.
 export const Create: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin/users/new' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/users/new' } } },
   render: () => <ProfileDemo mode="create" user={null} />,
 }
 

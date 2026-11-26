@@ -41,23 +41,23 @@ export default meta;
 type Story = StoryObj<typeof AdminSidebar>;
 
 export const Default: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin' } } },
 };
 
 export const ManagementActive: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin/listings' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/listings' } } },
 };
 
 export const ContentActive: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin/locations' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/locations' } } },
 };
 
 export const SystemActive: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin/settings' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/settings' } } },
 };
 
 // Task 1007 — a moderator's sidebar: only the pages the administrator switched on (the layout passes their first paths). Permissions and Footer are never shown to a moderator.
 export const ModeratorPages: Story = {
   args: { allowedPaths: ['/admin', '/admin/listings', '/admin/inquiries/support', '/admin/reports', '/admin/pages'] },
-  parameters: { nextjs: { navigation: { pathname: '/admin/listings' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/listings' } } },
 };

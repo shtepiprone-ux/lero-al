@@ -47,7 +47,7 @@ async function clearHistory(
   const cleared = result?.cleared_row_count ?? 0
   if (cleared === 0) return { cleared: 0 }   // no-op: no audit row, no delete, no revalidate
 
-  revalidatePath(`/admin/users/${entityId}`)
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
   return { cleared }
 }
 

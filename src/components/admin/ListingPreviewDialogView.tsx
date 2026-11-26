@@ -18,6 +18,7 @@ import { formatVisibility } from '@/modules/listings/lib/visibility'
 import { isListingHidden } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref } from '@/lib/auth/adminPages'
 
 export interface ListingPreviewDialogViewProps {
   listing: AdminListing
@@ -129,7 +130,7 @@ export function ListingPreviewDialogView({
                   key: 'view',
                   icon: <Eye size={iconSize} />,
                   label: t('btn_view'),
-                  href: `/admin/listings/${listing.id}/preview`,
+                  href: adminHref(locale, `/admin/listings/${listing.id}/preview`),
                 },
                 ...(!isListingHidden(listing.status)
                   ? [{

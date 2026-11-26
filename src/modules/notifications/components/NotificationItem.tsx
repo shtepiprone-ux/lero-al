@@ -16,6 +16,7 @@ const DF_LOCALE_MAP: Record<string, DfLocale> = { sq, en: enUS, uk, it }
 const UNREAD_BG = 'color-mix(in oklab, var(--primary) 5%, transparent)'
 const UNREAD_HOVER_BG = 'color-mix(in oklab, var(--primary) 10%, transparent)'
 import { markNotificationRead } from '@/modules/notifications/lib/mutations'
+import { notificationHref } from '@/modules/notifications/lib/notificationHref'
 import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import type { Notification, NotificationType } from '@/types/database'
 
@@ -281,12 +282,14 @@ export function NotificationItem({ notification, onRead }: Props) {
     </Group>
   )
 
-  if (notification.link) {
+  // Task 988: the stored link opens in the reader's language and stays a path of this site; an empty, foreign or unsafe one renders no anchor
+  const href = notificationHref(notification.link, locale)
+  if (href) {
     return (
       // c="inherit" — the original <a> relied on Tailwind Preflight's `a { color: inherit }`;
       // Mantine's Anchor defaults to its own link color otherwise, which leaked into the
       // (unstyled) title text through normal CSS inheritance. Measured and fixed (Task 754).
-      <Anchor href={notification.link} display="block" underline="never" c="inherit" onClick={handleClick}>
+      <Anchor href={href} display="block" underline="never" c="inherit" onClick={handleClick}>
         {content}
       </Anchor>
     )

@@ -26,7 +26,7 @@ vi.mock('next/navigation', () => ({
 }))
 vi.mock('@/modules/notifications/components/NotificationBell', () => ({ NotificationBell: () => null }))
 vi.mock('@/modules/auth/components/AuthSheet', () => ({ AuthSheet: () => null }))
-vi.mock('@/modules/admin/actions/locale', () => ({ setAdminLocale: vi.fn() }))
+vi.mock('@/modules/admin/actions/locale', () => ({ setAccountLocale: vi.fn() }))
 
 const ACTIVE_USER: User = {
   id: 'session-ended-user-1', public_id: 1, name: 'Dritan Gjoka', last_name: null, phone: null, whatsapp: null, avatar_url: null, role: 'user', user_type: 'private',

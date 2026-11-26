@@ -13,6 +13,7 @@ import { MantineFilterChips } from '@/design-system/mantine/patterns/MantineFilt
 import { BADGE_TONES } from '@/design-system/mantine/badgeTones'
 import { formatDate } from '@/lib/formatters'
 import type { UserRole, UserStatus } from '@/types/database'
+import { adminHref } from '@/lib/auth/adminPages'
 
 export interface VerifiedAgent {
   id: string
@@ -137,7 +138,7 @@ export function AdminUsersTableView({
             mih={theme.other.touchTarget}
             miw={theme.other.touchTarget}
             component={Link}
-            href={`/admin/users/${u.id}`}
+            href={adminHref(locale, `/admin/users/${u.id}`)}
             data-testid="user-detail-link"
           >
             <ChevronRight size={theme.other.iconSize.compact} />
@@ -212,7 +213,7 @@ export function AdminUsersTableView({
                 R71, GR-3i, R82(b), D6: the name, the company line and the phone wrap — nothing is cut. */}
             <Stack gap="sm" miw={0}>
               <Stack gap={0}>
-                <Anchor component={Link} href={`/admin/users/${u.id}`} underline="never" c="inherit">
+                <Anchor component={Link} href={adminHref(locale, `/admin/users/${u.id}`)} underline="never" c="inherit">
                   <Text size="sm" fw={500}>{fullName}</Text>
                 </Anchor>
                 {(u.company_name || u.public_id != null) && (
@@ -285,7 +286,7 @@ export function AdminUsersTableView({
               variant="subtle"
               size="sm"
               component={Link}
-              href={`/admin/users/${u.id}`}
+              href={adminHref(locale, `/admin/users/${u.id}`)}
               data-testid="user-detail-link"
             >
               <ChevronRight size={theme.other.iconSize.compact} />
@@ -308,7 +309,7 @@ export function AdminUsersTableView({
             {initialsOf(u.name)}
           </Avatar>
           <Stack gap={0} miw={0}>
-            <Anchor component={Link} href={`/admin/users/${u.id}`} underline="never" c="inherit" data-testid="agent-detail-link">
+            <Anchor component={Link} href={adminHref(locale, `/admin/users/${u.id}`)} underline="never" c="inherit" data-testid="agent-detail-link">
               <Text size="sm" fw={500}>{u.name ?? '—'}</Text>
             </Anchor>
             {u.company_name && (
@@ -358,7 +359,7 @@ export function AdminUsersTableView({
       </Avatar>
     ),
     title: (u) => (
-      <Anchor component={Link} href={`/admin/users/${u.id}`} underline="never" c="inherit" data-testid="agent-detail-link">
+      <Anchor component={Link} href={adminHref(locale, `/admin/users/${u.id}`)} underline="never" c="inherit" data-testid="agent-detail-link">
         <Text size="sm" fw={500}>{u.name ?? '—'}</Text>
       </Anchor>
     ),

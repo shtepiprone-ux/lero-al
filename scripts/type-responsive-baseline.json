@@ -1,5 +1,5 @@
 {
   "entries": [
-    { "key": "src/app/[locale]/favorites/page.tsx :: text-2xl", "reason": "none - legacy Tailwind h1 (L4); owner decision O83-2" }
+    { "key": "src/app/[locale]/(site)/favorites/page.tsx :: text-2xl", "reason": "none - legacy Tailwind h1 (L4); owner decision O83-2" }
   ]
 }

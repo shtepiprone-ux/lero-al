@@ -22,6 +22,7 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import type { ReportRow } from '@/components/admin/AdminReportsManager'
 import type { ReportStatus } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref } from '@/lib/auth/adminPages'
 
 export const REPORT_STATUSES: ReportStatus[] = ['pending', 'reviewed', 'resolved', 'dismissed']
 
@@ -128,7 +129,7 @@ export function ReportDetailDialogView({
           key: 'owner',
           icon: <UserIcon size={iconSize} aria-hidden="true" />,
           label: t('open_profile'),
-          href: `/admin/users/${report.listing.owner.id}`,
+          href: adminHref(locale, `/admin/users/${report.listing.owner.id}`),
         }]
       : []),
   ]

@@ -267,7 +267,7 @@ describe('clearing user history', () => {
   it('calls the database function with the actor from the session, never from the caller', async () => {
     expect(await clearHistoryRow('user_change_log', id, 'row-1')).toEqual({ cleared: 1 })
     expect(rpcCalls).toEqual([{ name: 'clear_user_history', args: { p_history_source: 'user_change_log', p_entity_id: id, p_row_id: 'row-1', p_actor_user_id: 'adm' } }])
-    expect(paths).toEqual([`/admin/users/${id}`])
+    expect(paths).toEqual(['/[locale]/admin/users/[id]'])
   })
 
   it('clearing a whole entity passes no row', async () => {

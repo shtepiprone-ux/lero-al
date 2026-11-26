@@ -39,6 +39,8 @@ interface AuthSheetProps {
   googleAccount?: RememberedGoogleAccount | null
   /** "Forget this account": the owner of the record erases it. */
   onForgetGoogleAccount?: () => void
+  /** Task 988: writes the page language as the account language of an account a Google sign-in just created (the header's `setAccountLocale`) */
+  onNewGoogleAccount?: () => Promise<unknown>
 }
 
 // ── Login view ────────────────────────────────────────────────────────────────
@@ -52,10 +54,12 @@ function LoginView({
   onRegister,
   onForgotPassword,
   onClose,
+  onNewGoogleAccount,
 }: {
   onRegister: () => void
   onForgotPassword: () => void
   onClose: () => void
+  onNewGoogleAccount?: () => Promise<unknown>
 }) {
   const t = useTranslations('auth')
   const tc = useTranslations('common')
@@ -123,7 +127,7 @@ function LoginView({
   // Task 927: Google's window returns the ID token through `/auth/google/callback` to this page (Task 927 D25); it goes to Supabase with this attempt's raw nonce.
   async function handleGoogle(result: { credential: string; nonce: string }) {
     setErrorKey(null)
-    const key = await completeGoogleSignIn(result)
+    const key = await completeGoogleSignIn(result, onNewGoogleAccount)
     if (key) { setErrorKey(key); return }
     onClose()
     openStoredDestination(router)
@@ -207,11 +211,13 @@ function WelcomeBackView({
   onForget,
   onMoreOptions,
   onClose,
+  onNewGoogleAccount,
 }: {
   account: RememberedGoogleAccount
   onForget: () => void
   onMoreOptions: () => void
   onClose: () => void
+  onNewGoogleAccount?: () => Promise<unknown>
 }) {
   const t = useTranslations('auth')
   const router = useRouter()
@@ -221,7 +227,7 @@ function WelcomeBackView({
 
   async function handleGoogle(result: { credential: string; nonce: string }) {
     setErrorKey(null)
-    const key = await completeGoogleSignIn(result)
+    const key = await completeGoogleSignIn(result, onNewGoogleAccount)
     if (key) { setErrorKey(key); return }
     onClose()
     openStoredDestination(router)
@@ -617,7 +623,7 @@ function RegisterView({
 
 // ── AuthSheet ─────────────────────────────────────────────────────────────────
 
-export function AuthSheet({ open, onOpenChange, initialView = 'login', googleAccount = null, onForgetGoogleAccount }: AuthSheetProps) {
+export function AuthSheet({ open, onOpenChange, initialView = 'login', googleAccount = null, onForgetGoogleAccount, onNewGoogleAccount }: AuthSheetProps) {
   const t = useTranslations('auth')
   // A sheet opened on `login` for a person this device remembers opens on Welcome back; every other opening keeps the view it was asked for.
   const openingView: AuthView = initialView === 'login' && googleAccount ? 'welcome-back' : initialView
@@ -669,6 +675,7 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login', googleAcc
             setView('login')
           }}
           onClose={() => onOpenChange(false)}
+          onNewGoogleAccount={onNewGoogleAccount}
         />
       )}
       {view === 'login' && (
@@ -676,6 +683,7 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login', googleAcc
           onRegister={() => setView('register')}
           onForgotPassword={() => setView('forgot-password')}
           onClose={() => onOpenChange(false)}
+          onNewGoogleAccount={onNewGoogleAccount}
         />
       )}
       {view === 'forgot-password' && (

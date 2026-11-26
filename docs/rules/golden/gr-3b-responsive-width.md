@@ -29,7 +29,7 @@ Otherwise the container is fluid.
 *"This must be solved right away in this task, not by creating a pile of extra tasks!"* The trigger: every admin page View
 Story rendered without the shell. From 1024 such a Story had 240px (the navbar) more room than the real page, so the
 owner reviewed a wider layout than users see.
-- Every Story of a View that a route under `src/app/admin/` renders as its page content uses the shared decorator
+- Every Story of a View that a route under `src/app/[locale]/admin/` renders as its page content uses the shared decorator
   `withAdminShell` (`src/stories/_StoryAdminShell.tsx`).
 - Inside it, the View is wrapped in the same `AdminPageFrame` props its route uses. There is no `StoryPageGutter`
   (GR-3d `n/a: own gutter (AdminPageFrame)`).

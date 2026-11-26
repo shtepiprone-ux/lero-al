@@ -14,8 +14,19 @@
 
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
+import { isAppLocale, type AppLocale } from '@/i18n/uiLocale'
 
-export async function refreshSession(request: NextRequest): Promise<NextResponse> {
+/**
+ * Task 988 (owner decisions O988-1, O988-2): with the refreshed response, the account language of the signed-in person (`users.preferred_locale`), which the proxy
+ * sends every page to. `null` for a guest, a refused account, no row (RLS `blocked_account_no_select` hides a blocked account's own row), a failed read, or a value
+ * that is not one of the four codes.
+ */
+export interface SessionRefresh {
+  response: NextResponse
+  accountLocale: AppLocale | null
+}
+
+export async function refreshSession(request: NextRequest): Promise<SessionRefresh> {
   // Start with a passthrough response; setAll() will replace it if tokens change.
   let supabaseResponse = NextResponse.next({ request })
 
@@ -47,7 +58,7 @@ export async function refreshSession(request: NextRequest): Promise<NextResponse
   // IMPORTANT: do not add any logic between createServerClient and getUser().
   // getUser() is what triggers the token refresh when the access token is
   // expired; the refreshed tokens are captured via setAll() above.
-  const { error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser()
 
   // Task 923 R45 (a) (owner decisions D26, D29): the server ends a refused session. Supabase Auth answers `user_banned` for a banned account and
   // `user_not_found` for a deleted one, and the SDK KEEPS the session on both, so the browser would stay "signed in" with a token that no longer works.
@@ -58,5 +69,18 @@ export async function refreshSession(request: NextRequest): Promise<NextResponse
     await supabase.auth.signOut({ scope: 'local' })
   }
 
-  return supabaseResponse
+  // Task 988: the caller's OWN row, read with this session client (RLS `users_self_read`), only after getUser() above refreshed the session. Only the four codes count.
+  let accountLocale: AppLocale | null = null
+  const userId = error ? null : data?.user?.id
+  if (userId) {
+    try {
+      const { data: row, error: readError } = await supabase.from('users').select('preferred_locale').eq('id', userId).maybeSingle()
+      const value: unknown = readError ? null : row?.preferred_locale
+      if (isAppLocale(value)) accountLocale = value
+    } catch {
+      // a failed read never fails the request: the guest rule applies
+    }
+  }
+
+  return { response: supabaseResponse, accountLocale }
 }

@@ -19,7 +19,7 @@ const meta: Meta<typeof AdminReportsView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/reports' } },
+    nextjs: { navigation: { pathname: '/en/admin/reports' } },
     docs: {
       description: {
         component:

@@ -115,10 +115,10 @@ describe('AC3 — the route table covers every signed-in page, for every role', 
   it('the real table matches the pages of the repository: 27 pages (22 admin, 2 cabinet, favorites, listings/create, listings/[slug]/edit)', () => {
     const pages = listPages(REPO)
     expect(pages).toHaveLength(27)
-    expect(pages.filter(page => page.startsWith('src/app/admin/'))).toHaveLength(22)
+    expect(pages.filter(page => page.startsWith('src/app/[locale]/admin/'))).toHaveLength(22)
     expect(checkRouteTable(ROUTES, pages)).toEqual([])
     expect((ROUTES as Row[]).filter(row => row.path.includes('{')).map(row => row.path).sort()).toEqual([
-      '/admin/listings/{listingId}/preview', '/admin/users/{userId}', '/sq/listings/{listingSlug}/edit',
+      '/sq/admin/listings/{listingId}/preview', '/sq/admin/users/{userId}', '/sq/listings/{listingSlug}/edit',
     ])
   })
 
@@ -130,8 +130,8 @@ describe('AC3 — the route table covers every signed-in page, for every role', 
   })
 
   it('a page.tsx that is not in the table is named and fails', () => {
-    const problems = checkRouteTable(ROUTES, [...listPages(REPO), 'src/app/admin/brand-new/page.tsx'])
-    expect(problems).toEqual(['page missing from the route table: src/app/admin/brand-new/page.tsx'])
+    const problems = checkRouteTable(ROUTES, [...listPages(REPO), 'src/app/[locale]/admin/brand-new/page.tsx'])
+    expect(problems).toEqual(['page missing from the route table: src/app/[locale]/admin/brand-new/page.tsx'])
   })
 
   it('a row with no expectation for a role fails and names the role', () => {
@@ -143,9 +143,9 @@ describe('AC3 — the route table covers every signed-in page, for every role', 
   })
 
   it('a row whose page no longer exists, and a page listed twice, fail', () => {
-    const rows = [...(ROUTES as Row[]), { ...(ROUTES as Row[])[0], page: 'src/app/admin/gone/page.tsx', path: '/admin/gone' }, (ROUTES as Row[])[1]]
+    const rows = [...(ROUTES as Row[]), { ...(ROUTES as Row[])[0], page: 'src/app/[locale]/admin/gone/page.tsx', path: '/sq/admin/gone' }, (ROUTES as Row[])[1]]
     const problems = checkRouteTable(rows, listPages(REPO))
-    expect(problems.some(problem => problem.includes('src/app/admin/gone/page.tsx') && problem.includes('no page'))).toBe(true)
+    expect(problems.some(problem => problem.includes('src/app/[locale]/admin/gone/page.tsx') && problem.includes('no page'))).toBe(true)
     expect(problems.some(problem => problem.includes('twice'))).toBe(true)
   })
 
@@ -156,19 +156,19 @@ describe('AC3 — the route table covers every signed-in page, for every role', 
       launchBrowser: async () => { throw new Error('must not be reached') },
       buildCookies: async () => [],
       routes: ROUTES,
-      pages: [...listPages(REPO), 'src/app/admin/brand-new/page.tsx'],
+      pages: [...listPages(REPO), 'src/app/[locale]/admin/brand-new/page.tsx'],
       log: line => env.logs.push(line),
     })
     expect(result.ok).toBe(false)
     expect(env.calls.createRun).toBe(0)
-    expect(env.logs.join('\n')).toContain('src/app/admin/brand-new/page.tsx')
+    expect(env.logs.join('\n')).toContain('src/app/[locale]/admin/brand-new/page.tsx')
   })
 })
 
 // ── AC2 ──────────────────────────────────────────────────────────────────────
 
-const GOOD: Observed = { status: 200, finalPath: '/admin/reports', pageErrors: [], consoleErrors: [], navigationError: null, blockedWrites: 0 }
-const REPORTS_ROW = (ROUTES as Row[]).find(row => row.path === '/admin/reports') as Row
+const GOOD: Observed = { status: 200, finalPath: '/sq/admin/reports', pageErrors: [], consoleErrors: [], navigationError: null, blockedWrites: 0 }
+const REPORTS_ROW = (ROUTES as Row[]).find(row => row.path === '/sq/admin/reports') as Row
 const judge = (observed: Partial<Observed>, role: Role = 'admin') => judgeVisit({ row: REPORTS_ROW, role, params: PARAMS, observed: { ...GOOD, ...observed } }) as string[]
 
 describe('AC2 — each defect the walk exists for fails the row', () => {
@@ -210,18 +210,18 @@ describe('AC2 — each defect the walk exists for fails the row', () => {
     const failures = judge({ finalPath: '/en/auth/login' })
     expect(failures).toHaveLength(1)
     expect(failures[0]).toContain('unexpected redirect')
-    expect(failures[0]).toContain('/admin/reports')
+    expect(failures[0]).toContain('/sq/admin/reports')
     expect(failures[0]).toContain('/en/auth/login')
   })
 
   it('a page where the role should have been sent away fails, and a redirect to the wrong place fails', () => {
     // a plain user must not see an admin page (the authorization regression this walk exists for)
-    const asUser = judge({ finalPath: '/admin/reports' }, 'user')
+    const asUser = judge({ finalPath: '/sq/admin/reports' }, 'user')
     expect(asUser.join(' ')).toContain('unexpected redirect')
     const away = judge({ finalPath: '/somewhere-else' }, 'user')
     expect(away.join(' ')).toContain('/somewhere-else')
     // the expected redirect passes
-    expect(judge({ finalPath: '/en' }, 'user')).toEqual([])
+    expect(judge({ finalPath: '/sq' }, 'user')).toEqual([])
   })
 
   it('a navigation that threw fails', () => {
@@ -229,8 +229,8 @@ describe('AC2 — each defect the walk exists for fails the row', () => {
   })
 
   it('the expected not-found passes only as a 404 on the requested path', () => {
-    const permissions = (ROUTES as Row[]).find(row => row.path === '/admin/permissions') as Row
-    const ask = (observed: Partial<Observed>) => judgeVisit({ row: permissions, role: 'moderator', params: PARAMS, observed: { ...GOOD, finalPath: '/admin/permissions', ...observed } }) as string[]
+    const permissions = (ROUTES as Row[]).find(row => row.path === '/sq/admin/permissions') as Row
+    const ask = (observed: Partial<Observed>) => judgeVisit({ row: permissions, role: 'moderator', params: PARAMS, observed: { ...GOOD, finalPath: '/sq/admin/permissions', ...observed } }) as string[]
     expect(ask({ status: 404 })).toEqual([])
     expect(ask({ status: 200 }).join(' ')).toContain('status 200')
   })
@@ -276,14 +276,14 @@ describe('AC2 — each defect the walk exists for fails the row', () => {
     for (const role of ROLES) expect(env.logs.join('\n')).toContain(`${role}: ${perRole} rows, ${perRole} passed`)
     expect(env.logs).toContain('signed-in pages: 216 rows passed')
     // every page is opened at both widths, 1280 first, then 390
-    expect(env.calls.visited.filter(visit => visit.startsWith('admin /admin/reports '))).toEqual(['admin /admin/reports @1280', 'admin /admin/reports @390'])
+    expect(env.calls.visited.filter(visit => visit.startsWith('admin /sq/admin/reports '))).toEqual(['admin /sq/admin/reports @1280', 'admin /sq/admin/reports @390'])
     expect(env.calls.makeUser).toEqual(['walk_admin:admin', 'walk_moderator:moderator', 'walk_agent:agent', 'walk_user:user'])
     expect(env.calls.makeListing).toEqual(['id-walk_agent:active'])
   })
 
   it('a hydration message on one row fails the run and the row is named in the log', async () => {
     const env = setup({
-      observe: (role, requested, correct) => (role === 'moderator' && requested === '/admin/support' ? { ...correct, consoleErrors: ['Minified React error #418; visit https://react.dev/errors/418'] } : correct),
+      observe: (role, requested, correct) => (role === 'moderator' && requested === '/sq/admin/support' ? { ...correct, consoleErrors: ['Minified React error #418; visit https://react.dev/errors/418'] } : correct),
     })
     const result = await env.run()
     expect(result.ok).toBe(false)
@@ -291,14 +291,14 @@ describe('AC2 — each defect the walk exists for fails the row', () => {
     expect(failing).toHaveLength(2) // the row at each of the two widths
     for (const line of failing) {
       expect(line).toContain('moderator')
-      expect(line).toContain('/admin/support')
+      expect(line).toContain('/sq/admin/support')
     }
   })
 
   // Review 1 F4: a first render that depends on the width (cards and sheets below 640) is only seen at the phone width.
   it('a hydration message at 390 only fails exactly that row: the 1280 row of the same page passes', async () => {
     const env = setup({
-      observe: (role, requested, correct, width) => (role === 'admin' && requested === '/admin/reports' && width === 390
+      observe: (role, requested, correct, width) => (role === 'admin' && requested === '/sq/admin/reports' && width === 390
         ? { ...correct, consoleErrors: ['Minified React error #418; visit https://react.dev/errors/418'] }
         : correct),
     })
@@ -307,13 +307,13 @@ describe('AC2 — each defect the walk exists for fails the row', () => {
     const rows = result.rows as { role: string; path: string; width: number; ok: boolean; failures: string[] }[]
     const failing = rows.filter(row => !row.ok)
     expect(failing).toHaveLength(1)
-    expect(failing[0]).toMatchObject({ role: 'admin', path: '/admin/reports', width: 390 })
+    expect(failing[0]).toMatchObject({ role: 'admin', path: '/sq/admin/reports', width: 390 })
     expect(failing[0].failures.join(' ')).toContain('hydration')
-    expect(rows.find(row => row.role === 'admin' && row.path === '/admin/reports' && row.width === 1280)?.ok).toBe(true)
+    expect(rows.find(row => row.role === 'admin' && row.path === '/sq/admin/reports' && row.width === 1280)?.ok).toBe(true)
     const lines = env.logs.filter(line => line.startsWith('FAIL'))
     expect(lines).toHaveLength(1)
     expect(lines[0]).toContain('admin')
-    expect(lines[0]).toContain('/admin/reports')
+    expect(lines[0]).toContain('/sq/admin/reports')
     expect(lines[0]).toContain('390')
     expect(env.logs.join('\n')).toContain(`admin: ${(ROUTES as Row[]).length * 2} rows, ${(ROUTES as Row[]).length * 2 - 1} passed`)
   })
@@ -385,7 +385,7 @@ describe('AC5 — the walk sends no write', () => {
   })
 
   it('the walk reports the writes it aborted, by method and path', async () => {
-    const env = setup({ observe: (role, requested, correct) => (role === 'admin' && requested === '/admin' ? { ...correct, blockedWrites: 2, blockedList: ['POST /api/presence', 'POST /api/presence'] } : correct) })
+    const env = setup({ observe: (role, requested, correct) => (role === 'admin' && requested === '/sq/admin' ? { ...correct, blockedWrites: 2, blockedList: ['POST /api/presence', 'POST /api/presence'] } : correct) })
     const result = await env.run()
     expect(result.ok).toBe(true)
     expect(result.blockedWrites).toBe(4)
@@ -471,7 +471,7 @@ type Seen = (role: Role, requested: string, correct: Observed) => Observed
 type WalkRow = { role: string; path: string; width: number; ok: boolean; failures: string[] }
 
 /** The row's path as the walk logs it (`{userId}` unresolved), and as the browser asks for it. */
-const templateOf = (route: string): string => ((ROUTES as Row[]).find(row => row.page === `src/app${route}/page.tsx`) as Row).path
+const templateOf = (route: string): string => ((ROUTES as Row[]).find(row => row.page === `src/app/[locale]${route}/page.tsx`) as Row).path
 const requestedOf = (route: string): string => resolveTemplate(templateOf(route), PARAMS)
 /** Every address the keys of `ADMIN_PAGES` open, as the walk requests it. */
 const KEYED = new Set(ADMIN_PAGES.flatMap(page => page.paths.map(requestedOf)))
@@ -484,7 +484,7 @@ function moderatorSees(allowed: string[], landing: string | null): Seen {
   const open = new Set(ADMIN_PAGES.filter(page => allowed.includes(page.key)).flatMap(page => page.paths.map(requestedOf)))
   return (role, requested, correct) => {
     if (role !== 'moderator') return correct
-    if (requested === '/admin') return landing ? { ...correct, status: 200, finalPath: landing } : correct
+    if (requested === '/sq/admin') return landing ? { ...correct, status: 200, finalPath: landing } : correct
     return KEYED.has(requested) && !open.has(requested) ? { ...correct, status: 404, finalPath: requested } : correct
   }
 }
@@ -494,19 +494,19 @@ const label = (row: WalkRow) => `${row.role} ${row.path} @${row.width}`
 
 describe('Task 1007 — the moderator\'s expected result follows the page switches', () => {
   it('the route table states the pages as they are with the switch on, and Footer is for an administrator only (O1007-1)', () => {
-    const footer = (ROUTES as Row[]).find(row => row.path === '/admin/footer') as Row
+    const footer = (ROUTES as Row[]).find(row => row.path === '/sq/admin/footer') as Row
     expect(footer.expect.moderator).toEqual({ kind: 'not-found' })
     expect(footer.expect.admin).toEqual({ kind: 'page' })
-    for (const page of ADMIN_PAGES) expect((ROUTES as Row[]).filter(row => page.paths.some(route => row.page === `src/app${route}/page.tsx`)), page.key).toHaveLength(page.paths.length)
+    for (const page of ADMIN_PAGES) expect((ROUTES as Row[]).filter(row => page.paths.some(route => row.page === `src/app/[locale]${route}/page.tsx`)), page.key).toHaveLength(page.paths.length)
   })
 
   it('Footer is not found for a moderator: the not-found page passes, a 200 fails', async () => {
     const passing = await setup().run()
     expect(passing.ok).toBe(true)
-    const env = setup({ observe: (role, requested, correct) => (role === 'moderator' && requested === '/admin/footer' ? { ...correct, status: 200, finalPath: requested } : correct) })
+    const env = setup({ observe: (role, requested, correct) => (role === 'moderator' && requested === '/sq/admin/footer' ? { ...correct, status: 200, finalPath: requested } : correct) })
     const result = await env.run()
     expect(result.ok).toBe(false)
-    expect(failedRows(result.rows).map(label).sort()).toEqual(['moderator /admin/footer @1280', 'moderator /admin/footer @390'])
+    expect(failedRows(result.rows).map(label).sort()).toEqual(['moderator /sq/admin/footer @1280', 'moderator /sq/admin/footer @390'])
     expect(failedRows(result.rows)[0].failures.join(' ')).toContain('status 200 where the not-found page was expected')
   })
 
@@ -532,43 +532,43 @@ describe('Task 1007 — the moderator\'s expected result follows the page switch
 
   it('a key switched on keeps the page: the page passes, and the not-found page on it fails', async () => {
     const keys = ['page.users']
-    const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, '/admin/users') }).run()
+    const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, '/sq/admin/users') }).run()
     expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
-    const hidden = await setup({ moderatorKeys: keys, observe: (role, requested, correct) => (role === 'moderator' && requested === '/admin/users' ? { ...correct, status: 404, finalPath: requested } : moderatorSees(keys, '/admin/users')(role, requested, correct)) }).run()
+    const hidden = await setup({ moderatorKeys: keys, observe: (role, requested, correct) => (role === 'moderator' && requested === '/sq/admin/users' ? { ...correct, status: 404, finalPath: requested } : moderatorSees(keys, '/sq/admin/users')(role, requested, correct)) }).run()
     expect(hidden.ok).toBe(false)
-    expect(failedRows(hidden.rows).map(label).sort()).toEqual(['moderator /admin/users @1280', 'moderator /admin/users @390'])
+    expect(failedRows(hidden.rows).map(label).sort()).toEqual(['moderator /sq/admin/users @1280', 'moderator /sq/admin/users @390'])
   })
 
   describe('the landing /admin', () => {
-    const observeLanding = (keys: string[], landing: string | null, at: Seen): Seen => (role, requested, correct) => (role === 'moderator' && requested === '/admin' ? at(role, requested, correct) : moderatorSees(keys, landing)(role, requested, correct))
+    const observeLanding = (keys: string[], landing: string | null, at: Seen): Seen => (role, requested, correct) => (role === 'moderator' && requested === '/sq/admin' ? at(role, requested, correct) : moderatorSees(keys, landing)(role, requested, correct))
     const dashboardRows = (rows: unknown) => failedRows(rows).map(label).sort()
 
     it('with page.dashboard on the moderator gets the page, and a redirect to another page fails', async () => {
       const right = await setup({ moderatorKeys: ALL_KEYS, observe: moderatorSees(ALL_KEYS, null) }).run()
       expect(right.ok).toBe(true)
-      const wrong = await setup({ moderatorKeys: ALL_KEYS, observe: observeLanding(ALL_KEYS, null, (_r, _q, correct) => ({ ...correct, finalPath: '/admin/listings' })) }).run()
-      expect(dashboardRows(wrong.rows)).toEqual(['moderator /admin @1280', 'moderator /admin @390'])
+      const wrong = await setup({ moderatorKeys: ALL_KEYS, observe: observeLanding(ALL_KEYS, null, (_r, _q, correct) => ({ ...correct, finalPath: '/sq/admin/listings' })) }).run()
+      expect(dashboardRows(wrong.rows)).toEqual(['moderator /sq/admin @1280', 'moderator /sq/admin @390'])
     })
 
     it('with page.dashboard off and others on the moderator is sent to the first path of the first key in ADMIN_PAGES order, never to /admin', async () => {
       const keys = ['page.reports', 'page.support']   // the database's order is not the sidebar's: support comes first
-      const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, '/admin/support') }).run()
+      const right = await setup({ moderatorKeys: keys, observe: moderatorSees(keys, '/sq/admin/support') }).run()
       expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
-      for (const wrongTarget of ['/admin/reports', '/admin']) {
-        const wrong = await setup({ moderatorKeys: keys, observe: observeLanding(keys, '/admin/support', (_r, _q, correct) => ({ ...correct, status: 200, finalPath: wrongTarget })) }).run()
-        expect(dashboardRows(wrong.rows), wrongTarget).toEqual(['moderator /admin @1280', 'moderator /admin @390'])
+      for (const wrongTarget of ['/sq/admin/reports', '/sq/admin']) {
+        const wrong = await setup({ moderatorKeys: keys, observe: observeLanding(keys, '/sq/admin/support', (_r, _q, correct) => ({ ...correct, status: 200, finalPath: wrongTarget })) }).run()
+        expect(dashboardRows(wrong.rows), wrongTarget).toEqual(['moderator /sq/admin @1280', 'moderator /sq/admin @390'])
       }
       // the first key's FIRST path: page.inquiries_support opens /admin/inquiries/support, not the /admin/inquiries redirect
       const inquiries = ['page.inquiries_support']
-      const first = await setup({ moderatorKeys: inquiries, observe: moderatorSees(inquiries, '/admin/inquiries/support') }).run()
+      const first = await setup({ moderatorKeys: inquiries, observe: moderatorSees(inquiries, '/sq/admin/inquiries/support') }).run()
       expect(first.ok, failedRows(first.rows).map(label).join(', ')).toBe(true)
     })
 
     it('with no page on the moderator gets the page /admin (the no-pages state), every other page is not found, and a redirect fails', async () => {
       const right = await setup({ moderatorKeys: [], observe: moderatorSees([], null) }).run()
       expect(right.ok, failedRows(right.rows).map(label).join(', ')).toBe(true)
-      const wrong = await setup({ moderatorKeys: [], observe: observeLanding([], null, (_r, _q, correct) => ({ ...correct, status: 200, finalPath: '/admin/listings' })) }).run()
-      expect(dashboardRows(wrong.rows)).toEqual(['moderator /admin @1280', 'moderator /admin @390'])
+      const wrong = await setup({ moderatorKeys: [], observe: observeLanding([], null, (_r, _q, correct) => ({ ...correct, status: 200, finalPath: '/sq/admin/listings' })) }).run()
+      expect(dashboardRows(wrong.rows)).toEqual(['moderator /sq/admin @1280', 'moderator /sq/admin @390'])
     })
   })
 

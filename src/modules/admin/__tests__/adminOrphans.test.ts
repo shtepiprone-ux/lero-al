@@ -3,7 +3,7 @@
  * unread settings and tables from coming back. The rules are a pure function of a map from path to text (`findSettingFindings`, `findTableFindings`); the first group of cases runs them on
  * the real `src` tree, the second on planted inputs.
  *
- * The admin code is `src/app/admin`, `src/components/admin` and `src/modules/admin`. The list of settings is parsed from the SOURCE of `src/modules/admin/actions/index.ts`, because that is a
+ * The admin code is `src/app/[locale]/admin`, `src/components/admin` and `src/modules/admin`. The list of settings is parsed from the SOURCE of `src/modules/admin/actions/index.ts`, because that is a
  * `'use server'` module (it may export only async functions) and so cannot export its constant. A "library helper" is an `export async function` of `src/modules/admin/lib/settings.ts`
  * (a `server-only` module); a helper is used outside the admin code when a file outside it imports its name from `'@/modules/admin/lib/settings'`.
  */
@@ -11,7 +11,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-const ADMIN_DIRS = ['src/app/admin/', 'src/components/admin/', 'src/modules/admin/']
+const ADMIN_DIRS = ['src/app/[locale]/admin/', 'src/components/admin/', 'src/modules/admin/']
 const SETTINGS_ACTIONS = 'src/modules/admin/actions/index.ts'
 const SETTINGS_LIB = 'src/modules/admin/lib/settings.ts'
 
@@ -224,11 +224,11 @@ describe('adminOrphans — the rules on planted inputs', () => {
 
   it('an ADMIN_RECORD_TABLES table with no admin reader is reported, and so is one that is no longer admin-written-only', () => {
     const records: Rules = { task930Keys: [], recordTables: { tick: 'a record only staff use' } }
-    const write: Files = { 'src/app/admin/tick/actions.ts': "await db.from('tick').insert({})" }
+    const write: Files = { 'src/app/[locale]/admin/tick/actions.ts': "await db.from('tick').insert({})" }
     expect(findTableFindings(write, records)).toEqual([expect.stringContaining("table 'tick': listed in ADMIN_RECORD_TABLES but no admin code reads it")])
-    expect(findTableFindings({ ...write, 'src/app/admin/tick/page.tsx': "await db.from('tick').select('*')" }, records)).toEqual([])
+    expect(findTableFindings({ ...write, 'src/app/[locale]/admin/tick/page.tsx': "await db.from('tick').select('*')" }, records)).toEqual([])
     // 'anchor' keeps the scan non-empty: the admin code writes it and a file outside reads it
-    const shared: Files = { ...write, 'src/app/admin/tick/page.tsx': "await db.from('tick').select('*')", 'src/app/admin/anchor.ts': "await db.from('anchor').insert({})", 'src/lib/anchor.ts': "await db.from('anchor').select('*')" }
+    const shared: Files = { ...write, 'src/app/[locale]/admin/tick/page.tsx': "await db.from('tick').select('*')", 'src/app/[locale]/admin/anchor.ts': "await db.from('anchor').insert({})", 'src/lib/anchor.ts': "await db.from('anchor').select('*')" }
     expect(findTableFindings({ ...shared, 'src/lib/site.ts': "await db.from('tick').insert({})" }, records)).toEqual([
       expect.stringContaining("table 'tick': listed in ADMIN_RECORD_TABLES but no longer written only by the admin code"),
     ])

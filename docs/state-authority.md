@@ -248,7 +248,7 @@ Consumers:
 - `src/modules/listings/lib/queries.ts`
 - `src/modules/listings/lib/favoritesQueries.ts`
 - `src/modules/listings/hooks/useFavoritesRealtime.ts`
-- `src/app/[locale]/listings/page.tsx`
+- `src/app/[locale]/(site)/listings/page.tsx`
 - `src/app/api/listings/route.ts`
 
 Adding a field: update `listingSelect.ts` only — all consumers update automatically.

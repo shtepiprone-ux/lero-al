@@ -2,7 +2,7 @@
 /**
  * Security (Task 923 R68 (a)): no admin page or metadata reads anything for a viewer who is not an active administrator or moderator.
  *  - SEC-X-SRV-ADMINPAGE-GUARD: the admin layout is not a guard for the page below it (a React Server Components request whose router-state header already names
- *    the layout renders the page alone), so every `src/app/admin/**\/page.tsx` and every admin `generateMetadata` calls `requireStaffPage()` as its FIRST await.
+ *    the layout renders the page alone), so every `src/app/[locale]/admin/**\/page.tsx` and every admin `generateMetadata` calls `requireStaffPage()` as its FIRST await.
  *    This file proves it twice: a scan of every admin page lists them and fails on one whose first await is anything else, and every page and metadata function is
  *    really called with a guest, a plain user, an agent, a blocked moderator, a deleted administrator and a failed role lookup against a database double that counts
  *    every read. Each call ends in `notFound()` or the sign-in redirect, with no read counted and nothing of a row in the result.
@@ -103,7 +103,7 @@ vi.mock('next-intl/server', () => ({
 }))
 vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 
-const ADMIN_ROOT = join(process.cwd(), 'src', 'app', 'admin')
+const ADMIN_ROOT = join(process.cwd(), 'src', 'app', '[locale]', 'admin')
 
 function pageFiles(dir = ADMIN_ROOT, out: string[] = []): string[] {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -132,14 +132,14 @@ const firstAwait = (body: string) => {
 }
 
 /**
- * Task 1007: the first await is `requireStaffPage(` with the access of the page: a key of `ADMIN_PAGES`, `{ adminOnly: true }`, or `{ landing: true }` in `src/app/admin/page.tsx`
+ * Task 1007: the first await is `requireStaffPage(` with the access of the page: a key of `ADMIN_PAGES`, `{ adminOnly: true }`, or `{ landing: true }` in `src/app/[locale]/admin/page.tsx`
  * only (stricter than the bare call it replaces; never loosened).
  */
 function namesAccess(first: string | null, file: string): boolean {
   const m = /^await requireStaffPage\(\{ (?:page: '(page\.[a-z_]+)'|(adminOnly): true|(landing): true) \}\)$/.exec(first ?? '')
   if (!m) return false
   if (m[1]) return (ADMIN_PAGE_KEYS as readonly string[]).includes(m[1])
-  if (m[3]) return relative(file) === 'src/app/admin/page.tsx'
+  if (m[3]) return relative(file) === 'src/app/[locale]/admin/page.tsx'
   return true
 }
 
@@ -285,7 +285,7 @@ describe('staffPage', () => {
   })
 
   it('[SEC-1007-PAGE-DENY] the real pages: a moderator with every switch off gets notFound from each, with no read but the key', async () => {
-    const files = pageFiles().filter((f) => relative(f) !== 'src/app/admin/page.tsx')
+    const files = pageFiles().filter((f) => relative(f) !== 'src/app/[locale]/admin/page.tsx')
     const props = { params: Promise.resolve({ id: '00000000-0000-4000-8000-0000000000aa' }), searchParams: Promise.resolve({}) }
     const failures: string[] = []
     for (const file of files) {

@@ -18,7 +18,7 @@ const meta: Meta<typeof AdminCurrenciesView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/currency' } },
+    nextjs: { navigation: { pathname: '/en/admin/currency' } },
     docs: {
       description: {
         component:

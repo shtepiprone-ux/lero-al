@@ -17,6 +17,7 @@ import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDia
 import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import type { RecentListingRow } from '@/modules/admin/dashboard/types'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref } from '@/lib/auth/adminPages'
 
 export interface AdminDashboardRecentListingsProps {
   listings: RecentListingRow[]
@@ -223,7 +224,7 @@ export function AdminDashboardRecentListings({ listings, locale, now, emptyText 
                     key: 'admin',
                     icon: <ListIcon size={theme.other.iconSize.standard} aria-hidden="true" />,
                     label: t('dialog_view_admin'),
-                    href: '/admin/listings',
+                    href: adminHref(locale, '/admin/listings'),
                   },
                 ]}
               />

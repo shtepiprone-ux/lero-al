@@ -10,7 +10,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 // ── Header ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
 type ViewProps = Record<string, unknown> & {
-  onOpenAuth: (v: string) => void; onSwitchLocale: (l: string) => void; onNavigate: (p: string) => void; onOpenAdmin: () => void; onLogout: () => void
+  onOpenAuth: (v: string) => void; onSwitchLocale: (l: string) => void | Promise<void>; onNavigate: (p: string) => void; onOpenAdmin: () => void; onLogout: () => void
   onOpenMobile: () => void; onCloseMobile: () => void; mobileOpen: boolean; user: unknown; isAuthenticated: boolean; isSigningOut: boolean
   notificationSlot?: React.ReactNode; authSheetSlot: React.ReactElement<{ open: boolean; onOpenChange: (o: boolean) => void; initialView: string }>
 }
@@ -19,12 +19,12 @@ let userState: { user: unknown; signOut: (cb: () => void) => void; isSigningOut:
 let pathname = '/en/listings/abc'
 const push = vi.fn()
 const refresh = vi.fn()
-const setAdminLocale = vi.fn()
+const setAccountLocale = vi.fn()
 
 vi.mock('next-intl', () => ({ useLocale: () => 'en', useTranslations: () => (key: string) => key }))
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push, refresh }), usePathname: () => pathname }))
 vi.mock('@/modules/auth/hooks/useUser', () => ({ useUser: () => userState }))
-vi.mock('@/modules/admin/actions/locale', () => ({ setAdminLocale: (l: string) => setAdminLocale(l) }))
+vi.mock('@/modules/admin/actions/locale', () => ({ setAccountLocale: (l: string) => setAccountLocale(l) }))
 vi.mock('@/modules/notifications/components/NotificationBell', () => ({ NotificationBell: () => <span data-testid="bell" /> }))
 vi.mock('@/components/layout/HeaderView', () => ({ HeaderView: (p: ViewProps) => { view = p; return null } }))
 vi.mock('@/modules/auth/components/AuthSheet', () => ({ AuthSheet: () => null }))
@@ -34,7 +34,7 @@ import { Header } from '../Header'
 
 const USER = { id: 'u1', name: 'Alba', role: 'user' }
 beforeEach(() => {
-  push.mockReset(); refresh.mockReset(); setAdminLocale.mockReset()
+  push.mockReset(); refresh.mockReset(); setAccountLocale.mockReset()
   userState = { user: USER, signOut: (cb) => cb(), isSigningOut: false }
   pathname = '/en/listings/abc'
 })
@@ -98,35 +98,48 @@ describe('Header', () => {
   })
 
   describe('switching language', () => {
-    function switchFrom(path: string, to: string) {
+    async function switchFrom(path: string, to: string) {
       window.history.pushState(null, '', path)
       render(<Header />)
-      view.onSwitchLocale(to)
+      await view.onSwitchLocale(to)
     }
-    it('keeps the rest of the address and syncs the admin language', () => {
-      switchFrom('/en/listings/abc', 'sq')
+    it('keeps the rest of the address and syncs the admin language', async () => {
+      await switchFrom('/en/listings/abc', 'sq')
       expect(push).toHaveBeenCalledWith('/sq/listings/abc')
-      expect(setAdminLocale).toHaveBeenCalledWith('sq')
+      expect(setAccountLocale).toHaveBeenCalledWith('sq')
     })
-    it('the bare language address goes to the new language home', () => {
-      switchFrom('/uk', 'it')
+    it('the bare language address goes to the new language home', async () => {
+      await switchFrom('/uk', 'it')
       expect(push).toHaveBeenCalledWith('/it/')
     })
-    it('a segment that only STARTS like a language is kept whole', () => {
-      switchFrom('/english-guide', 'sq')
+    it('a segment that only STARTS like a language is kept whole', async () => {
+      await switchFrom('/english-guide', 'sq')
       expect(push).toHaveBeenCalledWith('/sq/english-guide')
       push.mockClear(); cleanup()
-      switchFrom('/italy/x', 'en')
+      await switchFrom('/italy/x', 'en')
       expect(push).toHaveBeenCalledWith('/en/italy/x')
     })
-    it('the query string and hash are not copied into the new path', () => {
-      switchFrom('/en/listings?evil=//x.com', 'sq')
+    it('the query string and hash are not copied into the new path', async () => {
+      await switchFrom('/en/listings?evil=//x.com', 'sq')
       expect(push).toHaveBeenCalledWith('/sq/listings')
     })
-    it('an address with a double slash stays inside the site (it is always under the language)', () => {
-      switchFrom('/en//evil.example/x', 'sq')
+    it('an address with a double slash stays inside the site (it is always under the language)', async () => {
+      await switchFrom('/en//evil.example/x', 'sq')
       const target = push.mock.calls[0][0] as string
       expect(target.startsWith('/sq/')).toBe(true)
+    })
+    it('[AC5] navigates only after the account language was written (Task 988: the proxy would otherwise send the new address back)', async () => {
+      let release!: () => void
+      setAccountLocale.mockImplementation(() => new Promise<boolean>((resolve) => { release = () => resolve(true) }))
+      window.history.pushState(null, '', '/en/listings/abc')
+      render(<Header />)
+      const switching = view.onSwitchLocale('uk')
+      await Promise.resolve()
+      expect(setAccountLocale).toHaveBeenCalledWith('uk')
+      expect(push, 'no navigation before the action resolved').not.toHaveBeenCalled()
+      release()
+      await switching
+      expect(push).toHaveBeenCalledWith('/uk/listings/abc')
     })
   })
 
@@ -134,7 +147,7 @@ describe('Header', () => {
     const open = vi.spyOn(window, 'open').mockReturnValue(null)
     render(<Header />)
     view.onOpenAdmin()
-    expect(open).toHaveBeenCalledWith('/admin', '_blank', 'noopener,noreferrer')
+    expect(open).toHaveBeenCalledWith('/en/admin', '_blank', 'noopener,noreferrer')
   })
 
   it('signing out from a page that needs a session goes to the language home; from a public page it just refreshes', () => {

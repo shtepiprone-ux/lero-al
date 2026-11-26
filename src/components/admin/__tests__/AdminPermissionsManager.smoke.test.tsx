@@ -22,10 +22,12 @@ import { NextIntlClientProvider } from 'next-intl'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import messages from '../../../../messages/en.json'
+import sqMessages from '../../../../messages/sq.json'
 import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
 import { ADMIN_PAGES, ADMIN_PAGE_KEYS, type AccessKey } from '@/lib/auth/adminPages'
 import type { PermissionData, PermissionEvent } from '@/modules/admin/actions/permissions'
 import { AdminPermissionsManager } from '../AdminPermissionsManager'
+import { AdminPermissionsView } from '../AdminPermissionsView'
 
 // ── Server action + toast mocks ───────────────────────────────────────────────
 
@@ -61,7 +63,7 @@ function renderManager(events: PermissionEvent[] | null = EVENTS) {
   return render(
     <NextIntlClientProvider locale="en" messages={messages}>
       <MantineProvider theme={theme} env="test">
-        <AdminPermissionsManager permissions={PERMISSIONS} events={events} />
+        <AdminPermissionsManager permissions={PERMISSIONS} events={events} updatedDates={{}} eventDates={{}} />
       </MantineProvider>
     </NextIntlClientProvider>,
   )
@@ -171,5 +173,55 @@ describe('AdminPermissionsManager — view states (Task 892)', () => {
   it('T5: a failed audit read shows the unavailable alert', () => {
     renderManager(null)
     expect(screen.getByText(t.audit_unavailable)).toBeTruthy()
+  })
+})
+
+describe('AdminPermissionsView — dates come from the server (Task 988 R5-1)', () => {
+  it('T9: in `sq` the view renders the passed date strings and never formats a date in the browser', () => {
+    // Chrome has no Albanian date data (`Intl.DateTimeFormat.supportedLocalesOf(['sq'])` → `[]`), so a date formatted in the browser differs from the server's text: React #418
+    const spy = vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(() => {
+      throw new Error('Intl.DateTimeFormat called in the browser')
+    })
+    try {
+      const updatedAt = '2026-11-20T14:05:00Z'
+      const permissions = Object.fromEntries(
+        [...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].map(k => [k, { allowed: false, updated_at: updatedAt, updated_by_name: 'Admin' }]),
+      ) as Record<AccessKey, PermissionData>
+      const updatedDates = Object.fromEntries(
+        [...PERMISSION_KEYS, ...ADMIN_PAGE_KEYS].map(k => [k, '20 nën 2026']),
+      ) as Partial<Record<AccessKey, string>>
+      const events: PermissionEvent[] = [{
+        id: 'ev-1',
+        role: 'moderator',
+        permission_key: 'reports.manage',
+        old_allowed: false,
+        new_allowed: true,
+        actor_user_id: 'admin-1',
+        actor_name: 'Admin',
+        created_at: updatedAt,
+      }]
+      render(
+        <NextIntlClientProvider locale="sq" messages={sqMessages}>
+          <MantineProvider theme={theme} env="test">
+            <AdminPermissionsView
+              permissions={permissions}
+              events={events}
+              updatedDates={updatedDates}
+              eventDates={{ 'ev-1': '20.11.2026, 14:05' }}
+              allowedCount={0}
+              allowedPagesCount={0}
+              savingKey={null}
+              onToggle={() => {}}
+            />
+          </MantineProvider>
+        </NextIntlClientProvider>,
+      )
+      const text = document.body.textContent ?? ''
+      expect(text.split('20 nën 2026').length - 1, 'every key shows its passed date').toBe(PERMISSION_KEYS.length + ADMIN_PAGE_KEYS.length)
+      expect(text, 'the event shows its passed date').toContain('20.11.2026, 14:05')
+      expect(spy).not.toHaveBeenCalled()
+    } finally {
+      spy.mockRestore()
+    }
   })
 })

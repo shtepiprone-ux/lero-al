@@ -33,7 +33,7 @@ const OPENER_ALLOWED: Record<string, string> = {
 /** Every `window.open(...)` without `noopener`, except a call whose file and exact text are in `OPENER_ALLOWED`. */
 function windowOpenViolations(sources: { file: string; text: string }[]): string[] {
   const bad: string[] = []
-  for (const f of sources) for (const m of f.text.matchAll(/window\.open\([^)]*\)/g)) {
+  for (const f of sources) for (const m of f.text.matchAll(/window\.open\((?:[^()]|\([^()]*\))*\)/g)) {
     if (!/noopener/.test(m[0]) && OPENER_ALLOWED[f.file] !== m[0]) bad.push(`${f.file}: ${m[0].slice(0, 100)}`)
   }
   return bad
@@ -87,6 +87,11 @@ describe('new-tab links', () => {
     expect(blankTargetViolations([{ file: 'src/x.tsx', text: '<a href="https://x.example" target="_blank">x</a>' }])).toHaveLength(1)
     expect(blankTargetViolations([{ file: 'src/x.tsx', text: "{...(ext ? { target: '_blank' } : {})}" }])).toHaveLength(1)
     expect(blankTargetViolations([{ file: 'src/x.tsx', text: '<a href="https://x.example" target="_blank" rel="noopener noreferrer">x</a>' }])).toEqual([])
+  })
+
+  it('the checker reads a window.open whose address is a call (planted, through the same function the rule uses; Task 988 R5-2)', () => {
+    expect(windowOpenViolations([{ file: 'src/x.tsx', text: "window.open(adminHref(l, '/admin'), '_blank')" }])).toHaveLength(1)
+    expect(windowOpenViolations([{ file: 'src/x.tsx', text: "window.open(adminHref(l, '/admin'), '_blank', 'noopener,noreferrer')" }])).toEqual([])
   })
 })
 

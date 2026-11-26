@@ -90,8 +90,8 @@ const ROOT = resolve(__dirname, '..');
 
 // Eleven migration inputs (kickoff §3.1) — fixed, never a glob.
 export const MIGRATION_INPUTS_REL = [
-  'src/app/[locale]/layout.tsx',
-  'src/app/[locale]/page.tsx',
+  'src/app/[locale]/(site)/layout.tsx',
+  'src/app/[locale]/(site)/page.tsx',
   'src/components/layout/FooterView.module.css',
   'src/components/shared/HeroSearchView.module.css',
   'src/design-system/mantine/patterns/MantineCopyIdButton.module.css',
@@ -162,8 +162,8 @@ export const EXPECTED_ZERO_PROPERTY = '--space-0';
 // deliberately absent: re-indentation or an added declaration must never invalidate the signature,
 // only a changed target, token or use count may.
 export const MIGRATION_TARGETS = [
-  { file: 'src/app/[locale]/page.tsx', legacyProperty: '--space-16', expectedToken: '--homepage-runtime-space-16', uses: 1 },
-  { file: 'src/app/[locale]/page.tsx', legacyProperty: '--space-24', expectedToken: '--homepage-runtime-space-24', uses: 1 },
+  { file: 'src/app/[locale]/(site)/page.tsx', legacyProperty: '--space-16', expectedToken: '--homepage-runtime-space-16', uses: 1 },
+  { file: 'src/app/[locale]/(site)/page.tsx', legacyProperty: '--space-24', expectedToken: '--homepage-runtime-space-24', uses: 1 },
   { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-12', expectedToken: '--homepage-runtime-space-12', uses: 2 },
   { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-2-5', expectedToken: '--homepage-runtime-space-2-5', uses: 1 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-0', expectedToken: '--homepage-runtime-space-0', uses: 2 },
@@ -198,9 +198,11 @@ export const MIGRATION_TARGET_USES = 29;
 // Task 968 (2026-11-09) re-measured them again with `--report` on the tree after the card's move to
 // Mantine (see the Task 968 block above `MIGRATION_TARGETS`): "TOTAL CLASSIFIED (all categories): 64
 // pair(s) / 89 use(s)" and "observed signature 25eba7c6c06095180628a07d509a1a49d169ba7be867ffce07fd81b468a48539".
+// Task 988 (2026-11-26): the site's layout and home page moved into the route group `src/app/[locale]/(site)/` byte for byte; the signature hashes each tuple's file path,
+// so it is `computeMigrationSignature(MIGRATION_TARGETS)` over the moved paths: no tuple, token or use count changed.
 export const FULL_CENSUS_PAIRS = 64;
 export const FULL_CENSUS_USES = 89;
-export const MIGRATION_SIGNATURE = '25eba7c6c06095180628a07d509a1a49d169ba7be867ffce07fd81b468a48539';
+export const MIGRATION_SIGNATURE = '0408cfdbfbd2f2cca9696725af9201b623462e3723974829b9158819bdfcf229';
 
 function canonicalTargetLine(t) {
   return `${t.file}|${t.legacyProperty}|${t.expectedToken}|${t.uses}`;

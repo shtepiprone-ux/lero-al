@@ -54,7 +54,7 @@ vi.mock('@/modules/auth/components/AuthSheet', () => ({
   AuthSheet: () => null,
 }))
 vi.mock('@/modules/admin/actions/locale', () => ({
-  setAdminLocale: vi.fn(),
+  setAccountLocale: vi.fn(),
 }))
 
 // ── Fixtures ───────────────────────────────────────────────────────────────────

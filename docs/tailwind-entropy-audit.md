@@ -109,7 +109,7 @@ Future audits should compare against these numbers using `npm run governance:tai
 | File | Pattern | 1720px Risk | 1920px Risk | 2560px Risk | Ultrawide Risk | Action |
 |---|---|---|---|---|---|---|
 | `src/app/[locale]/listings/page.tsx` | `min-h-screen` wrapper without `.container-wide` | LOW | MEDIUM | HIGH | HIGH | Add `.container-wide` to content wrapper |
-| `src/app/[locale]/favorites/page.tsx` | Same as above | LOW | MEDIUM | HIGH | HIGH | Same fix |
+| `src/app/[locale]/(site)/favorites/page.tsx` | Same as above | LOW | MEDIUM | HIGH | HIGH | Same fix |
 | `src/app/admin/page.tsx` | Admin shell without max-width | LOW | LOW | MEDIUM | MEDIUM | Add `max-w-[1800px]` to admin shell |
 | `src/app/[locale]/listings/create/page.tsx` | `min-h-screen bg-muted/30` without container | LOW | LOW | MEDIUM | MEDIUM | Add `container-wide` to form |
 

@@ -155,7 +155,7 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/app/admin/page.tsx",
+      "file": "src/app/[locale]/admin/page.tsx",
       "pattern": "text-[10px]",
       "reason": "Admin dashboard micro-label or stat badge. Canonical badge/micro-label size.",
       "reviewer": "governance",
@@ -205,7 +205,7 @@
     },
     {
       "rule": "arbitrary-height",
-      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "file": "src/app/[locale]/(site)/listings/[slug]/page.tsx",
       "pattern": "h-[340px]",
       "reason": "Static gallery frame height for LCP optimization. Needs fixed height to prevent CLS.",
       "reviewer": "governance",
@@ -215,7 +215,7 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/app/admin/page.tsx",
+      "file": "src/app/[locale]/admin/page.tsx",
       "pattern": "text-[10px]",
       "reason": "Admin dashboard count badges (Pending Reports, Location Requests). Canonical badge/micro-label size per docs/ai-behavior.md.",
       "reviewer": "governance",

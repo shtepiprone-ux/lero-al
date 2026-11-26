@@ -3,9 +3,11 @@ import { routing } from '@/i18n/routing'
 import { NextResponse, type NextRequest } from 'next/server'
 import { refreshSession } from '@/lib/auth/middleware'
 import { carriesScriptReportOnly, newScriptNonce, scriptReportOnlyPolicy } from '@/lib/security/headers'
+import { UI_LOCALE_COOKIE, uiLocaleCookieOptions } from '@/i18n/uiLocale'
 
 const SUPPORTED = ['sq', 'en', 'uk', 'it'] as const
 type Locale = typeof SUPPORTED[number]
+const isLocale = (value: string | undefined): value is Locale => (SUPPORTED as readonly string[]).includes(value ?? '')
 
 // Request gate of the site. Next 16 renamed the `middleware` convention to `proxy` (Task 952): this file is `src/proxy.ts`, the only gate, and it exports `proxy` and `config`.
 // Default locale (Task 923 R72 (e); until Task 952 an older copy sat in a `src/proxy.ts` that Next 15 never ran, so a staff change of the site's default
@@ -48,9 +50,9 @@ async function getI18nMiddleware(): Promise<ReturnType<typeof createIntlMiddlewa
   return _cachedMiddleware
 }
 
-/** the admin panel and the API have no [locale] segment: they get the session refresh and nothing else (Task 923 R68 (b)) */
+/** the API has no [locale] segment: it gets the session refresh and nothing else (Task 923 R68 (b)); since Task 988 the admin lives under the slug like every page */
 function carriesNoLocale(pathname: string): boolean {
-  return pathname === '/admin' || pathname.startsWith('/admin/') || pathname === '/api' || pathname.startsWith('/api/')
+  return pathname === '/api' || pathname.startsWith('/api/')
 }
 
 const REPORT_ONLY_HEADER = 'Content-Security-Policy-Report-Only'
@@ -65,26 +67,55 @@ export async function proxy(request: NextRequest) {
     return res
   }
 
-  // 1. Auth session refresh: on every request this proxy sees, the admin panel and the API included
-  const sessionResponse = await refreshSession(request)
+  // 1. Auth session refresh: on every request this proxy sees, the API included; with it, the signed-in person's account language (Task 988)
+  const { response: sessionResponse, accountLocale } = await refreshSession(request)
+  const withSession = (res: NextResponse): NextResponse => {
+    for (const { name, value, ...options } of sessionResponse.cookies.getAll()) {
+      res.cookies.set(name, value, options)
+    }
+    return res
+  }
 
-  // 2. No locale routing on /admin and /api (no locale prefix, no redirect)
+  // 2. No locale routing on /api (no locale prefix, no redirect)
   if (carriesNoLocale(request.nextUrl.pathname)) return withPolicy(sessionResponse)
 
-  // 3. next-intl locale routing with the staff-chosen default locale
+  // 3. Task 988 (owner decisions O988-1, O988-2, O988-5): the interface language. A signed-in person always gets the account language; a guest the language of this
+  //    browser session (`lero_ui_locale`). A GET or HEAD page request in another language, or with none, answers 307 to the same path and query in that language;
+  //    the same language passes. Only the four exact codes steer it, the target is this request's own path, and a shared cache never keeps the per-person answer.
+  //    Every other method passes (a Server Action's POST is never redirected). A request without cookies is never sent away from the language of its address.
+  const { pathname } = request.nextUrl
+  const first = pathname.split('/')[1]
+  const pathLocale = isLocale(first) ? first : null
+  const isPage = request.method === 'GET' || request.method === 'HEAD'
+  const sessionCookie = request.cookies.get(UI_LOCALE_COOKIE)?.value
+  const sessionLocale = isLocale(sessionCookie) ? sessionCookie : null
+  const chosen = accountLocale ?? sessionLocale
+  // the session language this response writes: the account language when the cookie differs from it; for a guest, the language of the first page of the session
+  const writeSession = !isPage ? null : accountLocale ? (sessionCookie === accountLocale ? null : accountLocale) : (sessionLocale ? null : pathLocale)
+  const withSessionLocale = (res: NextResponse): NextResponse => {
+    if (writeSession) res.cookies.set(UI_LOCALE_COOKIE, writeSession, uiLocaleCookieOptions())
+    return res
+  }
+
+  if (isPage && chosen && pathLocale !== chosen) {
+    const target = request.nextUrl.clone()
+    const rest = pathLocale ? pathname.slice(pathLocale.length + 1) : pathname
+    target.pathname = `/${chosen}${rest === '/' ? '' : rest}`
+    const redirect = NextResponse.redirect(target, 307)
+    redirect.headers.set('Cache-Control', 'private, no-store')
+    return withPolicy(withSessionLocale(withSession(redirect)))
+  }
+
+  // 4. next-intl locale routing with the staff-chosen default locale
   const handleI18n = await getI18nMiddleware()
   const response = handleI18n(request) as NextResponse
 
   // Carry any Supabase-refreshed cookies into the final response.
-  for (const { name, value, ...options } of sessionResponse.cookies.getAll()) {
-    response.cookies.set(name, value, options)
-  }
-
-  return withPolicy(response)
+  return withPolicy(withSessionLocale(withSession(response)))
 }
 
 export const config = {
-  // Routes that receive the session refresh (and, outside /admin and /api, locale routing).
+  // Routes that receive the session refresh (and, outside /api, locale routing).
   // Excluded intentionally:
   //   api/cron/*          — cron jobs authenticate with the CRON_SECRET and carry no session
   //   api/auth-email-hook — the Supabase Auth hook authenticates with its webhook signature and carries no session
@@ -97,7 +128,7 @@ export const config = {
   //   vendor/<file>.js, vendor/<file>.txt — the vendored Worker script of the photo compression and its licence (Task 1038): they read no session, and a language prefix sent them
   //                         to /sq/vendor/..., a 404, so the Worker's script load failed and every photo was compressed on the main thread. Only files directly under /vendor/
   //                         with these two endings: `/vendor`, `/vendor/`, `/vendor/a/b.js`, `/vendorx/a.js` and `/vendor/x.json` keep the session refresh and locale routing.
-  // Every other /api route and /admin are INCLUDED so that an expired or refused session is renewed or ended there too (R45 (a)); locale routing stays off on them.
+  // Every other /api route and the admin are INCLUDED so that an expired or refused session is renewed or ended there too (R45 (a)); locale routing stays off on /api.
   matcher: [
     '/((?!api/cron|api/auth-email-hook|auth|_next/static|_next/image|favicon.ico|robots\\.txt$|sitemap/\\d{1,3}\\.xml$|vendor/[^/]+\\.(?:js|txt)$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],

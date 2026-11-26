@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useForm, useWatch } from 'react-hook-form'
 import type { UseFormSetValue } from 'react-hook-form'
@@ -31,6 +31,7 @@ import {
 } from '@/components/admin/AdminUserProfileView'
 import { AdminUserProfileDialogsView, type AdminUserProfileDialog } from '@/components/admin/AdminUserProfileDialogsView'
 import { AdminUserAvatarField } from '@/components/admin/AdminUserAvatarField'
+import { adminHref } from '@/lib/auth/adminPages'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -104,6 +105,7 @@ const FIELD_OPTIONS: { [K in keyof FormValues]?: Parameters<UseFormSetValue<Form
 
 export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin, canClearHistory, changeLogDates, statusHistoryDates, suspendedUntilFormatted }: Props) {
   const router = useRouter()
+  const locale = useLocale()
   const t = useTranslations('admin.user_profile')
 
   // Mode derivation — create if no user, otherwise view/edit toggle
@@ -292,7 +294,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     }
 
     setSaving(false)
-    if (result.userId) router.push(`/admin/users/${result.userId}`)
+    if (result.userId) router.push(adminHref(locale, `/admin/users/${result.userId}`))
   }
 
   async function handleSave(data: FormValues) {
@@ -334,7 +336,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     const result = await hardDeleteUser(user.id)
     setDeleting(false)
     if (result.error) { setSaveError(t('feedback.save_error')); setShowDeleteDialog(false); return }
-    router.push('/admin/users')
+    router.push(adminHref(locale, '/admin/users'))
   }
 
   async function handleDeactivate() {
@@ -406,7 +408,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   function handleConfirmCancel() {
     setShowCancelDialog(false)
     if (isCreate) {
-      router.push('/admin/users')
+      router.push(adminHref(locale, '/admin/users'))
     } else {
       form.reset(); setEditActive(false)
     }
@@ -551,8 +553,8 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         onRejectLocationRequest={handleRejectRequest}
         onAddLocation={isAdmin ? addLocation : undefined}
         onBack={() => {
-          if (!interceptHref('/admin/users')) return
-          router.push('/admin/users')
+          if (!interceptHref(adminHref(locale, '/admin/users'))) return
+          router.push(adminHref(locale, '/admin/users'))
         }}
         onEdit={() => setEditActive(true)}
         onSave={handleSubmit(onSubmit, handleInvalidSubmit)}

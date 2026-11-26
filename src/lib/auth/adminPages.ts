@@ -37,6 +37,24 @@ export type AccessKey = PermissionKey | AdminPageKey
 export const ADMIN_ONLY_PATHS = ['/admin/footer', '/admin/permissions'] as const
 
 /**
+ * Task 988 (owner decision O988-4): the admin lives under the language slug (`src/app/[locale]/admin`). The routes of this file, of the sidebar and of the header titles
+ * are written without the slug (`/admin/users`) and matched against the address after it; an address always carries it (`/uk/admin/users`).
+ */
+export type AdminRoute = '/admin' | `/admin/${string}` | `/admin?${string}`
+
+/** the address of an admin route in a language: `adminHref('uk', '/admin/users?x=1')` is `/uk/admin/users?x=1` */
+export function adminHref(locale: string, route: AdminRoute): string {
+  return `/${locale}${route}`
+}
+
+const ADMIN_ADDRESS = /^\/(?:sq|en|uk|it)(\/admin(?:\/[^/].*)?)$/
+
+/** the admin route of an address, its language slug removed: `/uk/admin/users/1` gives `/admin/users/1`; an address that is not `/<code>/admin…` gives `null` */
+export function adminRouteOf(pathname: string): string | null {
+  return ADMIN_ADDRESS.exec(pathname)?.[1] ?? null
+}
+
+/**
  * The sidebar addresses to show: the first path of each page key given, in the sidebar's order, and for an administrator the administrator-only items too.
  * Display only: every page and every loader checks its own key.
  */

@@ -1,11 +1,11 @@
 import 'server-only'
 
-import { cookies } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
+import { getLocale } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { hasPermission, roleHasPermission } from '@/lib/auth/permissions'
-import type { AccessKey, AdminPageKey } from '@/lib/auth/adminPages'
+import { adminHref, type AccessKey, type AdminPageKey } from '@/lib/auth/adminPages'
 
 /**
  * The signed-in person's staff role (`admin` or `moderator`), or null for an anonymous visitor, a plain user and an agent.
@@ -84,17 +84,13 @@ export async function checkActorRank(actorId: string, targetId: string): Promise
  */
 export type StaffPageAccess = { page: AdminPageKey } | { adminOnly: true } | { landing: true }
 
-const ADMIN_LOCALES = ['sq', 'en', 'uk', 'it'] as const
-const ADMIN_LOCALE_COOKIE = 'admin-locale'
-const ADMIN_LOCALE_DEFAULT = 'en'
-
 export async function requireStaffPage(access: StaffPageAccess): Promise<{ userId: string; role: StaffRole }> {
   const viewer = await requireViewer()
   if (!viewer.ok) {
     if (viewer.reason === 'unauthenticated') {
-      const raw = (await cookies()).get(ADMIN_LOCALE_COOKIE)?.value
-      const locale = (ADMIN_LOCALES as readonly string[]).includes(raw ?? '') ? raw : ADMIN_LOCALE_DEFAULT
-      redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
+      // Task 988: the admin lives under the language slug; the request locale is that slug (src/i18n/request.ts accepts only the four codes)
+      const locale = await getLocale()
+      redirect(`/${locale}/auth/login?next=${encodeURIComponent(adminHref(locale, '/admin'))}&session=lost`)
     }
     notFound()
   }

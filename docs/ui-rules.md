@@ -237,7 +237,7 @@ implementation is `AdminInput` from `@/components/admin/AdminInput` — a thin w
 | Public forms | `Input` | `h-9` (36px, default) |
 | Admin forms | `AdminInput` | `h-10` (40px, canonical) |
 
-- **ALWAYS** use `AdminInput` for form inputs in `src/components/admin/` and `src/app/admin/`.
+- **ALWAYS** use `AdminInput` for form inputs in `src/components/admin/` and `src/app/[locale]/admin/`.
 - **NEVER** use `<Input className="h-10 ..."` directly in admin files — use `AdminInput`.
 - Additional layout classes (e.g. `w-32`, `flex-1`, `font-mono`) may be passed via `className`.
 

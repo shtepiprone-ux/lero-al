@@ -1622,7 +1622,8 @@
         "new_user_subtitle": "Plotësoni fushat më poshtë për të krijuar profilin",
         "verified_badge": "I verifikuar",
         "copy_account_id": "Kopjo ID-në e llogarisë",
-        "account_id_copied": "ID-ja e llogarisë u kopjua"
+        "account_id_copied": "ID-ja e llogarisë u kopjua",
+        "title_fallback": "Profili"
       },
       "location_request": {
         "title": "Kërkesë për shtimin e vendbanimit"

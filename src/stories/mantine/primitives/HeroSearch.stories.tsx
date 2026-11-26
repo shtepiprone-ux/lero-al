@@ -51,10 +51,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // Task 670: production hero background is `bg="var(--hero-bg)"` (solid coral,
-// `src/app/[locale]/page.tsx:27`, since Task 659; retokenized off `--primary` onto its own
+// `src/app/[locale]/(site)/page.tsx:27`, since Task 659; retokenized off `--primary` onto its own
 // `--hero-bg` token 2026-08-18) — the gradient this section used to render here was stale
 // (pre-659). Task 712: renders the SAME Mantine `Box` composition production renders
-// (`src/app/[locale]/page.tsx:28-29`) — no raw `<section>`/`<div>` wrapper, no raw Tailwind
+// (`src/app/[locale]/(site)/page.tsx:28-29`) — no raw `<section>`/`<div>` wrapper, no raw Tailwind
 // utility (cl. 16c parity). Task 841: factored out of `Default`/`Fallback` so `Container` reuses
 // the identical frame byte-for-byte rather than a third copy.
 function HeroFrame({ children }: { children: ReactNode }) {

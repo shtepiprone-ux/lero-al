@@ -33,11 +33,11 @@ import {
 // (791 boundary — the view owns the callbacks), so the Next.js navigation mock is required here, the
 // same way `AdminShell.stories.tsx` needs it. Viewport and locale are switched via the Storybook
 // toolbar (Task 799 caveat).
-// GR-3b (review 1, F1): in production `/admin` renders inside `AdminShell` (`src/app/admin/layout.tsx:7`), whose
+// GR-3b (review 1, F1): in production `/admin` renders inside `AdminShell` (`src/app/[locale]/admin/layout.tsx:7`), whose
 // `MantineAppShellFoundation` has `navbarBreakpoint="lg"` (`src/components/admin/AdminShell.tsx:23`) and a fixed
 // 240px navbar from 1024px. Every export therefore renders inside the real `AdminShell` (one meta decorator),
 // the same way `AdminShell.stories.tsx` does — no Box, width, padding or viewport pin of this Story's own.
-// GR-3d: no `StoryPageGutter` — Task 1007 (owner decision O1007-2): in production `src/app/admin/page.tsx` renders the view inside `AdminPageFrame` (full width, the breakpoint
+// GR-3d: no `StoryPageGutter` — Task 1007 (owner decision O1007-2): in production `src/app/[locale]/admin/page.tsx` renders the view inside `AdminPageFrame` (full width, the breakpoint
 // gutter) and the view's root `MantineDashboardGrid` is `framed={false}` (no cap, no padding of its own), so every export renders inside the same `AdminPageFrame`.
 const meta: Meta<typeof AdminDashboardView> = {
   title: 'Patterns/Mantine/AdminDashboardView',
@@ -47,11 +47,11 @@ const meta: Meta<typeof AdminDashboardView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin' } },
+    nextjs: { navigation: { pathname: '/en/admin' } },
     docs: {
       description: {
         component:
-          "Task 853/890 — the `/admin` operations dashboard, recomposed to the owner's Lahomes/Omah references. Composes the 843–846 + 889 canonical patterns over 847's `AdminDashboardData`, 849's platform activity series and `trends.ts`; `src/app/admin/page.tsx` fetches every block server-side and passes them here unchanged (the 791 server→client boundary — this component owns every callback itself).",
+          "Task 853/890 — the `/admin` operations dashboard, recomposed to the owner's Lahomes/Omah references. Composes the 843–846 + 889 canonical patterns over 847's `AdminDashboardData`, 849's platform activity series and `trends.ts`; `src/app/[locale]/admin/page.tsx` fetches every block server-side and passes them here unchanged (the 791 server→client boundary — this component owns every callback itself).",
       },
     },
   },

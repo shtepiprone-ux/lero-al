@@ -47,16 +47,17 @@ const PAGE = { kind: 'page' };
 const NOT_FOUND = { kind: 'not-found' };
 const redirectTo = (to) => ({ kind: 'redirect', to });
 
-// A role that is not staff is sent from every admin route to the home page of the admin locale (`src/app/admin/layout.tsx:46`, default `en`).
-const AWAY_FROM_ADMIN = redirectTo('/en');
+// A role that is not staff is sent from every admin route to the home page of its language (`src/app/[locale]/admin/layout.tsx:25`); the walk's users are made without a
+// language, so their account language is `sq` (Task 988).
+const AWAY_FROM_ADMIN = redirectTo('/sq');
 const STAFF_ONLY = { admin: PAGE, moderator: PAGE, agent: AWAY_FROM_ADMIN, user: AWAY_FROM_ADMIN };
 const STAFF_REDIRECT = (to) => ({ admin: redirectTo(to), moderator: redirectTo(to), agent: AWAY_FROM_ADMIN, user: AWAY_FROM_ADMIN });
-// `src/app/admin/permissions/page.tsx:14` and `src/app/admin/footer/page.tsx:13` (`requireStaffPage({ adminOnly: true })`, Task 1007, O1007-1): a moderator gets `notFound()`.
+// `src/app/[locale]/admin/permissions/page.tsx:20` and `src/app/[locale]/admin/footer/page.tsx:19` (`requireStaffPage({ adminOnly: true })`, Task 1007, O1007-1): a moderator gets `notFound()`.
 const ADMIN_ONLY = { admin: PAGE, moderator: NOT_FOUND, agent: AWAY_FROM_ADMIN, user: AWAY_FROM_ADMIN };
 const EVERY_SIGNED_IN_ROLE = { admin: PAGE, moderator: PAGE, agent: PAGE, user: PAGE };
-// `src/app/[locale]/cabinet/statistics/page.tsx:38`: only an agent sees the dashboard.
+// `src/app/[locale]/(site)/cabinet/statistics/page.tsx:38`: only an agent sees the dashboard.
 const AGENT_ONLY = { admin: redirectTo('/sq/cabinet'), moderator: redirectTo('/sq/cabinet'), agent: PAGE, user: redirectTo('/sq/cabinet') };
-// `src/app/[locale]/listings/[slug]/edit/page.tsx:96`: the owner and staff edit; anyone else is sent to the listing.
+// `src/app/[locale]/(site)/listings/[slug]/edit/page.tsx:96`: the owner and staff edit; anyone else is sent to the listing.
 const OWNER_OR_STAFF = { admin: PAGE, moderator: PAGE, agent: PAGE, user: redirectTo('/sq/listings/{listingSlug}') };
 
 /**
@@ -65,42 +66,42 @@ const OWNER_OR_STAFF = { admin: PAGE, moderator: PAGE, agent: PAGE, user: redire
  * Task 1007: on a page of a key of `ADMIN_PAGES` the moderator's entry is the result with the page's switch ON; `moderatorExpectation` gives the result of the switch as it is.
  */
 export const ROUTES = [
-  { page: 'src/app/admin/page.tsx', path: '/admin', expect: STAFF_ONLY },
-  { page: 'src/app/admin/companies/page.tsx', path: '/admin/companies', expect: STAFF_ONLY },
-  { page: 'src/app/admin/currency/page.tsx', path: '/admin/currency', expect: STAFF_ONLY },
-  { page: 'src/app/admin/email-templates/page.tsx', path: '/admin/email-templates', expect: STAFF_ONLY },
-  { page: 'src/app/admin/footer/page.tsx', path: '/admin/footer', expect: ADMIN_ONLY },
-  { page: 'src/app/admin/inquiries/page.tsx', path: '/admin/inquiries', expect: STAFF_REDIRECT('/admin/inquiries/support') },
-  { page: 'src/app/admin/inquiries/sales/page.tsx', path: '/admin/inquiries/sales', expect: STAFF_ONLY },
-  { page: 'src/app/admin/inquiries/support/page.tsx', path: '/admin/inquiries/support', expect: STAFF_ONLY },
-  { page: 'src/app/admin/legal/page.tsx', path: '/admin/legal', expect: STAFF_REDIRECT('/admin/pages') },
-  { page: 'src/app/admin/listings/page.tsx', path: '/admin/listings', expect: STAFF_ONLY },
-  { page: 'src/app/admin/listings/[id]/preview/page.tsx', path: '/admin/listings/{listingId}/preview', expect: STAFF_ONLY },
-  { page: 'src/app/admin/locations/page.tsx', path: '/admin/locations', expect: STAFF_ONLY },
-  { page: 'src/app/admin/pages/page.tsx', path: '/admin/pages', expect: STAFF_ONLY },
-  { page: 'src/app/admin/permissions/page.tsx', path: '/admin/permissions', expect: ADMIN_ONLY },
-  { page: 'src/app/admin/popular-locations/page.tsx', path: '/admin/popular-locations', expect: STAFF_ONLY },
-  { page: 'src/app/admin/property-types/page.tsx', path: '/admin/property-types', expect: STAFF_ONLY },
-  { page: 'src/app/admin/reports/page.tsx', path: '/admin/reports', expect: STAFF_ONLY },
-  { page: 'src/app/admin/settings/page.tsx', path: '/admin/settings', expect: STAFF_ONLY },
-  { page: 'src/app/admin/support/page.tsx', path: '/admin/support', expect: STAFF_ONLY },
-  { page: 'src/app/admin/users/page.tsx', path: '/admin/users', expect: STAFF_ONLY },
-  { page: 'src/app/admin/users/new/page.tsx', path: '/admin/users/new', expect: STAFF_ONLY },
-  { page: 'src/app/admin/users/[id]/page.tsx', path: '/admin/users/{userId}', expect: STAFF_ONLY },
-  { page: 'src/app/[locale]/cabinet/page.tsx', path: '/sq/cabinet', expect: EVERY_SIGNED_IN_ROLE },
-  { page: 'src/app/[locale]/cabinet/statistics/page.tsx', path: '/sq/cabinet/statistics', expect: AGENT_ONLY },
-  { page: 'src/app/[locale]/favorites/page.tsx', path: '/sq/favorites', expect: EVERY_SIGNED_IN_ROLE },
-  { page: 'src/app/[locale]/listings/create/page.tsx', path: '/sq/listings/create', expect: EVERY_SIGNED_IN_ROLE },
-  { page: 'src/app/[locale]/listings/[slug]/edit/page.tsx', path: '/sq/listings/{listingSlug}/edit', expect: OWNER_OR_STAFF },
+  { page: 'src/app/[locale]/admin/page.tsx', path: '/sq/admin', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/companies/page.tsx', path: '/sq/admin/companies', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/currency/page.tsx', path: '/sq/admin/currency', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/email-templates/page.tsx', path: '/sq/admin/email-templates', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/footer/page.tsx', path: '/sq/admin/footer', expect: ADMIN_ONLY },
+  { page: 'src/app/[locale]/admin/inquiries/page.tsx', path: '/sq/admin/inquiries', expect: STAFF_REDIRECT('/sq/admin/inquiries/support') },
+  { page: 'src/app/[locale]/admin/inquiries/sales/page.tsx', path: '/sq/admin/inquiries/sales', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/inquiries/support/page.tsx', path: '/sq/admin/inquiries/support', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/legal/page.tsx', path: '/sq/admin/legal', expect: STAFF_REDIRECT('/sq/admin/pages') },
+  { page: 'src/app/[locale]/admin/listings/page.tsx', path: '/sq/admin/listings', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/listings/[id]/preview/page.tsx', path: '/sq/admin/listings/{listingId}/preview', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/locations/page.tsx', path: '/sq/admin/locations', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/pages/page.tsx', path: '/sq/admin/pages', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/permissions/page.tsx', path: '/sq/admin/permissions', expect: ADMIN_ONLY },
+  { page: 'src/app/[locale]/admin/popular-locations/page.tsx', path: '/sq/admin/popular-locations', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/property-types/page.tsx', path: '/sq/admin/property-types', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/reports/page.tsx', path: '/sq/admin/reports', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/settings/page.tsx', path: '/sq/admin/settings', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/support/page.tsx', path: '/sq/admin/support', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/users/page.tsx', path: '/sq/admin/users', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/users/new/page.tsx', path: '/sq/admin/users/new', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/admin/users/[id]/page.tsx', path: '/sq/admin/users/{userId}', expect: STAFF_ONLY },
+  { page: 'src/app/[locale]/(site)/cabinet/page.tsx', path: '/sq/cabinet', expect: EVERY_SIGNED_IN_ROLE },
+  { page: 'src/app/[locale]/(site)/cabinet/statistics/page.tsx', path: '/sq/cabinet/statistics', expect: AGENT_ONLY },
+  { page: 'src/app/[locale]/(site)/favorites/page.tsx', path: '/sq/favorites', expect: EVERY_SIGNED_IN_ROLE },
+  { page: 'src/app/[locale]/(site)/listings/create/page.tsx', path: '/sq/listings/create', expect: EVERY_SIGNED_IN_ROLE },
+  { page: 'src/app/[locale]/(site)/listings/[slug]/edit/page.tsx', path: '/sq/listings/{listingSlug}/edit', expect: OWNER_OR_STAFF },
 ];
 
 /** The folders whose pages the table must cover (Task 965 scope): `/admin`, the cabinet, favorites, listing create and listing edit. */
 const PAGE_ROOTS = [
-  'src/app/admin',
-  'src/app/[locale]/cabinet',
-  'src/app/[locale]/favorites',
-  'src/app/[locale]/listings/create',
-  'src/app/[locale]/listings/[slug]/edit',
+  'src/app/[locale]/admin',
+  'src/app/[locale]/(site)/cabinet',
+  'src/app/[locale]/(site)/favorites',
+  'src/app/[locale]/(site)/listings/create',
+  'src/app/[locale]/(site)/listings/[slug]/edit',
 ];
 const PAGE_FILE = /^page\.(tsx|ts|jsx|js)$/;
 
@@ -144,8 +145,8 @@ export function checkRouteTable(routes, pages) {
 
 // ── The moderator's page switches (Task 1007) ────────────────────────────────
 
-/** The address a row's `page.tsx` serves, as `ADMIN_PAGES` writes it: `src/app/admin/listings/[id]/preview/page.tsx` → `/admin/listings/[id]/preview`. */
-const routeOf = (row) => row.page.replace(/^src\/app/, '').replace(/\/page\.tsx$/, '');
+/** The address a row's `page.tsx` serves, as `ADMIN_PAGES` writes it (after the slug, Task 988): `src/app/[locale]/admin/listings/[id]/preview/page.tsx` → `/admin/listings/[id]/preview`. */
+const routeOf = (row) => row.page.replace(/^src\/app\/\[locale\]/, '').replace(/\/page\.tsx$/, '');
 
 /** The key of `ADMIN_PAGES` whose paths include this row's page, or undefined (Footer, Permissions and the pages outside the admin have none). */
 export function pageKeyOf(row) {
@@ -153,7 +154,7 @@ export function pageKeyOf(row) {
   return ADMIN_PAGES.find((page) => page.paths.includes(route))?.key;
 }
 
-/** `/admin` is the landing (`src/app/admin/page.tsx:29-44`): its result depends on the dashboard's key and on the other keys. */
+/** `/admin` is the landing (`src/app/[locale]/admin/page.tsx:29-43`): its result depends on the dashboard's key and on the other keys. */
 const isLanding = (row) => routeOf(row) === '/admin';
 
 /** A moderator's result on this row is decided by the switches. */
@@ -170,7 +171,7 @@ export function moderatorExpectation(row, allowedKeys) {
   if (isLanding(row)) {
     if (allowedKeys.includes('page.dashboard')) return today;
     const first = ADMIN_PAGES.find((page) => page.key !== 'page.dashboard' && allowedKeys.includes(page.key));
-    return first ? redirectTo(first.paths[0]) : today;
+    return first ? redirectTo(`/sq${first.paths[0]}`) : today;   // `adminHref(locale, …)` of `src/app/[locale]/admin/page.tsx:35`; the walk's users are `sq`
   }
   const key = pageKeyOf(row);
   if (key === undefined) return today;

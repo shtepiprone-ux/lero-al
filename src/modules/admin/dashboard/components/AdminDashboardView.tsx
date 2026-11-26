@@ -35,6 +35,7 @@ import {
   unassignedSupportHref,
   hiddenEligibleHref,
 } from '@/modules/admin/dashboard/hrefs'
+import { adminHref, type AdminRoute } from '@/lib/auth/adminPages'
 import type { AdminDashboardData, Adm11SegmentKey } from '@/modules/admin/dashboard/types'
 import type { AdminTrends, TrendPoint, VisibleListingsByCity } from '@/modules/admin/dashboard/trends'
 import type { ActivityFreshness, ActivityPoint } from '@/modules/analytics/activity/types'
@@ -118,6 +119,8 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
   const onPeriodChange = (next: PeriodSelection) =>
     router.replace(`${pathname}?${new URLSearchParams(serializePeriod(next)).toString()}`, { scroll: false })
   const fc = (n: number) => formatCount(n, locale)
+  // Task 988: every drill-down opens under the language slug of this page
+  const to = (route: AdminRoute) => adminHref(locale, route)
   const shortDate = (d: string) => formatShortDate(d, locale)
   // Task 923 Revision 7: a time-axis tick is the bare day (the month is never repeated per tick); the period is stated ONCE under the card title.
   const rangeOf = (points: ReadonlyArray<{ date: string }>) => formatDateRange(points[0]?.date, points[points.length - 1]?.date, locale)
@@ -216,8 +219,8 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
 
   const adm09Rows: DashboardStatRow[] = data.adm09.ok
     ? [
-        { label: t('adm09_no_expiry'), count: data.adm09.data.noExpiry, href: hiddenEligibleHref('no_expiry'), tone: 'warning' },
-        { label: t('adm09_expired'), count: data.adm09.data.expired, href: hiddenEligibleHref('expired'), tone: 'warning' },
+        { label: t('adm09_no_expiry'), count: data.adm09.data.noExpiry, href: to(hiddenEligibleHref('no_expiry')), tone: 'warning' },
+        { label: t('adm09_expired'), count: data.adm09.data.expired, href: to(hiddenEligibleHref('expired')), tone: 'warning' },
       ]
     : []
 
@@ -247,7 +250,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
   const adm01Rows: DashboardWorkListRow[] = data.adm01.ok
     ? data.adm01.data.rows.map((row) => ({
         id: row.id,
-        href: listingPreviewHref(row.id),
+        href: to(listingPreviewHref(row.id)),
         primary: row.title,
         meta: [row.authorName, <RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} baseDate={now} focusable={false} />],
         ctaLabel: t('worklist_cta_preview'),
@@ -257,7 +260,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
   const adm02Rows: DashboardWorkListRow[] = data.adm02.ok
     ? data.adm02.data.rows.map((row) => ({
         id: row.id,
-        href: pendingReportsHref(),
+        href: to(pendingReportsHref()),
         primary: tl(`report_reason_${row.reason}` as Parameters<typeof tl>[0]),
         meta: [
           row.listingTitle ?? '—',
@@ -271,7 +274,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
   const adm06Rows: DashboardWorkListRow[] = data.adm06.ok
     ? data.adm06.data.rows.map((row) => ({
         id: row.id,
-        href: unassignedSupportHref(),
+        href: to(unassignedSupportHref()),
         primary: tsup(row.ticketType === 'user_complaint' ? 'type_user_complaint' : 'type_support'),
         meta: [<RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} baseDate={now} focusable={false} />],
         // R57(a): the ticket's registered meaning, so "Open" / "In progress" look here as they do on /admin/support.
@@ -287,7 +290,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
     data.locationRequests.ok
       ? data.locationRequests.data.rows.map((row) => ({
           id: row.id,
-          href: `/admin/users/${row.id}`,
+          href: adminHref(locale, `/admin/users/${row.id}`),
           primary: row.displayName,
           meta: [[row.city, row.region].filter(Boolean).join(', ')],
           ctaLabel: t('worklist_cta_review'),
@@ -336,7 +339,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           value={data.adm01.ok ? fc(data.adm01.data.count) : ''}
           caption={t('adm01_caption')}
           chart={queueSparkline(trends.sparklines.listings, t('adm01_sparkline_aria'))}
-          href={pendingListingsHref()}
+          href={to(pendingListingsHref())}
           state={data.adm01.ok ? (data.adm01.data.count === 0 ? 'zero' : 'ready') : 'error'}
           zeroText={t('adm01_zero')}
           errorMessage={t('error_generic')}
@@ -350,7 +353,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           value={data.adm02.ok ? fc(data.adm02.data.pending) : ''}
           secondaryLine={adm02ReviewedLine}
           chart={queueSparkline(trends.sparklines.reports, t('adm02_sparkline_aria'))}
-          href={pendingReportsHref()}
+          href={to(pendingReportsHref())}
           state={data.adm02.ok ? (data.adm02.data.pending === 0 ? 'zero' : 'ready') : 'error'}
           zeroText={t('adm02_zero')}
           errorMessage={t('error_generic')}
@@ -365,7 +368,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           caption={t('adm06_caption')}
           secondaryLine={adm06AnomalyLine}
           chart={queueSparkline(trends.sparklines.tickets, t('adm06_sparkline_aria'))}
-          href={unassignedSupportHref()}
+          href={to(unassignedSupportHref())}
           state={data.adm06.ok ? (data.adm06.data.unassigned === 0 ? 'zero' : 'ready') : 'error'}
           zeroText={t('adm06_zero')}
           errorMessage={t('error_generic')}
@@ -544,7 +547,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           <MantineDashboardWorkList
             rows={adm01Rows}
             maxRows={5}
-            footer={{ label: t('adm01_view_queue'), href: pendingListingsHref() }}
+            footer={{ label: t('adm01_view_queue'), href: to(pendingListingsHref()) }}
             state={adm01Rows.length === 0 ? 'empty' : 'ready'}
             emptyIcon={positiveIcon}
             emptyText={t('adm01_zero')}
@@ -561,7 +564,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           <MantineDashboardWorkList
             rows={adm02Rows}
             maxRows={5}
-            footer={{ label: t('adm02_view_all'), href: pendingReportsHref() }}
+            footer={{ label: t('adm02_view_all'), href: to(pendingReportsHref()) }}
             state={adm02Rows.length === 0 ? 'empty' : 'ready'}
             emptyIcon={positiveIcon}
             emptyText={t('adm02_zero')}
@@ -578,7 +581,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           <MantineDashboardWorkList
             rows={adm06Rows}
             maxRows={5}
-            footer={{ label: t('adm06_view_all'), href: unassignedSupportHref() }}
+            footer={{ label: t('adm06_view_all'), href: to(unassignedSupportHref()) }}
             state={adm06Rows.length === 0 ? 'empty' : 'ready'}
             emptyIcon={positiveIcon}
             emptyText={t('adm06_zero')}
@@ -596,7 +599,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
             <MantineDashboardWorkList
               rows={locationRows}
               maxRows={5}
-              footer={{ label: t('location_requests_view_all'), href: '/admin/users?location_request=1' }}
+              footer={{ label: t('location_requests_view_all'), href: adminHref(locale, '/admin/users?location_request=1') }}
               state={locationRows.length === 0 ? 'empty' : 'ready'}
               emptyIcon={positiveIcon}
               emptyText={t('location_requests_zero')}
@@ -611,7 +614,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           title={t('recent_listings_title')}
           scopeLabel={t('scope_now')}
           headerAction={
-            <Button component={Link} href="/admin/listings" variant="transparent" size="sm">
+            <Button component={Link} href={adminHref(locale, '/admin/listings')} variant="transparent" size="sm">
               {t('recent_listings_all')}
             </Button>
           }

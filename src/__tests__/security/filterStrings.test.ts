@@ -59,7 +59,7 @@ describe('filter strings', () => {
   })
 
   it('the admin search sites use the escaping helpers', () => {
-    for (const f of ['src/app/admin/listings/page.tsx', 'src/app/admin/users/page.tsx', 'src/modules/admin/actions/index.ts']) {
+    for (const f of ['src/app/[locale]/admin/listings/page.tsx', 'src/app/[locale]/admin/users/page.tsx', 'src/modules/admin/actions/index.ts']) {
       const text = files.find((x) => x.file === f)!.text
       expect(text, f).toMatch(/orContains|ilikeContains/)
       expect(text, f).not.toMatch(/ilike\.%\$\{/)

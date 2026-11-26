@@ -6,6 +6,7 @@ import type { Locale } from 'date-fns'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
+import { adminHref } from '@/lib/auth/adminPages'
 import { formatPrice } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
 import { isListingHidden } from '@/modules/listings/domain'
@@ -31,7 +32,7 @@ export default async function AdminListingPreviewPage({ params }: Props) {
   // this is a belt-and-suspenders check for this specific data-bypassing route).
   // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account of any role is refused here too.
   const viewer = await requireViewer()
-  if (!viewer.ok && viewer.reason === 'unauthenticated') redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
+  if (!viewer.ok && viewer.reason === 'unauthenticated') redirect(`/${locale}/auth/login?next=${encodeURIComponent(adminHref(locale, '/admin'))}&session=lost`)
   const isAuthorized = viewer.ok && (viewer.role === 'admin' || viewer.role === 'moderator')
   if (!isAuthorized) redirect(`/${locale}`)
 

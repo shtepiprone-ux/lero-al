@@ -320,7 +320,7 @@ describe('AdminUserProfile (T1–T9)', () => {
     fireEvent.click(primary)
 
     await waitFor(() => expect(mockHardDelete).toHaveBeenCalledWith(USER.id))
-    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/admin/users'))
+    await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/en/admin/users'))
   })
 
   it('T5 — clear a history row calls clearHistoryRow; a { cleared: 0 } result shows the no-op info toast', async () => {

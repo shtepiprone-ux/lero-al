@@ -32,7 +32,7 @@ describe('setLocationFeatured', () => {
     expect(await setLocationFeatured(1, 3)).toEqual({})
     expect(db.tables.locations[0]).toMatchObject({ is_featured: true, display_order: 3 })
     expect(db.tables.locations[1]).toMatchObject({ is_featured: false, display_order: 0 })
-    expect(paths.sort()).toEqual(['/admin/popular-locations', '/en', '/it', '/sq', '/uk'])
+    expect(paths.sort()).toEqual(['/[locale]/admin/popular-locations', '/en', '/it', '/sq', '/uk'])
   })
 
   // a session whose profile row is missing is a guest for `requireViewer()` (a "zombie" session), so it gets the guest's answer
@@ -68,7 +68,7 @@ describe('setLocationUnfeatured', () => {
     expect(await setLocationUnfeatured(1)).toEqual({})
     expect(db.tables.locations[0]).toMatchObject({ is_featured: false, image_url: 'x.jpg' })
     expect(db.tables.locations[1].is_featured).toBe(true)
-    expect(paths).toContain('/admin/popular-locations')
+    expect(paths).toContain('/[locale]/admin/popular-locations')
   })
 
   it.each([[1.5], ['1'], [null], [undefined], [NaN], [{}]])('refuses the location %j', async (location) => {

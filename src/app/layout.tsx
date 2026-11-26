@@ -3,7 +3,7 @@ import { Open_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ColorSchemeScript } from '@mantine/core'
-import { headers, cookies } from 'next/headers'
+import { headers } from 'next/headers'
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 import '@/design-system/mantine/input-chrome.css'
@@ -31,10 +31,9 @@ export const viewport: Viewport = {
 const sans = Open_Sans({ subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'], variable: '--font-open-sans', display: 'swap' })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [headersList, jar] = await Promise.all([headers(), cookies()])
-  // next-intl middleware sets X-NEXT-INTL-LOCALE on every locale-prefixed route.
-  // Admin routes (excluded from middleware) fall back to the admin-locale cookie.
-  const locale = headersList.get('X-NEXT-INTL-LOCALE') ?? jar.get('admin-locale')?.value ?? 'sq'
+  const headersList = await headers()
+  // next-intl middleware sets X-NEXT-INTL-LOCALE on every locale-prefixed route, the admin included since Task 988 (the request locale).
+  const locale = headersList.get('X-NEXT-INTL-LOCALE') ?? 'sq'
 
   return (
     <html lang={locale} suppressHydrationWarning className={sans.variable} data-scroll-behavior="smooth">

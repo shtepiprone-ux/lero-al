@@ -58,7 +58,7 @@ const LISTING_STATUS_IGNORES = [
   // Non-listing status contexts: AuthStatus, TicketStatus, UserStatus, HTTP codes
   "src/lib/auth/**",
   "src/modules/auth/**",
-  "src/app/admin/support/**",
+  "src/app/[[]locale]/admin/support/**",
   "src/modules/notifications/**",
   // Cron jobs + presence — write UserStatus (inactive/active), not ListingStatus
   "src/app/api/cron/**",

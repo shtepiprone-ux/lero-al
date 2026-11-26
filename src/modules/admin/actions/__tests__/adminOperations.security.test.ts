@@ -88,7 +88,7 @@ describe('updateListingStatus', () => {
   it('hands the change to the transition gateway with the staff member as the actor and refreshes the list', async () => {
     expect(await updateListingStatus('l1', 'archived')).toEqual({})
     expect(transitions).toEqual([{ id: 'l1', to: 'archived', actor: { userId: 'mod', role: 'moderator', source: 'admin_panel' } }])
-    expect(paths).toEqual(['/admin/listings'])
+    expect(paths).toEqual(['/[locale]/admin/listings'])
   })
 
   it('a refusal by the gateway is returned, logged unless it is "not_found", and nothing is refreshed', async () => {
@@ -115,7 +115,7 @@ describe('setListingPremium', () => {
   it('switches the flag on with an end date and refreshes the admin lists and the public pages in every language', async () => {
     expect(await setListingPremium('l1', true, NEXT_YEAR)).toEqual({ ok: true })
     expect(db.tables.listings[0]).toMatchObject({ is_premium: true, premium_until: NEXT_YEAR })
-    expect(paths).toEqual(expect.arrayContaining(['/admin/listings', '/admin/badges', '/sq/listings', '/en/listings/flat-1', '/uk/listings', '/it/listings/flat-1']))
+    expect(paths).toEqual(expect.arrayContaining(['/[locale]/admin/listings', '/[locale]/admin/badges', '/sq/listings', '/en/listings/flat-1', '/uk/listings', '/it/listings/flat-1']))
     expect(paths).toHaveLength(2 + 8)
   })
 
@@ -160,7 +160,7 @@ describe('deleteListing', () => {
     await deleteListing('l1')
     expect(db.tables.listings.map((l) => l.id)).toEqual(['l2'])
     expect(tags).toEqual(['site-stats', PUBLIC_LISTINGS_CACHE_TAG])     // Task 964 R1-2: the sitemap files expire with the counter
-    expect(paths).toEqual(['/admin/listings', '/sq/listings', '/en/listings', '/uk/listings', '/it/listings'])
+    expect(paths).toEqual(['/[locale]/admin/listings', '/sq/listings', '/en/listings', '/uk/listings', '/it/listings'])
   })
 
   it('a database failure deletes nothing and refreshes nothing', async () => {
@@ -185,7 +185,7 @@ describe('locations', () => {
     expect(db.tables.locations.find((l) => l.id === 1)).toMatchObject({ name_al: 'Tiranë', is_featured: true })
     expect(await deleteLocation(1)).toEqual({})
     expect(db.tables.locations.map((l) => l.name_al)).toEqual(['Durrës'])
-    expect(paths).toEqual(Array(4).fill('/admin/locations'))
+    expect(paths).toEqual(Array(4).fill('/[locale]/admin/locations'))
   })
 
   // Task 923 R71 (f), X14: this was a characterisation of the leak ("a database failure returns its message") and is now its regression: a failure is a stable code, never the database text
@@ -224,7 +224,7 @@ describe('locations', () => {
     db.tables.users.find((u) => u.id === UUID)!.location_request = 'Again'
     expect(await rejectLocationRequest(UUID)).toEqual({})
     expect(db.tables.users.find((u) => u.id === UUID)).toMatchObject({ location_id: 1, location_request: null })
-    expect(paths).toEqual(expect.arrayContaining([`/admin/users/${UUID}`, '/admin/users', '/admin']))
+    expect(paths).toEqual(expect.arrayContaining(['/[locale]/admin/users/[id]', '/[locale]/admin/users', '/[locale]/admin']))
   })
 
   it('a failed request decision returns a key and refreshes nothing', async () => {
@@ -239,7 +239,7 @@ describe('CMS pages', () => {
   it('create stores the Albanian title of the content, and refreshes the list', async () => {
     expect(await createPage({ title: 'Fallback', slug: 'about-us', content: body as never, is_published: true })).toEqual({})
     expect(db.tables.pages.at(-1)).toMatchObject({ slug: 'about-us', title: 'Kushtet', is_published: true })
-    expect(paths).toEqual(['/admin/pages'])
+    expect(paths).toEqual(['/[locale]/admin/pages'])
   })
 
   it('create falls back to the given title when the Albanian one is empty', async () => {
@@ -340,7 +340,7 @@ describe('support tickets', () => {
     expect(db.tables.support_tickets.at(-1)).toMatchObject({ user_id: UUID, subject: 'Help', reason: 'Cannot log in', created_by_admin_id: 'mod', ticket_type: 'support', status: 'open' })
     expect(db.tables.support_ticket_events[0]).toMatchObject({ actor_user_id: 'mod', actor_role: 'moderator', event_type: 'created', new_status: 'open', note: 'Cannot log in' })
     expect(notifications).toEqual([])
-    expect(paths).toEqual(['/admin/support'])
+    expect(paths).toEqual(['/[locale]/admin/support'])
   })
 
   it('a complaint needs the reported person and a known complaint type, and the reported person is told', async () => {

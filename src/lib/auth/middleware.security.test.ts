@@ -38,7 +38,7 @@ const request = () => new NextRequest('https://lero.al/sq', { headers: { cookie:
 
 it.each([['user_banned'], ['user_not_found']])('ends the session locally when Auth answers %s, and the response clears the auth cookie', async (code) => {
   sdk.getUserError = { code, status: 403, message: code }
-  const res = await refreshSession(request())
+  const { response: res } = await refreshSession(request())
   expect(sdk.signOuts).toEqual([{ scope: 'local' }])
   expect(res.cookies.get('sb-test-auth-token')?.value).toBe('')
 })
@@ -50,13 +50,13 @@ it.each([
   ['a rate limit', { code: 'over_request_rate_limit', status: 429, message: 'slow down' }],
 ])('changes nothing on %s', async (_label, error) => {
   sdk.getUserError = error
-  const res = await refreshSession(request())
+  const { response: res } = await refreshSession(request())
   expect(sdk.signOuts).toEqual([])
   expect(res.cookies.getAll()).toEqual([])
 })
 
 it('changes nothing for an active person', async () => {
-  const res = await refreshSession(request())
+  const { response: res } = await refreshSession(request())
   expect(sdk.signOuts).toEqual([])
   expect(res.cookies.getAll()).toEqual([])
 })
@@ -70,7 +70,7 @@ it('[SEC-D29-SRV-DENY] A banned, deleted or no-access session is ended by the se
     sdk.signOuts.length = 0
     const req = request()
     expect(req.cookies.get('sb-test-auth-token')?.value, `${code}: precondition: the request carries the auth cookie`).toBe('abc')
-    const res = await refreshSession(req)
+    const { response: res } = await refreshSession(req)
     expect(sdk.signOuts, `${code}: the session is ended once, locally`).toEqual([{ scope: 'local' }])
     expect(res.cookies.get('sb-test-auth-token')?.value, `${code}: the response clears the auth cookie, so the next render is a guest's`).toBe('')
     expect(req.cookies.get('sb-test-auth-token')?.value, `${code}: the cleared cookie is the one the page then sees`).toBe('')
@@ -87,7 +87,7 @@ it('[SEC-D29-SRV-ALLOW] A banned, deleted or no-access session is ended by the s
     sdk.getUserError = error
     sdk.signOuts.length = 0
     const req = request()
-    const res = await refreshSession(req)
+    const { response: res } = await refreshSession(req)
     expect(sdk.signOuts, `${label}: no sign-out`).toEqual([])
     expect(res.cookies.getAll(), `${label}: the response sets and clears nothing`).toEqual([])
     expect(req.cookies.get('sb-test-auth-token')?.value, `${label}: the session cookie stays as it was`).toBe('abc')

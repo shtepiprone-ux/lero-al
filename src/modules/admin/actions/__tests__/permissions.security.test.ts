@@ -20,14 +20,14 @@ vi.mock('next/cache', () => ({ revalidatePath: (p: string) => { paths.push(p) } 
 // the page of the switches (SEC-X-SRV-PERMS-ADMIN-ONLY): the real page and the real staff-page guard; Next's redirect and not-found, the cookie jar, i18n and the three view components are doubles
 vi.mock('next/navigation', () => ({ notFound: () => { throw new Error('NEXT_NOT_FOUND') }, redirect: (to: string) => { throw new Error(`NEXT_REDIRECT ${to}`) } }))
 vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined }) }))
-vi.mock('next-intl/server', () => ({ getTranslations: async () => (key: string) => key }))
+vi.mock('next-intl/server', () => ({ getTranslations: async () => (key: string) => key, getLocale: async () => 'en' }))   // Task 988: the sign-in redirect takes the request locale
 vi.mock('@/lib/admin/getAdminLocale', () => ({ getAdminLocale: async () => 'en' }))
 vi.mock('@/components/admin/AdminPageHeader', () => ({ AdminPageHeader: () => null }))
 vi.mock('@/components/admin/AdminPageFrame', () => ({ AdminPageFrame: () => null }))
 vi.mock('@/components/admin/AdminPermissionsManager', () => ({ AdminPermissionsManager: () => null }))
 
 import { getModeratorPermissions, getPermissionEvents, setModeratorPermission } from '../permissions'
-import AdminPermissionsPage from '@/app/admin/permissions/page'
+import AdminPermissionsPage from '@/app/[locale]/admin/permissions/page'
 
 function failing(table: string, op: 'insert' | 'upsert' | 'select', error: { code?: string; message: string }) {
   const real = db.client.from
@@ -58,7 +58,7 @@ describe('setModeratorPermission', () => {
     expect(await setModeratorPermission('users.create', true)).toEqual({})
     expect(db.tables.role_permissions.find((r) => r.permission_key === 'users.create')).toMatchObject({ role: 'moderator', allowed: true, updated_by_user_id: 'adm' })
     expect(db.tables.role_permission_events).toMatchObject([{ role: 'moderator', permission_key: 'users.create', old_allowed: null, new_allowed: true, actor_user_id: 'adm' }])
-    expect(paths).toEqual(['/admin/permissions'])
+    expect(paths).toEqual(['/[locale]/admin/permissions'])
   })
 
   it('switching an existing one off records the previous value and keeps one row for it', async () => {

@@ -44,7 +44,7 @@ const meta: Meta<typeof AgentStatisticsView> = {
     docs: {
       description: {
         component:
-          "Task 854/891 — the agent dashboard. Composes the 843-846/845/889 canonical patterns over 848's `AgentStatisticsData` and 849's activity aggregate (series, by-listing, freshness); `src/app/[locale]/cabinet/statistics/page.tsx` fetches every block server-side and passes them here unchanged (the 791 server→client boundary — this component owns every callback itself).",
+          "Task 854/891 — the agent dashboard. Composes the 843-846/845/889 canonical patterns over 848's `AgentStatisticsData` and 849's activity aggregate (series, by-listing, freshness); `src/app/[locale]/(site)/cabinet/statistics/page.tsx` fetches every block server-side and passes them here unchanged (the 791 server→client boundary — this component owns every callback itself).",
       },
     },
   },

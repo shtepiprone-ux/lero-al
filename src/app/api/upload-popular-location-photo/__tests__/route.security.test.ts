@@ -74,7 +74,7 @@ describe('who may replace a popular location photo', () => {
     expect(await res.json()).toEqual({ url: 'https://res.cloudinary.test/p.jpg' })
     expect(uploads).toEqual([{ mime: 'image/jpeg', folder: 'popular_locations/7' }])
     expect(ops.find((o) => o.op === 'update')).toMatchObject({ table: 'locations', values: { image_url: 'https://res.cloudinary.test/p.jpg' }, filters: [['id', 7]] })
-    expect(revalidated).toEqual(['/admin/popular-locations'])
+    expect(revalidated).toEqual(['/[locale]/admin/popular-locations'])
   })
 
   it('a moderator without locations.manage is refused before anything is read, uploaded or written (Task 923 R66 (c))', async () => {

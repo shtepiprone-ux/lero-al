@@ -60,7 +60,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 
-import AdminDashboard from '@/app/admin/page'
+import AdminDashboard from '@/app/[locale]/admin/page'
 
 const props = { searchParams: Promise.resolve({}) }
 type Outcome = { element?: ReactElement<{ children?: ReactElement<{ title?: string }> }>; threw?: string }
@@ -101,10 +101,10 @@ describe('the /admin landing', () => {
 
   it('a moderator without page.dashboard: no dashboard read, a redirect to the first path of the first page switched on (the sidebar order, not the database order)', async () => {
     state.on = ['page.users', 'page.listings', 'page.reports']
-    expect(await outcome()).toEqual({ threw: 'NEXT_REDIRECT /admin/listings' })
+    expect(await outcome()).toEqual({ threw: 'NEXT_REDIRECT /uk/admin/listings' })
     expect(state.dashboardReads, 'nothing of the dashboard was read').toEqual([])
     state.on = ['page.inquiries_support']
-    expect(await outcome()).toEqual({ threw: 'NEXT_REDIRECT /admin/inquiries/support' })
+    expect(await outcome()).toEqual({ threw: 'NEXT_REDIRECT /uk/admin/inquiries/support' })
     expect(state.dashboardReads).toEqual([])
   })
 

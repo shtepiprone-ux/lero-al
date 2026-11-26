@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  revalidatePath('/admin/popular-locations')
+  revalidatePath('/[locale]/admin/popular-locations', 'page')
 
   return NextResponse.json({ url: cloudUrl })
 }

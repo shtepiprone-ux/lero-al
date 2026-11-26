@@ -1,7 +1,7 @@
 /**
  * Task 1007 AC10 — every admin page sits in the one canonical frame (owner rule 2026-11-19; owner decision O1007-2, 2026-11-24: "All pages in the admin must have the
  * canonical width ... The width must be the full screen", the dashboard included, the listing preview "do not touch").
- *  - every `src/app/admin/**\/page.tsx` has no `className`, and every one that renders (not a redirect) renders `<AdminPageFrame>` with no prop;
+ *  - every `src/app/[locale]/admin/**\/page.tsx` has no `className`, and every one that renders (not a redirect) renders `<AdminPageFrame>` with no prop;
  *  - the one exception is the listing preview, named here with its owner decision;
  *  - `AdminPageFrame` caps nothing: no max width whatever a caller passes, the gutter `xl` (24px), `2xl` (32px) from `lg`; the five `adminPage*MaxWidth` tokens are gone;
  *  - `MantineDashboardGrid` with `framed={false}` renders no max width, margin or padding (the frame owns them); with the default it keeps the box of `main`.
@@ -16,10 +16,10 @@ import { theme } from '@/design-system/mantine/theme'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { MantineDashboardGrid } from '@/design-system/mantine/patterns/MantineDashboardGrid'
 
-const ADMIN_ROOT = join(process.cwd(), 'src', 'app', 'admin')
+const ADMIN_ROOT = join(process.cwd(), 'src', 'app', '[locale]', 'admin')
 /** the pages that render without the frame, each with its owner decision */
 const UNFRAMED: Record<string, string> = {
-  'src/app/admin/listings/[id]/preview/page.tsx': 'owner, 2026-11-24, "do not touch": it renders ListingDetailView, the public listing page, as it is on main',
+  'src/app/[locale]/admin/listings/[id]/preview/page.tsx': 'owner, 2026-11-24, "do not touch": it renders ListingDetailView, the public listing page, as it is on main',
 }
 
 function pageFiles(dir = ADMIN_ROOT, out: string[] = []): string[] {

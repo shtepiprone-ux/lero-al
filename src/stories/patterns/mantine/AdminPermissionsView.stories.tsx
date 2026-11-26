@@ -12,7 +12,7 @@ import { withAdminShell } from '@/stories/_StoryAdminShell'
  * and is proven by this Story (GR-1 container exemption). Viewport and locale come from the Storybook toolbar.
  *
  * GR-3b (Task 857): every export renders inside the real `AdminShell` and the route's `AdminPageFrame`
- * (full width, O1007-2, `src/app/admin/permissions/page.tsx`); GR-3d: the frame is the page gutter.
+ * (full width, O1007-2, `src/app/[locale]/admin/permissions/page.tsx`); GR-3d: the frame is the page gutter.
  * Task 1007: the "Admin panel pages" section (one switch per admin page) is under the action keys in every export;
  * `WithPagesSection` shows some pages on, some off, and one page saving.
  */

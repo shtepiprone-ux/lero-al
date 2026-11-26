@@ -1,15 +1,15 @@
 // @vitest-environment node
 /**
- * Task 988 AC2: an address without a language keeps the visitor's language, and the language cookie lives 10 days (owner decision O988-1).
- *  - `/cabinet?tab=x` with `NEXT_LOCALE=uk` answers 307 to `/uk/cabinet?tab=x`, `Cache-Control: private, no-store` (a shared cache never keeps a cookie-dependent
- *    redirect), the refreshed session cookies and the report-only script policy; with no cookie next-intl's default answer stays.
- *  - SEC-988-PROXY-LOCALE-DENY: only the four exact language codes steer the redirect (a crafted cookie never builds the target); a path that already carries a
- *    language never redirects (no loop); `/admin` and `/api` stay outside locale routing.
- *  - next-intl's `NEXT_LOCALE` cookie is written with `Max-Age=864000` whenever the page language differs from it, and not when it is the same.
- * The real proxy and the real routing run; the Supabase client is a double. next-intl's ESM middleware imports `next/server` without an extension, which Node cannot
- * load under Vitest (`Cannot find module '…/node_modules/next/server'`, as every other proxy test records by mocking it), so its double is built from next-intl's own
- * code: `receiveRoutingConfig` (the `localeCookie` defaults) and `syncCookie` (the cookie writer), loaded by file path, around its answer with `localeDetection: false`
- * (a path without a language: 307 to the default language; a path with one: passed on). Every value is synthetic.
+ * Task 988 AC2 (owner decisions O988-1, O988-5): a guest keeps the language of this browser session across tabs and links.
+ *  - The session language is the cookie `lero_ui_locale`: a session cookie (no Max-Age, no Expires), `Path=/`, `SameSite=Lax`, `HttpOnly`, one of the four codes.
+ *  - With it, a GET or HEAD page request in another language, or with none, answers 307 to the same path and query in the session language, `Cache-Control:
+ *    private, no-store`, with the refreshed session cookies and the report-only script policy; the same language passes and writes no cookie.
+ *  - Without it, a path with a language passes and its response starts the session language (`lero_ui_locale=<that language>`); a path without one gets next-intl's
+ *    default answer. next-intl's `NEXT_LOCALE` never steers it. Every other method passes (a Server Action's POST is never redirected).
+ *  - SEC-988-PROXY-LOCALE-DENY: a crafted cookie value never steers a redirect; SEC-988-GUEST-COOKIE-DENY: no response sets `lero_ui_locale` to anything but a code.
+ * The real proxy runs; the Supabase client is a double (a guest: no user). next-intl's ESM middleware imports `next/server` without an extension, which Node cannot
+ * load under Vitest, so its double is built from next-intl's own `receiveRoutingConfig` and `syncCookie`, loaded by file path, around its answer with
+ * `localeDetection: false` (a path without a language: 307 to the default language; a path with one: passed on). Every value is synthetic.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -42,15 +42,19 @@ vi.mock('@supabase/ssr', () => ({
     auth: {
       getUser: async () => {
         if (state.refresh) opts.cookies.setAll([{ name: 'sb-test-auth-token', value: 'renewed', options: { path: '/', httpOnly: true } }])
-        return { data: {}, error: null }
+        return { data: { user: null }, error: null }
       },
     },
+    from: () => { throw new Error('a guest has no account row to read') },
   }),
 }))
 
 const ENV = { ...process.env }
-const req = (path: string, locale?: string) =>
-  new NextRequest(`https://lero.al${path}`, locale === undefined ? {} : { headers: { cookie: `NEXT_LOCALE=${encodeURIComponent(locale)}` } })
+const req = (path: string, cookies: Record<string, string> = {}, method = 'GET') => {
+  const cookie = Object.entries(cookies).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('; ')
+  return new NextRequest(`https://lero.al${path}`, { method, ...(cookie ? { headers: { cookie } } : {}) })
+}
+const uiCookie = (res: Response) => res.headers.getSetCookie().filter((c) => c.startsWith('lero_ui_locale='))
 
 beforeEach(() => {
   state.refresh = false
@@ -61,58 +65,113 @@ beforeEach(() => {
 })
 afterEach(() => { process.env = { ...ENV } })
 
-const localeCookie = (res: Response) => res.headers.getSetCookie().find((c) => c.startsWith('NEXT_LOCALE='))
-
 describe('proxyLocale', () => {
-  it('[AC2] an address without a language goes to the language of the NEXT_LOCALE cookie', async () => {
+  it('[AC2] a page in another language goes to the session language, private, with the refreshed session cookies and the policy', async () => {
     const { proxy } = await import('@/proxy')
     state.refresh = true
-    const res = await proxy(req('/cabinet?tab=x', 'uk'))
+    const res = await proxy(req('/sq/listings/x?a=1', { lero_ui_locale: 'uk' }))
     expect(res.status).toBe(307)
-    expect(res.headers.get('location')).toBe('https://lero.al/uk/cabinet?tab=x')
+    expect(res.headers.get('location')).toBe('https://lero.al/uk/listings/x?a=1')
     expect(res.headers.get('cache-control')).toBe('private, no-store')
     expect(res.headers.getSetCookie().some((c) => c.startsWith('sb-test-auth-token=renewed')), 'the refreshed session cookies are kept').toBe(true)
-    expect(res.headers.get('content-security-policy-report-only'), 'the answer passes withPolicy').toBeTruthy()
 
-    const root = await proxy(req('/', 'it'))
-    expect(root.status).toBe(307)
+    const cabinet = await proxy(req('/cabinet', { lero_ui_locale: 'uk' }))
+    expect(cabinet.status).toBe(307)
+    expect(cabinet.headers.get('location')).toBe('https://lero.al/uk/cabinet')
+    expect(cabinet.headers.get('cache-control')).toBe('private, no-store')
+    expect(cabinet.headers.get('content-security-policy-report-only'), 'the answer passes withPolicy').toBeTruthy()
+
+    const root = await proxy(req('/', { lero_ui_locale: 'it' }))
     expect(root.headers.get('location')).toBe('https://lero.al/it')
-    expect(root.headers.get('cache-control')).toBe('private, no-store')
+
+    const head = await proxy(req('/en/x', { lero_ui_locale: 'uk' }, 'HEAD'))
+    expect(head.headers.get('location'), 'HEAD is a page request too').toBe('https://lero.al/uk/x')
+
+    const admin = await proxy(req('/admin/users', { lero_ui_locale: 'uk' }))
+    expect(admin.headers.get('location'), 'an old admin address lands under the slug').toBe('https://lero.al/uk/admin/users')
   })
 
-  it('[AC2] no cookie: next-intl\'s default answer stays', async () => {
+  it('[AC2] the same language passes and sets no cookie', async () => {
     const { proxy } = await import('@/proxy')
-    const res = await proxy(req('/cabinet?tab=x'))
-    expect(res.headers.get('location')).toBe('https://lero.al/sq/cabinet?tab=x')
+    const res = await proxy(req('/uk/x', { lero_ui_locale: 'uk' }))
+    expect(res.headers.get('location')).toBeNull()
+    expect(uiCookie(res)).toEqual([])
+  })
+
+  it('[AC2] the first page of a session starts the session language: a session cookie with Path=/, SameSite=Lax, HttpOnly', async () => {
+    const { proxy } = await import('@/proxy')
+    const res = await proxy(req('/en/x'))
+    expect(res.headers.get('location')).toBeNull()
+    const [cookie] = uiCookie(res)
+    expect(cookie).toMatch(/^lero_ui_locale=en;/)
+    expect(cookie).toMatch(/;\s*Path=\/(;|$)/i)
+    expect(cookie).toMatch(/;\s*SameSite=Lax(;|$)/i)
+    expect(cookie).toMatch(/;\s*HttpOnly(;|$)/i)
+    expect(cookie).not.toMatch(/Max-Age=/i)
+    expect(cookie).not.toMatch(/Expires=/i)
+  })
+
+  it('[AC2] the cookie is Secure in production', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    try {
+      const { proxy } = await import('@/proxy')
+      const [cookie] = uiCookie(await proxy(req('/en/x')))
+      expect(cookie).toMatch(/;\s*Secure(;|$)/i)
+    } finally {
+      vi.unstubAllEnvs()
+    }
+  })
+
+  it('[AC2] without cookies an address without a language gets next-intl\'s default answer, and no request is sent away from its own language', async () => {
+    const { proxy } = await import('@/proxy')
+    const res = await proxy(req('/cabinet'))
+    expect(res.headers.get('location')).toBe('https://lero.al/sq/cabinet')
     expect(res.headers.get('cache-control')).not.toBe('private, no-store')
-  })
-
-  it('[SEC-988-PROXY-LOCALE-DENY] a crafted cookie never steers the redirect; a language path never redirects; /admin and /api are untouched', async () => {
-    const { proxy } = await import('@/proxy')
-    for (const value of ['//evil.com', 'UK', 'uk/../x', 'https://evil.com', 'uk ', '']) {
-      const res = await proxy(req('/cabinet?tab=x', value))
-      expect(res.headers.get('location'), JSON.stringify(value)).toBe('https://lero.al/sq/cabinet?tab=x')
-      expect(res.headers.get('cache-control'), JSON.stringify(value)).not.toBe('private, no-store')
-    }
-
-    const own = await proxy(req('/uk/x', 'en'))
-    expect(own.headers.get('location'), 'a path with a language is not redirected').toBeNull()
-
-    for (const path of ['/admin', '/admin/users', '/api/x']) {
-      const res = await proxy(req(path, 'uk'))
-      expect(res.headers.get('location'), path).toBeNull()
+    for (const path of ['/sq/listings/x', '/uk/x', '/it']) {
+      expect((await proxy(req(path))).headers.get('location'), path).toBeNull()
     }
   })
 
-  it('[AC2] the language cookie lives 10 days (O988-1) and is written only when the page language differs', async () => {
+  it('[AC2] other methods pass: a POST to /sq/x with the session language uk is not redirected', async () => {
     const { proxy } = await import('@/proxy')
-    const changed = localeCookie(await proxy(req('/en/x', 'uk')))
-    expect(changed).toBeDefined()
-    expect(changed).toMatch(/^NEXT_LOCALE=en;/)
-    expect(changed).toMatch(/;\s*Max-Age=864000(;|$)/i)
-    expect(changed).toMatch(/;\s*Path=\/(;|$)/i)
-    expect(changed).toMatch(/;\s*SameSite=Lax(;|$)/i)
+    for (const method of ['POST', 'PUT', 'DELETE']) {
+      const res = await proxy(req('/sq/x', { lero_ui_locale: 'uk' }, method))
+      expect(res.headers.get('location'), method).toBeNull()
+      expect(uiCookie(res), method).toEqual([])
+    }
+  })
 
-    expect(localeCookie(await proxy(req('/uk/x', 'uk'))), 'same language: no Set-Cookie').toBeUndefined()
+  it('[AC2] NEXT_LOCALE never steers the session language', async () => {
+    const { proxy } = await import('@/proxy')
+    const res = await proxy(req('/sq/x', { NEXT_LOCALE: 'sq', lero_ui_locale: 'uk' }))
+    expect(res.headers.get('location')).toBe('https://lero.al/uk/x')
+    const bare = await proxy(req('/cabinet', { NEXT_LOCALE: 'uk' }))
+    expect(bare.headers.get('location'), 'NEXT_LOCALE alone: next-intl\'s default').toBe('https://lero.al/sq/cabinet')
+    expect(uiCookie(await proxy(req('/en/x', { NEXT_LOCALE: 'uk' }))), 'the first page writes its own language, never NEXT_LOCALE').toEqual(expect.arrayContaining([expect.stringMatching(/^lero_ui_locale=en;/)]))
+  })
+
+  it('[SEC-988-PROXY-LOCALE-DENY] a crafted session cookie never steers a redirect; /api stays outside locale routing', async () => {
+    const { proxy } = await import('@/proxy')
+    for (const value of ['//evil.com', 'UK', 'uk/../x', 'https://evil.com', 'uk ', '', 'uk;x']) {
+      const own = await proxy(req('/sq/x', { lero_ui_locale: value }))
+      expect(own.headers.get('location'), JSON.stringify(value)).toBeNull()
+      const bare = await proxy(req('/cabinet', { lero_ui_locale: value }))
+      expect(bare.headers.get('location'), JSON.stringify(value)).toBe('https://lero.al/sq/cabinet')
+      expect(bare.headers.get('cache-control'), JSON.stringify(value)).not.toBe('private, no-store')
+    }
+    for (const path of ['/api/x', '/api']) {
+      expect((await proxy(req(path, { lero_ui_locale: 'uk' }))).headers.get('location'), path).toBeNull()
+    }
+  })
+
+  it('[SEC-988-GUEST-COOKIE-DENY] no response sets lero_ui_locale to anything but one of the four codes', async () => {
+    const { proxy } = await import('@/proxy')
+    const values: string[] = []
+    for (const value of ['//evil.com', 'UK', 'uk/../x', 'https://evil.com', '<script>', 'uk; Domain=evil.com']) {
+      for (const path of ['/sq/x', '/cabinet', '/UK/x', '/%2F%2Fevil.com/x', '/uk%2F..%2Fx']) {
+        for (const c of uiCookie(await proxy(req(path, { lero_ui_locale: value })))) values.push(c.split(';')[0].slice('lero_ui_locale='.length))
+      }
+    }
+    expect(values.every((v) => ['sq', 'en', 'uk', 'it'].includes(v)), JSON.stringify(values)).toBe(true)
   })
 })

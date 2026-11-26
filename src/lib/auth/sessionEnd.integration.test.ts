@@ -50,7 +50,7 @@ async function cookiesOf(person: SyntheticUser): Promise<CookieRow[]> {
 /** sends the old cookie set to refreshSession; returns the auth cookies the response removes (an empty value) and the ones it sets with a value */
 async function request(rows: CookieRow[]) {
   const req = new NextRequest('https://lero.al/sq', { headers: { cookie: rows.map((row) => `${row.name}=${row.value}`).join('; ') } })
-  const res = await refreshSession(req)
+  const { response: res } = await refreshSession(req)
   const set = res.cookies.getAll().filter((c) => c.name.startsWith('sb-'))
   return { cleared: set.filter((c) => c.value === ''), kept: set.filter((c) => c.value !== '') }
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
   MapPin, FileText, Settings, LogOut, ExternalLink, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, LifeBuoy, TrendingUp, PanelBottom,
@@ -11,6 +11,7 @@ import { Stack, Text, NavLink, Group, Anchor, ScrollArea, useMantineTheme } from
 import { signOut } from '@/lib/auth/browser'
 import { AdminLocaleSwitcher } from '@/components/admin/AdminLocaleSwitcher'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref, adminRouteOf, type AdminRoute } from '@/lib/auth/adminPages'
 
 interface AdminSidebarProps {
   /** Called after a nav item is activated (Task 852 — closes the AppShell drawer below `lg`). */
@@ -25,11 +26,14 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ onNavigate, siteName = 'Lero.al', allowedPaths }: AdminSidebarProps) {
   const t = useTranslations('admin.sidebar')
+  const locale = useLocale()
   const pathname = usePathname()
+  // Task 988: the items are admin routes (the access table's), matched after the language slug of the address and linked under it
+  const route = adminRouteOf(pathname) ?? ''
   const router = useRouter()
   const theme = useMantineTheme()
 
-  const GROUPS = [
+  const GROUPS: { label: string; items: { href: AdminRoute; label: string; icon: typeof LayoutDashboard }[] }[] = [
     {
       label: t('group_overview'),
       items: [
@@ -76,7 +80,7 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al', allowedPaths }:
   })).filter(group => group.items.length > 0)
 
   function isActive(href: string) {
-    return href === '/admin' ? pathname === '/admin' : pathname.startsWith(href)
+    return href === '/admin' ? route === '/admin' : route.startsWith(href)
   }
 
   async function handleLogout() {
@@ -100,7 +104,7 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al', allowedPaths }:
           <Group gap="xs" px="xs" wrap="nowrap">
             <Anchor
               component={Link}
-              href="/admin"
+              href={adminHref(locale, '/admin')}
               underline="never"
               fw={700}
               size="md"
@@ -124,7 +128,7 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al', allowedPaths }:
                   <NavLink
                     key={item.href}
                     component={Link}
-                    href={item.href}
+                    href={adminHref(locale, item.href)}
                     active={isActive(item.href)}
                     color="brand"
                     label={<Text size="sm" fw={500}>{item.label}</Text>}

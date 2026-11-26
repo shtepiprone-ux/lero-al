@@ -341,7 +341,7 @@ describe('AdminUsersTable — detail links', () => {
 
     const detailLinks = container.querySelectorAll('[data-testid="user-detail-link"]')
     expect(detailLinks.length).toBeGreaterThan(0)
-    expect(detailLinks[0].getAttribute('href')).toBe('/admin/users/usr-001')
+    expect(detailLinks[0].getAttribute('href')).toBe('/en/admin/users/usr-001')
   })
 })
 
@@ -471,7 +471,7 @@ describe('AdminUsersTable — card actions (mobile card anatomy)', () => {
     expect(cardActions).toBeTruthy()
     const detailLink = cardActions.querySelector('[data-testid="user-detail-link"]') as HTMLAnchorElement
     expect(detailLink).toBeTruthy()
-    expect(detailLink.getAttribute('href')).toBe('/admin/users/usr-001')
+    expect(detailLink.getAttribute('href')).toBe('/en/admin/users/usr-001')
   })
 })
 

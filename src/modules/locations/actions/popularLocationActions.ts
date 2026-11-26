@@ -15,7 +15,7 @@ async function requireLocationsManager() {
 }
 
 function revalidatePopularLocations() {
-  revalidatePath('/admin/popular-locations')
+  revalidatePath('/[locale]/admin/popular-locations', 'page')
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}`, 'page')
   }

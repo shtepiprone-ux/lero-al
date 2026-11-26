@@ -73,7 +73,7 @@ export async function updateListingStatus(
     }
     return { error: result.reason }
   }
-  revalidatePath('/admin/listings')
+  revalidatePath('/[locale]/admin/listings', 'page')
   return {}
 }
 
@@ -122,8 +122,8 @@ export async function setListingPremium(
     return { error: 'transient' }
   }
 
-  revalidatePath('/admin/listings')
-  revalidatePath('/admin/badges')
+  revalidatePath('/[locale]/admin/listings', 'page')
+  revalidatePath('/[locale]/admin/badges', 'page')
 
   // is_premium affects the listing card (premium badge + sort order is_premium desc)
   // and the detail page badge — both must be invalidated across all locales.
@@ -166,7 +166,7 @@ export async function deleteListing(listingId: string): Promise<{ error?: string
   updateTag('site-stats')
   // Task 964 R1-2: the deleted listing leaves the sitemap files at once (only after the one row was deleted)
   updateTag(PUBLIC_LISTINGS_CACHE_TAG)
-  revalidatePath('/admin/listings')
+  revalidatePath('/[locale]/admin/listings', 'page')
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')
   }
@@ -202,7 +202,7 @@ export async function updateUserProfile(
     console.error('updateUserProfile failed', { error, userId })
     return { error: 'update_failed' }
   }
-  revalidatePath('/admin/users')
+  revalidatePath('/[locale]/admin/users', 'page')
   return {}
 }
 
@@ -217,8 +217,8 @@ export async function toggleUserVerified(userId: string, isVerified: boolean): P
     console.error('toggleUserVerified failed', { error, userId })
     return { error: 'update_failed' }
   }
-  revalidatePath('/admin/users')
-  revalidatePath('/admin/badges')
+  revalidatePath('/[locale]/admin/users', 'page')
+  revalidatePath('/[locale]/admin/badges', 'page')
   return {}
 }
 
@@ -243,7 +243,7 @@ export async function createLocation(data: {
   const db = createAdminClient()
   const { error } = await db.from('locations').insert(pickFields(data, LOCATION_CREATE_FIELDS))
   if (error) { console.error('createLocation failed', { error }); return { error: 'create_failed' } }
-  revalidatePath('/admin/locations')
+  revalidatePath('/[locale]/admin/locations', 'page')
   return {}
 }
 
@@ -255,7 +255,7 @@ export async function updateLocation(
   const db = createAdminClient()
   const { error } = await db.from('locations').update(pickFields(data, LOCATION_UPDATE_FIELDS)).eq('id', id)
   if (error) { console.error('updateLocation failed', { error, id }); return { error: 'update_failed' } }
-  revalidatePath('/admin/locations')
+  revalidatePath('/[locale]/admin/locations', 'page')
   return {}
 }
 
@@ -264,7 +264,7 @@ export async function toggleLocationFeatured(id: number, isFeatured: boolean): P
   const db = createAdminClient()
   const { error } = await db.from('locations').update({ is_featured: isFeatured }).eq('id', id)
   if (error) { console.error('toggleLocationFeatured failed', { error, id }); return { error: 'update_failed' } }
-  revalidatePath('/admin/locations')
+  revalidatePath('/[locale]/admin/locations', 'page')
   return {}
 }
 
@@ -273,7 +273,7 @@ export async function deleteLocation(id: number): Promise<{ error?: string }> {
   const db = createAdminClient()
   const { error } = await db.from('locations').delete().eq('id', id)
   if (error) { console.error('deleteLocation failed', { error, id }); return { error: 'delete_failed' } }
-  revalidatePath('/admin/locations')
+  revalidatePath('/[locale]/admin/locations', 'page')
   return {}
 }
 
@@ -316,11 +316,11 @@ export async function saveSettings(entries: Record<string, string>): Promise<{ e
     return { error: 'save_failed' }
   }
   // Always revalidate the settings page so the admin sees fresh values.
-  revalidatePath('/admin/settings')
+  revalidatePath('/[locale]/admin/settings', 'page')
   // Any setting change may affect layout (header, footer, SEO metadata) —
   // revalidate the full layout for both public and admin surfaces.
   revalidatePath('/', 'layout')
-  revalidatePath('/admin', 'layout')
+  revalidatePath('/[locale]/admin', 'layout')
   return {}
 }
 
@@ -347,7 +347,7 @@ export async function createPage(data: {
     is_published: data.is_published,
   })
   if (error) { console.error('createPage failed', { error }); return { error: 'save_error' } }
-  revalidatePath('/admin/pages')
+  revalidatePath('/[locale]/admin/pages', 'page')
   return {}
 }
 
@@ -382,7 +382,7 @@ export async function updatePage(
   if (data.content?.sq?.title) patch.title = data.content.sq.title
   const { error } = await db.from('pages').update(patch).eq('id', id)
   if (error) { console.error('updatePage failed', { error, id }); return { error: 'save_error' } }
-  revalidatePath('/admin/pages')
+  revalidatePath('/[locale]/admin/pages', 'page')
   return {}
 }
 
@@ -391,7 +391,7 @@ export async function deletePage(id: number): Promise<{ error?: string }> {
   const db = createAdminClient()
   const { error } = await db.from('pages').delete().eq('id', id)
   if (error) { console.error('deletePage failed', { error, id }); return { error: 'delete_error' } }
-  revalidatePath('/admin/pages')
+  revalidatePath('/[locale]/admin/pages', 'page')
   return {}
 }
 
@@ -566,8 +566,8 @@ export async function updateUserProfileFull(
   // is saved first, so the database already refuses the account's writes; if the ban cannot be set the administrator is told, never shown a success.
   const access = await syncAccountAccess(userId, data.status, update.suspended_until)
 
-  revalidatePath(`/admin/users/${userId}`)
-  revalidatePath('/admin/users')
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
+  revalidatePath('/[locale]/admin/users', 'page')
   return access.ok ? {} : { error: 'access_sync_failed' }
 }
 
@@ -645,7 +645,7 @@ export async function createAdminUser(data: {
     return { error: 'create_profile_failed' }
   }
 
-  revalidatePath('/admin/users')
+  revalidatePath('/[locale]/admin/users', 'page')
   return { userId: authData.user.id }
 }
 
@@ -678,8 +678,8 @@ export async function deactivateUser(userId: string, reason: string): Promise<{ 
   // A deactivated account has no access (owner decision D9): ban it in Auth now that the status is saved.
   const access = await syncAccountAccess(userId, 'inactive', null)
 
-  revalidatePath(`/admin/users/${userId}`)
-  revalidatePath('/admin/users')
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
+  revalidatePath('/[locale]/admin/users', 'page')
   return access.ok ? {} : { error: 'access_sync_failed' }
 }
 
@@ -710,8 +710,8 @@ export async function reactivateUser(userId: string, reason: string): Promise<{ 
   // Reactivation lifts the Auth ban set by a block or a deactivation (owner decision D9).
   const access = await syncAccountAccess(userId, 'active', null)
 
-  revalidatePath(`/admin/users/${userId}`)
-  revalidatePath('/admin/users')
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
+  revalidatePath('/[locale]/admin/users', 'page')
   return access.ok ? {} : { error: 'access_sync_failed' }
 }
 
@@ -732,8 +732,8 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
 
   // Task 964 R1-2: the cascade of the account deletion removed the person's listings, so they leave the sitemap files at once (never after a refused deletion)
   updateTag(PUBLIC_LISTINGS_CACHE_TAG)
-  revalidatePath('/admin/users')
-  revalidatePath('/admin/listings')
+  revalidatePath('/[locale]/admin/users', 'page')
+  revalidatePath('/[locale]/admin/listings', 'page')
   return {}
 }
 
@@ -746,7 +746,7 @@ export async function removeUserAvatar(userId: string): Promise<{ error?: string
     console.error('removeUserAvatar failed', { error, userId })
     return { error: 'delete_failed' }
   }
-  revalidatePath(`/admin/users/${userId}`)
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
   return {}
 }
 
@@ -770,7 +770,7 @@ export async function addLocation(data: {
     return { error: 'add_failed' }
   }
 
-  revalidatePath('/admin/users')
+  revalidatePath('/[locale]/admin/users', 'page')
   return { id: loc.id }
 }
 
@@ -790,9 +790,9 @@ export async function approveLocationRequest(
     return { error: 'confirm_failed' }
   }
 
-  revalidatePath(`/admin/users/${userId}`)
-  revalidatePath('/admin/users')
-  revalidatePath('/admin')
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
+  revalidatePath('/[locale]/admin/users', 'page')
+  revalidatePath('/[locale]/admin', 'page')
   return {}
 }
 
@@ -806,9 +806,9 @@ export async function rejectLocationRequest(userId: string): Promise<{ error?: s
     return { error: 'reject_failed' }
   }
 
-  revalidatePath(`/admin/users/${userId}`)
-  revalidatePath('/admin/users')
-  revalidatePath('/admin')
+  revalidatePath('/[locale]/admin/users/[id]', 'page')
+  revalidatePath('/[locale]/admin/users', 'page')
+  revalidatePath('/[locale]/admin', 'page')
   return {}
 }
 
@@ -952,7 +952,7 @@ export async function createSupportTicket({
     })
   } catch {}
 
-  revalidatePath('/admin/support')
+  revalidatePath('/[locale]/admin/support', 'page')
   return { id: ticket.id }
 }
 
@@ -1016,6 +1016,6 @@ export async function updateTicketStatus(
     } catch {}
   }
 
-  revalidatePath('/admin/support')
+  revalidatePath('/[locale]/admin/support', 'page')
   return {}
 }

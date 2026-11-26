@@ -203,7 +203,7 @@ export async function setModeratorPermission(
       console.error('setModeratorPermission event insert failed', { error: eventError, key })
     }
 
-    revalidatePath('/admin/permissions')
+    revalidatePath('/[locale]/admin/permissions', 'page')
     return {}
   } catch (err) {
     console.error('setModeratorPermission unexpected error', err)

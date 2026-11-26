@@ -15,6 +15,7 @@ import { SUPPORT_TICKET_STATUSES } from '@/components/admin/supportFilters'
 import type { SupportTicketRow, SupportTicketEventRow } from '@/components/admin/AdminSupportManager'
 import type { TicketStatus } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref } from '@/lib/auth/adminPages'
 
 export interface TicketDetailDialogViewProps {
   ticket: SupportTicketRow
@@ -106,7 +107,7 @@ export function TicketDetailDialogView({
           icon: <UserIcon size={iconSize} aria-hidden="true" />,
           label,
           description: userName(user),
-          href: `/admin/users/${user.id}`,
+          href: adminHref(locale, `/admin/users/${user.id}`),
         }]
       : []
   const navRows: MantineNavRow[] = [

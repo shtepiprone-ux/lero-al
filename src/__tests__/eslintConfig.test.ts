@@ -30,7 +30,7 @@ describe('eslint.config.mjs keeps the classic hook rules', () => {
 
   it('[AC1] no react-hooks/ rule is off, and the five React Compiler rules are errors (severity 2)', async () => {
     const eslint = new ESLint()
-    for (const file of ['src/modules/listings/components/ListingsShell.tsx', 'src/hooks/useIsMobile.ts', 'src/app/[locale]/favorites/page.tsx']) {
+    for (const file of ['src/modules/listings/components/ListingsShell.tsx', 'src/hooks/useIsMobile.ts', 'src/app/[locale]/(site)/favorites/page.tsx']) {
       const config = await eslint.calculateConfigForFile(file) as { rules: Record<string, unknown> }
       const hookRules = Object.entries(config.rules).filter(([name]) => name.startsWith('react-hooks/'))
       const off = hookRules.filter(([, entry]) => severity(entry) === 0 || severity(entry) === 'off').map(([name]) => name)

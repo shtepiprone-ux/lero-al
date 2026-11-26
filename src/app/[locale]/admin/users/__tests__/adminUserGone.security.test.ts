@@ -1,7 +1,7 @@
 // @vitest-environment node
 /**
  * Security (Task 923 R139, D85, D86): a staff viewer who opens the admin page of a user who is missing or deleted lands on the Users list with a notice, never on the 404 page.
- *  - SEC-X-SRV-ADMIN-USER-GONE: no `users` row  -> redirect('/admin/users?notice=user_gone'), nothing else of that id is read.
+ *  - SEC-X-SRV-ADMIN-USER-GONE: no `users` row  -> redirect('/<locale>/admin/users?notice=user_gone'), nothing else of that id is read.
  *  - SEC-X-SRV-ADMIN-USER-DELETED: a row with `deleted_at` -> the same redirect, none of the row's data is read further or returned.
  *  - SEC-X-SRV-ADMIN-USER-QUERY-ERROR: the lookup fails -> the same redirect, no account data shown.
  *  - SEC-X-SRV-ADMIN-USER-PRESENT: an existing, undeleted account still renders its profile (preservation).
@@ -95,7 +95,7 @@ vi.mock('@/lib/supabase/admin', () => ({
 }))
 
 const ID = '00000000-0000-4000-8000-0000000000bb'
-const USER_GONE = '/admin/users?notice=user_gone'
+const USER_GONE = '/en/admin/users?notice=user_gone'   // Task 988: under the language slug of the request
 
 /** a synthetic account row, as `select('*')` returns it */
 const row = (over: Record<string, unknown> = {}) => ({

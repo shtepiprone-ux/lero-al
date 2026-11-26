@@ -4,7 +4,7 @@ import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { Stack, Text } from '@mantine/core'
-import { setAdminLocale } from '@/modules/admin/actions/locale'
+import { setAccountLocale } from '@/modules/admin/actions/locale'
 import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 
 interface AdminLocaleSwitcherProps {
@@ -24,9 +24,11 @@ export function AdminLocaleSwitcher({ pendingOverride }: AdminLocaleSwitcherProp
 
   function handleSwitch(locale: string) {
     if (locale === currentLocale || isPending) return
+    // Task 988: the account language first (the proxy sends every page in another language back to it), then the same admin page and query under the new slug
+    const { pathname, search } = window.location
     startTransition(async () => {
-      await setAdminLocale(locale)
-      router.refresh()
+      try { await setAccountLocale(locale) } catch { /* the navigation still runs: the page opens in the language the proxy decides */ }
+      router.push(`/${locale}${pathname.replace(/^\/(sq|en|uk|it)(?=\/|$)/, '')}${search}`)
     })
   }
 

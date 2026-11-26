@@ -91,7 +91,7 @@ describe('AdminUserCreate', () => {
     expect(sent.whatsapp).toBe('+355691234567')
     expect(sent.locationId).toBe(1)
     expect(sent.profileType).toBe('private')
-    await waitFor(() => expect(mocks.push).toHaveBeenCalledWith('/admin/users/new-user'))
+    await waitFor(() => expect(mocks.push).toHaveBeenCalledWith('/en/admin/users/new-user'))
   })
 
   it('refuses a missing first name and city and sends nothing', async () => {

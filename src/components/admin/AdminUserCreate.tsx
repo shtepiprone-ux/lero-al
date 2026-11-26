@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import {
   Loader2, ChevronLeft, UserPlus, Mail, CheckCircle2,
 } from 'lucide-react'
@@ -20,6 +20,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { createAdminUser, addLocation, type ProfileType } from '@/modules/admin/actions'
+import { adminHref } from '@/lib/auth/adminPages'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -99,6 +100,7 @@ function PasswordRequirements({ t }: { t: ReturnType<typeof useTranslations<'adm
 
 export function AdminUserCreate({ cities, regions }: Props) {
   const router = useRouter()
+  const locale = useLocale()
   const t = useTranslations('admin.user_profile')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -170,13 +172,13 @@ export function AdminUserCreate({ cities, regions }: Props) {
     })
     setSubmitting(false)
     if (result.error) { setError(result.error); return }
-    if (result.userId) router.push(`/admin/users/${result.userId}`)
+    if (result.userId) router.push(adminHref(locale, `/admin/users/${result.userId}`))
   }
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => router.push('/admin/users')}>
+        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => router.push(adminHref(locale, '/admin/users'))}>
           <ChevronLeft className="h-4 w-4" /> {t('actions.back_to_users')}
         </Button>
       </div>
@@ -303,7 +305,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
 
         {/* Submit */}
         <div className="flex flex-col sm:flex-row sm:justify-end gap-3">
-          <Button type="button" variant="outline" className="rounded-xl" onClick={() => router.push('/admin/users')}>
+          <Button type="button" variant="outline" className="rounded-xl" onClick={() => router.push(adminHref(locale, '/admin/users'))}>
             {t('actions.cancel')}
           </Button>
           <Button type="submit" className="gap-2 rounded-xl" disabled={submitting}>

@@ -1,13 +1,13 @@
 // @vitest-environment node
 /**
- * Task 988 AC3: every admin page reads the admin language before it translates.
- *  1. A scan of every `page.tsx` and `layout.tsx` under `src/app/admin`: in the page function and in `generateMetadata`, a call of `getTranslations`, `getLocale` or
- *     `getMessages` comes after `await getAdminLocale()`, and `requireStaffPage()` stays the first await of each page and `generateMetadata` (Task 923 R68 (a)); no
- *     `page.tsx` keeps a static `export const metadata` with a literal `title`.
- *  2. Each page's `generateMetadata` really runs with the `admin-locale` cookie set to each of the four languages and returns the key its heading renders, in that
- *     language, with " — Admin"; the profile title falls back to `admin.user_profile.header.title_fallback`.
- * The real `getAdminLocale` runs; the cookie jar, next-intl's server lookups (which fall back to `sq`, as `src/i18n/request.ts` does, when no locale was set), the
- * staff guard and the database are doubles. Every id is synthetic.
+ * Task 988 AC7 (owner decision O988-4; first written as AC3 of the reviewed tree): every admin page renders in the language of its slug.
+ *  1. A scan of every `page.tsx` and `layout.tsx` under `src/app/[locale]/admin`: in the page function and in `generateMetadata`, a call of `getTranslations`, `getLocale`
+ *     or `getMessages` comes after `await getAdminLocale()` (the request locale), and `requireStaffPage()` stays the first await of each page and `generateMetadata`
+ *     (Task 923 R68 (a)); no `page.tsx` keeps a static `export const metadata` with a literal `title`.
+ *  2. Each page's `generateMetadata` really runs with the request locale of each of the four slugs and returns the key its heading renders, in that language, with
+ *     " — Admin"; the profile title falls back to `admin.user_profile.header.title_fallback`. An `admin-locale` cookie of another language changes nothing.
+ * The real `getAdminLocale` runs; the cookie jar, next-intl's server lookups (the request locale is the slug of the address), the staff guard and the database are
+ * doubles. Every id is synthetic.
  */
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -16,7 +16,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 type Locale = 'sq' | 'en' | 'uk' | 'it'
 const LOCALES: Locale[] = ['sq', 'en', 'uk', 'it']
 
-const state = vi.hoisted(() => ({ adminCookie: 'uk' as string | undefined, requestLocale: undefined as string | undefined, order: [] as string[] }))
+const state = vi.hoisted(() => ({ adminCookie: 'it' as string | undefined, requestLocale: undefined as string | undefined, order: [] as string[] }))
 
 vi.mock('next/headers', () => ({
   cookies: async () => ({ get: (name: string) => (name === 'admin-locale' && state.adminCookie ? { name, value: state.adminCookie } : undefined), getAll: () => [], set: () => undefined }),
@@ -55,7 +55,7 @@ vi.mock('@/lib/supabase/admin', () => {
 })
 vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 
-const ADMIN_ROOT = join(process.cwd(), 'src', 'app', 'admin')
+const ADMIN_ROOT = join(process.cwd(), 'src', 'app', '[locale]', 'admin')
 const relative = (file: string) => file.slice(process.cwd().length + 1).split('\\').join('/')
 
 function routeFiles(dir = ADMIN_ROOT, out: string[] = []): string[] {
@@ -79,37 +79,37 @@ const TRANSLATES = /\b(?:getTranslations|getLocale|getMessages)\(/
 
 /** the key each page heading renders (`AdminPageHeader` title, or the heading of the client view it renders) */
 const HEADINGS: Record<string, string> = {
-  'src/app/admin/companies/page.tsx': 'admin.pages.companies_title',
-  'src/app/admin/currency/page.tsx': 'admin.currency.title',
-  'src/app/admin/email-templates/page.tsx': 'admin.pages.email_templates_title',
-  'src/app/admin/footer/page.tsx': 'admin.pages.footer_title',
-  'src/app/admin/inquiries/sales/page.tsx': 'admin.pages.inquiries_sales_title',
-  'src/app/admin/inquiries/support/page.tsx': 'admin.pages.inquiries_support_title',
-  'src/app/admin/listings/page.tsx': 'admin.pages.listings_title',
-  'src/app/admin/locations/page.tsx': 'admin.pages.locations_title',
-  'src/app/admin/pages/page.tsx': 'admin.pages.title',
-  'src/app/admin/permissions/page.tsx': 'admin.permissions.title',
-  'src/app/admin/popular-locations/page.tsx': 'admin.pages.popular_locations_title',
-  'src/app/admin/property-types/page.tsx': 'admin.property_types.title',
-  'src/app/admin/reports/page.tsx': 'admin.pages.reports_title',
-  'src/app/admin/settings/page.tsx': 'admin.pages.settings_title',
-  'src/app/admin/support/page.tsx': 'admin.pages.support_title',
-  'src/app/admin/users/new/page.tsx': 'admin.user_profile.header.new_user_title',
-  'src/app/admin/users/page.tsx': 'admin.pages.users_title',
-  'src/app/admin/users/[id]/page.tsx': 'admin.user_profile.header.title_fallback',
+  'src/app/[locale]/admin/companies/page.tsx': 'admin.pages.companies_title',
+  'src/app/[locale]/admin/currency/page.tsx': 'admin.currency.title',
+  'src/app/[locale]/admin/email-templates/page.tsx': 'admin.pages.email_templates_title',
+  'src/app/[locale]/admin/footer/page.tsx': 'admin.pages.footer_title',
+  'src/app/[locale]/admin/inquiries/sales/page.tsx': 'admin.pages.inquiries_sales_title',
+  'src/app/[locale]/admin/inquiries/support/page.tsx': 'admin.pages.inquiries_support_title',
+  'src/app/[locale]/admin/listings/page.tsx': 'admin.pages.listings_title',
+  'src/app/[locale]/admin/locations/page.tsx': 'admin.pages.locations_title',
+  'src/app/[locale]/admin/pages/page.tsx': 'admin.pages.title',
+  'src/app/[locale]/admin/permissions/page.tsx': 'admin.permissions.title',
+  'src/app/[locale]/admin/popular-locations/page.tsx': 'admin.pages.popular_locations_title',
+  'src/app/[locale]/admin/property-types/page.tsx': 'admin.property_types.title',
+  'src/app/[locale]/admin/reports/page.tsx': 'admin.pages.reports_title',
+  'src/app/[locale]/admin/settings/page.tsx': 'admin.pages.settings_title',
+  'src/app/[locale]/admin/support/page.tsx': 'admin.pages.support_title',
+  'src/app/[locale]/admin/users/new/page.tsx': 'admin.user_profile.header.new_user_title',
+  'src/app/[locale]/admin/users/page.tsx': 'admin.pages.users_title',
+  'src/app/[locale]/admin/users/[id]/page.tsx': 'admin.user_profile.header.title_fallback',
 }
 
 const messages = Object.fromEntries(LOCALES.map((l) => [l, JSON.parse(readFileSync(join(process.cwd(), 'messages', `${l}.json`), 'utf8'))])) as Record<Locale, unknown>
 const message = (locale: Locale, key: string) => key.split('.').reduce<unknown>((node, part) => (node as Record<string, unknown> | undefined)?.[part], messages[locale])
 
 beforeEach(() => {
-  state.adminCookie = 'uk'
+  state.adminCookie = 'it'
   state.requestLocale = undefined
   state.order = []
 })
 
 describe('adminLanguage', () => {
-  it('[AC3] every admin page and generateMetadata awaits getAdminLocale() before it translates, after requireStaffPage()', () => {
+  it('[AC7] every admin page and generateMetadata awaits getAdminLocale() before it translates, after requireStaffPage()', () => {
     const files = routeFiles()
     expect(files.length, 'the scanner found the admin pages').toBeGreaterThanOrEqual(20)
     const offenders: string[] = []
@@ -134,12 +134,12 @@ describe('adminLanguage', () => {
     expect(offenders, offenders.join('\n')).toEqual([])
   })
 
-  it.each(LOCALES)('[AC3] each generateMetadata returns its heading in the admin language (%s), after the staff check', async (locale) => {
+  it.each(LOCALES)('[AC7] each generateMetadata returns its heading in the language of the slug (%s), after the staff check; the admin-locale cookie changes nothing', async (locale) => {
     const failures: string[] = []
     const props = { params: Promise.resolve({ id: '00000000-0000-4000-8000-0000000000aa' }), searchParams: Promise.resolve({}) }
     for (const [file, key] of Object.entries(HEADINGS)) {
-      state.adminCookie = locale
-      state.requestLocale = undefined
+      state.adminCookie = locale === 'it' ? 'sq' : 'it'   // a cookie of another language: never read
+      state.requestLocale = locale                          // the request locale: the [locale] slug of the address
       state.order = []
       const mod = (await import(/* @vite-ignore */ join(process.cwd(), file))) as { generateMetadata?: (p: unknown) => Promise<{ title?: unknown }> }
       if (!mod.generateMetadata) { failures.push(`${file}: no generateMetadata`); continue }

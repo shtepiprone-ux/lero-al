@@ -8,7 +8,8 @@ import { toast } from '@/lib/toast'
 import { useGoogleOneTap } from '@/lib/auth/useGoogleOneTap'
 import { forgetRememberedGoogleAccount, readRememberedGoogleAccount, type RememberedGoogleAccount } from '@/lib/auth/rememberedGoogleAccount'
 import { completeGoogleSignIn, openStoredDestination } from '@/modules/auth/lib/googleSignIn'
-import { setAdminLocale } from '@/modules/admin/actions/locale'
+import { setAccountLocale } from '@/modules/admin/actions/locale'
+import { adminHref } from '@/lib/auth/adminPages'
 import { HeaderView } from '@/components/layout/HeaderView'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
@@ -31,7 +32,7 @@ export function Header() {
 
   // One Tap for a guest, never over the open sheet. A sign-in through it opens the stored destination; a refusal is a toast and nothing else.
   async function handleOneTap(result: { credential: string; nonce: string }) {
-    const errorKey = await completeGoogleSignIn(result)
+    const errorKey = await completeGoogleSignIn(result, () => setAccountLocale(locale))
     if (errorKey) {
       toast.error(t(errorKey as Parameters<typeof t>[0]))
       return
@@ -70,11 +71,11 @@ export function Header() {
     return () => window.removeEventListener(AUTH_SHEET_EVENT, handleGlobalOpen)
   }, [])
 
-  function switchLocale(newLocale: string) {
+  async function switchLocale(newLocale: string) {
     const currentPath = window.location.pathname
     const pathWithoutLocale = currentPath.replace(/^\/(sq|en|uk|it)(?=\/|$)/, '') || '/'
-    // Sync admin-locale cookie so admin panel stays in the same locale.
-    setAdminLocale(newLocale)
+    // Task 988: the account language (and the session language) first: the proxy sends every page in another language back to it, so the navigation waits
+    try { await setAccountLocale(newLocale) } catch { /* the navigation still runs: the page opens in the language the proxy decides */ }
     router.push(`/${newLocale}${pathWithoutLocale}`)
   }
 
@@ -94,7 +95,8 @@ export function Header() {
       onOpenAuth={openAuthSheet}
       onSwitchLocale={switchLocale}
       onNavigate={(path) => router.push(path)}
-      onOpenAdmin={() => window.open('/admin', '_blank', 'noopener,noreferrer')}
+      // Task 988: the admin lives under the language slug
+      onOpenAdmin={() => window.open(adminHref(locale, '/admin'), '_blank', 'noopener,noreferrer')}
       onLogout={handleLogout}
       isSigningOut={!!isSigningOut}
       mobileOpen={mobileOpen}
@@ -114,6 +116,7 @@ export function Header() {
             forgetRememberedGoogleAccount()
             setGoogleAccount(null)
           }}
+          onNewGoogleAccount={() => setAccountLocale(locale)}
         />
       }
     />

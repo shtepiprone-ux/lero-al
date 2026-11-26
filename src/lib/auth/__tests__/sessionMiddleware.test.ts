@@ -55,7 +55,7 @@ describe('refreshSession', () => {
     state.toSet = [{ name: 'sb-access', value: 'new', options: { httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: 3600 } }]
     const { refreshSession } = await import('../middleware')
     const request = req('/sq', 'sb-access=old')
-    const res = await refreshSession(request)
+    const { response: res } = await refreshSession(request)
     const set = res.cookies.get('sb-access')!
     expect(set.value).toBe('new')
     expect(set).toMatchObject({ httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: 3600 })
@@ -64,7 +64,7 @@ describe('refreshSession', () => {
 
   it('without a refresh it passes the request through and sets no cookie', async () => {
     const { refreshSession } = await import('../middleware')
-    const res = await refreshSession(req('/sq'))
+    const { response: res } = await refreshSession(req('/sq'))
     expect(res.cookies.getAll()).toEqual([])
   })
 })
@@ -93,14 +93,15 @@ describe('proxy.ts: session cookies and matcher', () => {
 describe('proxy.ts: default locale', () => {
   const fetchOk = (value: unknown) => vi.fn(async () => ({ ok: true, json: async () => [{ value }] }) as unknown as Response)
 
-  it('/admin and /api are never given a locale prefix, but the session is still refreshed', async () => {
+  // Task 988: the admin lives under the language slug; only /api stays outside locale routing
+  it('/api is never given a locale prefix, but the session is still refreshed', async () => {
     vi.stubGlobal('fetch', fetchOk('en'))
     const { proxy } = await import('@/proxy')
-    for (const p of ['/admin/users', '/api/anything', '/api']) {
+    for (const p of ['/api/anything', '/api']) {
       const res = await proxy(req(p))
       expect(res.headers.get('x-intl-path')).toBeNull()
     }
-    expect(state.getUserCalls).toBe(3)
+    expect(state.getUserCalls).toBe(2)
     expect(fetch).not.toHaveBeenCalled()
   })
 

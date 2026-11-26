@@ -41,8 +41,6 @@ export const RULES = [
  * whose line is gone fails the run (remove the entry with the fix).
  */
 export const REVIEWED = [
-  { file: 'src/modules/notifications/components/NotificationItem.tsx', line: 'href={notification.link}', rule: 'K5',
-    why: 'OPEN finding P-06, Task 988: the stored link is written by the server only today; the render must go through the URL guard' },
   { file: 'src/components/admin/AdminEmailTemplatesManager.tsx', line: 'srcDoc={html}', rule: 'K6',
     why: 'the template preview renders in <iframe sandbox="">: no script, no same-origin access, no form submission' },
   { file: 'src/modules/cms/components/CmsPageView.tsx', line: '__html: sanitizeCmsHtml(', rule: 'K8',

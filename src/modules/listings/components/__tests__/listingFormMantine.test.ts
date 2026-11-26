@@ -16,8 +16,8 @@ const FILES = [
   'src/modules/listings/components/ImageUpload.tsx',
   'src/modules/listings/components/ListingFormShell.tsx',
   'src/modules/listings/components/ListingFormShellView.tsx',
-  'src/app/[locale]/listings/create/page.tsx',
-  'src/app/[locale]/listings/[slug]/edit/page.tsx',
+  'src/app/[locale]/(site)/listings/create/page.tsx',
+  'src/app/[locale]/(site)/listings/[slug]/edit/page.tsx',
 ]
 const read = (file: string) => readFileSync(path.join(ROOT, file), 'utf8')
 

@@ -1,23 +1,9 @@
-import type { Metadata } from 'next'
-import { Box } from '@mantine/core'
-import { theme } from '@/design-system/mantine/theme'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
-import { resolveSession } from '@/lib/auth/server'
-import { AuthProvider } from '@/modules/auth/context/AuthContext'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { WebVitalsReporter } from '@/components/shared/WebVitalsReporter'
-import { PerformanceStoreInit } from '@/components/shared/PerformanceStoreInit'
-import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
 
-export const metadata: Metadata = {
-  title: 'Lero.al — Real estate marketplace in Albania',
-  description: 'Gjeni shtëpinë tuaj të ëndrrave në Shqipëri',
-}
-
+// Task 988 (owner decision O988-4): the language of every page, the site's (`(site)/layout.tsx` holds its header, footer and frame) and the admin's (`admin/layout.tsx`).
 export default async function LocaleLayout({
   children,
   params,
@@ -37,28 +23,9 @@ export default async function LocaleLayout({
 
   const messages = await getMessages()
 
-  // resolveSession is the single SSR entry point for auth state.
-  // It never throws — on any error it returns { user: null } so the layout
-  // always renders and AuthProvider simply starts with no authenticated user.
-  const { user: initialUser } = await resolveSession()
-
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <AuthProvider initialUser={initialUser}>
-        <>
-          <Header />
-          {/* Task 787 — the fixed mobile bottom bar is deleted (burger-menu-only mobile nav), so
-              <main> no longer reserves 56px of bottom clearance for it (was --homepage-runtime-space-14,
-              Task 770). */}
-          <Box component="main" mih={`calc(100vh - ${theme.other!.boxSize!.mainViewportOffset})`}>
-            {children}
-          </Box>
-          <Footer />
-          <WebVitalsReporter />
-          <PerformanceStoreInit />
-          <PerfDevOverlay />
-        </>
-      </AuthProvider>
+      {children}
     </NextIntlClientProvider>
   )
 }

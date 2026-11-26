@@ -5,6 +5,7 @@ import { UserPlus } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
+import { adminHref } from '@/lib/auth/adminPages'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/components/admin/AdminUsersTable'
@@ -30,7 +31,7 @@ export default async function AdminUsersPage({
 }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
   await requireStaffPage({ page: 'page.users' })
-  await getAdminLocale()
+  const locale = await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const sp = await searchParams
   const tab = sp.tab ?? 'all'
@@ -102,7 +103,7 @@ export default async function AdminUsersPage({
                 {t('users_total', { count })}
               </Text>
             )}
-            <Button component={ClientLink} href="/admin/users/new" leftSection={<UserPlus size={iconSize.standard} />}>
+            <Button component={ClientLink} href={adminHref(locale, '/admin/users/new')} leftSection={<UserPlus size={iconSize.standard} />}>
               {t('users_new_btn')}
             </Button>
           </Group>

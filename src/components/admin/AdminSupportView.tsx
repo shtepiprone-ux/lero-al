@@ -23,6 +23,7 @@ import {
 import type { SupportTicketRow } from '@/components/admin/AdminSupportManager'
 import type { TicketStatus } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { adminHref } from '@/lib/auth/adminPages'
 
 export interface AdminSupportViewProps {
   /** Rows after the filters (the container filters). */
@@ -102,7 +103,7 @@ export function AdminSupportView({ tickets, counts, filters, onFiltersChange, on
     return (
       <Anchor
         component={Link}
-        href={`/admin/users/${user.id}`}
+        href={adminHref(locale, `/admin/users/${user.id}`)}
         size="sm"
         fw={500}
         onClick={e => e.stopPropagation()}

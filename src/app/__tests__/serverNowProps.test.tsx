@@ -58,16 +58,16 @@ vi.mock('@/modules/listings/components/SimilarListingsView', () => ({ SimilarLis
 vi.mock('@/modules/cabinet/components/CabinetShell', () => ({ CabinetShell: Stub.cabinet }))
 vi.mock('@/modules/listings/components/RecentlyViewedSection', () => ({ RecentlyViewedSection: Stub.recent }))
 
-import AdminCompaniesPage from '@/app/admin/companies/page'
-import AdminListingsPage from '@/app/admin/listings/page'
-import FavoritesPage from '@/app/[locale]/favorites/page'
-import ListingsPage from '@/app/[locale]/listings/page'
+import AdminCompaniesPage from '@/app/[locale]/admin/companies/page'
+import AdminListingsPage from '@/app/[locale]/admin/listings/page'
+import FavoritesPage from '@/app/[locale]/(site)/favorites/page'
+import ListingsPage from '@/app/[locale]/(site)/listings/page'
 import { SimilarListings } from '@/modules/listings/components/SimilarListings'
-import AdminCurrencyPage from '@/app/admin/currency/page'
-import AdminPagesPage from '@/app/admin/pages/page'
-import AdminPropertyTypesPage from '@/app/admin/property-types/page'
-import AdminReportsPage from '@/app/admin/reports/page'
-import CabinetPage from '@/app/[locale]/cabinet/page'
+import AdminCurrencyPage from '@/app/[locale]/admin/currency/page'
+import AdminPagesPage from '@/app/[locale]/admin/pages/page'
+import AdminPropertyTypesPage from '@/app/[locale]/admin/property-types/page'
+import AdminReportsPage from '@/app/[locale]/admin/reports/page'
+import CabinetPage from '@/app/[locale]/(site)/cabinet/page'
 
 /** The first element of `type` in a returned React tree, searched through `props.children`. */
 function findElement(node: unknown, type: unknown): { props: Record<string, unknown> } | null {

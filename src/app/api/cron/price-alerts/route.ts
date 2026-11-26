@@ -209,7 +209,8 @@ async function handle(request: NextRequest) {
             },
             title: `Ndryshim çmimi: ${listing.title}`,
             body: `${oldPriceStr} → ${newPriceStr}`,
-            link: listingUrl,
+            // Task 988: the stored form of a notification link is a path without a language; the bell opens it in the reader's language (notificationHref)
+            link: `/listings/${listing.slug}`,
           })
 
           // The alert was sent: only now does the baseline move, to deduplicate future runs

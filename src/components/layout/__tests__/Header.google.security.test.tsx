@@ -31,7 +31,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: nav.push, refresh:
 const toasts = vi.hoisted(() => ({ error: vi.fn(), success: vi.fn() }))
 vi.mock('@/lib/toast', () => ({ toast: toasts }))
 vi.mock('@/modules/notifications/components/NotificationBell', () => ({ NotificationBell: () => null }))
-vi.mock('@/modules/admin/actions/locale', () => ({ setAdminLocale: vi.fn() }))
+vi.mock('@/modules/admin/actions/locale', () => ({ setAccountLocale: vi.fn() }))
 vi.mock('@/modules/auth/actions/recovery', () => ({ logPasswordRecoveryRequest: vi.fn() }))
 vi.mock('@/modules/auth/actions/captcha', () => ({ signUpWithCaptcha: vi.fn(), requestPasswordResetWithCaptcha: vi.fn() }))
 vi.mock('@/modules/companies/hooks/useCompanies', () => ({ useCompanies: () => ({ companies: [], refetch: vi.fn() }) }))

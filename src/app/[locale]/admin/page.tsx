@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { requireStaffPage } from '@/lib/auth/staff'
 import { allowedAdminPageKeys, roleHasPermission } from '@/lib/auth/permissions'
-import { ADMIN_PAGES } from '@/lib/auth/adminPages'
+import { ADMIN_PAGES, adminHref } from '@/lib/auth/adminPages'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import { parsePeriodParams, resolvePeriod } from '@/lib/dashboard/period'
@@ -32,7 +32,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
     // `page.dashboard` is never the target: `/admin` would redirect to itself when the first read failed and this one did not.
     const [first] = (await allowedAdminPageKeys(role)).filter((key) => key !== 'page.dashboard')
     const page = ADMIN_PAGES.find((p) => p.key === first)
-    if (page) redirect(page.paths[0])
+    if (page) redirect(adminHref(await getAdminLocale(), page.paths[0]))
     await getAdminLocale()   // the admin's own language, as on every admin page: without it the message comes in the site's default locale
     const t = await getTranslations('admin.pages_access')
     return (

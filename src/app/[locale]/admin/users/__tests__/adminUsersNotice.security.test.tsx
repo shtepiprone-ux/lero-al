@@ -12,7 +12,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
-import messages from '../../../../../messages/en.json'
+import messages from '../../../../../../messages/en.json'
 import AdminUsersPage from '../page'
 
 const pages: Record<string, unknown> = messages.admin.pages

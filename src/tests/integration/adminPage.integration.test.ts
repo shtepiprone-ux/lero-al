@@ -1,5 +1,5 @@
 /**
- * Real-boundary control for the guard of the admin pages (Task 923 R68 (a); cases SEC-X-INT-ADMINPAGE-GUARD-ALLOW and -DENY): the REAL page `src/app/admin/users/[id]/page.tsx`
+ * Real-boundary control for the guard of the admin pages (Task 923 R68 (a); cases SEC-X-INT-ADMINPAGE-GUARD-ALLOW and -DENY): the REAL page `src/app/[locale]/admin/users/[id]/page.tsx`
  * (its default export and its `generateMetadata`), the REAL `requireStaffPage`, the REAL `requireViewer` and the REAL cookie-bound client run against REAL Supabase Auth and the REAL
  * database of the approved development project. The page is called IN-PROCESS, the layout skipped, as a React Server Components request whose router-state header already names the layout
  * skips it. The session is the REAL one of a synthetic person, carried in the cookie jar that the mocked `next/headers` hands to the real client (the cookies are those the Supabase SSR
@@ -46,7 +46,7 @@ vi.mock('@/lib/supabase/admin', async (importOriginal) => {
   }
 })
 
-import AdminUserProfilePage, { generateMetadata } from '@/app/admin/users/[id]/page'
+import AdminUserProfilePage, { generateMetadata } from '@/app/[locale]/admin/users/[id]/page'
 
 let run: Run
 let moderator: SyntheticUser

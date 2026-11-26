@@ -64,6 +64,8 @@ describe('resolvePostSignOutPath — drift test against real guest guards', () =
       const fullPath = join(dir, entry)
       const relPath = `${relative}/${entry}`
       if (statSync(fullPath).isDirectory()) {
+        // Task 988: the admin under [locale] is not a site page (it has its own sign-out)
+        if (relative === '' && entry === 'admin') continue
         pages.push(...findPageFiles(fullPath, relPath))
       } else if (entry === 'page.tsx') {
         pages.push(relPath)
@@ -74,7 +76,8 @@ describe('resolvePostSignOutPath — drift test against real guest guards', () =
 
   function routePatternFor(relativePagePath: string): string {
     // relativePagePath looks like "/cabinet/page.tsx" — drop the trailing "/page.tsx".
-    return relativePagePath.slice(0, -'/page.tsx'.length)
+    // Task 988: a route group such as `(site)` adds no segment to the address
+    return relativePagePath.slice(0, -'/page.tsx'.length).replace(/\/\([^/]+\)/g, '')
   }
 
   const guardRegex = /redirect\(\s*`[^`]*auth\/login\?next=/

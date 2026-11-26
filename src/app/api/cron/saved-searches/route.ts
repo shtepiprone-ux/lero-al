@@ -177,7 +177,8 @@ async function handle(request: NextRequest) {
           templateParams: { searchName, count: newCount },
           title: `Kërkim i ruajtur: ${searchName}`,
           body: `${newCount} listim të reja`,
-          link: searchUrl,
+          // Task 988: the stored form of a notification link is a path without a language; the bell opens it in the reader's language (notificationHref)
+          link: `/listings?${sp.toString()}`,
         })
 
         // The alert was sent: only now does the boundary move

@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
+import { adminHref } from '@/lib/auth/adminPages'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
 import { formatDate, formatDateTime } from '@/lib/formatters'
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function AdminUserProfilePage({ params }: { params: Promise<{ id: string }> }) {
   // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
   await requireStaffPage({ page: 'page.users' })
-  await getAdminLocale()   // Task 988: the dates below are formatted in the admin language, not the site default
+  const adminLocale = await getAdminLocale()   // Task 988: the dates below are formatted in the admin language, not the site default
   const { id } = await params
   const db = createAdminClient()
 
@@ -43,10 +44,10 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
 
   if (userError) console.error('AdminUserProfilePage: user query failed', { error: userError, id })
   // Task 923 R139 (D85, D86): a missing or deleted account opens the Users list, which says why
-  if (!user) redirect('/admin/users?notice=user_gone')
+  if (!user) redirect(adminHref(adminLocale, '/admin/users?notice=user_gone'))
 
   // Soft-delete check
-  if (user.deleted_at) redirect('/admin/users?notice=user_gone')
+  if (user.deleted_at) redirect(adminHref(adminLocale, '/admin/users?notice=user_gone'))
 
   // Change log — table may not exist yet; degrade gracefully
   let changeLog: UserChangeLog[] = []

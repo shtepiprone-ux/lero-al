@@ -3,7 +3,7 @@
  "sheets": {
   "AI_Agent_Security": {
    "verdict": "not applicable",
-   "reason": "the carried rule H1a only adds a read-only owasp.mjs sync --verify before handed commands; no tool permission, hook or setting changes"
+   "reason": "the carried rule H1a only adds a read-only owasp.mjs sync --verify before handed commands; no tool permission, hook or setting changes; the four Git requirements of the sheet at 07cd1f4a are handed to Task 1065 in controls.json (Review 3)"
   },
   "LLM_Prompt_Injection_Prevention": {
    "verdict": "not applicable",
@@ -18,14 +18,14 @@
    "quotes": [
     "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
    ],
-   "evidence": "the executor wrote only the seven values the kickoff names (`git diff 639929db2 -- docs/security/owasp/controls.json`: three reviewedSha, three reviewedOn, one new not-applicable entry); `owasp.mjs check` verifies every mapped quote against the cached sheet text, exit 0 (Review 1); Revision 1 wrote only the two OAuth2 version values of R1-1 (`git diff cfa0613d3 -- docs/security/owasp/controls.json`), `owasp.mjs check` exit 0 (Review 2)"
+   "evidence": "the executor wrote only the seven values the kickoff names (`git diff 639929db2 -- docs/security/owasp/controls.json`: three reviewedSha, three reviewedOn, one new not-applicable entry); `owasp.mjs check` verifies every mapped quote against the cached sheet text, exit 0 (Review 1); Revision 1 wrote only the two OAuth2 version values of R1-1 (`git diff cfa0613d3 -- docs/security/owasp/controls.json`), `owasp.mjs check` exit 0 (Review 2); Revisions 2 and 3 wrote only the values of R2-1, R2-2 and R3-1 to R3-3 (`git diff 2bdcb8de4 -- docs/security/owasp/controls.json`), `owasp.mjs check` exit 0 (Review 3)"
   },
   "Verifying_Third_Party_Agent_Execution_Evidence": {
    "verdict": "met",
    "quotes": [
     "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
    ],
-   "evidence": "the reviewer reran every command of the report: `owasp.mjs sync --verify` 0, `owasp.mjs check` 0, `node --test scripts/quality/owasp.test.mjs` 25/25, `check-files.mjs` on both files 0, three breaks each exit 1 with O3 or O2 and restored byte for byte (Review 1); Revision 1: the same commands rerun, the OAuth2 break exit 1 with O3 and restored byte for byte (Review 2); CI is read with `gh pr checks` (V14)"
+   "evidence": "the reviewer reran every command of the report: `owasp.mjs sync --verify` 0, `owasp.mjs check` 0, `node --test scripts/quality/owasp.test.mjs` 25/25, `check-files.mjs` on both files 0, three breaks each exit 1 with O3 or O2 and restored byte for byte (Review 1); Revision 1: the same commands rerun, the OAuth2 break exit 1 with O3 and restored byte for byte (Review 2); Revisions 2 and 3: the same commands rerun, three breaks exit 1 with O3, O7 and O3, restored byte for byte (Review 3); CI is read with `gh pr checks` (V14)"
   }
  }
 }

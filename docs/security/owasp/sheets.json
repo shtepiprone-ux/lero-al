@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "7eb130bc64f5aebd708c0ed1d216fb9328a7e7c0",
- "fetchedOn": "2026-11-26T10:04:01.983Z",
+ "commit": "5254440ecf1a22dba9ddfab1608e4a70cdeb3964",
+ "fetchedOn": "2026-11-26T10:30:29.672Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -22,7 +22,7 @@
    "name": "AI_Agent_Security",
    "file": "AI_Agent_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html",
-   "sha": "e70913f940cb89781282cd9e5c77587cb46b8571",
+   "sha": "07cd1f4acbc9af938feddc01cb3472d30e7a4304",
    "title": "AI Agent Security Cheat Sheet"
   },
   {
@@ -316,7 +316,7 @@
    "name": "File_Upload",
    "file": "File_Upload_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
-   "sha": "fff26e97a464a4e74092cdd666f79360ed53438f",
+   "sha": "31e92fabd2fe7b5c326d515ecbf99d8ca5ac2e52",
    "title": "File Upload Cheat Sheet"
   },
   {
@@ -540,7 +540,7 @@
    "name": "Multi_Tenant_Security",
    "file": "Multi_Tenant_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html",
-   "sha": "f2116329213cc51dcfe13f5273a42b4b84fe5f82",
+   "sha": "0c4efa28621da5080a7de2eedadae44e7ef98976",
    "title": "Multi-Tenant Application Security Cheat Sheet"
   },
   {
@@ -761,10 +761,17 @@
    "title": "Security Terminology Cheat Sheet"
   },
   {
+   "name": "Server_Side_Document_and_Media_Rendering",
+   "file": "Server_Side_Document_and_Media_Rendering_Cheat_Sheet.md",
+   "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Document_and_Media_Rendering_Cheat_Sheet.html",
+   "sha": "b96b84420a3064c79b999df27fb27a1c1bfa17e4",
+   "title": "Server-Side Document and Media Rendering Cheat Sheet"
+  },
+  {
    "name": "Server_Side_Request_Forgery_Prevention",
    "file": "Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
-   "sha": "69c84db039ce2bbd07f44582f50bde94717ae3e1",
+   "sha": "f87d54aeb47bea85bf28c3aa7e9de570a9664b9e",
    "title": "Server-Side Request Forgery Prevention Cheat Sheet"
   },
   {

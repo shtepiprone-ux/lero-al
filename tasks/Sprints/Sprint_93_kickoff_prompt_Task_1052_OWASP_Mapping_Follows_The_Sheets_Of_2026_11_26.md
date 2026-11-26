@@ -133,7 +133,75 @@ check` → exit 1 with one O3 for `OAuth2`; save it. (2) `node scripts/quality/o
 commands. (5) Break: `reviewedSha` of `OAuth2` set back to `765d6e48…` → `owasp.mjs check` exits 1 with O3; restored.
 (6) Report as step 6.
 
+## Revision 2
+
+Owner, 2026-11-26 (translated): "yes, add". After Review 2 and the push of `2bdcb8de4`, the CI job "Lint, types and product
+checks" of PR #81 (job 139837094531) failed at "OWASP reference — upstream equals the committed registry": "141 sheets at
+686a406e4d79; … changed: Multi_Tenant_Security". Upstream commit `686a406e4d79` "docs: simplify tenant identification and
+context management (#3016)" is dated 2026-11-26T10:11:39Z (`gh api repos/OWASP/CheatSheetSeries/commits/686a406e4d79`), after
+the handoff's H1a (upstream `7eb130bc64f5`, nothing changed) and after the commit `2bdcb8de4`.
+What changed (Opus, 2026-11-26): `gh api repos/OWASP/CheatSheetSeries/git/blobs/f2116329213cc51dcfe13f5273a42b4b84fe5f82` →
+the old text (393 lines), `diff` with `.cache/owasp/Multi_Tenant_Security.md` (357 lines), five hunks: one added line
+"Query parameterization prevents injection but does not enforce tenant isolation; tenant authorization and tenant-scoped
+queries are still required." and the code example shortened (the bad example removed, the good one condensed: verified
+claims select the tenant, membership checked, fail closed). No requirement the product does not already meet: tenant
+isolation is RLS on the request paths, mapped by "Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths". The
+four mapped quotes are in the new text (`owasp.mjs check` reports only the O3). The entry holds `reviewedSha`
+`f2116329213cc51dcfe13f5273a42b4b84fe5f82` (`docs/security/owasp/controls.json:1385`).
+The executor's sync stopped as `BLOCKED`: upstream `4395341e58fd` (#3022, 10:16:08Z) changed `AI_Agent_Security` (e70913f9 →
+07cd1f4a). `diff` of the old blob (604 lines) with the cache (626): a new section "Running Git in Repository-Controlled
+Workspaces" (Git runs programs named by repository configuration; a nested bare repository escapes a rule on `.git/` only)
+with four requirements; the two mapped quotes unchanged. Met in part: `.claude/settings.json:136-137` deny `Edit(./.git/**)`
+and `Write(./.git/**)` only; no sandbox, read-only Git on the host (`checklists/common.md` A8). The gap is Task 1065 (A4),
+filed in `docs/backlog.md`; the four requirements are handed to it.
+
+- R2-1 `docs/security/owasp/controls.json`, `Multi_Tenant_Security` (`:1385-1386`): `reviewedSha`
+  `0c4efa28621da5080a7de2eedadae44e7ef98976`, `reviewedOn` `2026-11-26`; `applies`, `triggers` and `requirements` unchanged.
+  Test: AC1, AC2, AC3 as above.
+- R2-2 `docs/security/owasp/controls.json`, `AI_Agent_Security` (`:43-56`): `reviewedSha`
+  `07cd1f4acbc9af938feddc01cb3472d30e7a4304`, `reviewedOn` `2026-11-26`; after the two existing requirements, four new ones,
+  each exactly `{ "quote": "<quote>", "task": "1065" }` in the file's indentation, in this order:
+  "Run Git in untrusted workspaces, including any the agent can write to, inside the agent's sandbox, not on the host.";
+  "Do not auto-approve any Git command, including";
+  "Require approval before the agent's file tools write to";
+  "Check the path as the file system resolves it, including symlinks, letter case, and Windows short names.".
+  `applies`, `triggers` and the two existing requirements unchanged. Test: AC1, AC2, AC3 as above.
+- `docs/security/owasp/sheets.json` written by `owasp.mjs sync` at upstream `4395341e58fd` (already uncommitted; the
+  executor's sync writes it again).
+
+Route of the revision: start from `2bdcb8de4` (reviewed and pushed); Opus's uncommitted files (this kickoff,
+`docs/backlog.md`, `docs/security/owasp/sheets.json`) stay as they are. (1) `node scripts/quality/owasp.mjs check` → exit 1
+with O3 for `AI_Agent_Security` and `Multi_Tenant_Security`; save it. (2) `node scripts/quality/owasp.mjs sync`: upstream
+`4395341e58fd`, nothing changed beyond the two sheets; anything else: stop and report `BLOCKED`. (3) Write R2-1 and R2-2.
+(4) Run step 4 of the Route with the same commands. (5) Breaks, each restored: `reviewedSha` of `Multi_Tenant_Security` set
+back to `f2116329…` → `owasp.mjs check` exits 1 with O3; the `task` of one new `AI_Agent_Security` requirement set to `9999`
+→ exits 1 with O7. (6) Report as step 6.
+
+## Revision 3
+
+Owner, 2026-11-26 (translated): "let us try the review and the push again". Revision 2 done, unreviewed; Opus's V1 sync →
+upstream `5254440ecf1a` "New CS: Server-Side Document and Media Rendering Cheat Sheet (#3038)" (10:28:59Z), added 1, changed 2.
+Old blobs (`gh api .../git/blobs/<sha>`) diffed with `.cache/owasp/`: `File_Upload` (fff26e97 → 31e92fab) line 113 only and
+`Server_Side_Request_Forgery_Prevention` (69c84db0 → f87d54ae) one added line 14, each a pointer to the new sheet, no
+requirement added or removed. The new sheet (66 lines, read in full) covers a server that converts user content with an engine
+(wkhtmltopdf, headless Chromium, ImageMagick, FFmpeg, LibreOffice …); the product runs none: no import of `sharp`, `puppeteer`,
+a PDF library, `satori` or `next/og` in `src` outside tests (Grep → no match); photos are compressed in the browser
+(`package.json:165`), Cloudinary transforms run at the provider, `playwright` (`package.json:225`) runs only CI checks.
+- R3-1 `docs/security/owasp/controls.json` `File_Upload` (`:825-826`): `reviewedSha` `31e92fabd2fe7b5c326d515ecbf99d8ca5ac2e52`,
+  `reviewedOn` `2026-11-26`. R3-2 `Server_Side_Request_Forgery_Prevention` (`:1914-1915`): `reviewedSha`
+  `f87d54aeb47bea85bf28c3aa7e9de570a9664b9e`, `reviewedOn` `2026-11-26`. Nothing else in either entry.
+- R3-3 new entry after `Secure_Product_Design` (`:1875-1893`), in the file's indentation: `"Server_Side_Document_and_Media_Rendering":
+  { "applies": false, "why": "the server converts no user content with a rendering engine: photos are compressed in the
+  browser, Cloudinary transforms run at the provider, and no PDF, image, video or office engine runs in the app",
+  "reviewedSha": "b96b84420a3064c79b999df27fb27a1c1bfa17e4", "reviewedOn": "2026-11-26" }`. `sheets.json` by `owasp.mjs sync`.
+  Test: AC1, AC2, AC3.
+
+Route: start from `2bdcb8de4`; Revision 2's changes and Opus's files stay. (1) `owasp.mjs check` → exit 1, two O3 and one O2;
+save. (2) `owasp.mjs sync`: upstream `5254440ecf1a`, nothing beyond these three, else `BLOCKED`. (3) R3-1 to R3-3. (4) Route
+step 4. (5) Breaks, restored: new entry removed → O2; `File_Upload` back to `fff26e97…` → O3. (6) Report as step 6.
+
 ## Review
 
 - [Review 1 — APPROVED](../../docs/reviews/Task_1052_Review_1.md)
 - [Review 2 — APPROVED](../../docs/reviews/Task_1052_Review_2.md)
+- [Review 3 — APPROVED](../../docs/reviews/Task_1052_Review_3.md)

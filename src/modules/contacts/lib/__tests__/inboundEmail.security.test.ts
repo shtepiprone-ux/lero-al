@@ -9,7 +9,11 @@
  *  - AC5: mail from lero.al or a subdomain, and automatic answers, are dropped; no inbound path sends a mail.
  *  - AC7: an HTML-only mail is stored as text (no tag, no attribute, no script text).
  *  - AC8: a failed write answers 500, and nothing half-written answers 200.
- * The real processInboundEmail and the real MIME parser run against an in-memory database. Every value is synthetic.
+ *  - Task 1047 AC1 (SEC-1047-STORE, SEC-1047-STORE-TYPE, SEC-1047-STORE-NAME, SEC-1047-STORE-ROLLBACK): each attachment is put into the mail bucket under `mail/<inquiry id>/<uuid v4>`;
+ *    JPEG, PNG, WebP and PDF bytes with their real type and `inline`, everything else (HTML or SVG declared `image/png` too) `application/octet-stream` and `attachment`; a crafted name
+ *    gives an ASCII fallback and a percent-encoded `filename*`; the rows carry `key` and `preview`; a dropped mail puts nothing; a failed put, reopen or insert (a unique violation too)
+ *    deletes the keys it put and writes no row.
+ * The real processInboundEmail and the real MIME parser run against an in-memory database; the mail bucket is a double that records what was put and deleted. Every value is synthetic.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb, type Row } from '@/tests/fakeSupabase'
@@ -47,8 +51,8 @@ vi.mock('@/lib/supabase/admin', () => ({
       }
       const then = chain.then
       chain.then = (r: unknown) => {
-        // the race: the pre-check reads no row for a message id
-        if (raceDuplicate && filters.some(([c]) => c === 'message_id')) return (r as (v: unknown) => void)({ data: [], error: null })
+        // the race: the pre-check (`.eq('message_id', …)`) reads no row for a message id; the thread lookup (`.in('message_id', […])`) still reads its rows
+        if (raceDuplicate && filters.some(([c, v]) => c === 'message_id' && !Array.isArray(v))) return (r as (v: unknown) => void)({ data: [], error: null })
         return then(r)
       }
       const insert = chain.insert
@@ -83,6 +87,26 @@ vi.mock('@/modules/notifications/lib/emails/send', async (importOriginal) => ({
   sendEmail: sendEmailSpy,
 }))
 
+/** the mail bucket: every put tried (in call order), the ones that succeeded, and every delete; `failPutAt` makes the put of that call index fail */
+const r2 = vi.hoisted(() => ({
+  tried: [] as string[],
+  puts: [] as { key: string; bytes: Uint8Array; contentType: string; contentDisposition: string }[],
+  deleted: [] as string[][],
+  failPutAt: null as number | null,
+  failDelete: false,
+}))
+vi.mock('@/lib/media/r2', () => ({
+  putMailObject: vi.fn(async (key: string, bytes: Uint8Array, o: { contentType: string; contentDisposition: string }) => {
+    const index = r2.tried.push(key) - 1
+    if (r2.failPutAt === index) throw new Error('MARKER-PUT')
+    r2.puts.push({ key, bytes: new Uint8Array(bytes), ...o })
+  }),
+  deleteMailObjects: vi.fn(async (keys: readonly string[]) => {
+    r2.deleted.push([...keys])
+    if (r2.failDelete) throw new Error('MARKER-DELETE')
+  }),
+}))
+
 import { processInboundEmail } from '../inboundEmail'
 
 const ENV = { ...process.env }
@@ -99,7 +123,8 @@ interface MailOptions {
   extra?: string[]
   text?: string
   html?: string
-  attachments?: { filename: string; type: string; bytes: number }[]
+  /** `content` is the file's bytes (else `bytes` bytes of 7); `disposition` replaces the Content-Disposition header value (for an RFC 2231 name) */
+  attachments?: { filename: string; type: string; bytes?: number; content?: Uint8Array; disposition?: string }[]
 }
 
 /** a raw RFC 5322 message, CRLF line ends */
@@ -115,7 +140,8 @@ function mail(o: MailOptions = {}): Uint8Array {
   if (o.html !== undefined) parts.push(`Content-Type: text/html; charset=utf-8\r\n\r\n${o.html}`)
   else parts.push(`Content-Type: text/plain; charset=utf-8\r\n\r\n${o.text ?? 'Hello, is the flat still available?'}`)
   for (const a of o.attachments ?? []) {
-    parts.push(`Content-Type: ${a.type}\r\nContent-Disposition: attachment; filename="${a.filename}"\r\nContent-Transfer-Encoding: base64\r\n\r\n${Buffer.alloc(a.bytes, 7).toString('base64')}`)
+    const data = a.content ? Buffer.from(a.content) : Buffer.alloc(a.bytes ?? 0, 7)
+    parts.push(`Content-Type: ${a.type}\r\nContent-Disposition: ${a.disposition ?? `attachment; filename="${a.filename}"`}\r\nContent-Transfer-Encoding: base64\r\n\r\n${data.toString('base64')}`)
   }
   const body = `Content-Type: multipart/mixed; boundary="b1044"\r\n\r\n${parts.map((p) => `--b1044\r\n${p}\r\n`).join('')}--b1044--\r\n`
   return new TextEncoder().encode(`${head.join('\r\n')}\r\n${body}`)
@@ -141,6 +167,11 @@ beforeEach(() => {
   failInsert = null
   failUpdate = null
   failCount = null
+  r2.tried.length = 0
+  r2.puts.length = 0
+  r2.deleted.length = 0
+  r2.failPutAt = null
+  r2.failDelete = false
   sendEmailSpy.mockClear()
   info = vi.spyOn(console, 'info').mockImplementation(() => {})
   error = vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -179,7 +210,8 @@ describe('a new mail opens an inquiry', () => {
     await processInboundEmail(mail({ attachments: many }), env())
     const stored = inquiries()[1].attachments as { filename: string; size: number; content_type: string }[]
     expect(stored).toHaveLength(20)
-    expect(stored.every((a) => a.filename.length <= 200 && Object.keys(a).sort().join() === 'content_type,filename,size')).toBe(true)
+    expect(stored.every((a) => a.filename.length <= 200 && Object.keys(a).sort().join() === 'content_type,filename,key,preview,size')).toBe(true)
+    expect(r2.puts).toHaveLength(20)
   })
 })
 
@@ -375,5 +407,158 @@ describe('AC8 nothing is acknowledged before it is stored', () => {
     const res = await processInboundEmail(new TextEncoder().encode('not a mail at all'), env())
     expect(res.status).not.toBe(200)
     expect(inquiries()).toHaveLength(1)
+  })
+})
+
+describe('Task 1047 AC1 attachments are stored in the mail bucket', () => {
+  const UUID_V4 = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}'
+  const bytes = (...b: number[]) => new Uint8Array([...b, 1, 2, 3, 4, 5, 6, 7, 8])
+  const text = (s: string) => new TextEncoder().encode(s)
+  const PNG = bytes(0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a)
+  const JPEG = bytes(0xff, 0xd8, 0xff, 0xe0)
+  const WEBP = bytes(0x52, 0x49, 0x46, 0x46, 0x10, 0, 0, 0, 0x57, 0x45, 0x42, 0x50)
+  const PDF = text('%PDF-1.7\nsynthetic')
+  const HTML = text('<html><body><script>alert(1)</script></body></html>')
+  const SVG = text('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>')
+  const DOCX = bytes(0x50, 0x4b, 0x03, 0x04)
+  const answer = (o: MailOptions = {}) => mail({ from: 'Visitor <visitor@example.com>', inReplyTo: '<staff-1@eu-west-1.amazonses.com>', ...o })
+  const asAnswer = env({ from: 'visitor@example.com' })
+  type Stored = { filename: string; size: number; content_type: string; key: string; preview: boolean }
+
+  it('[SEC-1047-STORE] a new inquiry gets a uuid id first; each file is put under mail/<that id>/<uuid v4>; the row carries the key and preview', async () => {
+    const res = await processInboundEmail(mail({ attachments: [
+      { filename: 'photo.png', type: 'image/png', content: PNG },
+      { filename: 'plan.pdf', type: 'application/pdf', content: PDF },
+    ] }), env())
+    expect(res).toEqual({ status: 200, outcome: 'stored' })
+    const row = inquiries()[1]
+    expect(row.id).toMatch(new RegExp(`^${UUID_V4}$`))
+    const keyPattern = new RegExp(`^mail/${row.id}/${UUID_V4}$`)
+    expect(r2.puts.map((p) => p.key).every((k) => keyPattern.test(k))).toBe(true)
+    expect(new Set(r2.puts.map((p) => p.key)).size).toBe(2)
+    expect(row.attachments).toEqual([
+      { filename: 'photo.png', size: PNG.byteLength, content_type: 'image/png', key: r2.puts[0].key, preview: true },
+      { filename: 'plan.pdf', size: PDF.byteLength, content_type: 'application/pdf', key: r2.puts[1].key, preview: true },
+    ])
+    expect([...r2.puts[0].bytes]).toEqual([...PNG])
+    expect([...r2.puts[1].bytes]).toEqual([...PDF])
+  })
+
+  it.each([
+    ['JPEG', JPEG, 'image/jpeg', 'image/jpeg'],
+    ['PNG', PNG, 'image/png', 'image/png'],
+    ['WebP', WEBP, 'image/webp', 'image/webp'],
+    ['PDF', PDF, 'application/octet-stream', 'application/pdf'],
+  ])('[SEC-1047-STORE-TYPE] %s bytes are stored with their real type and inline', async (_l, content, declared, real) => {
+    await processInboundEmail(mail({ attachments: [{ filename: 'file.bin', type: declared, content }] }), env())
+    expect(r2.puts).toHaveLength(1)
+    expect(r2.puts[0].contentType).toBe(real)
+    expect(r2.puts[0].contentDisposition).toBe(`inline; filename="file.bin"; filename*=UTF-8''file.bin`)
+    expect((inquiries()[1].attachments as Stored[])[0]).toMatchObject({ preview: true, content_type: declared })
+  })
+
+  it.each([
+    ['HTML declared image/png', HTML, 'image/png'],
+    ['SVG declared image/png', SVG, 'image/png'],
+    ['SVG declared image/svg+xml', SVG, 'image/svg+xml'],
+    ['a DOCX', DOCX, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    ['a text file', text('plain words'), 'text/plain'],
+  ])('[SEC-1047-STORE-TYPE] %s is stored as application/octet-stream and attachment, never inline', async (_l, content, declared) => {
+    await processInboundEmail(mail({ attachments: [{ filename: 'file.png', type: declared, content }] }), env())
+    expect(r2.puts).toHaveLength(1)
+    expect(r2.puts[0].contentType).toBe('application/octet-stream')
+    expect(r2.puts[0].contentDisposition).toBe(`attachment; filename="file.png"; filename*=UTF-8''file.png`)
+    expect((inquiries()[1].attachments as Stored[])[0]).toMatchObject({ preview: false, content_type: declared })
+  })
+
+  it('[SEC-1047-STORE-NAME] a name with ", \\, CR LF, /, Cyrillic and ( ) * \' gives an ASCII fallback without them and a percent-encoded filename*', async () => {
+    const disposition = `attachment; filename*=UTF-8''%22Plan%22%5C%0D%0Ax%2F%D0%B4%D0%BE%D0%BC%20%281%29%2A%27.pdf`
+    await processInboundEmail(mail({ attachments: [{ filename: '', type: 'text/plain', content: text('words'), disposition }] }), env())
+    const stored = (inquiries()[1].attachments as Stored[])[0]
+    expect(stored.filename).toBe(`"Plan"\\ x/дом (1)*'.pdf`)
+    const header = r2.puts[0].contentDisposition
+    expect(header).toBe(`attachment; filename="_Plan__ x____ _1___.pdf"; filename*=UTF-8''%22Plan%22%5C%20x%2F%D0%B4%D0%BE%D0%BC%20%281%29%2A%27.pdf`)
+    expect(header).not.toMatch(/[\r\n\\]/)
+    expect(stored.key).not.toContain('Plan')
+  })
+
+  it('[SEC-1047-STORE-NAME] an empty name falls back to "attachment"; a long name is cut to 100 ASCII characters', async () => {
+    await processInboundEmail(mail({ attachments: [
+      { filename: '', type: 'text/plain', content: text('a'), disposition: 'attachment' },
+      { filename: `${'a'.repeat(150)}.txt`, type: 'text/plain', content: text('b') },
+    ] }), env())
+    expect(r2.puts[0].contentDisposition).toBe(`attachment; filename="attachment"; filename*=UTF-8''`)
+    expect(r2.puts[1].contentDisposition).toBe(`attachment; filename="${'a'.repeat(100)}"; filename*=UTF-8''${'a'.repeat(150)}.txt`)
+  })
+
+  it('[SEC-1047-STORE-NAME] a 200-character cut inside a surrogate pair still stores the mail (the lone half becomes U+FFFD in filename*)', async () => {
+    const disposition = `attachment; filename*=UTF-8''${'n'.repeat(199)}%F0%9F%98%80.txt`
+    const res = await processInboundEmail(mail({ attachments: [{ filename: '', type: 'text/plain', content: text('c'), disposition }] }), env())
+    expect(res).toEqual({ status: 200, outcome: 'stored' })
+    expect(r2.puts[0].contentDisposition).toBe(`attachment; filename="${'n'.repeat(100)}"; filename*=UTF-8''${'n'.repeat(199)}%EF%BF%BD`)
+  })
+
+  it('[SEC-1047-STORE] an answer\'s files sit under its inquiry and its row carries the keys', async () => {
+    const res = await processInboundEmail(answer({ attachments: [{ filename: 'id.jpg', type: 'image/jpeg', content: JPEG }] }), asAnswer)
+    expect(res).toEqual({ status: 200, outcome: 'joined' })
+    expect(r2.puts[0].key).toMatch(new RegExp(`^mail/q1/${UUID_V4}$`))
+    expect(replies()[1].attachments).toEqual([{ filename: 'id.jpg', size: JPEG.byteLength, content_type: 'image/jpeg', key: r2.puts[0].key, preview: true }])
+  })
+
+  it.each([
+    ['a duplicate', () => { inquiries()[0].message_id = '<dup-store@example.com>' }, { messageId: '<dup-store@example.com>' }, {}],
+    ['our own domain', () => {}, { from: 'noreply@lero.al' }, {}],
+    ['an automatic answer', () => {}, { extra: ['Auto-Submitted: auto-replied'] }, {}],
+    ['a flood', () => { for (let i = 0; i < 5; i++) inquiries().push({ id: `fl-${i}`, source: 'email', email: 'ana@example.com', created_at: minutesAgo(5), message_id: null }) }, {}, {}],
+  ])('[SEC-1047-STORE] a dropped mail (%s) puts nothing', async (_l, seed, m, e) => {
+    seed()
+    const res = await processInboundEmail(mail({ ...(m as MailOptions), attachments: [{ filename: 'photo.png', type: 'image/png', content: PNG }] }), env(e))
+    expect(res.status).toBe(200)
+    expect(r2.tried).toEqual([])
+  })
+
+  it('[SEC-1047-STORE-ROLLBACK] a failed put deletes the keys already put, answers 500 with attachment_put and writes no row', async () => {
+    r2.failPutAt = 1
+    const res = await processInboundEmail(mail({ attachments: [
+      { filename: 'a.png', type: 'image/png', content: PNG }, { filename: 'b.pdf', type: 'application/pdf', content: PDF }, { filename: 'c.txt', type: 'text/plain', content: text('c') },
+    ] }), env())
+    expect(res).toEqual({ status: 500, outcome: 'write_failed' })
+    expect(inquiries()).toHaveLength(1)
+    expect(r2.deleted).toEqual([[r2.tried[0], r2.tried[2]]])
+    expect(JSON.stringify(error.mock.calls)).toContain('attachment_put')
+  })
+
+  it('[SEC-1047-STORE-ROLLBACK] a failed put of an answer leaves the inquiry closed (the puts run before the reopening) and writes no row', async () => {
+    r2.failPutAt = 0
+    const res = await processInboundEmail(answer({ attachments: [{ filename: 'id.jpg', type: 'image/jpeg', content: JPEG }] }), asAnswer)
+    expect(res).toEqual({ status: 500, outcome: 'write_failed' })
+    expect(inquiries()[0].status).toBe('closed')
+    expect(replies()).toHaveLength(1)
+  })
+
+  it.each([
+    ['a failed insert of a new inquiry', () => { failInsert = 'contact_inquiries' }, false, { status: 500, outcome: 'write_failed' }],
+    ['a unique violation of a new inquiry', () => { inquiries()[0].message_id = '<race-store@example.com>'; raceDuplicate = true }, false, { status: 200, outcome: 'duplicate' }],
+    ['a failed reopening of the inquiry', () => { failUpdate = 'contact_inquiries' }, true, { status: 500, outcome: 'write_failed' }],
+    ['a failed insert of an answer', () => { failInsert = 'contact_inquiry_replies' }, true, { status: 500, outcome: 'write_failed' }],
+    ['a unique violation of an answer', () => { replies().push({ id: 'r-race', inquiry_id: 'q1', direction: 'inbound', message_id: '<race-store@example.com>', created_at: minutesAgo(900) }); raceDuplicate = true }, true, { status: 200, outcome: 'duplicate' }],
+  ])('[SEC-1047-STORE-ROLLBACK] %s deletes the keys it put', async (_l, seed, isAnswer, outcome) => {
+    seed()
+    const files = [{ filename: 'a.png', type: 'image/png', content: PNG }, { filename: 'b.txt', type: 'text/plain', content: text('b') }]
+    const raw = isAnswer ? answer({ messageId: '<race-store@example.com>', attachments: files }) : mail({ messageId: '<race-store@example.com>', attachments: files })
+    const res = await processInboundEmail(raw, isAnswer ? asAnswer : env())
+    expect(res).toEqual(outcome)
+    expect(r2.puts).toHaveLength(2)
+    expect(r2.deleted).toEqual([r2.puts.map((p) => p.key)])
+  })
+
+  it('[SEC-1047-STORE-ROLLBACK] a failed delete logs attachment_delete_failed only, and no log line holds a key', async () => {
+    failInsert = 'contact_inquiries'
+    r2.failDelete = true
+    const res = await processInboundEmail(mail({ attachments: [{ filename: 'MARKER-NAME.png', type: 'image/png', content: PNG }] }), env())
+    expect(res).toEqual({ status: 500, outcome: 'write_failed' })
+    const logged = JSON.stringify([...info.mock.calls, ...error.mock.calls])
+    expect(logged).toContain('attachment_delete_failed')
+    for (const secret of ['mail/', 'MARKER-NAME', 'MARKER-DELETE', r2.puts[0].key]) expect(logged).not.toContain(secret)
   })
 })

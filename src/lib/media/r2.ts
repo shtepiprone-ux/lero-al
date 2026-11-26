@@ -19,6 +19,10 @@ import { AwsClient, AwsV4Signer } from 'aws4fetch'
 export const CACHE_CONTROL = 'public, max-age=3600, s-maxage=31536000'
 /** how long a presigned PUT address is valid: long enough for one photo on a slow phone, short enough that a leaked address is of little use */
 export const PRESIGN_EXPIRES_SECONDS = 300
+/** how long a presigned GET address of a stored mail attachment is valid (Task 1047): the staff route redirects to it at once, so a leaked address is of little use */
+export const MAIL_GET_EXPIRES_SECONDS = 300
+/** every stored mail attachment: no shared cache keeps it, and a browser keeps no copy (Web_Cache_Security) */
+const MAIL_CACHE_CONTROL = 'private, no-store'
 
 /** the server has no complete R2 configuration: nothing is signed or called */
 export class R2ConfigError extends Error {
@@ -136,6 +140,37 @@ export async function deleteObjects(keys: readonly string[]): Promise<void> {
 /** deletes the objects of the mail bucket, as `deleteObjects` does for the listing bucket */
 export async function deleteMailObjects(keys: readonly string[]): Promise<void> {
   await deleteIn('mail', keys)
+}
+
+/**
+ * Stores one attachment of a received mail in the mail bucket (Task 1047). Cloudflare does not list the `response-content-*` overrides of GetObject, so the type and the disposition
+ * the browser gets are fixed here, at PUT time; `Cache-Control: private, no-store` goes with them. A non-2xx answer throws.
+ */
+export async function putMailObject(key: string, bytes: Uint8Array<ArrayBuffer>, options: { contentType: string; contentDisposition: string }): Promise<void> {
+  const { url, settings: s } = objectUrl(key, 'mail')
+  const res = await client(s).fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': options.contentType, 'Content-Disposition': options.contentDisposition, 'Cache-Control': MAIL_CACHE_CONTROL },
+    body: bytes,
+  })
+  if (!res.ok) throw new Error(`R2 PUT failed: ${res.status}`)
+}
+
+/** A presigned GET address for one object of the mail bucket, valid `MAIL_GET_EXPIRES_SECONDS` (Task 1047): only the staff route hands it out, after its own checks. */
+export async function presignMailGet(key: string): Promise<string> {
+  const { url, settings: s } = objectUrl(key, 'mail')
+  const address = new URL(url)
+  address.searchParams.set('X-Amz-Expires', String(MAIL_GET_EXPIRES_SECONDS))
+  const signer = new AwsV4Signer({
+    method: 'GET',
+    url: address.toString(),
+    accessKeyId: s.accessKeyId,
+    secretAccessKey: s.secretAccessKey,
+    service: 's3',
+    region: 'auto',
+    signQuery: true,
+  })
+  return (await signer.sign()).url.toString()
 }
 
 /**

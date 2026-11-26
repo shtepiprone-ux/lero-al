@@ -71,7 +71,7 @@ export interface ContactInquiry {
   source: ContactInquirySource
   /** Task 1044: the Message-ID of the received mail (unique where set) */
   message_id: string | null
-  /** Task 1044: names, sizes and declared types of the received mail's attachments; their content is never kept (O1044-4) */
+  /** Task 1044: names, sizes and declared types of the received mail's attachments; Task 1047: each file's object in the private mail bucket (rows before that task: none) */
   attachments: InquiryAttachment[]
 }
 
@@ -81,7 +81,12 @@ export type ContactReplyDirection = 'outbound' | 'inbound'
 export interface InquiryAttachment {
   filename: string
   size: number
+  /** the type the sender declared, kept as text only */
   content_type: string
+  /** Task 1047: the object of the private mail bucket, `mail/<inquiry id>/<uuid v4>`; absent on rows written before that task */
+  key?: string
+  /** Task 1047: true when the bytes are a JPEG, PNG, WebP or PDF, stored inline (opened in a new tab); absent on rows written before that task */
+  preview?: boolean
 }
 
 export interface ContactInquiryReply {

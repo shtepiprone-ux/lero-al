@@ -1179,7 +1179,8 @@
       "reply_email_failed": "Reply saved, but email delivery failed. You can contact the user manually.",
       "reply_history_load_failed": "Reply history could not be loaded. The replies may still exist in the database.",
       "customer_message": "Message from the customer",
-      "attachments_not_kept": "Attachments (not kept)"
+      "attachments_not_kept": "Attachments (not kept)",
+      "attachments_title": "Attachments"
     },
     "support": {
       "new_complaint_btn": "New complaint",

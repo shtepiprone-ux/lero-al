@@ -7,13 +7,16 @@
  *  - SEC-R2-SSRF: every server call goes to `R2_ENDPOINT` only; `keyFromPublicUrl` accepts an address of `R2_PUBLIC_URL` only, in the exact form of a key.
  *  - SEC-1046-R2-MAIL (Task 1046 AC3): the mail functions sign with `R2_MAIL_*` and address `R2_MAIL_BUCKET_NAME` only; the listing functions never use a mail variable; a missing
  *    mail variable throws `R2ConfigError` before any call; a declared or real length above the limit throws `R2TooLargeError` without keeping the body.
+ *  - SEC-1047-R2-MAIL-PUT, SEC-1047-R2-MAIL-GET (Task 1047 AC3): `putMailObject` signs a PUT to `R2_MAIL_BUCKET_NAME` with the mail key id and sends `Content-Type`, `Content-Disposition`
+ *    and `Cache-Control: private, no-store`; `presignMailGet` signs a GET to the mail bucket with the mail secret, valid 300 s; neither reads a listing variable; a refused key throws before
+ *    any call.
  * The code under test is the real module. The only double is the network (`fetch`). Every value is synthetic.
  */
 import { createHash, createHmac } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { CACHE_CONTROL, PRESIGN_EXPIRES_SECONDS, R2ConfigError, R2TooLargeError, deleteMailObjects, deleteObjects, getMailObject, headObject, keyFromPublicUrl, presignPut, publicUrl, readHead } from '../r2'
+import { CACHE_CONTROL, MAIL_GET_EXPIRES_SECONDS, PRESIGN_EXPIRES_SECONDS, R2ConfigError, R2TooLargeError, deleteMailObjects, deleteObjects, getMailObject, headObject, keyFromPublicUrl, presignMailGet, presignPut, publicUrl, putMailObject, readHead } from '../r2'
 
 const ENV = {
   R2_ACCESS_KEY_ID: 'AKTESTACCESSKEY1038',
@@ -370,6 +373,103 @@ describe('the mail bucket (Task 1046)', () => {
     const seen = stubFetch(() => new Response(null, { status: 200 }))
     await expect(getMailObject(key, 100)).rejects.toThrow()
     await expect(deleteMailObjects([key])).rejects.toThrow()
+    expect(seen).toHaveLength(0)
+  })
+})
+
+describe('the stored attachments of received mail (Task 1047)', () => {
+  const FILE_KEY = 'mail/3f1c2a54-9d0e-4c43-8d7a-0e5b1a6c7d21/0f8e4c1a-2b3d-4e5f-9a6b-7c8d9e0f1a2b'
+  const LISTING_VARIABLES = ['R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET_NAME'] as const
+  const OPTIONS = { contentType: 'application/pdf', contentDisposition: `inline; filename="plan.pdf"; filename*=UTF-8''plan.pdf` }
+  const BYTES = new TextEncoder().encode('%PDF-1.7 synthetic')
+
+  function stubFetch(handler: (request: Request) => Response | Promise<Response>) {
+    const seen: { request: Request; body: Uint8Array }[] = []
+    vi.stubGlobal('fetch', vi.fn(async (input: Request) => { seen.push({ request: input, body: new Uint8Array(await input.clone().arrayBuffer()) }); return handler(input) }))
+    return seen
+  }
+
+  const hmac = (key: Buffer | string, data: string) => createHmac('sha256', key).update(data).digest()
+  /** AWS Signature V4 of a presigned GET with the MAIL secret, written out here, independent of aws4fetch: a PUT or a listing signature never equals it */
+  function expectedGetSignature(url: URL): string {
+    const query = new URLSearchParams(url.search)
+    const amzDate = query.get('X-Amz-Date') as string
+    const date = amzDate.slice(0, 8)
+    const canonicalQuery = [...query.entries()]
+      .filter(([k]) => k !== 'X-Amz-Signature')
+      .map(([k, v]) => [encodeURIComponent(k), encodeURIComponent(v)] as const)
+      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+      .map(([k, v]) => `${k}=${v}`)
+      .join('&')
+    const canonicalRequest = ['GET', url.pathname, canonicalQuery, `host:${url.host}\n`, 'host', 'UNSIGNED-PAYLOAD'].join('\n')
+    const stringToSign = ['AWS4-HMAC-SHA256', amzDate, `${date}/auto/s3/aws4_request`, createHash('sha256').update(canonicalRequest).digest('hex')].join('\n')
+    const kSigning = hmac(hmac(hmac(hmac(`AWS4${ENV.R2_MAIL_SECRET_ACCESS_KEY}`, date), 'auto'), 's3'), 'aws4_request')
+    return createHmac('sha256', kSigning).update(stringToSign).digest('hex')
+  }
+
+  it('[SEC-1047-R2-MAIL-PUT] putMailObject PUTs the bytes to R2_MAIL_BUCKET_NAME on R2_ENDPOINT with the mail key id, the type, the disposition and private, no-store', async () => {
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await putMailObject(FILE_KEY, BYTES, OPTIONS)
+    expect(seen).toHaveLength(1)
+    const { request, body } = seen[0]
+    expect(request.method).toBe('PUT')
+    expect(new URL(request.url).origin).toBe(ENV.R2_ENDPOINT)
+    expect(new URL(request.url).pathname).toBe(`/${ENV.R2_MAIL_BUCKET_NAME}/${FILE_KEY}`)
+    expect(request.headers.get('content-type')).toBe(OPTIONS.contentType)
+    expect(request.headers.get('content-disposition')).toBe(OPTIONS.contentDisposition)
+    expect(request.headers.get('cache-control')).toBe('private, no-store')
+    expect(request.headers.get('authorization')).toContain(`Credential=${ENV.R2_MAIL_ACCESS_KEY_ID}/`)
+    expect(request.headers.get('authorization')).not.toContain(ENV.R2_ACCESS_KEY_ID)
+    expect([...body]).toEqual([...BYTES])
+  })
+
+  it('[SEC-1047-R2-MAIL-PUT] a non-2xx answer throws', async () => {
+    for (const status of [403, 404, 500]) {
+      stubFetch(() => new Response(null, { status }))
+      await expect(putMailObject(FILE_KEY, BYTES, OPTIONS), String(status)).rejects.toThrow()
+    }
+  })
+
+  it('[SEC-1047-R2-MAIL-GET] presignMailGet gives a GET address on R2_ENDPOINT for the mail bucket and the key, valid 300 seconds, signed with the mail secret', async () => {
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    const url = new URL(await presignMailGet(FILE_KEY))
+    expect(seen).toHaveLength(0)
+    expect(url.origin).toBe(ENV.R2_ENDPOINT)
+    expect(url.pathname).toBe(`/${ENV.R2_MAIL_BUCKET_NAME}/${FILE_KEY}`)
+    expect(MAIL_GET_EXPIRES_SECONDS).toBe(300)
+    expect(url.searchParams.get('X-Amz-Expires')).toBe('300')
+    expect(url.searchParams.get('X-Amz-Credential')?.startsWith(`${ENV.R2_MAIL_ACCESS_KEY_ID}/`)).toBe(true)
+    expect(url.searchParams.get('X-Amz-SignedHeaders')).toBe('host')
+    expect(url.searchParams.get('X-Amz-Signature')).toBe(expectedGetSignature(url))
+    expect(url.toString()).not.toContain(ENV.R2_MAIL_SECRET_ACCESS_KEY)
+  })
+
+  it('[SEC-1047-R2-MAIL-PUT] [SEC-1047-R2-MAIL-GET] neither reads a listing variable: both work without them', async () => {
+    for (const name of LISTING_VARIABLES) delete process.env[name]
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await expect(putMailObject(FILE_KEY, BYTES, OPTIONS)).resolves.toBeUndefined()
+    await expect(presignMailGet(FILE_KEY)).resolves.toContain(ENV.R2_MAIL_BUCKET_NAME)
+    expect(seen).toHaveLength(1)
+  })
+
+  it.each(['R2_MAIL_ACCESS_KEY_ID', 'R2_MAIL_SECRET_ACCESS_KEY', 'R2_MAIL_BUCKET_NAME', 'R2_ENDPOINT'])('[SEC-1047-R2-MAIL-PUT] without %s both throw R2ConfigError before any call', async (name) => {
+    delete process.env[name]
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await expect(putMailObject(FILE_KEY, BYTES, OPTIONS)).rejects.toBeInstanceOf(R2ConfigError)
+    await expect(presignMailGet(FILE_KEY)).rejects.toBeInstanceOf(R2ConfigError)
+    expect(seen).toHaveLength(0)
+  })
+
+  it.each([
+    ['a .. segment', 'mail/../x'],
+    ['a leading slash', `/${FILE_KEY}`],
+    ['an empty key', ''],
+    ['a query', `${FILE_KEY}?x=1`],
+    ['a backslash', 'mail\\x'],
+  ])('[SEC-1047-R2-MAIL-PUT] [SEC-1047-R2-MAIL-GET] a key with %s throws before any call', async (_label, key) => {
+    const seen = stubFetch(() => new Response(null, { status: 200 }))
+    await expect(putMailObject(key, BYTES, OPTIONS)).rejects.toThrow('R2 key refused')
+    await expect(presignMailGet(key)).rejects.toThrow('R2 key refused')
     expect(seen).toHaveLength(0)
   })
 })

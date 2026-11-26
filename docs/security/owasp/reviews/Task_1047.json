@@ -1,0 +1,315 @@
+{
+ "task": "1047",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "the kickoff's T1-T7 name another mailbox, another conversation, a disguised file, a crafted name, a leaked address and a half-written mail; each has its case in `route.security.test.ts` or `inboundEmail.security.test.ts`, and the reviewer reran the four breaks (each exit 1, Review 1)"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the kickoff's \"## Attack surface\" names the new route `src/app/api/admin/inquiry-attachment/route.ts`, the signed GET (`src/lib/media/r2.ts` `presignMailGet`) and the stored files (`putMailObject`); no other entry point is in the diff (`git diff --stat d2164bf4e`)"
+  },
+  "Authorization": {
+   "verdict": "met",
+   "quotes": [
+    "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+   ],
+   "evidence": "`route.ts:36-37` `checkStaff()` before any read, `:56-57` the mailbox's page key on every GET; live on the dev server with the owner's session: an unknown inquiry 404, a malformed or extra parameter 400 (Review 1)"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "met",
+   "quotes": [
+    "Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."
+   ],
+   "evidence": "a failed account lookup is 403 (`src/lib/auth/staff.ts:38`), a failed permission read is no permission (`staff.ts:42` `.catch(() => false)`), test \"a failed permission read is 403 (fail closed)\"; a failed row read is 500 without `Location` (`route.ts:44`, `:50`)"
+  },
+  "Authorization_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+   ],
+   "evidence": "the route reads the reply by its id AND its inquiry (`route.ts:49`, test \"the reply is read by its id AND its inquiry\") and accepts only a key under `mail/<that inquiry>/<uuid v4>` (`route.ts:61-62`)"
+  },
+  "Authorization_Policy_And_Data_Distribution": {
+   "verdict": "met",
+   "quotes": [
+    "Deny affected operations when a required attribute cannot be obtained reliably."
+   ],
+   "evidence": "the page key is read at each request, never cached (`staff.ts:41-42`); the mailbox attribute comes from the row (`route.ts:55`) with the pages' own split (`/sales/i` against `ilike '%sales%'`, `src/app/admin/inquiries/sales/page.tsx:29`, `support/page.tsx:29`)"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "met",
+   "quotes": [
+    "Automated tests should specifically target the ways authorization usually degrades over time."
+   ],
+   "evidence": "reviewer's breaks: the page-key check removed (`route.ts:57`) → 4 of 37 fail; the prefix and uuid check removed (`route.ts:62`) → 3 of 37 fail; each restored, sha256 equal"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Integration test cases validate the correct implementation of the authorization matrix."
+   ],
+   "evidence": "`route.security.test.ts` has one case per row of the kickoff's matrix: `[SEC-1047-ATTACHMENT-DENY]` (anonymous, user, agent, no role, failed lookup, each mailbox without its key, reply of another inquiry, index past the list, row without key, foreign or malformed key) and `[SEC-1047-ATTACHMENT-ALLOW]` (administrator, moderator with the key); 37 passed"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "not applicable",
+   "reason": "the only new entry point answers staff sessions only (`route.ts:36-37`) and sends no mail or code"
+  },
+  "Business_Logic_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Always re-derive security-relevant values (prices, permissions, ownership) on the server. Client state is input, not truth."
+   ],
+   "evidence": "the browser sends ids and an index only; the key, the mailbox and the permission are read on the server (`route.ts:43-62`); the inbound files are put before the row and deleted on any failed write (`inboundEmail.ts` `storeAttachments`, `discard`), break 4 → 3 of 73 fail"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no login, password or account step is added or changed"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+   ],
+   "evidence": "inline only for JPEG, PNG, WebP and PDF signatures, every other file `application/octet-stream` and `attachment` (`inboundEmail.ts` `previewType`, `contentDisposition`), served from R2's host; the name is React text (test `<b>plan</b>.pdf`, no `b` element); break 3 → 8 of 73 fail"
+  },
+  "Cryptographic_Storage": {
+   "verdict": "met",
+   "quotes": [
+    "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness"
+   ],
+   "evidence": "each object name and the new inquiry id are `crypto.randomUUID()` (`inboundEmail.ts` `storeAttachments`, `processInboundEmail`), never the file name; test `[SEC-1047-STORE]` checks the uuid v4 shape"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+   ],
+   "evidence": "the link is the fixed path `/api/admin/inquiry-attachment` with a `URLSearchParams` query of ids and an index (`InquiryDetailDialogView.tsx:58-60`); no file text reaches a sink"
+  },
+  "Denial_of_Service": {
+   "verdict": "met",
+   "quotes": [
+    "Using validation that is cheap in resources first"
+   ],
+   "evidence": "the route checks role and query before any read (tests \"... is 400 before any read\", \"gets 403 before any read\"); the puts are bounded by Task 1046's 25 MB and the 20-file cap (`MAX_ATTACHMENTS`, test \"20\" with 20 puts)"
+  },
+  "File_Upload": {
+   "verdict": "met",
+   "quotes": [
+    "Validate the file type, don't trust the Content-Type header as it can be spoofed"
+   ],
+   "evidence": "the stored type comes from the bytes (`sniffImageType` or `%PDF-`); HTML and SVG declared `image/png` are stored `application/octet-stream` and `attachment` (`[SEC-1047-STORE-TYPE]`); the declared type is kept as text only"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "verdict": "not applicable",
+   "reason": "no site transport header or configuration changes; the redirect points at the https `R2_ENDPOINT` checked in `r2.ts` settings"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Each receiving service must still authorize the requested action and resource."
+   ],
+   "evidence": "the route authorizes itself from the session (`requireViewer` through `checkStaff`), not from the admin page around the link; R2 authorizes the GET by its own signature, valid 300 s (`r2.ts` `presignMailGet`, `[SEC-1047-R2-MAIL-GET]`)"
+  },
+  "Injection_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
+   ],
+   "evidence": "rows are read through the query builder with checked UUIDs (`route.ts:43`, `:49`); the disposition is an allow-listed ASCII fallback plus a percent-encoded `filename*` (`[SEC-1047-STORE-NAME]`: `\"`, `\\`, CR LF, `/`, Cyrillic)"
+  },
+  "Input_Validation": {
+   "verdict": "finding",
+   "finding": "F2",
+   "note": "the route query is checked before any read (route.ts:25-33, 13 cases 400); F2: oneLine (inboundEmail.ts:80) and bodyText (:128) cut UTF-16 units and can store half a surrogate pair; owner decision O1047-3 puts the fix into Revision 1"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "implement access control checks for each object that users try to access"
+   ],
+   "evidence": "the file is found from the row the viewer may see, by inquiry, reply and index (`route.ts:43-62`); a key the browser sends is refused as an extra parameter (test \"an extra parameter\"); a key under another inquiry is 404 without a signature (test \"a key under another inquiry\")"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+   ],
+   "evidence": "`route.ts:14-16` anchored fixed-length patterns; `inboundEmail.ts` `contentDisposition` tests one character at a time; the jsonb row is read as `unknown` and the key checked with `typeof` (`route.ts:59-62`)"
+  },
+  "Key_Management": {
+   "verdict": "met",
+   "quotes": [
+    "a single key should be used for only one purpose"
+   ],
+   "evidence": "`putMailObject` and `presignMailGet` sign with `R2_MAIL_*` only and work with every listing variable removed (`[SEC-1047-R2-MAIL-PUT] [SEC-1047-R2-MAIL-GET] neither reads a listing variable`)"
+  },
+  "Logging": {
+   "verdict": "met",
+   "quotes": [
+    "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+   ],
+   "evidence": "the route logs `{ outcome }` on 500 only (`route.ts:20`); the inbound path logs `attachment_put` and `attachment_delete_failed` codes only; both tests assert no key, address, URL, id or file name in any log line"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "the shared security-event helper is Task 1026; this diff adds outcome codes only (`attachment_put`, `attachment_delete_failed`, `invalid_query`, `presign_failed`)"
+  },
+  "Mass_Assignment": {
+   "verdict": "met",
+   "quotes": [
+    "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable."
+   ],
+   "evidence": "the route reads exactly `inquiry`, `n` and `reply`, each once, against an allow-list (`route.ts:17`, `:26-27`); tests \"an extra parameter\", \"a repeated parameter\""
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Rendering the form only on a protected page does not authenticate the action request."
+   ],
+   "evidence": "the Route Handler checks the session itself (`route.ts:36`), audience administrator and moderator with the mailbox's page key; `r2.ts` starts with `import 'server-only'` (`[SEC-R2-SRV-ONLY]`)"
+  },
+  "Nodejs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Never write sensitive data to application logs, including passwords, API keys, session tokens, authorization headers, or sensitive personal data."
+   ],
+   "evidence": "no signed URL, key or customer data is logged (route test `afterEach` scans every log level for `mail/`, `http`, `X-Amz` and the ids)"
+  },
+  "OAuth2": {
+   "verdict": "not applicable",
+   "reason": "no OAuth flow is touched; the sheet is triggered by the route's redirect to a signed file address"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "no command is run; the census file is JSON read by the Storybook job"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "If objects have to be used then they should be created using the Object.create(null) API"
+   ],
+   "evidence": "no object is merged from the query or the mail; `URLSearchParams` is read by name (`route.ts:26-30`) and the row is built field by field (`inboundEmail.ts` `storeAttachments`)"
+  },
+  "Query_Parameterization": {
+   "verdict": "met",
+   "quotes": [
+    "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure."
+   ],
+   "evidence": "`.eq` with validated UUIDs (`route.ts:43`, `:49`); no SQL text is built"
+  },
+  "REST_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Return 401 for a missing or invalid key, and 403 for a valid key that lacks access to the resource."
+   ],
+   "evidence": "no session 401, a session without access 403 (`route.ts:37`, `:57`), tests `[SEC-1047-ATTACHMENT-DENY]`"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Never allow `javascript:` or `data:` in navigable attributes."
+   ],
+   "evidence": "the `href` is the fixed `/api/admin/inquiry-attachment` path (`InquiryDetailDialogView.tsx:60`), never a stored value; measured in Storybook: 4 links, every `href` on that path"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "use parameterized queries for dynamic data values"
+   ],
+   "evidence": "the route's two reads take only checked UUIDs through the query builder (`route.ts:43`, `:49`)"
+  },
+  "Secrets_Management": {
+   "verdict": "met",
+   "quotes": [
+    "prevent them from leaking and compromising the organization"
+   ],
+   "evidence": "the mail token stays server-side (`r2.ts`, `server-only`); a signed address lives 300 s (`MAIL_GET_EXPIRES_SECONDS`) and is never logged; the presigned URL does not contain the secret (`[SEC-1047-R2-MAIL-GET]`)"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Diff-Based Reviews focus on code changes only."
+   ],
+   "evidence": "Review 1 read `git diff d2164bf4e` (14 files) and the two new files against this kickoff; every file is in its Scope"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "no new package, no lockfile, rule or CI change (`diff --stat d2164bf4e`: 14 files of the Scope); no invisible or bidi character in the diff or the new files (reviewer node scan: 0)"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "T1-T6 each became an acceptance criterion (AC1-AC3) with its test; each failed on the unchanged code in the reviewer run (`inboundEmail.security.test.ts` 23 failed, `route.security.test.ts` module missing, `r2.security.test.ts` 13 failed, `InquiryDetailDialogView.inbound.test.tsx` 5 failed)"
+  },
+  "Serverless_FaaS_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)."
+   ],
+   "evidence": "the new route authorizes itself; the bucket is reached only with the mail token and the 300 s signed GETs (`r2.ts`)"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "the threat modeling process should answer the following four questions"
+   ],
+   "evidence": "the kickoff \"## Attack surface\" answers the four questions; T1-T6 are tested in `route.security.test.ts` and `inboundEmail.security.test.ts`; T7 is accepted within the task (the event log is Task 1026)"
+  },
+  "Transport_Layer_Security": {
+   "verdict": "not applicable",
+   "reason": "no TLS setting changes; the mail store uses the same https-only `R2_ENDPOINT` check as before"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "verdict": "met",
+   "quotes": [
+    "If used, do not allow the URL as user input for the destination."
+   ],
+   "evidence": "the 302 target is signed by the server from the row's key on `R2_ENDPOINT` (`route.ts:66-70`); no parameter is a URL, and an extra parameter is 400"
+  },
+  "User_Privacy_Protection": {
+   "verdict": "not applicable",
+   "reason": "the files are read by staff only; no visitor request or address reaches a third party"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "the reviewer reran the executor claims: `npm run typecheck` exit 0, ESLint exit 0, `npm test --` 85 Route files 1720 passed, `r2SignedUpload.integration.test.ts` 4 passed, the four failing-first runs and the four breaks (Review 1)"
+  },
+  "Web_Cache_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Default to preventing shared caching for authenticated, personalized, tenant-specific, or otherwise sensitive responses."
+   ],
+   "evidence": "`Cache-Control: no-store` on the redirect and every refusal (`route.ts:21`, `:70`; live 404 and 400 carried `no-store`), `private, no-store` on each object (`r2.ts` `MAIL_CACHE_CONTROL`, `[SEC-1047-R2-MAIL-PUT]`)"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "met",
+   "quotes": [
+    "The fundamental security rule is to never use innerHTML with untrusted data."
+   ],
+   "evidence": "the file name is React text (`InquiryDetailDialogView.tsx:62`); test `<b>plan</b>.pdf` renders no `b` element"
+  },
+  "Web_Service_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Schema validation enforces constraints and syntax defined by the schema."
+   ],
+   "evidence": "the query is two lower-case UUIDs and one index of fixed patterns (`route.ts:14-15`, `:31`)"
+  }
+ }
+}

@@ -771,6 +771,32 @@ export const FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES: ReplyRow[] = [
   },
 ]
 
+// ── Task 1047: an inquiry received by mail whose files are stored in the mail bucket (labelled fixture data) ──
+
+const FIXTURE_STORED_INQUIRY_ID = '6a2f9c41-3d7e-4b58-9c0a-2e4f6b8d1a37'
+
+/** a PNG and a PDF that open in a new tab (`preview`), and a DOCX that is downloaded */
+export const FIXTURE_STORED_ATTACHMENT_INQUIRY: InquiryRow = {
+  ...FIXTURE_EMAIL_INQUIRY,
+  id: FIXTURE_STORED_INQUIRY_ID,
+  attachments: [
+    { filename: 'fotografia-e-sallonit.png', size: 734_208, content_type: 'image/png', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/1b7e4f20-8c3a-4d91-a6f5-0e2c9b8d7a61`, preview: true },
+    { filename: 'kontrata-e-meparshme.pdf', size: 248_320, content_type: 'application/pdf', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/2c8f5a31-9d4b-4ea2-b706-1f3d0c9e8b72`, preview: true },
+    { filename: 'kerkesa-per-qira.docx', size: 41_984, content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/3d9a6b42-0e5c-4fb3-8817-2a4e1d0f9c83`, preview: false },
+  ],
+}
+
+/** a staff reply and the customer's answer with one stored photo */
+export const FIXTURE_STORED_ATTACHMENT_INQUIRY_REPLIES: ReplyRow[] = [
+  { ...FIXTURE_EMAIL_INQUIRY_REPLIES[0], id: '4e0b7c53-1f6d-4ac4-9928-3b5f2e1a0d94', inquiry_id: FIXTURE_STORED_INQUIRY_ID },
+  {
+    ...FIXTURE_EMAIL_INQUIRY_REPLIES[1],
+    id: '5f1c8d64-2a7e-4bd5-8a39-4c6a3f2b1ea5',
+    inquiry_id: FIXTURE_STORED_INQUIRY_ID,
+    attachments: [{ filename: 'planimetria.png', size: 512_000, content_type: 'image/png', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/6a2d9e75-3b8f-4ce6-9b4a-5d7b4a3c2fb6`, preview: true }],
+  },
+]
+
 // ── Task 859 additions: /admin/support Views (labelled fixture data) ─────────
 
 export const FIXTURE_SUPPORT_TICKETS_EXTRA: SupportTicketRow[] = [

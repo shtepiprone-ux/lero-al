@@ -3,7 +3,7 @@
 import { Fragment, type ReactNode } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { SendSquareIcon } from '@solar-icons/react/broken'
-import { Alert, Button, Group, Paper, Stack, Text, Textarea, useMantineTheme } from '@mantine/core'
+import { Alert, Anchor, Button, Group, Paper, Stack, Text, Textarea, useMantineTheme } from '@mantine/core'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
@@ -41,17 +41,30 @@ function renderLines(text: string): ReactNode {
 }
 
 /**
- * Task 1044: the attachment names of a received mail, as plain text lines "<name> (<size> KB)" under the "not kept" title (O1044-4: only the name, size and type
- * are stored, never the content). Nothing is rendered without attachments.
+ * Task 1044: the attachment names of a received mail, as lines "<name> (<size> KB)". Nothing is rendered without attachments.
+ * Task 1047: a stored file (with `key`) is a link to the staff route by inquiry, index and reply; a photo or PDF (`preview`) opens in a new tab, any other file is downloaded. A file of
+ * a row written before that task stays a plain line, and its list keeps the "not kept" title; "Attachments" when every file is stored.
  */
-function AttachmentNames({ attachments, title }: { attachments: InquiryAttachment[] | undefined; title: string }) {
+function AttachmentNames({ attachments, inquiryId, replyId }: { attachments: InquiryAttachment[] | undefined; inquiryId: string; replyId?: string }) {
+  const t = useTranslations('admin.inquiries')
   if (!attachments || attachments.length === 0) return null
+  const allStored = attachments.every((file) => typeof file.key === 'string' && file.key.length > 0)
   return (
     <Stack gap="xs">
-      <Text size="xs" fw={500}>{title}</Text>
-      {attachments.map((file, index) => (
-        <Text key={index} size="sm">{`${file.filename} (${Math.ceil(file.size / 1024)} KB)`}</Text>
-      ))}
+      <Text size="xs" fw={500}>{allStored ? t('attachments_title') : t('attachments_not_kept')}</Text>
+      {attachments.map((file, index) => {
+        const size = ` (${Math.ceil(file.size / 1024)} KB)`
+        if (!file.key) return <Text key={index} size="sm">{`${file.filename}${size}`}</Text>
+        const query = new URLSearchParams({ inquiry: inquiryId, n: String(index), ...(replyId ? { reply: replyId } : {}) })
+        return (
+          <Text key={index} size="sm">
+            <Anchor size="sm" href={`/api/admin/inquiry-attachment?${query.toString()}`} {...(file.preview ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+              {file.filename}
+            </Anchor>
+            {size}
+          </Text>
+        )
+      })}
     </Stack>
   )
 }
@@ -129,7 +142,7 @@ export function InquiryDetailDialogView({
 
         <MantineDialogSection title={t('detail_message')}>
           <Text size="sm">{renderLines(inquiry.message)}</Text>
-          <AttachmentNames attachments={inquiry.attachments} title={t('attachments_not_kept')} />
+          <AttachmentNames attachments={inquiry.attachments} inquiryId={inquiry.id} />
         </MantineDialogSection>
 
         {replies.length === 0 && inquiry.reply_count > 0 ? (
@@ -152,7 +165,7 @@ export function InquiryDetailDialogView({
                     </Group>
                     {r.direction === 'inbound' && <Text size="xs" fw={500}>{r.from_email}</Text>}
                     <Text size="sm">{renderLines(r.body)}</Text>
-                    <AttachmentNames attachments={r.attachments} title={t('attachments_not_kept')} />
+                    <AttachmentNames attachments={r.attachments} inquiryId={inquiry.id} replyId={r.id} />
                   </Stack>
                 </Paper>
               ))}

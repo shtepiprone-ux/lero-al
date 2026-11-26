@@ -211,4 +211,28 @@ text and underline, not colour alone; focus is Mantine's visible ring.
    deletion after a failed insert removed → AC1 fails; each restored. CI runs only on GitHub and is read with `gh pr checks <n>` (A5).
 5. Report: each command, exit code, relevant output; each new test's failing run before the change; each break's output.
 
+## Revision 1
+
+Owner decisions 2026-11-26 (Review 1, translated): O1047-2 "a new key" for a stored file without a name; O1047-3 "in Revision 1 of task 1047"
+for the cut inside a surrogate pair. Starts from the owner's local commit of the reviewed tree (Review 1, handoff).
+
+- R1-1 (Review 1, F1) `src/components/admin/InquiryDetailDialogView.tsx:62`: the link text of a stored file is
+  `file.filename || t('attachment_unnamed')`; a file without `key` keeps `main`'s line. `messages/{sq,en,uk,it}.json`
+  `admin.inquiries.attachment_unnamed`: "Skedar pa emër", "Unnamed file", "Файл без назви", "File senza nome" (Edit only, after
+  `attachments_title`). `src/stories/fixtures/admin.fixtures.ts`: `FIXTURE_STORED_ATTACHMENT_INQUIRY` gains a fourth file
+  `{ filename: '', size: 18_432, content_type: 'image/png', key: mail/<its id>/<a new uuid v4>, preview: true }`. Test
+  `src/components/admin/__tests__/InquiryDetailDialogView.inbound.test.tsx`: `[SEC-1047-DIALOG-LINK] a stored file without a name is a link
+  named "Unnamed file"` (`getByRole('link', { name: t.attachment_unnamed })`, its `href` and `target`); it fails on the reviewed tree.
+- R1-2 (Review 1, F2) `src/modules/contacts/lib/inboundEmail.ts:79-81`, `:128`: one helper cuts a text at `max` and then drops a trailing
+  high surrogate (`/[\uD800-\uDBFF]$/`); `oneLine` and `bodyText` use it; no other line changes (the limits, the order, every check stay).
+  Test `src/modules/contacts/lib/__tests__/inboundEmail.security.test.ts`: `[SEC-1047-STORE-NAME] a 200-character cut inside a surrogate
+  pair ...` expects the stored `filename` to be 199 × `n`, the disposition `attachment; filename="<100 × n>"; filename*=UTF-8''<199 × n>`, and
+  no lone surrogate (`/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/`) in the stored row; a new case does the same
+  for a 199-character subject and sender name followed by an emoji, and for a body of 19 999 characters followed by an emoji; each fails on
+  the reviewed tree.
+- Run (I8): `npm run typecheck`; ESLint on the changed code files; `npm test --` with the Route's 85 files; the `StoredAttachments` Story at
+  320, 640, 1024 and 1440 px in sq, en, uk, it (I8a), the unnamed file's link measured as the others.
+
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1047_Review_1.md)

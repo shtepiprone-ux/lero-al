@@ -1,0 +1,361 @@
+{
+ "task": "988",
+ "sheets": {
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "the crafted cookie, account value, action argument and sign-up value of T1, T6, T7, T8 are tested: `proxyLocale.test.ts` [SEC-988-PROXY-LOCALE-DENY] [SEC-988-GUEST-COOKIE-DENY], `proxyAccountLocale.test.ts`, `locale.security.test.ts` [SEC-988-ACCOUNT-LOCALE-DENY]; each fails with its control removed (Review 2 V8)"
+  },
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the rule files only; the diff gives no agent any new tool, permission or input"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the new behaviour is the account read of `src/lib/auth/middleware.ts:72-84`, the 307 of `src/proxy.ts:100-106`, the moved admin routes and the trigger body of `supabase/sql_migrations/task988/task988.sql`; `config.matcher` of `src/proxy.ts` is unchanged (Review 2 V3)"
+  },
+  "Authentication": {
+   "verdict": "not applicable",
+   "reason": "sign-in, passwords and factors are unchanged; the Google success path only adds an awaited language write after a successful sign-in (`src/modules/auth/lib/googleSignIn.ts:38-40`)"
+  },
+  "Authentication_Patterns": {
+   "verdict": "not applicable",
+   "reason": "the session is still verified by the existing `getUser()` of `refreshSession`, before the new read (`src/lib/auth/middleware.ts:61`, `:73-83`)"
+  },
+  "Authorization": {
+   "verdict": "met",
+   "quotes": [
+    "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+   ],
+   "evidence": "every moved admin page keeps `requireStaffPage` as its first await (46 moved files byte-identical, 12 changed read in Review 2 V4); `setAccountLocale` writes `.eq('id', viewer.userId)` only (`src/modules/admin/actions/locale.ts:22`); `adminSlug.test.tsx` [SEC-988-ADMIN-SLUG-DENY]"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "no authorization decision is added; the access keys of `adminPages.ts` are unchanged and matched after the slug (`adminRouteOf`, `src/lib/auth/adminPages.ts:50-55`)"
+  },
+  "Authorization_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+   ],
+   "evidence": "each admin page checks its own key after the move (`adminSlug.test.tsx`: a moderator without `page.users` gets notFound() from `/uk/admin/users` before any read); the proxy only redirects"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "met",
+   "quotes": [
+    "Automated tests should specifically target the ways authorization usually degrades over time."
+   ],
+   "evidence": "Review 2 F1 fixed in Revision 2: the signed-in page walk of every role (`scripts/check-signed-in-pages.mjs`) names the moved pages and their `/sq/admin/...` addresses, a non-staff role is expected at `/sq`, the moderator's page switches are read after the slug (`routeOf`); `check-signed-in-pages.test.ts` 73/73, and red with the old admin row, the old `routeOf` (19 cases), the landing without `/sq` (2) or the `/en` default (1) (Review 3 V3)"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Integration test cases validate the correct implementation of the authorization matrix."
+   ],
+   "evidence": "`moderatorKeys.integration.test.ts`, `staffAccess.integration.test.ts` and `adminPage.integration.test.ts` pass on the moved paths (integration graph, Review 2 V3: 15 of 16 files green, the one red case is AC4, SQL not applied)"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "not applicable",
+   "reason": "no counter, limit, challenge or automation control is touched"
+  },
+  "Business_Logic_Security": {
+   "verdict": "not applicable",
+   "reason": "no price, workflow or status rule changes; the price alert keeps its rule, only the stored form of its link changes"
+  },
+  "Clickjacking_Defense": {
+   "verdict": "not applicable",
+   "reason": "frame headers come from next.config and are unchanged by the diff"
+  },
+  "Content_Security_Policy": {
+   "verdict": "not applicable",
+   "reason": "the policy is unchanged; its report-only matcher follows the moved admin (`src/lib/security/headers.ts:49`, `adminSlug.test.tsx`) and every 307 passes `withPolicy`"
+  },
+  "Cookie_Theft_Mitigation": {
+   "verdict": "not applicable",
+   "reason": "the proxy reads no session cookie value; the new cookie `lero_ui_locale` holds one of four codes, HttpOnly, SameSite=Lax, Secure in production (`src/i18n/uiLocale.ts:17-19`)"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the diff adds no login, password or recovery path"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+   ],
+   "evidence": "`src/modules/notifications/components/NotificationItem.tsx:286` takes `href` from `notificationHref`, which passes `safeNextPath` (`src/modules/notifications/lib/notificationHref.ts:15`); the smoke test renders no anchor for `javascript:` and foreign links"
+  },
+  "Cross-Site_Request_Forgery_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the session language changes only through the Server Action `setAccountLocale` (Next origin check) or the first page of a session; a followed link is redirected, never written"
+  },
+  "Cryptographic_Storage": {
+   "verdict": "not applicable",
+   "reason": "hash here is the URL fragment; nothing is stored or encrypted"
+  },
+  "Database_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Configured with the minimum permissions required as discussed in the permissions section below."
+   ],
+   "evidence": "the trigger keeps owner postgres, SECURITY DEFINER, `search_path=public, pg_temp` and the grants `{postgres=X/postgres,service_role=X/postgres}`: preflight 0 problems (Review 2 H4 and the owner's run), `task988-verify.sql` after the owner's apply rows 1-4 ok = true; the proxy reads with the session client under RLS"
+  },
+  "Denial_of_Service": {
+   "verdict": "met",
+   "quotes": [
+    "Using validation that is cheap in resources first"
+   ],
+   "evidence": "no loop: a path already in the chosen language passes (`src/proxy.ts:100`); the new read is one primary-key lookup of the caller's own row after `getUser()` (`src/lib/auth/middleware.ts:77`); a failed read falls back to the guest rule"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+   ],
+   "evidence": "the stored link reaches only `href` after `notificationHref` (`NotificationItem.tsx:286`, `:292`); `javascript:alert(1)` gives null in `notificationHref.test.ts`"
+  },
+  "GraphQL": {
+   "verdict": "not applicable",
+   "reason": "the project exposes no GraphQL endpoint at all"
+  },
+  "HTTP_Headers": {
+   "verdict": "not applicable",
+   "reason": "site-wide headers stay in next.config and apply to the redirect unchanged"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "verdict": "not applicable",
+   "reason": "the HSTS header stays in next.config, untouched by the diff"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no identity passes between services in this diff at all"
+  },
+  "Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no query, command or interpreter input is built from request data"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": [
+    "Validate on the server even when the browser checks the same fields."
+   ],
+   "evidence": "the account value (`src/lib/auth/middleware.ts:79`), the cookie (`src/proxy.ts:91`), the action argument (`src/modules/admin/actions/locale.ts:15`) and the trigger metadata (`task988.sql`, `v_locale not in (...)`) are each checked against the four codes on the server"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "implement access control checks for each object that users try to access"
+   ],
+   "evidence": "the proxy reads `.eq('id', userId)` of the session user and the integration test shows another person's row gives no row (`accountLocale.integration.test.ts` [AC3]); the action writes only `viewer.userId`"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "not applicable",
+   "reason": "no merge, dynamic property write or regular expression over long input"
+  },
+  "Key_Management": {
+   "verdict": "not applicable",
+   "reason": "no key, secret or token is read or written by the diff"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no model prompt or model output is built or read by this diff"
+  },
+  "Mass_Assignment": {
+   "verdict": "met",
+   "quotes": [
+    "DTOs and field allowlists restrict writable properties; they do not replace authorization for the requested object and operation."
+   ],
+   "evidence": "`setAccountLocale` updates the one column `preferred_locale` of the caller's row (`src/modules/admin/actions/locale.ts:22`)"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or configuration is added or changed"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "not applicable",
+   "reason": "accounts are not tenants; the Review 1 tree reads no tenant data"
+  },
+  "Multifactor_Authentication": {
+   "verdict": "not applicable",
+   "reason": "staff sign-in and its factors are unchanged by this diff"
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Use for optimistic redirects and request filtering. Do not make it the only authorization layer."
+   ],
+   "evidence": "the proxy only redirects by language (`src/proxy.ts:100-106`); every admin page keeps `requireStaffPage`, the admin layout keeps `requireViewer` (`src/app/[locale]/admin/layout.tsx:21-24`)"
+  },
+  "Nodejs_Security": {
+   "verdict": "not applicable",
+   "reason": "the cron routes change one stored string each; no module, process or dynamic code is added"
+  },
+  "OAuth2": {
+   "verdict": "not applicable",
+   "reason": "the Google flow, its nonce and redirect are unchanged; only its success path writes the page language for a new account"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "no process is started with any input from requests"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the Review 1 tree builds no object from request keys"
+  },
+  "Query_Parameterization": {
+   "verdict": "not applicable",
+   "reason": "the only query in the diff is the existing Supabase client call by id"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Where possible, render untrusted content as text using JSX expressions."
+   ],
+   "evidence": "`NotificationItem.tsx:292` passes the checked path as a JSX attribute; no HTML is injected"
+  },
+  "REST_Security": {
+   "verdict": "not applicable",
+   "reason": "no route handler is added or changed by the Review 1 tree"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Diff-Based Reviews focus on code changes only."
+   ],
+   "evidence": "`docs/reviews/Task_988_Review_5.md` reviews the Revision 4 diff only (`git diff 0179d9298`), after Review 4 on `git diff 4250862d8`, Review 3 on `git diff 913e9c65d` and Review 2 on `git diff 9dfb730b8`"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "no dependency added (`package.json` unchanged); every claim of the reports rerun in Reviews 2 to 5 (V3), and every break in V8"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "T1-T8 of the kickoff are AC1-AC6; each fails with its control removed: `proxyLocale.test.ts`, `proxyAccountLocale.test.ts`, `locale.security.test.ts`, `adminSlug.test.tsx` (Review 2 V8)"
+  },
+  "Server_Side_Template_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the e-mail templates are out of scope and untouched by the diff"
+  },
+  "Serverless_FaaS_Security": {
+   "verdict": "not applicable",
+   "reason": "no function configuration, runtime or permission changes in this diff"
+  },
+  "Session_Management": {
+   "verdict": "met",
+   "quotes": [
+    "Follow the session logging protections and session renewal guidance."
+   ],
+   "evidence": "the session refresh, its cookies and the banned-account sign-out run as before (`middlewareAccountLocale.test.ts` [AC3] refused account); the 307 carries the refreshed cookies (`proxyLocale.test.ts`, `proxyAccountLocale.test.ts`)"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no SQL text is written; the Supabase client builds the existing lookup"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "the threat modeling process should answer the following four questions"
+   ],
+   "evidence": "the four questions are answered in the kickoff \"## Attack surface\" (T1-T8); each mitigation has its test (`proxyLocale.test.ts`, `proxyAccountLocale.test.ts`, `middlewareAccountLocale.test.ts`, `locale.security.test.ts`, `adminSlug.test.tsx`) and its break (Review 2 V8)"
+  },
+  "Transport_Layer_Security": {
+   "verdict": "not applicable",
+   "reason": "no transport, certificate or HSTS setting is touched by the diff"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "verdict": "met",
+   "quotes": [
+    "A server-side mapping from an approved destination ID remains preferable to accepting arbitrary URLs."
+   ],
+   "evidence": "the 307 target is the request's own URL with one of four codes in front (`src/proxy.ts:100-104`); `//evil.com`, `https://evil.com`, `uk/../x`, `UK` as cookie or account value give no 307 of the rule (`proxyLocale.test.ts`, `proxyAccountLocale.test.ts`)"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "Review 2 reran `npx vitest related --run` (157/158 files), the integration graph (15/16), `node scripts/quality/client-sinks.mjs` (exit 1 on the report's tree, F2; exit 0 after Opus's fix) and broke each acceptance criterion in V8; `task988-preflight.sql` ran read-only (H4)"
+  },
+  "Web_Cache_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Prefer disabling shared caching for personalized responses."
+   ],
+   "evidence": "every 307 of the language rules carries `private, no-store` (`src/proxy.ts:105`); asserted in `proxyLocale.test.ts` and `proxyAccountLocale.test.ts` and broken once (Review 2 V8)"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "met",
+   "quotes": [
+    "The fundamental security rule is to never use innerHTML with untrusted data."
+   ],
+   "evidence": "`NotificationItem.tsx:292` renders the link as an attribute through the helper; no innerHTML in the diff"
+  },
+  "Web_Service_Security": {
+   "verdict": "not applicable",
+   "reason": "no web service or API route changes in the Review 1 tree"
+  },
+  "XS_Leaks": {
+   "verdict": "not applicable",
+   "reason": "the guest cookie is SameSite=Lax, so no cross-site frame or subresource request carries it, and a top-level redirect is not readable by the other site"
+  },
+  "Authorization_Policy_And_Data_Distribution": {
+   "verdict": "not applicable",
+   "reason": "no policy, permission key or role table changes; only the address the existing keys are matched against"
+  },
+  "DOM_Clobbering_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no named element or DOM property lookup is added; links are rendered through React attributes"
+  },
+  "Email_Validation_and_Verification": {
+   "verdict": "not applicable",
+   "reason": "the cron e-mails keep their address and content; only the stored notification link changes"
+  },
+  "File_Upload": {
+   "verdict": "not applicable",
+   "reason": "the two upload routes change one `revalidatePath` argument each (`src/app/api/upload-avatar/route.ts:175`, `src/app/api/upload-popular-location-photo/route.ts:91`); type, size and permission checks are untouched"
+  },
+  "HTML5_Security": {
+   "verdict": "not applicable",
+   "reason": "no storage, messaging or new browser API; `window.open` keeps `noopener,noreferrer` (`src/components/layout/Header.tsx:99`)"
+  },
+  "JSON_Web_Token": {
+   "verdict": "not applicable",
+   "reason": "no token is parsed, issued or verified by the diff; the session handling of `@supabase/ssr` is unchanged"
+  },
+  "Logging": {
+   "verdict": "not applicable",
+   "reason": "no log line is added or removed by the diff"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "no security event is logged or renamed by the diff"
+  },
+  "Secrets_Management": {
+   "verdict": "not applicable",
+   "reason": "no secret, key or token is read, written or moved by the diff"
+  },
+  "Third_Party_Javascript_Management": {
+   "verdict": "not applicable",
+   "reason": "no third-party script is added or changed"
+  },
+  "User_Privacy_Protection": {
+   "verdict": "not applicable",
+   "reason": "the account language is read only for the person it belongs to; nothing new is stored about a guest beyond a session cookie with one of four codes"
+  },
+  "XSS_Filter_Evasion": {
+   "verdict": "not applicable",
+   "reason": "no filter or sanitiser is added or changed; the notification link keeps `notificationHref` of Review 1"
+  }
+ }
+}

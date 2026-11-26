@@ -25,7 +25,7 @@ it.
 | `threat-model.md` | D6 |
 | `security-testing.md` | D10, I9, V8 |
 | `secure-code-review.md` | V7, V12 (finding template, review file) |
-| `quality-gates.md` | reference: what each gate and CI job checks; the test rule (§8) |
+| `quality-gates.md` | reference: what each gate and CI job checks; the test rule (§8); the tests a change reaches (§8.1: D10, I8, V3) |
 | `shared/project-language.md` | A11 |
 | `shared/canonical-component-reuse.md` | U1, U2 |
 | `shared/ui-token-contract.md` | U3, U4 |

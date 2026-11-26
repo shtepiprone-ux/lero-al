@@ -15,7 +15,7 @@ const meta: Meta<typeof AdminShell> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin' } },
+    nextjs: { navigation: { pathname: '/en/admin' } },
   },
   args: {
     siteName: 'Lero.al',

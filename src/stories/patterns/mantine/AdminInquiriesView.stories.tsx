@@ -20,7 +20,7 @@ const meta: Meta<typeof AdminInquiriesView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/inquiries/sales' } },
+    nextjs: { navigation: { pathname: '/en/admin/inquiries/sales' } },
     docs: {
       description: {
         component:

@@ -16,7 +16,7 @@ const meta: Meta<typeof AdminPageFrame> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/currency' } },
+    nextjs: { navigation: { pathname: '/en/admin/currency' } },
     docs: {
       description: {
         component:

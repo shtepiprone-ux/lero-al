@@ -21,7 +21,7 @@ const meta: Meta<typeof AdminSupportView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/support' } },
+    nextjs: { navigation: { pathname: '/en/admin/support' } },
     docs: {
       description: {
         component:

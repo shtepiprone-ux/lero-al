@@ -10,7 +10,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { ADMIN_PAGES, ADMIN_PAGE_KEYS } from '../adminPages'
+import { ADMIN_PAGES, ADMIN_PAGE_KEYS, adminRouteOf } from '../adminPages'
 
 const ROOT = process.cwd()
 const ADMIN_ROOT = join(ROOT, 'src', 'app', '[locale]', 'admin')
@@ -92,5 +92,27 @@ describe('adminPages', () => {
     expect(items.map((i) => i.href).filter((h) => ADMIN_ONLY_ROUTES.includes(h)).sort(), 'the sidebar still has both administrator-only items').toEqual([...ADMIN_ONLY_ROUTES].sort())
     expect(keyed.map((i) => i.href), 'the sidebar items equal the first path of each key, in order').toEqual(ADMIN_PAGES.map((p) => p.paths[0]))
     expect(keyed.map((i) => i.label)).toEqual(ADMIN_PAGES.map((p) => p.labelKey))
+  })
+
+  it('Task 988 R4-1: every admin address a Story mocks carries the language slug, so the sidebar and the header resolve its route', () => {
+    const storyFiles = (dir: string, out: string[] = []): string[] => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const full = join(dir, entry.name)
+        if (entry.isDirectory()) storyFiles(full, out)
+        else if (entry.name.endsWith('.stories.tsx')) out.push(full)
+      }
+      return out.sort()
+    }
+    const found: string[] = []
+    const offenders: string[] = []
+    for (const file of storyFiles(join(ROOT, 'src', 'stories'))) {
+      for (const m of readFileSync(file, 'utf8').matchAll(/pathname: '([^']*)'/g)) {
+        if (!m[1].includes('/admin')) continue
+        found.push(m[1])
+        if (typeof adminRouteOf(m[1]) !== 'string') offenders.push(`${slash(file.slice(ROOT.length + 1))}: pathname '${m[1]}'`)
+      }
+    }
+    expect(found.length, 'the scanner found the admin Story addresses').toBeGreaterThanOrEqual(22)
+    expect(offenders, offenders.join('\n')).toEqual([])
   })
 })

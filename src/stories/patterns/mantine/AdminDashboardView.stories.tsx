@@ -47,7 +47,7 @@ const meta: Meta<typeof AdminDashboardView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin' } },
+    nextjs: { navigation: { pathname: '/en/admin' } },
     docs: {
       description: {
         component:

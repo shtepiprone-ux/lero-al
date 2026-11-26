@@ -22,14 +22,14 @@ export default meta;
 type Story = StoryObj<typeof AdminHeader>;
 
 export const Default: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin/listings' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/listings' } } },
 };
 
 export const UnknownPath: Story = {
-  parameters: { nextjs: { navigation: { pathname: '/admin/does-not-exist' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin/does-not-exist' } } },
 };
 
 export const DrawerOpen: Story = {
   args: { opened: true },
-  parameters: { nextjs: { navigation: { pathname: '/admin' } } },
+  parameters: { nextjs: { navigation: { pathname: '/en/admin' } } },
 };

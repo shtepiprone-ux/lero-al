@@ -28,7 +28,7 @@ const meta: Meta<typeof AdminUsersTableView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/users' } },
+    nextjs: { navigation: { pathname: '/en/admin/users' } },
     docs: {
       description: {
         component:

@@ -18,7 +18,7 @@ const meta: Meta<typeof AdminPagesView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/pages' } },
+    nextjs: { navigation: { pathname: '/en/admin/pages' } },
     docs: {
       description: {
         component:

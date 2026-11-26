@@ -18,7 +18,7 @@ const meta: Meta<typeof AdminUsersTable> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/users', query: { q: 'Marco' } } },
+    nextjs: { navigation: { pathname: '/en/admin/users', query: { q: 'Marco' } } },
     docs: { description: { component: 'The route container of the admin users table. It owns the URL, the search debounce and the verify server action; the markup is `AdminUsersTableView`.' } },
   },
 }

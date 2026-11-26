@@ -26,7 +26,7 @@ const meta: Meta<typeof AdminListingsView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/listings' } },
+    nextjs: { navigation: { pathname: '/en/admin/listings' } },
     docs: {
       description: {
         component:

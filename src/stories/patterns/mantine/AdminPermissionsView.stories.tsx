@@ -73,7 +73,7 @@ const meta: Meta<typeof AdminPermissionsView> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    nextjs: { navigation: { pathname: '/admin/permissions' } },
+    nextjs: { navigation: { pathname: '/en/admin/permissions' } },
     docs: {
       description: {
         component:

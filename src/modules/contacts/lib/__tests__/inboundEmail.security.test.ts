@@ -424,6 +424,11 @@ describe('Task 1047 AC1 attachments are stored in the mail bucket', () => {
   const answer = (o: MailOptions = {}) => mail({ from: 'Visitor <visitor@example.com>', inReplyTo: '<staff-1@eu-west-1.amazonses.com>', ...o })
   const asAnswer = env({ from: 'visitor@example.com' })
   type Stored = { filename: string; size: number; content_type: string; key: string; preview: boolean }
+  /** a high surrogate without its low half, or a low surrogate without its high half (Review 1, F2) */
+  const LONE_SURROGATE = /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/
+  /** every string of a stored row, its attachments included */
+  const strings = (value: unknown): string[] =>
+    typeof value === 'string' ? [value] : value && typeof value === 'object' ? Object.values(value).flatMap(strings) : []
 
   it('[SEC-1047-STORE] a new inquiry gets a uuid id first; each file is put under mail/<that id>/<uuid v4>; the row carries the key and preview', async () => {
     const res = await processInboundEmail(mail({ attachments: [
@@ -491,11 +496,26 @@ describe('Task 1047 AC1 attachments are stored in the mail bucket', () => {
     expect(r2.puts[1].contentDisposition).toBe(`attachment; filename="${'a'.repeat(100)}"; filename*=UTF-8''${'a'.repeat(150)}.txt`)
   })
 
-  it('[SEC-1047-STORE-NAME] a 200-character cut inside a surrogate pair still stores the mail (the lone half becomes U+FFFD in filename*)', async () => {
+  it('[SEC-1047-STORE-NAME] a 200-character cut inside a surrogate pair drops the lone half: the name is 199 characters and the stored row holds no lone surrogate', async () => {
     const disposition = `attachment; filename*=UTF-8''${'n'.repeat(199)}%F0%9F%98%80.txt`
     const res = await processInboundEmail(mail({ attachments: [{ filename: '', type: 'text/plain', content: text('c'), disposition }] }), env())
     expect(res).toEqual({ status: 200, outcome: 'stored' })
-    expect(r2.puts[0].contentDisposition).toBe(`attachment; filename="${'n'.repeat(100)}"; filename*=UTF-8''${'n'.repeat(199)}%EF%BF%BD`)
+    expect((inquiries()[1].attachments as Stored[])[0].filename).toBe('n'.repeat(199))
+    expect(r2.puts[0].contentDisposition).toBe(`attachment; filename="${'n'.repeat(100)}"; filename*=UTF-8''${'n'.repeat(199)}`)
+    expect(strings(inquiries()[1]).filter((s) => LONE_SURROGATE.test(s))).toEqual([])
+  })
+
+  it('[SEC-1047-STORE-NAME] a 200-character subject and sender name and a 20 000-character body cut inside a surrogate pair leave no lone surrogate in the stored row', async () => {
+    const emoji = String.fromCodePoint(0x1f600)
+    const word = (value: string) => `=?UTF-8?B?${Buffer.from(value, 'utf8').toString('base64')}?=`
+    const res = await processInboundEmail(mail({
+      subject: word(`${'s'.repeat(199)}${emoji}`),
+      from: `${word(`${'a'.repeat(199)}${emoji}`)} <ana@example.com>`,
+      text: `${'b'.repeat(19_999)}${emoji}`,
+    }), env())
+    expect(res).toEqual({ status: 200, outcome: 'stored' })
+    expect(inquiries()[1]).toMatchObject({ custom_subject: 's'.repeat(199), name: 'a'.repeat(199), message: 'b'.repeat(19_999) })
+    expect(strings(inquiries()[1]).filter((s) => LONE_SURROGATE.test(s))).toEqual([])
   })
 
   it('[SEC-1047-STORE] an answer\'s files sit under its inquiry and its row carries the keys', async () => {

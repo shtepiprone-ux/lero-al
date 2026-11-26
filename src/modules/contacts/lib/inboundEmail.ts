@@ -75,9 +75,14 @@ function failed(outcome: InboundOutcome, code?: string): InboundResult {
   return { status: 500, outcome }
 }
 
+/** `value` cut to `max` UTF-16 units; a cut inside a surrogate pair drops its high half, so no lone surrogate is stored (Task 1047 Review 1, F2) */
+function cut(value: string, max: number): string {
+  return value.slice(0, max).replace(/[\uD800-\uDBFF]$/, '')
+}
+
 /** text on one line, without NUL (Postgres text refuses it), cut to `max` characters */
 function oneLine(value: string, max: number): string {
-  return value.split(NUL).join('').replace(/[\r\n\u2028\u2029\t]+/g, ' ').trim().slice(0, max)
+  return cut(value.split(NUL).join('').replace(/[\r\n\u2028\u2029\t]+/g, ' ').trim(), max)
 }
 
 /** the first value of each header by its lower-case name, read into a Map: parsed headers are never merged into an object */
@@ -125,7 +130,7 @@ function bodyText(email: Email): string {
     text = sanitizeHtml(email.html, { allowedTags: [], allowedAttributes: {} })
     for (const [entity, character] of XML_ENTITIES) text = text.replace(entity, character)
   }
-  return text.split(NUL).join('').trim().slice(0, MAX_BODY_LENGTH)
+  return cut(text.split(NUL).join('').trim(), MAX_BODY_LENGTH)
 }
 
 const PDF_SIGNATURE = [0x25, 0x50, 0x44, 0x46, 0x2d]   // %PDF-

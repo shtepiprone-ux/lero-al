@@ -236,3 +236,4 @@ for the cut inside a surrogate pair. Starts from the owner's local commit of the
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1047_Review_1.md)
+- [Review 2 — APPROVED](../../docs/reviews/Task_1047_Review_2.md)

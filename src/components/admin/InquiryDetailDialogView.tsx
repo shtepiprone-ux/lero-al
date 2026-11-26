@@ -59,7 +59,7 @@ function AttachmentNames({ attachments, inquiryId, replyId }: { attachments: Inq
         return (
           <Text key={index} size="sm">
             <Anchor size="sm" href={`/api/admin/inquiry-attachment?${query.toString()}`} {...(file.preview ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-              {file.filename}
+              {file.filename || t('attachment_unnamed')}
             </Anchor>
             {size}
           </Text>

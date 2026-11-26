@@ -166,6 +166,15 @@ describe('Task 1047 AC4 stored attachments open from the dialog', () => {
     expect(docx.parentElement?.textContent).toBe('contract.docx (1 KB)')
   })
 
+  it('[SEC-1047-DIALOG-LINK] a stored file without a name is a link named "Unnamed file"', () => {
+    renderView({ ...STORED, attachments: [{ filename: '', size: 18_432, content_type: 'image/png', key: key(0), preview: true }] }, [])
+    expect(t.attachment_unnamed).toBe('Unnamed file')
+    const unnamed = within(screen.getByRole('dialog')).getByRole('link', { name: t.attachment_unnamed })
+    expect(unnamed).toHaveAttribute('href', route(`inquiry=${ID}&n=0`))
+    expect(unnamed).toHaveAttribute('target', '_blank')
+    expect(unnamed).toHaveAttribute('rel', 'noopener noreferrer')
+  })
+
   it('[SEC-1047-DIALOG-LINK] a stored file of a customer\'s answer links with &reply=<id>', () => {
     renderView(STORED, [STAFF, STORED_ANSWER])
     const row = within(screen.getByRole('dialog')).getByText(t.customer_message).closest('.mantine-Paper-root') as HTMLElement

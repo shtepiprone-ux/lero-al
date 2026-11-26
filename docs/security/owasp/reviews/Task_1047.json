@@ -126,9 +126,11 @@
    "evidence": "rows are read through the query builder with checked UUIDs (`route.ts:43`, `:49`); the disposition is an allow-listed ASCII fallback plus a percent-encoded `filename*` (`[SEC-1047-STORE-NAME]`: `\"`, `\\`, CR LF, `/`, Cyrillic)"
   },
   "Input_Validation": {
-   "verdict": "finding",
-   "finding": "F2",
-   "note": "the route query is checked before any read (route.ts:25-33, 13 cases 400); F2: oneLine (inboundEmail.ts:80) and bodyText (:128) cut UTF-16 units and can store half a surrogate pair; owner decision O1047-3 puts the fix into Revision 1"
+   "verdict": "met",
+   "quotes": [
+    "Agree on a character encoding across components and reject malformed input."
+   ],
+   "evidence": "the route query is checked before any read (route.ts:25-33, 13 cases 400); Review 1 F2 fixed in Revision 1 (Review 2): `cut` (inboundEmail.ts:79-81) drops a high surrogate left by the 200 or 20 000 unit cut, used by `oneLine` (:85) and `bodyText` (:133); the two `[SEC-1047-STORE-NAME]` surrogate cases scan every string of the stored row for a lone surrogate and fail with the `.replace` removed (Review 2, exit 1)"
   },
   "Insecure_Direct_Object_Reference_Prevention": {
    "verdict": "met",

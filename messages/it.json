@@ -1180,7 +1180,8 @@
       "reply_history_load_failed": "Impossibile caricare la cronologia delle risposte. Le risposte potrebbero esistere ancora nel database.",
       "customer_message": "Messaggio del cliente",
       "attachments_not_kept": "Allegati (non conservati)",
-      "attachments_title": "Allegati"
+      "attachments_title": "Allegati",
+      "attachment_unnamed": "File senza nome"
     },
     "support": {
       "new_complaint_btn": "Nuovo reclamo",

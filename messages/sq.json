@@ -1180,7 +1180,8 @@
       "reply_history_load_failed": "Historia e përgjigjeve nuk mund të ngarkohet. Përgjigjet mund të ekzistojnë ende në bazën e të dhënave.",
       "customer_message": "Mesazh nga klienti",
       "attachments_not_kept": "Bashkëngjitje (nuk ruhen)",
-      "attachments_title": "Bashkëngjitje"
+      "attachments_title": "Bashkëngjitje",
+      "attachment_unnamed": "Skedar pa emër"
     },
     "support": {
       "new_complaint_btn": "Ankesë e re",

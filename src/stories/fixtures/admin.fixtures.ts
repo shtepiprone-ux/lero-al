@@ -775,7 +775,7 @@ export const FIXTURE_LONG_ATTACHMENT_INQUIRY_REPLIES: ReplyRow[] = [
 
 const FIXTURE_STORED_INQUIRY_ID = '6a2f9c41-3d7e-4b58-9c0a-2e4f6b8d1a37'
 
-/** a PNG and a PDF that open in a new tab (`preview`), and a DOCX that is downloaded */
+/** a PNG and a PDF that open in a new tab (`preview`), a DOCX that is downloaded, and a PNG without a name (Review 1, F1: its link reads "Unnamed file") */
 export const FIXTURE_STORED_ATTACHMENT_INQUIRY: InquiryRow = {
   ...FIXTURE_EMAIL_INQUIRY,
   id: FIXTURE_STORED_INQUIRY_ID,
@@ -783,6 +783,7 @@ export const FIXTURE_STORED_ATTACHMENT_INQUIRY: InquiryRow = {
     { filename: 'fotografia-e-sallonit.png', size: 734_208, content_type: 'image/png', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/1b7e4f20-8c3a-4d91-a6f5-0e2c9b8d7a61`, preview: true },
     { filename: 'kontrata-e-meparshme.pdf', size: 248_320, content_type: 'application/pdf', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/2c8f5a31-9d4b-4ea2-b706-1f3d0c9e8b72`, preview: true },
     { filename: 'kerkesa-per-qira.docx', size: 41_984, content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/3d9a6b42-0e5c-4fb3-8817-2a4e1d0f9c83`, preview: false },
+    { filename: '', size: 18_432, content_type: 'image/png', key: `mail/${FIXTURE_STORED_INQUIRY_ID}/33f886d2-951f-4424-8851-891d8edc3423`, preview: true },
   ],
 }
 

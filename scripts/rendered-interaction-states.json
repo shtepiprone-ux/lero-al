@@ -6636,6 +6636,17 @@
       "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
     },
     {
+      "id": "patterns-mantine-inquirydetaildialogview--stored-attachments",
+      "story": "patterns-mantine-inquirydetaildialogview--stored-attachments",
+      "open": {
+        "kind": "mount"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [],
+      "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
+    },
+    {
       "id": "patterns-mantine-inquirydetaildialogview--with-replies",
       "story": "patterns-mantine-inquirydetaildialogview--with-replies",
       "open": {

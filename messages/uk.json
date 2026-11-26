@@ -1179,7 +1179,9 @@
       "reply_email_failed": "Відповідь збережено, але доставка email не вдалась. Ви можете зв'язатися з користувачем вручну.",
       "reply_history_load_failed": "Історію відповідей не вдалося завантажити. Відповіді можуть існувати в базі даних.",
       "customer_message": "Повідомлення від клієнта",
-      "attachments_not_kept": "Вкладення (не зберігаються)"
+      "attachments_not_kept": "Вкладення (не зберігаються)",
+      "attachments_title": "Вкладення",
+      "attachment_unnamed": "Файл без назви"
     },
     "support": {
       "new_complaint_btn": "Нова скарга",

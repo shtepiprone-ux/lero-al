@@ -1,6 +1,6 @@
 # Task 1046 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_1046_Received_Mail_Travels_Through_Private_R2.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_1046_Received_Mail_Travels_Through_Private_R2.md) · OWASP record: [Task_1046.json](../security/owasp/reviews/Task_1046.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_1046_Received_Mail_Travels_Through_Private_R2.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_1046_Received_Mail_Travels_Through_Private_R2.md) · OWASP record: [Task_1046.json](../security/owasp/reviews/Task_1046.json)
 
 Review 1 of the working tree on 4aa6ace4a — APPROVED WITH NOTES
 Scope: diff-based; the 7 files of the kickoff's Scope (`git diff --stat HEAD`: 561+, 72−): `cloudflare/email-inbound/worker.js` (Email Worker), `src/app/api/email/inbound/route.ts` (public POST, Worker-only by bearer), `src/lib/media/r2.ts` (server-only R2 client), `docs/env.md`, and the three test files.
@@ -54,3 +54,8 @@ Six steps: (1) no existing control weakened: the bearer check, recipient check a
 
 - Owner: commit and push (checklist H), the pull request; then V14 `gh pr checks <n>`.
 - Owner, before the deploy (kickoff Route 0): bucket `lero-inbound-mail` with the `inbound/` 1-day lifecycle rule, a token for that bucket only, `R2_MAIL_*` on Vercel Production, the Worker binding `INBOUND_BUCKET`; Vercel deploys first, then the new `worker.js` is pasted.
+
+## V14 — pull request #79
+
+- `gh pr checks 79` on d90a3bef9: all 23 checks pass, `CI Required` included (run 45764498069); the changed-line coverage of `Unit and component tests` passed with `r2.ts:156` uncovered (N1 closed). `gh pr view 79`: `MERGEABLE`, `CLEAN`; `main` on GitHub 1bf37a166, the branch's base.
+- Live setup (kickoff Route 0), read or done 2026-11-26 by Opus at the owner's request: the bucket, its 1-day `inbound/` rule, the token and the three Vercel names read; the Worker binding `INBOUND_BUCKET` added (plan file).

@@ -3,11 +3,14 @@
  *  - SEC-1044-DIALOG-TEXT: a stored `<b>` in a message or an answer and markup in a file name are shown as their characters, never as elements;
  *  - an `inbound` row is headed by the neutral badge "Message from the customer" and its sender address instead of a staff name; a staff row keeps the staff name;
  *  - the attachment names of the message and of a row are listed as "<name> (<size> KB)" under "Attachments (not kept)"; no list without attachments.
+ * Task 1047 AC4 (SEC-1047-DIALOG-LINK): a stored file (with `key`) is a link to `/api/admin/inquiry-attachment?inquiry=<id>&n=<i>` (`&reply=<id>` in a row), a preview opens in a new tab
+ * with `rel="noopener noreferrer"`, any other stored file has no target; the title reads "Attachments" when every file is stored; a row written before the task keeps its plain lines
+ * and "Attachments (not kept)".
  * Renders the real View on MantineProvider with the project theme and the real `en` messages. Every value is synthetic.
  */
 import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { render, screen, within } from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import { NextIntlClientProvider } from 'next-intl'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
@@ -122,5 +125,80 @@ describe('AC7 the dialog renders received mail as text', () => {
     expect(within(dialog).queryByText(t.attachments_not_kept)).toBeNull()
     expect(within(dialog).queryByText(t.customer_message)).toBeNull()
     expect(within(dialog).getByText('Elira Dervishi')).toBeInTheDocument()
+  })
+})
+
+describe('Task 1047 AC4 stored attachments open from the dialog', () => {
+  const ID = '3f1c2a54-9d0e-4c43-8d7a-0e5b1a6c7d21'
+  const REPLY = '9a1c2a54-9d0e-4c43-8d7a-0e5b1a6c7d99'
+  const key = (n: number) => `mail/${ID}/0f8e4c1a-2b3d-4e5f-9a6b-7c8d9e0f1a2${n}`
+  const STORED: InquiryRow = {
+    ...INQUIRY,
+    id: ID,
+    attachments: [
+      { filename: 'photo.png', size: 2048, content_type: 'image/png', key: key(0), preview: true },
+      { filename: '<b>plan</b>.pdf', size: 4096, content_type: 'application/pdf', key: key(1), preview: true },
+      { filename: 'contract.docx', size: 1024, content_type: 'application/msword', key: key(2), preview: false },
+    ],
+  }
+  const STORED_ANSWER: ReplyRow = { ...INBOUND, id: REPLY, inquiry_id: ID, attachments: [{ filename: 'id-card.jpg', size: 512, content_type: 'image/jpeg', key: key(3), preview: true }] }
+  const route = (query: string) => `/api/admin/inquiry-attachment?${query}`
+
+  it('[SEC-1047-DIALOG-LINK] a stored preview file is a link to the route that opens in a new tab with rel="noopener noreferrer", followed by its size', () => {
+    renderView(STORED, [STAFF, STORED_ANSWER])
+    const dialog = screen.getByRole('dialog')
+    const photo = within(dialog).getByRole('link', { name: 'photo.png' })
+    expect(photo).toHaveAttribute('href', route(`inquiry=${ID}&n=0`))
+    expect(photo).toHaveAttribute('target', '_blank')
+    expect(photo).toHaveAttribute('rel', 'noopener noreferrer')
+    expect(photo.parentElement?.textContent).toBe('photo.png (2 KB)')
+    const pdf = within(dialog).getByRole('link', { name: '<b>plan</b>.pdf' })
+    expect(pdf).toHaveAttribute('href', route(`inquiry=${ID}&n=1`))
+    expect(pdf).toHaveAttribute('target', '_blank')
+    expect(dialog.querySelector('b, img')).toBeNull()
+  })
+
+  it('[SEC-1047-DIALOG-LINK] a stored file that is no preview is a link to the route without a target (it is downloaded)', () => {
+    renderView(STORED, [STAFF, STORED_ANSWER])
+    const docx = within(screen.getByRole('dialog')).getByRole('link', { name: 'contract.docx' })
+    expect(docx).toHaveAttribute('href', route(`inquiry=${ID}&n=2`))
+    expect(docx).not.toHaveAttribute('target')
+    expect(docx.parentElement?.textContent).toBe('contract.docx (1 KB)')
+  })
+
+  it('[SEC-1047-DIALOG-LINK] a stored file without a name is a link named "Unnamed file"', () => {
+    renderView({ ...STORED, attachments: [{ filename: '', size: 18_432, content_type: 'image/png', key: key(0), preview: true }] }, [])
+    expect(t.attachment_unnamed).toBe('Unnamed file')
+    const unnamed = within(screen.getByRole('dialog')).getByRole('link', { name: t.attachment_unnamed })
+    expect(unnamed).toHaveAttribute('href', route(`inquiry=${ID}&n=0`))
+    expect(unnamed).toHaveAttribute('target', '_blank')
+    expect(unnamed).toHaveAttribute('rel', 'noopener noreferrer')
+  })
+
+  it('[SEC-1047-DIALOG-LINK] a stored file of a customer\'s answer links with &reply=<id>', () => {
+    renderView(STORED, [STAFF, STORED_ANSWER])
+    const row = within(screen.getByRole('dialog')).getByText(t.customer_message).closest('.mantine-Paper-root') as HTMLElement
+    const card = within(row).getByRole('link', { name: 'id-card.jpg' })
+    expect(card).toHaveAttribute('href', route(`inquiry=${ID}&n=0&reply=${REPLY}`))
+    expect(card).toHaveAttribute('target', '_blank')
+  })
+
+  it('[SEC-1047-DIALOG-LINK] the title reads "Attachments" when every file is stored', () => {
+    renderView(STORED, [STAFF, STORED_ANSWER])
+    const dialog = screen.getByRole('dialog')
+    expect(t.attachments_title).toBe('Attachments')
+    expect(within(dialog).getAllByText(t.attachments_title)).toHaveLength(2)
+    expect(within(dialog).queryByText(t.attachments_not_kept)).toBeNull()
+  })
+
+  it('a row written before the task keeps its plain lines and "Attachments (not kept)"; a row with one file not stored keeps that title too', () => {
+    renderView(INQUIRY, [STAFF, INBOUND])
+    expect(within(screen.getByRole('dialog')).queryAllByRole('link')).toHaveLength(0)
+    cleanup()
+    renderView({ ...STORED, attachments: [{ filename: 'photo.png', size: 2048, content_type: 'image/png', key: key(0), preview: true }, { filename: 'old.pdf', size: 1024, content_type: 'application/pdf' }] }, [])
+    const dialog = screen.getByRole('dialog')
+    expect(within(dialog).getByText(t.attachments_not_kept)).toBeInTheDocument()
+    expect(within(dialog).getByRole('link', { name: 'photo.png' })).toBeInTheDocument()
+    expect(within(dialog).getByText('old.pdf (1 KB)').closest('a')).toBeNull()
   })
 })

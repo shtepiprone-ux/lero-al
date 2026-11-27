@@ -45,11 +45,12 @@ const row = (locale: string): SiteFooter => ({
 
 const SHARED = { contact_phone: '+355 69 123 4567', contact_email: 'support@lero.al', contact_email_sales: '', footer_show_phone: 'true', footer_show_email_support: 'false' }
 
-function renderManager() {
+/** `sq` replaces fields of the sq row (Revision 2, F7: the lists at the link bound) */
+function renderManager(sq: Partial<SiteFooter> = {}) {
   return render(
     <NextIntlClientProvider locale="en" messages={messages}>
       <MantineProvider theme={theme} env="test">
-        <AdminFooterManager initialData={{ sq: row('sq'), en: row('en'), uk: row('uk'), it: row('it') }} initialShared={SHARED} initialized />
+        <AdminFooterManager initialData={{ sq: { ...row('sq'), ...sq }, en: row('en'), uk: row('uk'), it: row('it') }} initialShared={SHARED} initialized />
       </MantineProvider>
     </NextIntlClientProvider>,
   )
@@ -115,6 +116,50 @@ describe('Task 989 AC5 — the shared block of the Footer page', () => {
     expect(payload.social_links.map((l) => [l.url, l.enabled])).toEqual([['https://www.facebook.com/lero.al', true], ['https://www.instagram.com/lero.al', false]])
     await waitFor(() => expect(mockToastSuccess).toHaveBeenCalled())
     expect(mockUpsert).not.toHaveBeenCalled()
+  })
+
+  // Revision 2, F7: the form carries the bounds of the two actions (`withinFooterBounds`), so a value the save would refuse cannot be typed or added; a language
+  // tab refused with `validation` says the save failed, not the contacts message of the shared block
+  it('the link label, link address and the six text fields of a language tab carry the bounds of the actions as maxLength', () => {
+    renderManager()
+    const maxLength = (inputs: HTMLElement[]) => inputs.map((input) => input.getAttribute('maxlength'))
+    const labels = screen.getAllByLabelText(t.field_label)
+    const urls = screen.getAllByLabelText(t.field_url)
+    expect(labels.length).toBeGreaterThan(0)
+    expect(maxLength(labels).every((v) => v === '200'), String(maxLength(labels))).toBe(true)
+    expect(maxLength(urls).every((v) => v === '2048'), String(maxLength(urls))).toBe(true)
+    const panel = screen.getByRole('tabpanel')
+    const texts = [t.field_brand_title, t.field_tagline, t.field_copyright_template, t.field_social_section_title].map((name) => within(panel).getByLabelText(name))
+    texts.push(...within(panel).getAllByLabelText(t.field_section_title))
+    expect(texts).toHaveLength(6)
+    expect(maxLength(texts)).toEqual(['5000', '5000', '5000', '5000', '5000', '5000'])
+  })
+
+  it('"add link" is disabled in a list of 50 links and enabled in a list of 49', () => {
+    const links = (prefix: string, count: number) => Array.from({ length: count }, (_, i) => ({ id: `${prefix}${i}`, label: `L${i}`, url: `https://x.example/${i}`, enabled: true, order: i }))
+    renderManager({ social_links: links('s', 50), nav_links: links('n', 49), info_links: links('i', 50) })
+    // in document order: the shared social list, then the navigation and information lists of the language tab
+    const add = screen.getAllByRole('button', { name: t.add_link }) as HTMLButtonElement[]
+    expect(add.map((b) => b.disabled)).toEqual([true, false, true])
+    fireEvent.click(add[1])
+    expect((screen.getAllByRole('button', { name: t.add_link }) as HTMLButtonElement[]).map((b) => b.disabled)).toEqual([true, true, true])
+  })
+
+  it('a language-tab save refused with validation shows the save error, not the contacts message', async () => {
+    mockUpsert.mockResolvedValue({ error: 'validation' })
+    renderManager()
+    fireEvent.click(screen.getByRole('button', { name: t.save }))
+    await waitFor(() => expect(mockToastError).toHaveBeenCalled())
+    expect(mockToastError).toHaveBeenCalledWith(t.error_save)
+    expect(mockToastError).not.toHaveBeenCalledWith(t.error_invalid_contact)
+  })
+
+  it('the shared save refused with validation keeps the contacts message', async () => {
+    mockSaveShared.mockResolvedValue({ error: 'validation' })
+    renderManager()
+    fireEvent.click(screen.getByRole('button', { name: t.save_shared }))
+    await waitFor(() => expect(mockToastError).toHaveBeenCalled())
+    expect(mockToastError).toHaveBeenCalledWith(t.error_invalid_contact)
   })
 
   it('a refused save shows the error toast', async () => {

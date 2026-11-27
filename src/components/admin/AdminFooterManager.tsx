@@ -11,7 +11,7 @@ import { toast } from '@/lib/toast'
 import { MantineFormSection } from '@/design-system/mantine/patterns/MantineFormSectionStack'
 import { MantineDeleteIconButton } from '@/design-system/mantine/patterns/MantineDeleteIconButton'
 import { saveFooterShared, upsertFooterContent, type FooterLocalePayload } from '@/modules/admin/actions/footer'
-import { isSwitchOn } from '@/modules/admin/lib/settingKeys'
+import { FOOTER_LINKS_MAX, FOOTER_LINK_LABEL_MAX, FOOTER_LINK_URL_MAX, SETTING_MAX_LENGTH, isSwitchOn } from '@/modules/admin/lib/settingKeys'
 import type { SiteFooter, FooterLink } from '@/types/database'
 import { isValidFooterUrl } from '@/lib/footer-route-allowlist'
 
@@ -102,6 +102,7 @@ function SortableLinkRow({ link, idx, count, wide, disabled, onUpdate, onRemove,
             onChange={e => onUpdate(link.id, 'label', e.target.value)}
             placeholder={t('field_label')}
             aria-label={t('field_label')}
+            maxLength={FOOTER_LINK_LABEL_MAX}
             disabled={disabled}
           />
           <TextInput
@@ -109,6 +110,7 @@ function SortableLinkRow({ link, idx, count, wide, disabled, onUpdate, onRemove,
             onChange={e => onUpdate(link.id, 'url', e.target.value)}
             placeholder={t('url_placeholder')}
             aria-label={t('field_url')}
+            maxLength={FOOTER_LINK_URL_MAX}
             disabled={disabled}
             error={urlInvalid ? t('link_url_invalid_internal') : undefined}
             description={urlInvalid ? t('link_url_internal_help') : undefined}
@@ -199,7 +201,8 @@ function LinkGroupEditor({
         </SortableContext>
       </DndContext>
       <Group>
-        <Button type="button" variant="default" size="sm" leftSection={<Plus size={theme.other.iconSize.compact} />} onClick={addLink} disabled={disabled}>
+        {/* Revision 2, F7: a list holds at most the links the save accepts */}
+        <Button type="button" variant="default" size="sm" leftSection={<Plus size={theme.other.iconSize.compact} />} onClick={addLink} disabled={disabled || links.length >= FOOTER_LINKS_MAX}>
           {t('add_link')}
         </Button>
       </Group>
@@ -286,31 +289,32 @@ function LocaleTab({
       <SimpleGrid cols={{ base: 1, md: 2, xl: 3 }} spacing="lg" verticalSpacing="lg">
         <MantineFormSection title={t('section_brand')}>
           <Stack gap="md">
-            <TextInput label={t('field_brand_title')} value={data.brand_title} onChange={e => onChange('brand_title', e.target.value)} disabled={isPending} />
-            <TextInput label={t('field_tagline')} value={data.tagline} onChange={e => onChange('tagline', e.target.value)} disabled={isPending} />
+            <TextInput label={t('field_brand_title')} value={data.brand_title} onChange={e => onChange('brand_title', e.target.value)} maxLength={SETTING_MAX_LENGTH} disabled={isPending} />
+            <TextInput label={t('field_tagline')} value={data.tagline} onChange={e => onChange('tagline', e.target.value)} maxLength={SETTING_MAX_LENGTH} disabled={isPending} />
             <TextInput
               label={t('field_copyright_template')}
               description={t('copyright_hint', { year: '{year}' })}
               inputWrapperOrder={['label', 'input', 'description', 'error']}
               value={data.copyright_template}
               onChange={e => onChange('copyright_template', e.target.value)}
+              maxLength={SETTING_MAX_LENGTH}
               disabled={isPending}
               placeholder="© {year} Lero.al"
             />
-            <TextInput label={t('field_social_section_title')} value={data.social_section_title} onChange={e => onChange('social_section_title', e.target.value)} disabled={isPending} />
+            <TextInput label={t('field_social_section_title')} value={data.social_section_title} onChange={e => onChange('social_section_title', e.target.value)} maxLength={SETTING_MAX_LENGTH} disabled={isPending} />
           </Stack>
         </MantineFormSection>
 
         <MantineFormSection title={t('field_nav_links')}>
           <Stack gap="md">
-            <TextInput label={t('field_section_title')} value={data.nav_section_title} onChange={e => onChange('nav_section_title', e.target.value)} disabled={isPending} />
+            <TextInput label={t('field_section_title')} value={data.nav_section_title} onChange={e => onChange('nav_section_title', e.target.value)} maxLength={SETTING_MAX_LENGTH} disabled={isPending} />
             <LinkGroupEditor links={data.nav_links} onChange={links => onChange('nav_links', normalizeLinks(links))} disabled={isPending} />
           </Stack>
         </MantineFormSection>
 
         <MantineFormSection title={t('field_info_links')}>
           <Stack gap="md">
-            <TextInput label={t('field_section_title')} value={data.info_section_title} onChange={e => onChange('info_section_title', e.target.value)} disabled={isPending} />
+            <TextInput label={t('field_section_title')} value={data.info_section_title} onChange={e => onChange('info_section_title', e.target.value)} maxLength={SETTING_MAX_LENGTH} disabled={isPending} />
             <LinkGroupEditor links={data.info_links} onChange={links => onChange('info_links', normalizeLinks(links))} disabled={isPending} />
           </Stack>
         </MantineFormSection>
@@ -372,11 +376,12 @@ export function AdminFooterManager({ initialData, initialShared = {}, initialize
     }))
   }
 
-  function showResult(result: { error?: string }) {
+  // Revision 2, F7: `validation` names the contacts only for the shared block; a language tab refused with it (a bound of the row) shows the save error
+  function showResult(result: { error?: string }, validationMessage: 'error_invalid_contact' | 'error_save') {
     if (result.error === 'forbidden') { toast.error(t('error_forbidden')); return }
     if (result.error === 'invalid_url') { toast.error(t('error_invalid_url')); return }
     if (result.error === 'invalid_internal_link') { toast.error(t('error_invalid_internal_link')); return }
-    if (result.error === 'validation') { toast.error(t('error_invalid_contact')); return }
+    if (result.error === 'validation') { toast.error(t(validationMessage)); return }
     if (result.error) { toast.error(t('error_save')); return }
     toast.success(t('save_success'))
   }
@@ -389,7 +394,7 @@ export function AdminFooterManager({ initialData, initialShared = {}, initialize
       return
     }
     startTransition(async () => {
-      showResult(await upsertFooterContent(locale, form))
+      showResult(await upsertFooterContent(locale, form), 'error_save')
     })
   }
 
@@ -401,7 +406,7 @@ export function AdminFooterManager({ initialData, initialShared = {}, initialize
     const settings: Record<string, string> = { ...sharedText }
     for (const key of SHARED_SWITCH_KEYS) settings[key] = sharedSwitches[key] ? 'true' : 'false'
     startTransition(async () => {
-      showResult(await saveFooterShared({ settings, social_links: socialLinks }))
+      showResult(await saveFooterShared({ settings, social_links: socialLinks }), 'error_invalid_contact')
     })
   }
 

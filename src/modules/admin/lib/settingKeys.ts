@@ -30,7 +30,8 @@ export const REMOVED_SETTING_KEYS: readonly string[] = [
   'tagline', 'logo_dark_url', 'social_facebook', 'social_instagram', 'social_linkedin', 'about_al', 'about_uk', 'meta_title', 'meta_desc',
 ]
 
-const SETTING_MAX_LENGTH = 5000
+/** the longest value a setting or a text field of a footer row may hold; the Footer page form uses it as `maxLength` (Revision 2, F7) */
+export const SETTING_MAX_LENGTH = 5000
 const EMAIL_MAX_LENGTH = 254
 /** one address: no space or line break, no `?`, `&`, `,` or `;` (a second address or a header in a `mailto:` link), exactly one `@` — one character class each side */
 const EMAIL = /^[^\s@?&,;]+@[^\s@?&,;]+$/
@@ -67,10 +68,11 @@ export function validSettingValue(key: string, value: unknown): boolean {
   return true
 }
 
-const FOOTER_LINKS_MAX = 50
+// the footer bounds (Revision 1, F4); the Footer page form uses the list, label and address bounds too (Revision 2, F7). A link id is made by the form, not typed.
+export const FOOTER_LINKS_MAX = 50
 const FOOTER_LINK_ID_MAX = 64
-const FOOTER_LINK_LABEL_MAX = 200
-const FOOTER_LINK_URL_MAX = 2048
+export const FOOTER_LINK_LABEL_MAX = 200
+export const FOOTER_LINK_URL_MAX = 2048
 
 /**
  * Task 989 Revision 1 (F4): the bounds of both footer writes, checked before any database call — at most 50 links in each list, a link's `id` at most 64,

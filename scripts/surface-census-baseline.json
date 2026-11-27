@@ -91,6 +91,9 @@
     "src/app/[locale]/(site)/cabinet/page.tsx :: src/modules/listings/components/RecentlyViewedSection.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
+    "src/app/[locale]/(site)/cabinet/statistics/page.tsx :: src/app/[locale]/(site)/cabinet/statistics/page.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/app/[locale]/(site)/ci/click-shield-modal/page.tsx :: src/app/[locale]/(site)/ci/click-shield-modal/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -127,7 +130,7 @@
     "src/app/[locale]/(site)/favorites/page.tsx :: src/app/[locale]/(site)/favorites/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/app/[locale]/layout.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/app/[locale]/(site)/layout.tsx :: src/app/[locale]/(site)/layout.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/(site)/layout.tsx :: src/components/layout/Footer.tsx :: tier1-unenrolled-or-unstoried": {
@@ -297,21 +300,6 @@
     },
     "src/app/[locale]/admin/footer/page.tsx :: src/app/[locale]/admin/footer/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/admin/footer/page.tsx :: src/components/admin/AdminFooterManager.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/admin/footer/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/admin/footer/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/admin/footer/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/admin/footer/page.tsx :: src/components/ui/tabs.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/[locale]/admin/inquiries/page.tsx :: src/app/[locale]/admin/inquiries/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
@@ -490,27 +478,6 @@
     "src/app/[locale]/admin/settings/page.tsx :: src/app/[locale]/admin/settings/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/admin/AdminSettings.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/admin/settings/page.tsx :: src/components/ui/textarea.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/[locale]/admin/support/page.tsx :: src/app/[locale]/admin/support/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -545,6 +512,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/admin/users/page.tsx :: src/app/[locale]/admin/users/page.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/[locale]/layout.tsx :: src/app/[locale]/layout.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/global-error.tsx :: src/app/global-error.tsx :: tier1-unenrolled-or-unstoried": {
@@ -797,12 +767,6 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/notifications/lib/emails/VerifyEmail.tsx :: src/modules/notifications/lib/emails/VerifyEmail.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/(site)/layout.tsx :: src/app/[locale]/(site)/layout.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/(site)/cabinet/statistics/page.tsx :: src/app/[locale]/(site)/cabinet/statistics/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     }
   }

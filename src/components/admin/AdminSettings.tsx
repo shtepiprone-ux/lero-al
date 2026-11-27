@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Badge, Box, Button, Code, Divider, Group, NumberInput, Paper, ScrollArea, Stack, Tabs, Text, TextInput, Textarea, useMantineTheme } from '@mantine/core'
+import { Box, Button, Code, Divider, Group, NumberInput, Paper, ScrollArea, Stack, Tabs, Text, TextInput, Textarea, useMantineTheme } from '@mantine/core'
 import { Check, CheckCircle2, Save, AlertCircle } from 'lucide-react'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { MantineFormSection } from '@/design-system/mantine/patterns/MantineFormSectionStack'
 import { MantineSelect } from '@/design-system/mantine/patterns/MantineSelect'
 import { saveSettings } from '@/modules/admin/actions'
@@ -188,7 +189,7 @@ export function AdminSettings({ initialSettings }: Props) {
                     <Group justify="space-between" wrap="nowrap" gap="sm">
                       <Group gap="sm" wrap="nowrap">
                         <Text fz="sm" fw={500}>{lang.label}</Text>
-                        {defaultLocale === lang.value && <Badge variant="light" size="xs">DEFAULT</Badge>}
+                        {defaultLocale === lang.value && <MantineBadge variant="tone" tone="brand" size="xs">DEFAULT</MantineBadge>}
                       </Group>
                       <Text fz="xs" fw={500} c="green">{t('locale_active')}</Text>
                     </Group>

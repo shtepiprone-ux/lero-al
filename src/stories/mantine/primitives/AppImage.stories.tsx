@@ -131,32 +131,6 @@ export const Default: Story = {
   },
 }
 
-/** a wide logo fixture from `public/` (Storybook serves it at the root) */
-const DEMO_LOGO = '/next.svg'
-
-/**
- * Task 989: `brand-logo` — the saved site logo of the header. The caller sets the height (`theme.other.boxSize.siteLogo`, the wordmark's line height); the image
- * keeps its own width and aspect ratio (`contain`): a Cloudinary logo is fitted into 84px of height (`h_84,c_fit,f_auto,q_auto`), its width kept, and a
- * non-Cloudinary fixture (as `DEMO_LOGO` here) is served as it is. It shows no placeholder (the header draws the wordmark when there is no logo).
- */
-export const BrandLogo: Story = {
-  render: function BrandLogoStory() {
-    const theme = useMantineTheme()
-    return (
-      <MantineStoryShell>
-        <Stack gap="xs">
-          <Text size="xs" c="gray.5" fw={500}>
-            brand-logo — at theme.other.boxSize.siteLogo
-          </Text>
-          <Box h={theme.other.boxSize.siteLogo}>
-            <AppImage src={DEMO_LOGO} alt="Lero.al" variant="brand-logo" priority />
-          </Box>
-        </Stack>
-      </MantineStoryShell>
-    )
-  },
-}
-
 /**
  * Task 886 R25 (owner O83-1, 2026-09-30): the canonical photo placeholder — a grey field with a
  * picture glyph — for every variant that opts in, in both triggering states: no `src` and a `src`

@@ -150,12 +150,44 @@ export const SigningOut: Story = {
 /** a wide logo fixture from `public/` (Storybook serves it at the root): the saved logo keeps its own width at the wordmark's height */
 const DEMO_LOGO = '/next.svg'
 
+/** the props both logo Stories share: the closed shell of `Default`, with the saved logo */
+function logoProps(locale: string) {
+  return {
+    locale,
+    onOpenAuth: () => {},
+    onSwitchLocale: () => {},
+    onNavigate: () => {},
+    onOpenAdmin: () => {},
+    onLogout: () => {},
+    mobileOpen: false,
+    onOpenMobile: () => {},
+    onCloseMobile: () => {},
+    authSheetSlot: null,
+    logoUrl: DEMO_LOGO,
+    siteName: 'Lero.al',
+  }
+}
+
 // Task 989 (GR-3a EXTEND — Mantine/Primitives/HeaderView): the saved logo instead of the wordmark. The site layout hands `logoUrl` only after `isBrandImageUrl`
-// accepted it; the View draws it through `AppImage` (`brand-logo`) at `theme.other.boxSize.siteLogo`, named by the site name. Guest and signed-in, as `Default`.
+// accepted it; the View draws it through `AppImage` (`brand-logo`) at `theme.other.boxSize.siteLogo`, named by the site name. This Story is the guest header;
+// `WithLogoSignedIn` is the signed-in one (Task 989 Revision 3: one state per Story, no caption wrapper).
 export const WithLogo: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const common = logoProps(locale)
+
+    return (
+      <MantineStoryShell>
+        <HeaderView {...common} isAuthenticated={false} user={null} notificationSlot={undefined} />
+      </MantineStoryShell>
+    )
+  },
+}
+
+// Task 989: the saved logo in the signed-in header, with the same user and real bell as `Default`.
+export const WithLogoSignedIn: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
     const rows = notificationRows(locale)
     const realBell = (
       <NotificationBellView
@@ -164,37 +196,11 @@ export const WithLogo: Story = {
         onRead={() => {}}
       />
     )
-    const common = {
-      locale,
-      onOpenAuth: () => {},
-      onSwitchLocale: () => {},
-      onNavigate: () => {},
-      onOpenAdmin: () => {},
-      onLogout: () => {},
-      mobileOpen: false,
-      onOpenMobile: () => {},
-      onCloseMobile: () => {},
-      authSheetSlot: null,
-      logoUrl: DEMO_LOGO,
-      siteName: 'Lero.al',
-    }
+    const common = logoProps(locale)
 
     return (
       <MantineStoryShell>
-        <Stack gap="xl">
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              {t('header_view_caption_guest')}
-            </Text>
-            <HeaderView {...common} isAuthenticated={false} user={null} notificationSlot={undefined} />
-          </Stack>
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              {t('header_view_caption_authed')}
-            </Text>
-            <HeaderView {...common} isAuthenticated user={{ name: 'Alba Krasniqi', avatar_url: null, role: 'user' }} notificationSlot={realBell} />
-          </Stack>
-        </Stack>
+        <HeaderView {...common} isAuthenticated user={{ name: 'Alba Krasniqi', avatar_url: null, role: 'user' }} notificationSlot={realBell} />
       </MantineStoryShell>
     )
   },

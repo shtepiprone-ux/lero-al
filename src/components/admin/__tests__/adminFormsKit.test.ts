@@ -26,6 +26,17 @@ describe('Task 989 AC5 — both forms on Mantine', () => {
   it.each(FORMS)('%s is enrolled in the Mantine migration scope', (path) => {
     expect(MANIFEST).toContain(path)
   })
+
+  // Task 989 Revision 3 (Review 4 F10): a badge is drawn only through the canonical `MantineBadge` (`scripts/check-badge-canonical.mjs`)
+  it('the settings form draws the default-language mark with MantineBadge, not the Mantine Badge', () => {
+    const text = read('src/components/admin/AdminSettings.tsx')
+    const core = text.match(/import\s*\{([^}]*)\}\s*from\s*['"]@mantine\/core['"]/)
+    expect(core).not.toBeNull()
+    expect(core![1].split(',').map((name) => name.trim())).not.toContain('Badge')
+    expect(text).toMatch(/import\s*\{\s*MantineBadge\s*\}\s*from\s*['"]@\/design-system\/mantine\/patterns\/MantineBadge['"]/)
+    expect(text).toMatch(/<MantineBadge variant="tone" tone="brand" size="xs">DEFAULT<\/MantineBadge>/)
+    expect(text).not.toMatch(/<Badge\b/)
+  })
 })
 
 describe('Task 989 AC5 — the settings form holds no key of the Footer page', () => {

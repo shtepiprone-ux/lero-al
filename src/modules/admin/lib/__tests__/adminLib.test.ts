@@ -12,7 +12,7 @@ vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => { if (dbThrows
 vi.mock('next/cache', () => ({ unstable_cache: (fn: unknown) => fn }))
 vi.mock('@/modules/listings/constants', () => ({ ARCHIVED_NOINDEX_DAYS: 90 }))
 
-import { getAllSettings, getArchivedNoindexDays, getDefaultSiteLocale, getSetting } from '../settings'
+import { getAllSettings, getArchivedNoindexDays, getDefaultSiteLocale, getSetting, getSettings } from '../settings'
 import { getLocalizedName, getLocalizedPropertyTypes, getPropertyTypes, PROPERTY_TYPES_CACHE_TAG } from '../propertyTypes'
 
 const setSetting = (key: string, value: string) => { db.tables.site_settings = [...(db.tables.site_settings ?? []).filter((r) => r.key !== key), { key, value }] }
@@ -31,6 +31,34 @@ describe('getSetting', () => {
   it('asks for exactly the key it was given', async () => {
     await getSetting('og_image', 'x')
     expect(db.log[0].filters).toEqual([['key', 'eq', 'og_image']])
+  })
+})
+
+// Task 989 Revision 3 (Review 4 F12): the layouts and the footer read several keys per request through `getSettings`.
+describe('getSettings', () => {
+  it('an empty key list is an empty map and creates no client', async () => {
+    dbThrows = true // creating a client would throw
+    expect(await getSettings([])).toEqual({})
+    expect(db.log).toHaveLength(0)
+  })
+
+  it('maps the rows to key and value, and asks for exactly the keys given', async () => {
+    setSetting('logo_url', 'https://res.cloudinary.com/x/logo.png')
+    setSetting('favicon_url', 'https://res.cloudinary.com/x/icon.png')
+    expect(await getSettings(['logo_url', 'favicon_url', 'missing'])).toEqual({
+      logo_url: 'https://res.cloudinary.com/x/logo.png',
+      favicon_url: 'https://res.cloudinary.com/x/icon.png',
+    })
+    expect(db.log).toHaveLength(1)
+    expect(db.log[0].table).toBe('site_settings')
+    expect(db.log[0].filters).toEqual([['key', 'in', ['logo_url', 'favicon_url', 'missing']]])
+  })
+
+  it('a read error throws', async () => {
+    const failing = { data: null, error: { message: 'down' } }
+    const chain = { select: () => chain, in: () => Promise.resolve(failing) }
+    ;(db as { client: unknown }).client = { from: () => chain }
+    await expect(getSettings(['logo_url'])).rejects.toThrow('site_settings read failed')
   })
 })
 

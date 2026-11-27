@@ -20,11 +20,12 @@ footer tab and no field that repeats the Footer page; no setting the admin saves
 
 ## Cause
 
-Read at `213103f0a`
+Read at `8896ef0d7`
 - Two editors for the footer: the settings Footer tab saves social links and two "footer text" fields (`src/components/admin/AdminSettings.tsx:19`), and the General tab a tagline, an e-mail and a phone (`:17`); the Footer page saves per language a brand title, a tagline and social links (`src/components/admin/AdminFooterManager.tsx:170-175`, `:207-218`). The site reads only the Footer page's tagline and social links (`src/components/layout/Footer.tsx:25`, `:38`) and none of the settings fields (`grep -rln "contact_phone\|social_facebook\|about_al" src --include=*.tsx --include=*.ts` → the settings page, the form, the action file, tests, one Story fixture).
-- Production, read 2026-11-19: the `sq` footer row links to the account's Facebook profile and to `https://instagram.com`; the `en`, `uk` and `it` rows link to `https://facebook.com` and `https://instagram.com`; the settings hold the account's Facebook and Instagram addresses; `about_al` and `about_uk` hold the support and sales addresses (no sales field exists); the General tagline equals the `sq` footer text; `contact_phone` is empty.
-- The Footer page's brand title is never read: the footer brand is `site_name` (`src/components/layout/Footer.tsx:15`, `:20-22`). `contact_email` and `contact_phone` take any text (`src/modules/admin/actions/index.ts:294-300`).
-- The header draws a fixed wordmark (`src/components/layout/HeaderView.tsx:112-117`); the favicon is the fixed `src/app/favicon.ico`; title and description are fixed in `src/app/[locale]/layout.tsx:17-18` while `meta_title` and `meta_desc` are saved and unread; the theme is light only (`src/design-system/mantine/MantineRootProvider.tsx:20-22`).
+- Production, read-only 2026-11-27: all four footer rows link to the account's Facebook and Instagram pages (`www.facebook.com/…`, `www.instagram.com/…`, both on); the settings hold the same two addresses, `social_linkedin` is empty; `about_al` and `about_uk` hold the support and sales addresses (no sales field exists); the General tagline equals the `sq` footer text; `contact_phone` is empty; `logo_url`, `logo_dark_url` and `favicon_url` hold `res.cloudinary.com` addresses that nothing renders.
+- The Footer page's brand title is never read: the footer brand is `site_name` (`src/components/layout/Footer.tsx:15`, `:20-22`). `contact_email` and `contact_phone` take any text (`validSettingValue`, `src/modules/admin/actions/index.ts:291-297`).
+- The header draws a fixed wordmark (`src/components/layout/HeaderView.tsx:112-117`); the favicon is the fixed `src/app/favicon.ico`; title and description are fixed in `src/app/[locale]/(site)/layout.tsx:14-17` (Task 988 moved the site frame there; the admin's title is `src/app/[locale]/admin/layout.tsx:10`) while `meta_title` and `meta_desc` are saved and unread; the theme is light only (`src/design-system/mantine/MantineRootProvider.tsx:20-22`).
+- The image check the site has does not mean "the account's Cloudinary" any more: `isTrustedImageUrl` (`src/lib/uploads/imageUrl.ts:49-60`) also accepts a listing photo on the media host `media.lero.al` (`:51`, Task 1038).
 - Both forms are built from the legacy `@/components/ui` kit (`src/components/admin/AdminSettings.tsx:6-8`, `src/components/admin/AdminFooterManager.tsx:7-10`).
 
 Fix: one Footer page with a shared block (contacts, social links, switches) and language tabs; the footer reads only it; the settings lose the footer fields and apply logo, favicon, title and description; validators per key; both forms on Mantine; a test fails for any saved key nothing reads.
@@ -35,9 +36,9 @@ Fix: one Footer page with a shared block (contacts, social links, switches) and 
 - Footer page (`/admin/footer`; `AdminFooterManager.tsx` on Mantine, no `@/components/ui`): a shared block above the language tabs — phone, support e-mail (`contact_email`, its value kept), sales e-mail (`contact_email_sales`, new), each with a `Switch` (`footer_show_phone`, `footer_show_email_support`, `footer_show_email_sales`; absent = on); the social links as one list for all languages, each link with its switch (the existing `enabled`), first shown from the `sq` row; a `Switch` `footer_show_text`. Language tabs: brand title, footer text, section titles, navigation and information links, copyright.
 - `src/modules/admin/actions/footer.ts`: `saveFooterShared` (new): the same admin check as `upsertFooterContent`, before any read; the validators; writes the contact keys and switches to `site_settings` and the social list to all four `site_footer` rows; revalidates the layout. `upsertFooterContent` no longer takes social links.
 - The footer (`Footer.tsx` → `FooterView.tsx`): the brand title of the page's language (`site_name` when empty); the footer text when filled and on; a contacts column (phone as `tel:`, e-mails as `mailto:`, encoded) and the social links, each only when filled and on.
-- Both forms leave legacy whole (owner rule 2026-11-19, `.claude/rules/shared/canonical-component-reuse.md`): `AdminInput` gives way to `TextInput` and the shared `Combobox` to `MantineSelect`; `AdminFooterManager.tsx` and `AdminSettings.tsx` join `scripts/mantine-migration-scope.json` with their Stories. If this task changes `src/app/admin/footer/page.tsx` or `src/app/admin/settings/page.tsx`, its legacy wrapper becomes `AdminPageFrame` here and the page joins `src/app/admin/__tests__/adminPageFrame.test.ts`; otherwise Task 1007 does it.
-- Settings (`AdminSettings.tsx` on Mantine): the Footer tab leaves; the General tab keeps `site_name` (its tagline, e-mail and phone are on the Footer page); SEO: `meta_title_<locale>` and `meta_desc_<locale>` for the four languages become the site's default title and description (`generateMetadata` of `src/app/[locale]/layout.tsx`; empty → today's text). `tagline`, `logo_dark_url`, `social_facebook`, `social_instagram`, `social_linkedin`, `about_al`, `about_uk`, `meta_title`, `meta_desc` leave the key lists; `saveSettings` refuses them; their rows stay unread (no SQL).
-- Logo and favicon: `getSettings(keys)` in `src/modules/admin/lib/settings.ts` (one query); `src/app/[locale]/layout.tsx` passes `logoUrl` to `Header` and `icons` to the metadata only when `isTrustedImageUrl` (`src/lib/uploads/imageUrl.ts:11`) accepts them, else the wordmark and `src/app/favicon.ico`; `src/app/admin/layout.tsx` the same favicon; `HeaderView` `logoUrl` → `AppImage variant="brand-logo"` (EXTEND `src/design-system/media/appImageConfig.ts`, `AppImage.module.css`; height token `theme.other.boxSize.siteLogo` = the wordmark line height, `src/design-system/mantine/theme.ts:832`; natural width, `contain`), `alt` the site name.
+- Both forms leave legacy whole (owner rule 2026-11-19, `.claude/rules/shared/canonical-component-reuse.md`): `AdminInput` gives way to `TextInput` and the shared `Combobox` to `MantineSelect`; `AdminFooterManager.tsx` and `AdminSettings.tsx` join `scripts/mantine-migration-scope.json` with their Stories. Both pages already render inside `AdminPageFrame` (`src/app/[locale]/admin/footer/page.tsx:25`, `src/app/[locale]/admin/settings/page.tsx:67`) and stay so.
+- Settings (`AdminSettings.tsx` on Mantine): the Footer tab leaves; the General tab keeps `site_name` (its tagline, e-mail and phone are on the Footer page); SEO: `meta_title_<locale>` and `meta_desc_<locale>` for the four languages become the site's default title and description (`src/app/[locale]/(site)/layout.tsx`: its `metadata` becomes `generateMetadata`; empty → today's text). `tagline`, `logo_dark_url`, `social_facebook`, `social_instagram`, `social_linkedin`, `about_al`, `about_uk`, `meta_title`, `meta_desc` leave the key lists; `saveSettings` refuses them; their rows stay unread (no SQL).
+- Logo and favicon: `getSettings(keys)` in `src/modules/admin/lib/settings.ts` (one query); `isBrandImageUrl` (new, `src/lib/uploads/imageUrl.ts`): the Cloudinary branch of `isTrustedImageUrl` alone (https, `res.cloudinary.com`, the project's cloud; the media host refused), which `isTrustedImageUrl` then calls, its answers unchanged; `src/app/[locale]/(site)/layout.tsx` passes `logoUrl` to `<Header />` (`:28`, a client component that hands it to `HeaderView`) and `icons` to the metadata only when `isBrandImageUrl` accepts them, else the wordmark and `src/app/favicon.ico`; `src/app/[locale]/admin/layout.tsx` the same favicon; `HeaderView` `logoUrl` → `AppImage variant="brand-logo"` (EXTEND `src/design-system/media/appImageConfig.ts`, `AppImage.module.css`; height token `theme.other.boxSize.siteLogo` = the wordmark line height `lineHeight.siteWordmark`, `src/design-system/mantine/theme.ts:825`; natural width, `contain`), `alt` the site name.
 - `logo_dark_url` leaves the Brand tab (O989-2: the site has no dark surface).
 - `src/modules/admin/actions/__tests__/settingsReach.test.ts` (new): every key of both lists has a reader outside the admin pages, the forms, the action files and tests.
 - Stories: `HeaderView` `WithLogo`, `AppImage` `BrandLogo`, `FooterView` `ContactsAndSocial` (all on; some off; empty values). Dependencies: none. Task 990 changes the same editor's refused-link message (`footer.ts`, its toast): whichever merges second keeps the other's change and its test.
@@ -49,7 +50,7 @@ Changed: staff-saved values are output on every public page; a new admin action.
    Footer page actions with the admin check), read with the service role, rendered to every visitor as an image `src`, an
    icon link, `tel:`, `mailto:`, outside links and text.
 2. **What can go wrong?**
-   - T1 I/T: a logo or favicon on another host tracks visitors or swaps the brand → mitigate: rendered only when `isTrustedImageUrl` accepts it → AC2, `SEC-989-BRAND-URL-DENY`.
+   - T1 I/T: a logo or favicon on another host tracks visitors or swaps the brand → mitigate: rendered only when `isBrandImageUrl` accepts it → AC2, `SEC-989-BRAND-URL-DENY`.
    - T2 T: an e-mail with `?cc=` or a line break, a phone with a scheme, a social link `javascript:` → mitigate: refused on save and checked again before output → AC3, AC4, `SEC-989-FOOTER-LINK-DENY`.
    - T3 E: anyone calls `saveFooterShared` → mitigate: the admin check before any read or write → AC4, `SEC-989-FOOTER-SAVE-DENY`.
    - T4 D: a failed read breaks every page → mitigate: the wordmark, the fixed favicon, a footer without the failed elements → AC2, AC3.
@@ -58,7 +59,7 @@ Changed: staff-saved values are output on every public page; a new admin action.
 
 ## OWASP
 
-Required by `node scripts/quality/owasp.mjs plan` (2026-11-19, revised with O989-1 and O989-3).
+Required by `node scripts/quality/owasp.mjs plan` (2026-11-19, revised with O989-1 and O989-3; rerun 2026-11-27 on `8896ef0d7`).
 
 - Abuse_Case: "it is important to identify the attacks which the application must defend against" — a forged call of the new footer action and hostile stored values are the abuse cases of the threat model — AC3, AC4.
 - AI_Agent_Security: not applicable — the task cites a project rule file; no agent, tool or agent permission changes.
@@ -76,6 +77,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19, revised with O989
 - Denial_of_Service: "Using validation that is cheap in resources first" — one read of the named keys per request; a failed read drops the elements without retry — AC2, AC3.
 - File_Upload: not applicable — nothing is uploaded; the owner pastes the address of a file already in Cloudinary.
 - GraphQL: not applicable — the project has no GraphQL endpoint; "migration" names the Mantine UI migration.
+- HTTP_Strict_Transport_Security: not applicable — no response header changes; the site's HSTS header (`src/lib/security/headers.ts`) stays as on `main`.
 - Identity_Propagation_Patterns: not applicable — the service-role read of public settings carries no identity, as today.
 - Injection_Prevention: not applicable — the migration manifest is a JSON list of paths; no interpreter receives input.
 - Input_Validation: "Reject invalid requests with a clear error; do not continue with partially validated data." — one invalid value refuses the whole save, nothing written — AC4.
@@ -95,6 +97,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19, revised with O989
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC2-AC4.
 - SQL_Injection_Prevention: not applicable — "migration" names the Mantine UI migration; no SQL is written or built.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — answered in "## Attack surface" — AC2, AC3, AC4.
+- Transport_Layer_Security: "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS" — the logo and the favicon load only over https: `isBrandImageUrl` refuses `http://res.cloudinary.com/…` — AC2.
 - User_Privacy_Protection: "Preventing leakage of user IP addresses is of great significance when user protection is in scope." — every visitor's browser fetches the logo, so only the account's own Cloudinary is allowed — AC2.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results, the deliberate breaks included — AC7.
 - Web_Cache_Security: not applicable — the layout revalidation refreshes public content only; no per-user data enters a cached page.
@@ -124,7 +127,7 @@ design — owner decision 2026-10-20 (`HeaderView`, `FooterView`, `Mantine/Primi
 ## Acceptance criteria
 
 - AC1 Every saved setting reaches the site — test: `src/modules/admin/actions/__tests__/settingsReach.test.ts` (new): fails for a key of either list that no file outside the admin pages, the forms and the action files reads.
-- AC2 Logo and favicon follow the setting, only from the account's Cloudinary — test: `src/components/layout/__tests__/HeaderView.logo.test.tsx` (new) and `src/app/[locale]/__tests__/layoutBrand.test.ts` (new: also the title and description of each language, today's text when empty); `SEC-989-BRAND-URL-DENY`: `http://res.cloudinary.com/…`, another cloud, `https://evil.com/x.png`, `javascript:…` and a failed read → no logo, no `icons`.
+- AC2 Logo and favicon follow the setting, only from the account's Cloudinary — test: `src/components/layout/__tests__/HeaderView.logo.test.tsx` (new) and `src/app/[locale]/__tests__/layoutBrand.test.ts` (new: also the title and description of each language, today's text when empty); `SEC-989-BRAND-URL-DENY`: `http://res.cloudinary.com/…`, another cloud, a listing photo `https://media.lero.al/<owner>/listings/<uuid>/full.webp`, `https://evil.com/x.png`, `javascript:…` and a failed read → no logo, no `icons`; `src/lib/uploads/__tests__/imageUrl.security.test.ts` passes unchanged (every answer of `isTrustedImageUrl` kept).
 - AC3 The footer follows the Footer page — test: `src/components/layout/__tests__/Footer.settings.test.tsx` (new): brand title, text, each contact and each social link shown when filled and on, hidden when off or empty; `SEC-989-FOOTER-LINK-DENY`: a stored `javascript:` social link, an e-mail with `?cc=` and a phone with letters are not rendered as links.
 - AC4 The writes refuse bad values, removed keys and non-admins — test: `src/__tests__/security/staffActions.test.ts` (extended): `saveSettings` refuses each removed key; `saveFooterShared` refuses each invalid e-mail, phone, switch and link, and `SEC-989-FOOTER-SAVE-DENY`; a valid admin save writes the social list to all four rows.
 - AC5 One editor for the footer, on Mantine — test: `src/components/admin/__tests__/AdminFooterManager.shared.test.tsx` (new: the shared block with its switches above the language tabs; saving sends its fields) and `src/components/admin/__tests__/adminFormsKit.test.ts` (new: neither form imports `@/components/ui` or renders `AdminInput` or `Combobox`; the settings form offers no key of the Footer page), and `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with both forms enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them.
@@ -137,6 +140,28 @@ design — owner decision 2026-10-20 (`HeaderView`, `FooterView`, `Mantine/Primi
 2. Tests first (AC1-AC5); save each failing output.
 3. Key lists and validators, the Footer page and its action, the footer render, the settings form, logo, favicon, title and description, Stories. One pass over every changed file (checklist I7).
 4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break of each `SEC-989` check, restored.
-5. Report: each command, exit code, relevant output. After the merge the owner fills on the Footer page the Instagram address, the sales e-mail and the phone, and in the settings the logo, favicon, titles and descriptions; Opus checks the header, the tab icon and the footer in four languages on production.
+5. Report: each command, exit code, relevant output. After the merge the owner fills on the Footer page the sales e-mail and the phone, and in the settings the titles and descriptions of the four languages (the logo and the favicon are already saved, read 2026-11-27); Opus checks the header, the tab icon and the footer in four languages on production.
+
+## Revision 1 (Review 1, 2026-11-27)
+
+The items are written in full in [Task_989_Review_1.md](../../docs/reviews/Task_989_Review_1.md), "Revision 1"; items 1 and 2 reach files the Scope did not name: allowed by the owner on 2026-11-27 (translated): "I allow". The owner's instructions of 2026-11-27 recorded in the executor's report §3 (SEO language tabs, the Footer page layout, the translations of "Footer", link reordering with `@dnd-kit`) are owner decisions (owner, 2026-11-27, translated: "these were my instructions").
+
+- F1: the six existing tests (`siteLayout.test.tsx`, `pages-and-footer-validation.smoke.test.ts`, `FooterView.security.test.tsx`, `headerFooterContainers.test.tsx`, `userAdministration.security.test.ts`, `adminOrphans.test.ts`) follow the kickoff; each security assertion moves to `saveFooterShared` or to a key the settings form still holds; none is removed.
+- F2: one tab icon: `src/app/favicon.ico` → `public/favicon.ico`; both layouts set `icons` to the accepted saved favicon or `/favicon.ico`; `layoutBrand.test.ts` asserts exactly one.
+- F3: the link row's handle, up, down and delete take `theme.other.touchTarget` below 640px and at least 32px from 640px; a test checks the props.
+- F4: both footer actions: at most 50 links per list, `id` ≤ 64, `label` ≤ 200, `url` ≤ 2048, each text field ≤ 5000 characters; over a bound → `validation`, nothing written; tests at and over each bound.
+- F5: the report quotes each command's summary lines and exit code as printed.
+- F6: `AppImage.stories.tsx:139` states the `h_84,c_fit` fit of a Cloudinary logo.
+
+## Revision 2 (Review 2, 2026-11-27)
+
+The items are written in full in [Task_989_Review_2.md](../../docs/reviews/Task_989_Review_2.md), "Revision 2"; F1-F6 are fixed.
+
+- F7: the Footer page form carries the bounds of the actions from `settingKeys.ts` (`maxLength` on the link label, the link address and the six text fields; "add link" disabled at 50 links); a language-tab save refused with `validation` shows `error_save`, the shared save keeps the contacts message; tests in `AdminFooterManager.shared.test.tsx`.
+- The report quotes each command's summary lines and exit code and names the shell.
 
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_989_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_989_Review_2.md)
+- [Review 3 — APPROVED](../../docs/reviews/Task_989_Review_3.md)

@@ -1,0 +1,294 @@
+{
+ "task": "989",
+ "sheets": {
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "the diff changes no agent, tool, hook or agent permission; the rule files in the tree are the owner's requested edits, outside the task"
+  },
+  "Abuse_Case": {
+   "verdict": "met",
+   "quotes": [
+    "it is important to identify the attacks which the application must defend against"
+   ],
+   "evidence": "the forged call of `saveFooterShared` and hostile stored values are tested: `src/__tests__/security/staffActions.test.ts` (17 refused payloads, `[SEC-989-FOOTER-SAVE-DENY]`) and `src/components/layout/__tests__/Footer.settings.test.tsx` (`SEC-989-FOOTER-LINK-DENY`); both fail without the change (Review 1 V8)"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": [
+    "developers should understand and monitor the Attack Surface as they design and build and change a system"
+   ],
+   "evidence": "the new action `src/modules/admin/actions/footer.ts:138` and every value output to visitors (`src/app/[locale]/(site)/layout.tsx:30-45`, `src/components/layout/FooterView.tsx:12-16`) match the kickoff's \"## Attack surface\" (Review 1 V7)"
+  },
+  "Authorization": {
+   "verdict": "met",
+   "quotes": [
+    "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+   ],
+   "evidence": "`src/modules/admin/actions/footer.ts:142` checks the admin before any read; `saveSettings` keeps `assertPermission('settings.manage')`; `staffActions.test.ts` → 238 passed, 38 failed with `footer.ts` and `actions/index.ts` of main (Review 1 V8)"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "met",
+   "quotes": [
+    "Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."
+   ],
+   "evidence": "`assertAdminUser` answers null on any failed lookup (`footer.ts:18-22`); `[SEC-989-FOOTER-SAVE-DENY]` asserts no read or write for anonymous, user, agent and moderator in `src/__tests__/security/staffActions.test.ts`"
+  },
+  "Authorization_Patterns": {
+   "verdict": "met",
+   "quotes": [
+    "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+   ],
+   "evidence": "the check is the first statement of the action (`src/modules/admin/actions/footer.ts:142-143`), not in the page"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "met",
+   "quotes": [
+    "Automated tests should specifically target the ways authorization usually degrades over time."
+   ],
+   "evidence": "`saveFooterShared` joined the staff-action table of `src/__tests__/security/staffActions.test.ts`, which fails for any staff action that reaches the database without the role"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "met",
+   "quotes": [
+    "Integration test cases validate the correct implementation of the authorization matrix."
+   ],
+   "evidence": "the matrix row of the kickoff runs in `src/__tests__/security/staffActions.test.ts` (anonymous, user, agent, moderator refused; admin saves to `site_settings` and the four `site_footer` rows)"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "verdict": "not applicable",
+   "reason": "both writes are staff-only actions; no anonymous form or endpoint is added"
+  },
+  "Content_Security_Policy": {
+   "verdict": "not applicable",
+   "reason": "triggered by the CSS module paths; no header, script source or CSP directive changes in the diff"
+  },
+  "Credential_Stuffing_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no sign-in, sign-up or credential path is touched by the diff"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+   ],
+   "evidence": "values validated on save (`src/modules/admin/lib/settingKeys.ts:62-77`) and again before output (`telHref`, `mailtoHref` at `settingKeys.ts:80-93`, `isBrandImageUrl` in the layouts), rendered by React as text or attributes; `Footer.settings.test.tsx` passes, 6 failed without the change"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "met",
+   "quotes": [
+    "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+   ],
+   "evidence": "the stored values reach only `src`, `href` and text (`src/components/layout/HeaderView.tsx:121-123`, `src/components/layout/FooterView.tsx:12-16`); no `dangerouslySetInnerHTML` in the diff"
+  },
+  "Database_Security": {
+   "verdict": "not applicable",
+   "reason": "no schema, grant, policy or SQL file changes; `db-catalog-audit.mjs` reported no finding"
+  },
+  "Denial_of_Service": {
+   "verdict": "met",
+   "quotes": [
+    "To make it harder for resource-consuming DoS attacks to succeed."
+   ],
+   "evidence": "Revision 1 (F4): `withinFooterBounds` (`src/modules/admin/lib/settingKeys.ts:80`) caps each list at 50 links and every field before any write, in `saveFooterShared` (`src/modules/admin/actions/footer.ts:151`) and `upsertFooterContent` (`:197`); 18 at/over-bound cases in `src/__tests__/security/staffActions.test.ts` fail without it (Review 2 V8)"
+  },
+  "Dependency_Graph_SBOM": {
+   "verdict": "not applicable",
+   "reason": "no SBOM document is produced or ingested by this change; CI's own job covers the graph"
+  },
+  "File_Upload": {
+   "verdict": "not applicable",
+   "reason": "nothing is uploaded; the admin pastes the address of a file already in Cloudinary"
+  },
+  "GraphQL": {
+   "verdict": "not applicable",
+   "reason": "the project has no GraphQL endpoint and the diff adds none"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "verdict": "not applicable",
+   "reason": "no response header changes; `src/lib/security/headers.ts` is untouched"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "not applicable",
+   "reason": "the service-role read of public settings carries no identity, as on main"
+  },
+  "Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "all writes go through the Supabase client with fixed keys; no interpreter receives input"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": [
+    "Apply schemas to nested objects and use [item schemas and array length limits](https://json-schema.org/understanding-json-schema/reference/array)."
+   ],
+   "evidence": "values are allow-listed per key (`validSettingValue`, `validFooterSettingValue`) and, since Revision 1, link counts and field lengths of both footer actions are bounded by `withinFooterBounds` (`src/modules/admin/lib/settingKeys.ts:80`, called at `src/modules/admin/actions/footer.ts:151` and `:197`); tests in `src/__tests__/security/staffActions.test.ts`"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the action writes the fixed four language rows; no row is chosen by a client identifier"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+   ],
+   "evidence": "`EMAIL` and `PHONE` are single character classes (`src/modules/admin/lib/settingKeys.ts:36-38`), the e-mail length checked first (`:42`)"
+  },
+  "Key_Management": {
+   "verdict": "not applicable",
+   "reason": "triggered by words of the documents in the tree; no key, secret or signature is used by the change"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no language model reads or writes any data of this change"
+  },
+  "Logging": {
+   "verdict": "met",
+   "quotes": [
+    "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+   ],
+   "evidence": "the two new `console.error` lines of `src/modules/admin/actions/footer.ts:167,177` log the Supabase error object only, as the existing branches; no setting value or user data"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "no security event type is added; the new log lines are server failure messages"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "no MCP server, tool or agent permission is added or changed"
+  },
+  "Mass_Assignment": {
+   "verdict": "met",
+   "quotes": [
+    "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable."
+   ],
+   "evidence": "`validSettingValue` and `validFooterSettingValue` allow-list keys (`settingKeys.ts:62`, `:72`); `socialLinkFrom` copies five named fields (`footer.ts:126-132`), tested with extra keys and `__proto__` in `staffActions.test.ts`"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "not applicable",
+   "reason": "site settings and footer rows are global; no tenant data path changes"
+  },
+  "NPM_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."
+   ],
+   "evidence": "`npm view @dnd-kit/core@6.3.1` (2024-12-05), `@dnd-kit/sortable@10.0.0` (2024-12-04), `@dnd-kit/utilities@3.2.2` (2023-11-06), `@dnd-kit/accessibility@3.1.1` (2024-11-23): no preinstall, install, postinstall or prepare script; exact versions in `package.json`; four lockfile entries from registry.npmjs.org with integrity"
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Treat each reachable action as a client-callable POST entry point."
+   ],
+   "evidence": "`saveFooterShared` is called directly without a session and with forged payloads in `src/__tests__/security/staffActions.test.ts`; the key lists left the `'use server'` file for `src/modules/admin/lib/settingKeys.ts`"
+  },
+  "OAuth2": {
+   "verdict": "not applicable",
+   "reason": "triggered by the word redirect in the documents; no OAuth flow or redirect changes"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "the change starts no operating system process"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the actions read named fields; no object is merged from client keys"
+  },
+  "Query_Parameterization": {
+   "verdict": "not applicable",
+   "reason": "queries use the Supabase client with fixed columns; no query text is built"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": [
+    "Where possible, render untrusted content as text using JSX expressions."
+   ],
+   "evidence": "contacts, brand title and footer text are JSX text (`src/components/layout/FooterView.tsx:15,89-92`); `Footer.settings.test.tsx` passes"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no SQL is written or built by the change"
+  },
+  "Secrets_Management": {
+   "verdict": "not applicable",
+   "reason": "triggered by words of the documents in the tree; no secret is read, stored or output by the change"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": [
+    "Diff-Based Reviews focus on code changes only."
+   ],
+   "evidence": "Review 1 (`docs/reviews/Task_989_Review_1.md`) reviewed the diff against main with V1-V14"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "the executor's report was rerun claim by claim (Review 1 V3: `npx vitest related --run`, `npm run typecheck`, ESLint); the counts that did not reproduce are F5"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": [
+    "Threat Modeling - which results in security related stories being added during"
+   ],
+   "evidence": "each mitigation of the kickoff's threat model is an acceptance criterion with a test that fails without it (Review 1 V8: `npm test -- src/__tests__/security/staffActions.test.ts` with main's actions → 38 failed; AC2 28 and 1, AC3 6)"
+  },
+  "Software_Supply_Chain_Security": {
+   "verdict": "met",
+   "quotes": [
+    "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
+   ],
+   "evidence": "`package.json` pins `@dnd-kit/core` 6.3.1, `@dnd-kit/sortable` 10.0.0, `@dnd-kit/utilities` 3.2.2 without a range; the lockfile adds only the four `@dnd-kit` entries (`git diff HEAD -- package-lock.json`, +56 lines)"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": [
+    "the threat modeling process should answer the following four questions"
+   ],
+   "evidence": "the kickoff's \"## Attack surface\" answers them; T1-T4 are AC2-AC4, each tested (`staffActions.test.ts`, `Footer.settings.test.tsx`, `layoutBrand.test.ts`)"
+  },
+  "Transport_Layer_Security": {
+   "verdict": "met",
+   "quotes": [
+    "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS"
+   ],
+   "evidence": "`isBrandImageUrl` refuses `http://res.cloudinary.com/…` (`src/lib/uploads/imageUrl.ts:67`, `layoutBrand.test.ts` `SEC-989-BRAND-URL-DENY`)"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "verdict": "not applicable",
+   "reason": "triggered by the word redirect in the documents; the change adds no redirect or forward"
+  },
+  "User_Privacy_Protection": {
+   "verdict": "met",
+   "quotes": [
+    "Preventing leakage of user IP addresses is of great significance when user protection is in scope."
+   ],
+   "evidence": "logo and favicon are output only from the project's Cloudinary cloud (`src/app/[locale]/(site)/layout.tsx:29-31`); `evil.com`, another cloud and the media host are refused in `layoutBrand.test.ts`"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "Review 1 V3 and V8 reran the report's tests and broke each product change once (`npm test -- <AC test>` with the main file in place); two counts did not reproduce (F5)"
+  },
+  "Vulnerable_Dependency_Management": {
+   "verdict": "met",
+   "quotes": [
+    "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+   ],
+   "evidence": "the new packages enter CI's dependency audit and change report (`.github/workflows/ci.yml`); `npm view` showed no install script; read again in V14 with `gh pr checks <n>`"
+  },
+  "Web_Cache_Security": {
+   "verdict": "not applicable",
+   "reason": "the layout revalidation refreshes public content only; no per-user data enters a cached page"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "met",
+   "quotes": [
+    "The fundamental security rule is to never use innerHTML with untrusted data."
+   ],
+   "evidence": "the logo is an `<img>` through `AppImage` (`src/components/layout/HeaderView.tsx:121-123`); the footer values are text and attributes; no `innerHTML` in the diff"
+  }
+ }
+}

@@ -1,6 +1,6 @@
 # Task 1022 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1022_A_Parking_Listing_Can_Be_Saved.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1022_A_Parking_Listing_Can_Be_Saved.md) · OWASP record: [Task_1022.json](../security/owasp/reviews/Task_1022.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1022_A_Parking_Listing_Can_Be_Saved.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1022_A_Parking_Listing_Can_Be_Saved.md) · OWASP record: [Task_1022.json](../security/owasp/reviews/Task_1022.json)
 
 Review 1 of the working tree on 36fc0c07f (branch `main`, uncommitted) — NEEDS REVISION
 Scope: diff-based; 4 new files (`supabase/sql_migrations/task1022/task1022.sql`, `task1022-rollback.sql`, `task1022-verify.sql`, `src/modules/listings/constants/__tests__/propertyTypeEnum.test.ts`); no entry point changes; the database enum `public.property_type` (owner-applied)

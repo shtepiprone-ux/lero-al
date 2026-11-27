@@ -1,6 +1,6 @@
 # Task 988 — Review 3
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 3 of the working tree on 913e9c65d (Revision 2, branch `task/988-chosen-language-stays`, uncommitted) — NEEDS REVISION
 Scope: diff-based; `git diff --stat 913e9c65d -- src scripts` → 11 files (+280, −276): the walk table and its test, four CI tables and two gate scripts (R2-1), the crawler rule and its test (R2-3), one integration case (R2-4); `scripts/governance/reports/component-catalog.latest.json` changed but ignored by Git (`.gitignore:64`). The `.claude/`, `docs/` and `tasks/` changes are Opus's. Entry points: none new; `robots.txt` (public) changes one rule; the sign-up trigger was broken once and restored on the real project (D91).

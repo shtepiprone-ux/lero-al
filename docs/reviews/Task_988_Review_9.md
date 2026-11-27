@@ -1,6 +1,6 @@
 # Task 988 — Review 9
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 9 of Revision 6 (`git diff bbabe3d45` and the new test files, branch `task/988-chosen-language-stays`, pull request #83) — APPROVED
 Scope: the Revision 6 block of the kickoff (R6-1, R6-2, R6-3), for Review 8's F11, F12 and F13.
@@ -86,7 +86,18 @@ Overall risk: the revision changes one test file and one baseline file, and adds
 - N11: the report's typecheck exit code was 2 (`tsc`), and here it was 1 (`npm run -s`). Same 80 errors, same file.
 - N12: the R6-2 check of the report is a scratch file, not `node -e` (the report's deviation); this review ran its own check (V3).
 
+## Production (after the merge, 2026-11-26)
+
+Merged in PR #83 as `36fc0c07f`; `main` CI run 45905563415 and Scorecard 45905563326 green. The checks of the kickoff's Route step 5 on `https://lero.al`:
+- Guest, with `curl`, listing `qera-apartament-11-lqeni-i-tiranes-kompleksi-nobis-mwtdj43u`:
+  - `/uk` → 200 with `Set-Cookie: lero_ui_locale=uk; Path=/; Secure; HttpOnly; SameSite=lax` (no `Max-Age`: a session cookie);
+  - the same session pastes `/sq/listings/<slug>` → 307 to `/uk/listings/<slug>`, which renders `<html lang="uk"`;
+  - after a browser restart (no cookie), `/sq/listings/<slug>` → 200 and `lero_ui_locale=sq`; `/` → 307 to `/sq`.
+- Signed in, the owner's Chrome session: an administrator whose account language is `uk`. An agent account was not available, so the agent role's own pages were not walked (`UNKNOWN`); the language rules below are the same for every signed-in person.
+  - `/sq/listings/<slug>` → `/uk/listings/<slug>`; `/` → `/uk`; `/cabinet` and `/sq/cabinet` → `/uk/cabinet`; `/en/cabinet?tab=listings` → `/uk/cabinet?tab=listings`. Each lands with 200 and `lang="uk"`.
+  - The notification bell on `/sq` (redirected to `/uk`): its items link to `/uk/cabinet?tab=searches` and `/uk/listings/test1-mqidv5is`.
+  - `/admin/users` → `/uk/admin/users`, `lang="uk"`, title "Користувачі — Admin".
+
 ## Open parts
 
-- Owner: commit and push of Revision 6 to pull request #83.
-- Opus: V14 on the new run. Merge when every required check is green, then the production checks of the kickoff's Route step 5.
+- None for Task 988. An agent account's walk on production stays `UNKNOWN` (no agent session in the owner's browser).

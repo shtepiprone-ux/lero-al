@@ -1,6 +1,6 @@
 # Task 988 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 2 of the working tree on 9dfb730b8 (Revision 1, branch `task/988-chosen-language-stays`, uncommitted) — NEEDS REVISION
 Scope: diff-based; `git diff --stat 9dfb730b8 -- src eslint.config.mjs supabase` → 135 files (+521, −5336) plus the untracked moved and new files: 58 files moved (`src/app/admin/**` → `src/app/[locale]/admin/**`, 27 site files → `src/app/[locale]/(site)/**`; 46 byte-identical, 12 changed), 4 SQL files, 13 new test files. Entry points: the request proxy (account and session language, 307), `refreshSession` (a read of the caller's own row), the Server Action `setAccountLocale`, the Google success path, 22 admin pages and the admin layout under the slug, two cron writers, the trigger `public.handle_new_user()` (written, not applied). The `.claude/`, `docs/` and `tasks/` changes are Opus's.

@@ -1,6 +1,6 @@
 # Task 988 — Review 7
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 7 of the working tree on 7ba9ef38d (Revision 5, branch `task/988-chosen-language-stays`, pull request #83, uncommitted) — APPROVED
 Scope: diff-based. `git diff --stat 7ba9ef38d -- src scripts docs` → 20 files (+131, −34).

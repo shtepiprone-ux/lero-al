@@ -10,7 +10,7 @@ kickoff is written by `create-task` (cause, OWASP plan, tested acceptance criter
 
 | Owner item | Task | Sprint |
 |---|---|---|
-| 1 the chosen language is lost (site and admin) | 988 | 94 |
+| 1 the chosen language is lost (site and admin) | 988 — merged in PR #83 (`36fc0c07f`), 2026-11-26 | 94 |
 | 2 photo number in the top-left corner; 3 the price field | 997 | 94 |
 | 4 `[slug]/loading.tsx` layout still Tailwind (Task 792 review note N1) | 1004 | 71 |
 | 5 is `expired` publicly reachable? Owner: no, only admin, moderator and owner | decision recorded; 805 retired | 73 |
@@ -50,7 +50,7 @@ language set to `uk`, `/admin/email-templates` renders its heading in Albanian: 
 `getAdminLocale()` (`src/app/admin/email-templates/page.tsx:14`), so the default `sq` of `src/i18n/request.ts:7-9`
 applies; `/admin/users/[id]` reads `getLocale()` the same way (`src/app/admin/users/[id]/page.tsx:88`); 17 admin pages
 keep a fixed English or Ukrainian tab title (`export const metadata`). Kickoff:
-`tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md`; it takes P-06's render part from 959.
+`tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md`; it takes P-06's render part from 959.
 The listing form keeps the language (`src/modules/listings/components/ListingFormShell.tsx:71,79,249,259,269`);
 `INFERENCE:` the owner's "after a listing is created" is the moderation notification that follows, and Opus repeats the
 flow on production after the merge. Audit finding P-06 planned the same `NotificationItem` line for Task 959: 988

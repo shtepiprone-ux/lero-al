@@ -1,6 +1,6 @@
 # Task 988 — Review 8
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 8 of pull request #83 at bbabe3d45 (branch `task/988-chosen-language-stays`, the tree Review 7 approved) — NEEDS REVISION
 Scope: checklist V14 on the pull request. `gh pr checks 83` → CI run 45898290625 with three red jobs: `Lint, types and product checks`, `Unit and component tests`, and `CI Required`, which fails because of the other two. Every other check passed, among them `Click-shield` (so F8 is gone from the signed-in walk) and the OWASP task gate. No new diff: this review reads the failed logs and the code they name.

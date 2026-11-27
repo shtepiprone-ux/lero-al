@@ -1,0 +1,87 @@
+{
+ "task": "1022",
+ "sheets": {
+  "Authorization": {
+   "verdict": "not applicable",
+   "reason": "the SQL adds one enum label; no grant, policy, role or permission check changes"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "no authorization decision or its output is added or changed by the diff"
+  },
+  "Authorization_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no enforcement point moves; the write path stays as on main"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "not applicable",
+   "reason": "no access rule changes; the Server Actions and their checks are untouched"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "not applicable",
+   "reason": "no row of the authorization matrix changes with one enum value"
+  },
+  "Database_Security": {
+   "verdict": "finding",
+   "finding": "F1",
+   "note": "the rollback cannot run: `db-sql-roundtrip.mjs` → \"cannot alter type of a column used in a trigger definition\" (trigger listings_catalogue_active); no grant is added, `db-catalog-audit.mjs` exit 0"
+  },
+  "GraphQL": {
+   "verdict": "not applicable",
+   "reason": "the project has no GraphQL endpoint; the SQL is a fixed schema change"
+  },
+  "Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the three SQL files are fixed statements; no input reaches an interpreter"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": [
+    "Validate on the server even when the browser checks the same fields."
+   ],
+   "evidence": "`src/modules/listings/constants/__tests__/propertyTypeEnum.test.ts` holds the server schema's list (`step1Schema.shape.property_type`) and the form's list against the enum of `supabase/catalog.json`; fails on main's snapshot, passes with `parking` (Review 1, V8)"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "not applicable",
+   "reason": "the new test reads a committed JSON file; no regular expression, merge or untrusted input"
+  },
+  "Mass_Assignment": {
+   "verdict": "not applicable",
+   "reason": "no file of src changes; the validated object and the insert stay as on main"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "not applicable",
+   "reason": "no tenant identifier, object access check or storage path is changed"
+  },
+  "Nextjs_Security": {
+   "verdict": "not applicable",
+   "reason": "no Server Action, route or returned field changes; only the database enum"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is built from client keys; no product code changes in the diff"
+  },
+  "Query_Parameterization": {
+   "verdict": "not applicable",
+   "reason": "the statements are fixed text; no query is built from input"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "the SQL is a fixed schema change the owner applies once by hand"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": [
+    "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+   ],
+   "evidence": "no dependency added; every claim of the executor's report rerun in Review 1 (V3): `npm test -- src/modules/listings/constants/__tests__/propertyTypeEnum.test.ts`, `npx eslint --no-warn-ignored --max-warnings 0 src/modules/listings/constants/__tests__/propertyTypeEnum.test.ts`, `npx vitest related --run --reporter=verbose` over the four new files"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": [
+    "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+   ],
+   "evidence": "Review 1 V3 reproduced each exit code of the report (one difference: typecheck exit 1, not 2) and V8 ran `node scripts/quality/db-sql-roundtrip.mjs supabase/sql_migrations/task1022/task1022.sql supabase/sql_migrations/task1022/task1022-rollback.sql`, which found F1"
+  }
+ }
+}

@@ -128,3 +128,4 @@ No visible change: the form already offers the type; only its save stops failing
 
 ## Review
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1022_Review_1.md)
+- [Review 2 — APPROVED](../../docs/reviews/Task_1022_Review_2.md)

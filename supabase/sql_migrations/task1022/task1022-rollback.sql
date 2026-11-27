@@ -1,6 +1,6 @@
 -- Task 1022: the way back from task1022.sql. PostgreSQL cannot drop one value of an enum, so the type is recreated with the nine values it had before, in their order, and the column is moved to it.
 -- One transaction; run it only after task1022.sql. It refuses when any public.listings row has the type parking, so no data is lost silently.
--- Only listings.property_type has the type; its index listings_property_type_idx is rebuilt by the column change; the column has no default.
+-- Only listings.property_type has the type; its index listings_property_type_idx is rebuilt by the column change; the column has no default; the trigger listings_catalogue_active names the column, so it is dropped before the change and recreated after it.
 begin;
 
 -- 1. Refuse while a listing still holds the value.
@@ -14,6 +14,8 @@ end
 $$;
 
 -- 2. Recreate the type with its nine values and move the column to it.
+drop trigger listings_catalogue_active on public.listings;
+
 alter type public.property_type rename to property_type_task1022_old;
 
 create type public.property_type as enum ('apartment', 'house', 'land', 'commercial', 'office', 'garage', 'warehouse', 'other', 'room');
@@ -21,5 +23,9 @@ create type public.property_type as enum ('apartment', 'house', 'land', 'commerc
 alter table public.listings alter column property_type type public.property_type using property_type::text::public.property_type;
 
 drop type public.property_type_task1022_old;
+
+create trigger listings_catalogue_active
+  before insert or update of property_type, currency on public.listings
+  for each row execute function public.listings_catalogue_active();
 
 commit;

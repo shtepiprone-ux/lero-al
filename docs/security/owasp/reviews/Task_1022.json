@@ -22,9 +22,11 @@
    "reason": "no row of the authorization matrix changes with one enum value"
   },
   "Database_Security": {
-   "verdict": "finding",
-   "finding": "F1",
-   "note": "the rollback cannot run: `db-sql-roundtrip.mjs` → \"cannot alter type of a column used in a trigger definition\" (trigger listings_catalogue_active); no grant is added, `db-catalog-audit.mjs` exit 0"
+   "verdict": "met",
+   "quotes": [
+    "Configured with the minimum permissions required as discussed in the permissions section below."
+   ],
+   "evidence": "Review 2: the change grants nothing; `node scripts/quality/db-sql-roundtrip.mjs supabase/sql_migrations/task1022/task1022.sql supabase/sql_migrations/task1022/task1022-rollback.sql` → exit 0 (LF and CRLF; F1 of Review 1 fixed); after the owner's apply `node scripts/quality/db-catalog-audit.mjs` → \"no finding\", exit 0"
   },
   "GraphQL": {
    "verdict": "not applicable",
@@ -39,7 +41,7 @@
    "quotes": [
     "Validate on the server even when the browser checks the same fields."
    ],
-   "evidence": "`src/modules/listings/constants/__tests__/propertyTypeEnum.test.ts` holds the server schema's list (`step1Schema.shape.property_type`) and the form's list against the enum of `supabase/catalog.json`; fails on main's snapshot, passes with `parking` (Review 1, V8)"
+   "evidence": "`src/modules/listings/constants/__tests__/propertyTypeEnum.test.ts` holds the server schema's list (`step1Schema.shape.property_type`) and the form's list against the enum of `supabase/catalog.json`; fails on main's snapshot (Review 1, V8), passes on the snapshot refreshed after the apply (Review 2: 2 passed, exit 0)"
   },
   "JavaScript_and_TypeScript_Security": {
    "verdict": "not applicable",

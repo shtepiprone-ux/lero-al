@@ -6,7 +6,9 @@
  */
 import React from 'react'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { renderToString } from 'react-dom/server'
+import { hydrateRoot } from 'react-dom/client'
 import { NextIntlClientProvider } from 'next-intl'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
@@ -45,15 +47,19 @@ const row = (locale: string): SiteFooter => ({
 
 const SHARED = { contact_phone: '+355 69 123 4567', contact_email: 'support@lero.al', contact_email_sales: '', footer_show_phone: 'true', footer_show_email_support: 'false' }
 
-/** `sq` replaces fields of the sq row (Revision 2, F7: the lists at the link bound) */
-function renderManager(sq: Partial<SiteFooter> = {}) {
-  return render(
+/** the manager with its providers; `sq` replaces fields of the sq row (Revision 2, F7: the lists at the link bound) */
+function managerTree(sq: Partial<SiteFooter> = {}) {
+  return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <MantineProvider theme={theme} env="test">
         <AdminFooterManager initialData={{ sq: { ...row('sq'), ...sq }, en: row('en'), uk: row('uk'), it: row('it') }} initialShared={SHARED} initialized />
       </MantineProvider>
-    </NextIntlClientProvider>,
+    </NextIntlClientProvider>
   )
+}
+
+function renderManager(sq: Partial<SiteFooter> = {}) {
+  return render(managerTree(sq))
 }
 
 beforeAll(() => setViewport(1280))
@@ -200,6 +206,40 @@ describe('Task 989 AC5 — the shared block of the Footer page', () => {
     expect(handle.getAttribute('aria-roledescription')).toBe(t.drag_role)
     const describedBy = handle.getAttribute('aria-describedby')
     expect(describedBy && document.getElementById(describedBy)?.textContent).toBe(t.drag_instructions)
+  })
+
+  // Revision 4, F13 (owner's dev-server log, 2026-11-27: server "DndDescribedBy-1", client "DndDescribedBy-2"): the page is rendered on the server and hydrated in
+  // the browser. Without a stable `id`, @dnd-kit names the drag instructions from a module counter that keeps counting across server requests, so the handles
+  // hydrate with an `aria-describedby` the page does not hold. Two client-only renders would prove nothing (React's useId also takes a global counter there).
+  it('the drag handles hydrate with the aria-describedby of the server HTML, and it names the drag instructions', async () => {
+    renderToString(managerTree()) // an earlier request on the same server
+    const html = renderToString(managerTree())
+    const container = document.createElement('div')
+    container.innerHTML = html
+    document.body.appendChild(container)
+    const serverIds = Array.from(container.querySelectorAll('[data-testid="footer-link-handle"]')).map((handle) => handle.getAttribute('aria-describedby'))
+    expect(serverIds.length).toBeGreaterThan(0)
+    expect(serverIds.every(Boolean)).toBe(true)
+
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const recoverable: unknown[] = []
+    let root: ReturnType<typeof hydrateRoot> | undefined
+    try {
+      await act(async () => {
+        root = hydrateRoot(container, managerTree(), { onRecoverableError: (error) => { recoverable.push(error) } })
+      })
+      const messagesLogged = consoleError.mock.calls.map((call) => call.map(String).join(' '))
+      expect(messagesLogged.filter((m) => /hydrated but some attributes|did not match/i.test(m))).toEqual([])
+      expect(recoverable).toEqual([])
+
+      const handles = Array.from(container.querySelectorAll('[data-testid="footer-link-handle"]'))
+      expect(handles.map((handle) => handle.getAttribute('aria-describedby'))).toEqual(serverIds)
+      for (const id of serverIds) expect(document.getElementById(id!)?.textContent, id!).toBe(t.drag_instructions)
+    } finally {
+      consoleError.mockRestore()
+      act(() => root?.unmount())
+      container.remove()
+    }
   })
 
   // Revision 1, F3: the handle, up, down and delete of a link row are at least the touch target (44px, `theme.other.touchTarget`) below 640px and at least 32px

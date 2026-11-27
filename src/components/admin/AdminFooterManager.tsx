@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useId, useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { ActionIcon, Alert, Button, Grid, Group, Input, Paper, ScrollArea, SimpleGrid, Stack, Switch, Tabs, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { Plus, GripVertical, ChevronUp, ChevronDown } from 'lucide-react'
@@ -136,6 +136,7 @@ function LinkGroupEditor({
 }) {
   const t = useTranslations('admin.footer')
   const theme = useMantineTheme()
+  const dndId = useId()
 
   function addLink() {
     onChange([...links, newLink()])
@@ -170,6 +171,7 @@ function LinkGroupEditor({
   return (
     <Stack gap="xs">
       <DndContext
+        id={dndId}
         sensors={sensors}
         collisionDetection={closestCenter}
         modifiers={[restrictToVertical]}

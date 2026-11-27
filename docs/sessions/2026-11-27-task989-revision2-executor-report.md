@@ -1,6 +1,6 @@
 # Task 989 — Revision 2, executor report (Sonnet)
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) ·
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) ·
 Review: [Task_989_Review_2.md](../reviews/Task_989_Review_2.md), "Revision 2 (for the implementer)" · Base commit `75a9be6a8` ("Task 989: Revision 1 as
 reviewed in Review 2, before Revision 2"). No Git command that writes was run. Every command below ran in **Git Bash** (the Bash tool); none ran in PowerShell.
 

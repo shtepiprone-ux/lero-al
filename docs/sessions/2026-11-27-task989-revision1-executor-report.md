@@ -1,6 +1,6 @@
 # Task 989 — Revision 1, executor report (Sonnet)
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) ·
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) ·
 Review: [Task_989_Review_1.md](../reviews/Task_989_Review_1.md), "Revision 1 (for the implementer)" · Base commit `6dedcb419` ("Task 989: the
 implementation as reviewed in Review 1, before Revision 1"). No Git command that writes was run.
 

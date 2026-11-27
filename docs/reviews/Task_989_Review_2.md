@@ -1,6 +1,6 @@
 # Task 989 — Review 2
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 1](Task_989_Review_1.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 1](Task_989_Review_1.md)
 
 Review 2 of Revision 1: the working tree on 6dedcb419 (branch `task/989-site-settings-reach-the-site`, uncommitted) — NEEDS REVISION
 Scope: diff-based against `6dedcb419`; 16 files under `src` and `public` (4 product files, 1 Story, 11 tests) and the favicon move; the executor's report `docs/sessions/2026-11-27-task989-revision1-executor-report.md`

@@ -1,6 +1,6 @@
 # Task 989 — Review 6
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 5](Task_989_Review_5.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 5](Task_989_Review_5.md)
 
 Review 6 of Revision 4: the working tree on 4acea0d58 (branch `task/989-site-settings-reach-the-site`, PR #85, uncommitted) — APPROVED
 Scope: diff-based against `4acea0d58`; `src/components/admin/AdminFooterManager.tsx` (4 lines) and its test; the executor's report `docs/sessions/2026-11-27-task989-revision4-executor-report.md`
@@ -28,3 +28,9 @@ Overall risk: the drag handles hydrate with the server's description id; the CI 
 - V11: no finding.
 - V12: this file, linked from the kickoff; `check-files.mjs` on both.
 - V13: APPROVED. V14 follows the push: the CI of PR #85.
+
+## After the merge (V14, H6, H7)
+
+- PR #85 CI on `32bb87402`: 21 checks pass, `CI Required` pass, `MERGEABLE CLEAN`; `owasp.mjs sync --verify` exit 0 before the merge; the owner merged: `9b74f63a0` (2026-11-27T15:45:18Z); `main` CI 46027702079 success; Vercel status of the merge commit "Deployment has completed".
+- Route step 5 on production (`curl` of `https://lero.al/{sq,en,uk,it}`, 200 each): exactly one `<link rel="icon">`, the saved Cloudinary favicon; the header logo is the saved Cloudinary logo (`h_84,c_fit`, alt "Lero.al"); the footer renders per language (uk: "Провідний маркетплейс нерухомості в Албанії", Навігація, Інформація), two `mailto:` links, Facebook and Instagram, no `tel:` link. The phone stays off (owner, 2026-11-27, translated: "we leave the phone off for now"; `footer_show_phone = false`). The titles and descriptions of the four languages were empty; at the owner's approval of the texts (2026-11-27, translated: "the main thing is that the SEO texts exist") Opus saved them on the admin settings page (dev server, the one Supabase project of D91); production then serves each language's own `<title>` and `<meta name="description">` (sq "Lero.al — Imobiliare në Shqipëri", en "Lero.al — Real estate in Albania", uk "Lero.al — Нерухомість в Албанії", it "Lero.al — Immobili in Albania"). Route step 5: done.
+- Task 930 closed by AC1 (`TASK_930_KEYS` is empty); archived with the task.

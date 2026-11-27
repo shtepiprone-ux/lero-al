@@ -1,6 +1,6 @@
 # Task 989 — Review 3
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 1](Task_989_Review_1.md), [Review 2](Task_989_Review_2.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 1](Task_989_Review_1.md), [Review 2](Task_989_Review_2.md)
 
 Review 3 of Revision 2: the working tree on 75a9be6a8 (branch `task/989-site-settings-reach-the-site`, uncommitted) — APPROVED
 Scope: diff-based against `75a9be6a8`; 3 files (`src/modules/admin/lib/settingKeys.ts`, `src/components/admin/AdminFooterManager.tsx`, its test) and the executor's report `docs/sessions/2026-11-27-task989-revision2-executor-report.md`

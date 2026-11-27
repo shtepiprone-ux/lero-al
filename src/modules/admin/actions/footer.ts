@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { resolveLinkTarget } from '@/lib/security/safeUrl'
 import type { SiteFooter, FooterLink } from '@/types/database'
 import { isValidFooterUrl, normalizeInternalPath, STATIC_INTERNAL_PATHS } from '@/lib/footer-route-allowlist'
-import { FOOTER_SETTING_KEYS, validFooterSettingValue } from '@/modules/admin/lib/settingKeys'
+import { FOOTER_SETTING_KEYS, validFooterSettingValue, withinFooterBounds } from '@/modules/admin/lib/settingKeys'
 
 const VALID_LOCALES = ['sq', 'en', 'uk', 'it'] as const
 
@@ -147,7 +147,8 @@ export async function saveFooterShared(payload: {
   if (!settings || typeof settings !== 'object' || Array.isArray(settings)) return { error: 'validation' }
   const entries = Object.entries(settings as Record<string, unknown>)
   if (entries.some(([key, value]) => !validFooterSettingValue(key, value))) return { error: 'validation' }
-  if (!Array.isArray(rawLinks)) return { error: 'validation' }
+  // a list that is not a list, more than 50 links or a field over its bound (Revision 1, F4)
+  if (!Array.isArray(rawLinks) || !withinFooterBounds([rawLinks])) return { error: 'validation' }
   const socialLinks = rawLinks.map(socialLinkFrom)
   if (socialLinks.some(link => link === null)) return { error: 'validation' }
   const links = socialLinks as FooterLink[]
@@ -189,6 +190,11 @@ export async function upsertFooterContent(
   payload: FooterLocalePayload,
 ): Promise<{ error?: string }> {
   if (!(VALID_LOCALES as readonly string[]).includes(locale)) {
+    return { error: 'validation' }
+  }
+  // Revision 1, F4: at most 50 links per list, each field of a link and each text field within its bound
+  const texts = [payload.brand_title, payload.tagline, payload.nav_section_title, payload.info_section_title, payload.social_section_title, payload.copyright_template]
+  if (!withinFooterBounds([payload.nav_links, payload.info_links], texts)) {
     return { error: 'validation' }
   }
   if (!validateLinks(payload.nav_links) || !validateLinks(payload.info_links)) {

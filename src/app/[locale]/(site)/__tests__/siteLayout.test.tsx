@@ -15,8 +15,10 @@ vi.mock('@/components/layout/Footer', () => ({ Footer: function Footer() { retur
 vi.mock('@/components/shared/WebVitalsReporter', () => ({ WebVitalsReporter: function WebVitalsReporter() { return null } }))
 vi.mock('@/components/shared/PerformanceStoreInit', () => ({ PerformanceStoreInit: function PerformanceStoreInit() { return null } }))
 vi.mock('@/components/shared/PerfDevOverlay', () => ({ PerfDevOverlay: function PerfDevOverlay() { return null } }))
+// Task 989: the title comes from the settings; with none saved it is today's text
+vi.mock('@/modules/admin/lib/settings', () => ({ getSettings: async () => ({}) }))
 
-import SiteLayout, { metadata } from '../layout'
+import SiteLayout, { generateMetadata } from '../layout'
 import { AuthProvider } from '@/modules/auth/context/AuthContext'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -27,7 +29,8 @@ import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
 type Node = { type: unknown; props: { component?: string; children?: unknown } }
 
 describe('SiteLayout — the site frame (Task 988)', () => {
-  it('keeps the site title', () => {
+  it('keeps the site title', async () => {
+    const metadata = await generateMetadata({ params: Promise.resolve({ locale: 'en' }) })
     expect(metadata.title).toBe('Lero.al — Real estate marketplace in Albania')
   })
 

@@ -67,6 +67,26 @@ export function validSettingValue(key: string, value: unknown): boolean {
   return true
 }
 
+const FOOTER_LINKS_MAX = 50
+const FOOTER_LINK_ID_MAX = 64
+const FOOTER_LINK_LABEL_MAX = 200
+const FOOTER_LINK_URL_MAX = 2048
+
+/**
+ * Task 989 Revision 1 (F4): the bounds of both footer writes, checked before any database call — at most 50 links in each list, a link's `id` at most 64,
+ * its `label` at most 200 and its `url` at most 2048 characters, each text field at most 5000 characters. A list that is not a list is out of bounds; a field that is
+ * not text is left to the checks of its type.
+ */
+export function withinFooterBounds(lists: readonly unknown[], texts: readonly unknown[] = []): boolean {
+  const short = (value: unknown, max: number) => typeof value !== 'string' || value.length <= max
+  const linkWithin = (link: unknown) => {
+    const { id, label, url } = (link && typeof link === 'object' ? link : {}) as Record<string, unknown>
+    return short(id, FOOTER_LINK_ID_MAX) && short(label, FOOTER_LINK_LABEL_MAX) && short(url, FOOTER_LINK_URL_MAX)
+  }
+  return lists.every((list) => Array.isArray(list) && list.length <= FOOTER_LINKS_MAX && list.every(linkWithin))
+    && texts.every((text) => short(text, SETTING_MAX_LENGTH))
+}
+
 /** a value of the shared block of the Footer page; an empty contact is allowed (it is not shown) */
 export function validFooterSettingValue(key: string, value: unknown): boolean {
   if (!FOOTER_SETTING_KEYS.includes(key) || typeof value !== 'string') return false

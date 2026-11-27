@@ -64,23 +64,26 @@ function SortableLinkRow({ link, idx, count, wide, disabled, onUpdate, onRemove,
   // the page instead of dragging (dnd-kit, PointerSensor). These two are the only inline styles here, and neither is a visual value.
   const dragStyle = { transform: CSS.Translate.toString(transform), transition }
   const handleStyle = { touchAction: 'none' as const }
+  // Revision 1, F3: below 640px each icon control is the touch target; from 640px 32px, as main's row controls (`h-8 w-8`). The delete takes the touch target at
+  // every width (owner, 2026-11-27): the canonical MantineDeleteIconButton has no 32px size.
+  const controlSize = { base: theme.other.touchTarget, sm: theme.other.iconSize.prominent }
   return (
     <Paper ref={setNodeRef} style={dragStyle} withBorder radius="md" p="sm" shadow={isDragging ? 'md' : undefined} pos="relative" data-testid="footer-link-row">
       <Stack gap="xs">
         <Group justify="space-between" wrap="nowrap" gap="xs">
           <Group gap="xs" wrap="nowrap">
-            <ActionIcon ref={setActivatorNodeRef} type="button" variant="subtle" color="gray" size="sm" aria-label={t('drag_link')} title={t('drag_link')}
+            <ActionIcon ref={setActivatorNodeRef} type="button" variant="subtle" color="gray" size="sm" mih={controlSize} miw={controlSize} aria-label={t('drag_link')} title={t('drag_link')}
               disabled={disabled} data-testid="footer-link-handle" style={handleStyle} {...attributes} {...listeners}>
               <GripVertical size={theme.other.iconSize.compact} />
             </ActionIcon>
             <Text fz="xs" c="dimmed">{idx + 1}</Text>
           </Group>
           <Group gap="xs" wrap="nowrap">
-            <ActionIcon type="button" variant="subtle" color="gray" size="sm" aria-label={t('move_up', { n: idx + 1 })} title={t('move_up', { n: idx + 1 })}
+            <ActionIcon type="button" variant="subtle" color="gray" size="sm" mih={controlSize} miw={controlSize} aria-label={t('move_up', { n: idx + 1 })} title={t('move_up', { n: idx + 1 })}
               disabled={disabled || idx === 0} onClick={() => onMove(idx, idx - 1)}>
               <ChevronUp size={theme.other.iconSize.compact} />
             </ActionIcon>
-            <ActionIcon type="button" variant="subtle" color="gray" size="sm" aria-label={t('move_down', { n: idx + 1 })} title={t('move_down', { n: idx + 1 })}
+            <ActionIcon type="button" variant="subtle" color="gray" size="sm" mih={controlSize} miw={controlSize} aria-label={t('move_down', { n: idx + 1 })} title={t('move_down', { n: idx + 1 })}
               disabled={disabled || idx === count - 1} onClick={() => onMove(idx, idx + 1)}>
               <ChevronDown size={theme.other.iconSize.compact} />
             </ActionIcon>
@@ -90,7 +93,7 @@ function SortableLinkRow({ link, idx, count, wide, disabled, onUpdate, onRemove,
               disabled={disabled}
               aria-label={t('show_link', { n: idx + 1 })}
             />
-            <MantineDeleteIconButton label={t('remove_link', { n: idx + 1 })} onClick={() => onRemove(link.id)} disabled={disabled} />
+            <MantineDeleteIconButton label={t('remove_link', { n: idx + 1 })} onClick={() => onRemove(link.id)} disabled={disabled} touch />
           </Group>
         </Group>
         <SimpleGrid cols={{ base: 1, sm: wide ? 2 : 1 }} spacing="xs">

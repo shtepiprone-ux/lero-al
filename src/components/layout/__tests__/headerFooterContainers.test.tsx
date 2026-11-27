@@ -1,7 +1,8 @@
 /**
  * The Header and Footer containers (Task 923 Revision 7). Header: it wires the sign-in sheet to a global event, switches language without losing the page and without
  * trusting a path that only looks like a language, opens the admin app in a new tab without handing it the opener, and signs out to the right page. Footer: the
- * database content wins field by field, an empty list or a failing footer service falls back to the built-in links, and the site name is split into brand and domain.
+ * database content wins field by field, an empty navigation or information list or a failing footer service falls back to the built-in links (the built-in social
+ * links only when there is no footer row or the service fails, Task 989 O989-1), and the site name is split into brand and domain.
  */
 import type { FooterViewProps } from '../FooterView'
 import React from 'react'
@@ -233,11 +234,14 @@ describe('Footer', () => {
     expect(p.copyright).toBe(`© ${y} Lero. All rights ${y}.`)
   })
 
-  it('only enabled links are shown; a list with none enabled falls back to the built-in ones', async () => {
+  it('only enabled links are shown; a navigation list with none enabled falls back to the built-in ones, a social list with none enabled shows none (O989-1)', async () => {
     const p = await footer('Lero.al', { nav_links: [link('a'), link('b', false)], info_links: [link('c', false)], social_links: [link('d', false), link('e', false)] })
     expect(p.navLinks.map((l) => l.id)).toEqual(['a'])
     expect(p.infoLinks).toHaveLength(4)
-    expect(p.socialLinks.map((l) => l.id)).toEqual(['social-facebook', 'social-instagram'])
+    expect(p.socialLinks).toEqual([])
+    // the built-in Facebook and Instagram links stand only for a footer that could not be read
+    const failed = await footer('Lero.al', new Error('db down'))
+    expect(failed.socialLinks.map((l) => l.id)).toEqual(['social-facebook', 'social-instagram'])
   })
 
   it('a database record with no lists at all still renders', async () => {

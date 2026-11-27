@@ -345,6 +345,59 @@ describe('Task 989 AC4 — the settings and the Footer page refuse what they mus
     expect((footerWrite?.payload as { social_links: unknown }).social_links).toEqual([FOOTER_SHARED.social_links[0]])
   })
 
+  // Revision 1, F4: both footer writes are bounded — at most 50 links per list; a link's id ≤ 64, label ≤ 200, address ≤ 2048 characters; each text field of a
+  // language row ≤ 5000 characters. Each bound: exactly at it is saved, one over it is refused with `validation` and nothing is written.
+  describe('Revision 1, F4 — the footer writes are bounded', () => {
+    const linkOf = (i: number, over: Record<string, unknown> = {}) => ({ id: `l${i}`, label: `Link ${i}`, url: `https://x.example/${i}`, enabled: true, order: i, ...over })
+    const urlOf = (length: number) => { const head = 'https://x.example/'; return head + 'a'.repeat(length - head.length) }
+    const links = (count: number) => Array.from({ length: count }, (_, i) => linkOf(i))
+    const LOCALE_ROW = { brand_title: 'B', tagline: '', nav_section_title: '', nav_links: [] as unknown[], info_section_title: '', info_links: [] as unknown[], social_section_title: '', copyright_template: '' }
+    /** [bound, the value at the bound, the value one over it] — each a list of links */
+    const LINK_BOUNDS: [string, unknown[], unknown[]][] = [
+      ['50 links', links(50), links(51)],
+      ['a link id of 64 characters', [linkOf(0, { id: 'i'.repeat(64) })], [linkOf(0, { id: 'i'.repeat(65) })]],
+      ['a link label of 200 characters', [linkOf(0, { label: 'L'.repeat(200) })], [linkOf(0, { label: 'L'.repeat(201) })]],
+      ['a link address of 2048 characters', [linkOf(0, { url: urlOf(2048) })], [linkOf(0, { url: urlOf(2049) })]],
+    ]
+    const TEXT_FIELDS = ['brand_title', 'tagline', 'nav_section_title', 'info_section_title', 'social_section_title', 'copyright_template'] as const
+
+    it.each(LINK_BOUNDS)('saveFooterShared saves the social list at %s and refuses one over it, writing nothing', async (_bound, at, over) => {
+      asAdmin()
+      expect(await (footer.saveFooterShared as Fn)({ settings: {}, social_links: at })).toEqual({})
+      expect(writes().some((a) => a.table === 'site_footer' && a.op === 'update')).toBe(true)
+      access.length = 0
+      sideEffects.length = 0
+      expect(await (footer.saveFooterShared as Fn)({ settings: FOOTER_SHARED.settings, social_links: over })).toEqual({ error: 'validation' })
+      expect(writes()).toEqual([])
+      expect(sideEffects).toEqual([])
+    })
+
+    it.each(LINK_BOUNDS.flatMap(([bound, at, over]) => (['nav_links', 'info_links'] as const).map((list) => [`${list}: ${bound}`, list, at, over] as const)))(
+      'upsertFooterContent saves %s and refuses one over it, writing nothing',
+      async (_label, list, at, over) => {
+        asAdmin()
+        expect(await (footer.upsertFooterContent as Fn)('en', { ...LOCALE_ROW, [list]: at })).toEqual({})
+        expect(writes().some((a) => a.table === 'site_footer' && a.op === 'upsert')).toBe(true)
+        access.length = 0
+        sideEffects.length = 0
+        expect(await (footer.upsertFooterContent as Fn)('en', { ...LOCALE_ROW, [list]: over })).toEqual({ error: 'validation' })
+        expect(writes()).toEqual([])
+        expect(sideEffects).toEqual([])
+      },
+    )
+
+    it.each(TEXT_FIELDS)('upsertFooterContent saves %s of 5000 characters and refuses 5001, writing nothing', async (field) => {
+      asAdmin()
+      expect(await (footer.upsertFooterContent as Fn)('en', { ...LOCALE_ROW, [field]: 'x'.repeat(5000) })).toEqual({})
+      expect(writes().some((a) => a.table === 'site_footer' && a.op === 'upsert')).toBe(true)
+      access.length = 0
+      sideEffects.length = 0
+      expect(await (footer.upsertFooterContent as Fn)('en', { ...LOCALE_ROW, [field]: 'x'.repeat(5001) })).toEqual({ error: 'validation' })
+      expect(writes()).toEqual([])
+      expect(sideEffects).toEqual([])
+    })
+  })
+
   it('upsertFooterContent no longer writes the social links of one language', async () => {
     asAdmin()
     await (footer.upsertFooterContent as Fn)('en', { ...FOOTER, brand_title: 'B', nav_section_title: '', info_section_title: '', social_section_title: '', copyright_template: '', social_links: [{ id: 's', label: 'X', url: 'https://x.example', enabled: true, order: 0 }] })

@@ -2,8 +2,8 @@
  * pages-and-footer-validation.smoke.test.ts — Task 867 (Sprint 79), R4/R5/R7.
  *
  * Covers:
- *   - upsertFooterContent (R4): a published CMS slug saves with its locale's social links;
- *     an unpublished/unknown slug rejects the whole locale payload; a disabled bad link does
+ *   - upsertFooterContent (R4): a published CMS slug saves, and the upsert carries no social
+ *     links (Task 989: the shared list is saved by saveFooterShared); an unpublished/unknown slug rejects the whole locale payload; a disabled bad link does
  *     not block the save; a `pages` lookup error returns `transient` with no upsert.
  *   - createPage / updatePage (R5): `sq_body_required` on a publish with an empty Albanian
  *     body, in both the content-supplied and content-omitted forms; drafts and non-empty
@@ -58,6 +58,8 @@ const mockPageInsert = vi.fn()          // pages: insert(...)
 const mockPageUpdateEq = vi.fn()        // pages: update(...).eq(...)
 const mockPageDeleteEq = vi.fn()        // pages: delete().eq(...)
 const mockFooterUpsert = vi.fn()        // site_footer: upsert(...)
+const mockFooterUpdate = vi.fn()        // site_footer: update(...).in(...) — saveFooterShared's social list (Task 989)
+const mockSettingsUpsert = vi.fn()      // site_settings: upsert(...) — saveFooterShared's contacts and switches (Task 989)
 const mockCreateAdminClient = vi.fn()
 
 vi.mock('@/lib/supabase/admin', () => ({
@@ -101,7 +103,11 @@ function makePagesBuilder() {
 
 function makeAdminFrom(table: string) {
   if (table === 'pages') return makePagesBuilder()
-  if (table === 'site_footer') return { upsert: (payload: unknown, opts: unknown) => mockFooterUpsert(payload, opts) }
+  if (table === 'site_footer') return {
+    upsert: (payload: unknown, opts: unknown) => mockFooterUpsert(payload, opts),
+    update: (patch: unknown) => ({ in: (...args: unknown[]) => mockFooterUpdate(patch, ...args) }),
+  }
+  if (table === 'site_settings') return { upsert: (payload: unknown, opts: unknown) => mockSettingsUpsert(payload, opts) }
   if (table === 'users') return { select: () => ({ eq: () => ({ maybeSingle: mockRoleSingle }) }) }
   return {
     select: vi.fn().mockReturnThis(),
@@ -119,7 +125,7 @@ function link(overrides: Partial<FooterLink>): FooterLink {
   return { id: 'l1', label: 'Link', url: '/', enabled: true, order: 0, ...overrides }
 }
 
-const EMPTY_FOOTER_PAYLOAD: Omit<SiteFooter, 'locale' | 'updated_at' | 'updated_by'> = {
+const EMPTY_FOOTER_PAYLOAD: Omit<SiteFooter, 'locale' | 'updated_at' | 'updated_by' | 'social_links'> = {
   brand_title: 'Lero.al',
   tagline: 'Tagline',
   nav_section_title: 'Navigation',
@@ -127,7 +133,6 @@ const EMPTY_FOOTER_PAYLOAD: Omit<SiteFooter, 'locale' | 'updated_at' | 'updated_
   info_section_title: 'Info',
   info_links: [],
   social_section_title: 'Social',
-  social_links: [],
   copyright_template: '© {year}',
 }
 
@@ -149,6 +154,8 @@ beforeEach(() => {
   mockPageUpdateEq.mockResolvedValue({ error: null })
   mockPageDeleteEq.mockResolvedValue({ error: null })
   mockFooterUpsert.mockResolvedValue({ error: null })
+  mockFooterUpdate.mockResolvedValue({ error: null })
+  mockSettingsUpsert.mockResolvedValue({ error: null })
 })
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -156,23 +163,19 @@ beforeEach(() => {
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe('upsertFooterContent — CMS slug existence (R4)', () => {
-  it('positive — a published CMS slug saves and its social_links reach the upsert', async () => {
+  it('positive — a published CMS slug saves, and the upsert carries no social_links (Task 989: saveFooterShared saves them)', async () => {
     mockCmsBatchSelect.mockResolvedValue({ data: [{ slug: 'privacy-policy' }], error: null })
     const { upsertFooterContent } = await import('../footer')
 
-    const social = [link({ id: 's1', url: 'https://facebook.com/lero' })]
     const result = await upsertFooterContent('en', {
       ...EMPTY_FOOTER_PAYLOAD,
       info_links: [link({ id: 'i1', url: '/privacy-policy' })],
-      social_links: social,
     })
 
     expect(result).toEqual({})
     expect(mockCmsBatchSelect).toHaveBeenCalled()
-    expect(mockFooterUpsert).toHaveBeenCalledWith(
-      expect.objectContaining({ social_links: social }),
-      { onConflict: 'locale' },
-    )
+    expect(mockFooterUpsert).toHaveBeenCalledWith(expect.any(Object), { onConflict: 'locale' })
+    expect(mockFooterUpsert.mock.calls[0][0]).not.toHaveProperty('social_links')
   })
 
   it('negative — an unpublished slug rejects the whole payload, no upsert', async () => {
@@ -182,7 +185,6 @@ describe('upsertFooterContent — CMS slug existence (R4)', () => {
     const result = await upsertFooterContent('en', {
       ...EMPTY_FOOTER_PAYLOAD,
       info_links: [link({ id: 'i1', url: '/draft-page' })],
-      social_links: [link({ id: 's1', url: 'https://facebook.com/lero' })],
     })
 
     expect(result).toEqual({ error: 'invalid_internal_link' })
@@ -467,10 +469,13 @@ describe('deletePage — R7 write-path actor assertion', () => {
 describe('upsertFooterContent — link schemes (S9)', () => {
   const SCRIPT_URLS = ['javascript:alert(1)', 'JaVaScRiPt:alert(1)', 'java\tscript:alert(1)', 'java\nscript:alert(1)', ' javascript:alert(1)', 'data:text/html,<script>alert(1)</script>', 'vbscript:msgbox(1)', 'file:///etc/passwd']
 
-  it.each(SCRIPT_URLS)('rejects %j in a social link and writes nothing', async (url) => {
-    const { upsertFooterContent } = await import('../footer')
-    const result = await upsertFooterContent('en', { ...EMPTY_FOOTER_PAYLOAD, social_links: [link({ id: 's1', url })] })
+  // Task 989: the social list is shared by the four languages and saved by saveFooterShared, as an administrator
+  it.each(SCRIPT_URLS)('saveFooterShared rejects %j in a social link and writes nothing', async (url) => {
+    const { saveFooterShared } = await import('../footer')
+    const result = await saveFooterShared({ settings: {}, social_links: [link({ id: 's1', url })] })
     expect(result).toEqual({ error: 'invalid_url' })
+    expect(mockFooterUpdate).not.toHaveBeenCalled()
+    expect(mockSettingsUpsert).not.toHaveBeenCalled()
     expect(mockFooterUpsert).not.toHaveBeenCalled()
   })
 
@@ -481,13 +486,11 @@ describe('upsertFooterContent — link schemes (S9)', () => {
     expect(mockFooterUpsert).not.toHaveBeenCalled()
   })
 
-  it('accepts https, http, mailto and tel links', async () => {
-    const { upsertFooterContent } = await import('../footer')
-    const result = await upsertFooterContent('en', {
-      ...EMPTY_FOOTER_PAYLOAD,
-      social_links: [link({ id: 's1', url: 'https://instagram.com/lero' }), link({ id: 's2', url: 'mailto:info@lero.al' }), link({ id: 's3', url: 'tel:+355691234567' })],
-    })
+  it('saveFooterShared accepts https, mailto and tel social links', async () => {
+    const { saveFooterShared } = await import('../footer')
+    const social = [link({ id: 's1', url: 'https://instagram.com/lero' }), link({ id: 's2', url: 'mailto:info@lero.al' }), link({ id: 's3', url: 'tel:+355691234567' })]
+    const result = await saveFooterShared({ settings: {}, social_links: social })
     expect(result).toEqual({})
-    expect(mockFooterUpsert).toHaveBeenCalled()
+    expect(mockFooterUpdate).toHaveBeenCalledWith(expect.objectContaining({ social_links: social }), 'locale', ['sq', 'en', 'uk', 'it'])
   })
 })

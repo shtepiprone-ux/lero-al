@@ -136,7 +136,8 @@ const DEMO_LOGO = '/next.svg'
 
 /**
  * Task 989: `brand-logo` — the saved site logo of the header. The caller sets the height (`theme.other.boxSize.siteLogo`, the wordmark's line height); the image
- * keeps its own width and aspect ratio (`contain`), is served as saved (no transform), and shows no placeholder (the header draws the wordmark when there is no logo).
+ * keeps its own width and aspect ratio (`contain`): a Cloudinary logo is fitted into 84px of height (`h_84,c_fit,f_auto,q_auto`), its width kept, and a
+ * non-Cloudinary fixture (as `DEMO_LOGO` here) is served as it is. It shows no placeholder (the header draws the wordmark when there is no logo).
  */
 export const BrandLogo: Story = {
   render: function BrandLogoStory() {

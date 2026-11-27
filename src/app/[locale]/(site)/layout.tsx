@@ -31,17 +31,16 @@ function brandImage(value: string | undefined): string | null {
   return isBrandImageUrl(value) ? (value as string) : null
 }
 
-// Task 989: the default title and description of the page's language and the favicon come from the settings; an empty value gives today's text, a refused
-// favicon gives no `icons`, and the fixed `src/app/favicon.ico` stays.
+// Task 989: the default title and description of the page's language and the favicon come from the settings; an empty value gives today's text. The tab has
+// exactly one icon (Revision 1, F2): the saved favicon when `isBrandImageUrl` accepts it, else the fixed `public/favicon.ico`, also when the read fails.
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params
   const locale = (SITE_LOCALES as readonly string[]).includes(raw) ? raw : 'sq'
   const settings = await readSettings([`meta_title_${locale}`, `meta_desc_${locale}`, 'favicon_url'])
-  const favicon = brandImage(settings.favicon_url)
   return {
     title: settings[`meta_title_${locale}`]?.trim() || DEFAULT_TITLE,
     description: settings[`meta_desc_${locale}`]?.trim() || DEFAULT_DESCRIPTION,
-    ...(favicon ? { icons: { icon: favicon } } : {}),
+    icons: { icon: brandImage(settings.favicon_url) ?? '/favicon.ico' },
   }
 }
 

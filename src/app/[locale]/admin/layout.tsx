@@ -9,10 +9,11 @@ import { getAllSettings, getSettings } from '@/modules/admin/lib/settings'
 import { isAppLocale } from '@/i18n/uiLocale'
 import { isBrandImageUrl } from '@/lib/uploads/imageUrl'
 
-// Task 989: the admin tab shows the saved favicon too, only when it is an image of the account's own Cloudinary; else the fixed `src/app/favicon.ico`
+// Task 989: the admin tab shows the saved favicon too, only when it is an image of the account's own Cloudinary; else the fixed `public/favicon.ico`, also when the
+// read fails — exactly one icon (Revision 1, F2)
 export async function generateMetadata(): Promise<Metadata> {
   const favicon = await getSettings(['favicon_url']).then(settings => settings.favicon_url, () => undefined)
-  return { title: 'Admin — Lero.al', ...(isBrandImageUrl(favicon) ? { icons: { icon: favicon as string } } : {}) }
+  return { title: 'Admin — Lero.al', icons: { icon: isBrandImageUrl(favicon) ? favicon as string : '/favicon.ico' } }
 }
 
 // Task 988 (owner decision O988-4): the admin lives under the language slug. Its language is the `[locale]` segment, checked and given to next-intl by

@@ -120,12 +120,13 @@ vi.mock('@/lib/auth/server', () => ({ getUser: async () => null }))
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({}) }))
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => { throw new Error('the save must be refused before any database client') } }))
 vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+// Task 989: the social links are saved by saveFooterShared, which checks the administrator first; the caller here is one, so the refusal tested is the scheme's
+vi.mock('@/lib/auth/staff', () => ({ checkStaff: async () => ({ ok: true, userId: 'admin-1', role: 'admin' }) }))
 
 it('[SEC-S09-SRV-DENY] A stored link with an unsafe scheme is refused on save', async () => {
-  const { upsertFooterContent } = await import('@/modules/admin/actions/footer')
-  const empty = { brand_title: 'B', tagline: 'T', nav_section_title: 'N', nav_links: [], info_section_title: 'I', info_links: [], social_section_title: 'S', social_links: [], copyright_template: 'C' }
+  const { saveFooterShared } = await import('@/modules/admin/actions/footer')
   for (const url of ['javascript:alert(1)', 'data:text/html,<script>alert(1)</script>', 'vbscript:msgbox(1)']) {
-    expect(await upsertFooterContent('en', { ...empty, social_links: [link('s1', 'Evil', url)] } as never), url).toEqual({ error: 'invalid_url' })
+    expect(await saveFooterShared({ settings: {}, social_links: [{ ...link('s1', 'Evil', url), order: 0 }] }), url).toEqual({ error: 'invalid_url' })
   }
 })
 

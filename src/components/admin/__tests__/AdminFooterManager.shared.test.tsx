@@ -157,6 +157,46 @@ describe('Task 989 AC5 — the shared block of the Footer page', () => {
     expect(describedBy && document.getElementById(describedBy)?.textContent).toBe(t.drag_instructions)
   })
 
+  // Revision 1, F3: the handle, up, down and delete of a link row are at least the touch target (44px, `theme.other.touchTarget`) below 640px and at least 32px
+  // (main's `h-8 w-8`) from 640px; the delete is the canonical MantineDeleteIconButton with `touch` at every width (owner, 2026-11-27). jsdom has no layout, so the
+  // sizes are read from the props as Mantine writes them: an inline style, or a class with its rule and its `@media (min-width: 40em)` rule.
+  it('the four icon controls of a link row are at least 44px below 640px and at least 32px from 640px', () => {
+    renderManager()
+    const css = Array.from(document.querySelectorAll('style[data-mantine-styles="inline"]')).map((s) => s.textContent ?? '').join('')
+    const rule = (selector: string): Record<string, string> => {
+      const at = css.indexOf(selector)
+      if (at < 0) return {}
+      const body = css.slice(at + selector.length, css.indexOf('}', at))
+      return Object.fromEntries(body.split(';').filter((d) => d.includes(':')).map((d) => [d.slice(0, d.indexOf(':')).trim(), d.slice(d.indexOf(':') + 1).trim()]))
+    }
+    const px = (value: string | undefined) => (value && value.includes('rem') ? Number.parseFloat(value.replace('calc(', '')) * 16 : 0)
+    const sizes = (el: HTMLElement) => {
+      const cls = Array.from(el.classList).find((c) => c.startsWith('__m__-'))
+      const base = cls ? rule(`.${cls}{`) : {}
+      const wide = cls ? rule(`@media(min-width: 40em){.${cls}{`) : {}
+      const below = { w: px(base['min-width'] ?? el.style.minWidth), h: px(base['min-height'] ?? el.style.minHeight) }
+      const from640 = { w: px(wide['min-width'] ?? base['min-width'] ?? el.style.minWidth), h: px(wide['min-height'] ?? base['min-height'] ?? el.style.minHeight) }
+      return { below, from640 }
+    }
+    const row = screen.getAllByTestId('footer-link-row').find((r) => within(r).queryByDisplayValue(/facebook/))!
+    const controls = {
+      handle: within(row).getByTestId('footer-link-handle'),
+      up: within(row).getByRole('button', { name: t.move_up.replace('{n}', '1') }),
+      down: within(row).getByRole('button', { name: t.move_down.replace('{n}', '1') }),
+      delete: within(row).getByRole('button', { name: t.remove_link.replace('{n}', '1') }),
+    }
+    for (const [name, el] of Object.entries(controls)) {
+      const { below, from640 } = sizes(el)
+      expect(below.w, `${name} width below 640px`).toBeGreaterThanOrEqual(44)
+      expect(below.h, `${name} height below 640px`).toBeGreaterThanOrEqual(44)
+      expect(from640.w, `${name} width from 640px`).toBeGreaterThanOrEqual(32)
+      expect(from640.h, `${name} height from 640px`).toBeGreaterThanOrEqual(32)
+    }
+    // the handle, up and down are 32px from 640px, as main's row controls; the delete keeps the touch target (owner, 2026-11-27)
+    for (const name of ['handle', 'up', 'down'] as const) expect(sizes(controls[name]).from640, name).toEqual({ w: 32, h: 32 })
+    expect(sizes(controls.delete).from640).toEqual({ w: 44, h: 44 })
+  })
+
   it('reorderLinks moves the dragged link to the place of the one it is dropped on, and nothing else', () => {
     const link = (id: string) => ({ id, label: id, url: `/${id}`, enabled: true, order: 0 })
     const list = [link('a'), link('b'), link('c')]

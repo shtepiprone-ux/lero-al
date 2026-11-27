@@ -1,11 +1,13 @@
 // @vitest-environment node
 /**
  * Task 989 AC2: the logo, the favicon, the title and the description of the site follow the settings, and the logo and the favicon come only from the account's
- * Cloudinary. The site layout (`src/app/[locale]/(site)/layout.tsx`) hands `<Header />` a `logoUrl` and gives the metadata `icons` only when `isBrandImageUrl`
- * accepts the stored address; the admin layout gives the same favicon. `SEC-989-BRAND-URL-DENY`: an `http:` Cloudinary address, another cloud, a listing photo on the
- * media host, another site, a `javascript:` value and a failed read give no logo and no `icons` (the wordmark and `src/app/favicon.ico` stay). The element trees are
- * read, nothing is rendered.
+ * Cloudinary. The site layout (`src/app/[locale]/(site)/layout.tsx`) hands `<Header />` a `logoUrl` only when `isBrandImageUrl` accepts the stored address; the
+ * metadata of both layouts always has exactly one tab icon: the accepted saved favicon, else the fixed `/favicon.ico` (Revision 1, F2: the fixed icon moved to
+ * `public/favicon.ico`, so the `src/app/favicon.ico` file convention no longer outputs a second one). `SEC-989-BRAND-URL-DENY`: an `http:` Cloudinary address, another
+ * cloud, a listing photo on the media host, another site, a `javascript:` value and a failed read give no logo and the fixed icon. The element trees are read, nothing
+ * is rendered.
  */
+import { existsSync } from 'node:fs'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ReactElement, ReactNode } from 'react'
 
@@ -42,6 +44,8 @@ const LOGO = `https://res.cloudinary.com/${CLOUD}/image/upload/v1/Lero/logo.svg`
 const FAVICON = `https://res.cloudinary.com/${CLOUD}/image/upload/v1/Lero/favicon.png`
 const TODAY_TITLE = 'Lero.al — Real estate marketplace in Albania'
 const TODAY_DESCRIPTION = 'Gjeni shtëpinë tuaj të ëndrrave në Shqipëri'
+/** the fixed tab icon, served from `public/` */
+const FIXED_ICON = { icon: '/favicon.ico' }
 
 /** SEC-989-BRAND-URL-DENY: none of these is an image of the account's Cloudinary */
 const REFUSED = [
@@ -123,20 +127,32 @@ describe('Task 989 AC2 — the site layout', () => {
     expect((await adminMetadata()).icons).toEqual({ icon: FAVICON })
   })
 
-  it.each(REFUSED)('[SEC-989-BRAND-URL-DENY] a stored favicon %s gives no icons (src/app/favicon.ico stays)', async (url) => {
+  it.each(REFUSED)('[SEC-989-BRAND-URL-DENY] a stored favicon %s gives the fixed /favicon.ico, and only it', async (url) => {
     store.values = { favicon_url: url }
-    expect((await siteMetadata(params('en'))).icons).toBeUndefined()
-    expect((await adminMetadata()).icons).toBeUndefined()
+    expect((await siteMetadata(params('en'))).icons).toEqual(FIXED_ICON)
+    expect((await adminMetadata()).icons).toEqual(FIXED_ICON)
   })
 
-  it('[SEC-989-BRAND-URL-DENY] a failed read gives no icons and today\'s title', async () => {
+  it('[SEC-989-BRAND-URL-DENY] a failed read gives the fixed /favicon.ico and today\'s title', async () => {
     store.fail = true
     const metadata = await siteMetadata(params('en'))
-    expect(metadata.icons).toBeUndefined()
+    expect(metadata.icons).toEqual(FIXED_ICON)
     expect(metadata).toMatchObject({ title: TODAY_TITLE, description: TODAY_DESCRIPTION })
     const admin = await adminMetadata()
-    expect(admin.icons).toBeUndefined()
+    expect(admin.icons).toEqual(FIXED_ICON)
     expect(admin.title).toBe('Admin — Lero.al')
+  })
+
+  it('the admin layout has exactly one tab icon in every case: the accepted saved favicon, else /favicon.ico; no file convention adds a second', async () => {
+    const cases: [Record<string, string>, boolean, string][] = [[{ favicon_url: FAVICON }, false, FAVICON], [{ favicon_url: REFUSED[0] }, false, '/favicon.ico'], [{}, false, '/favicon.ico'], [{}, true, '/favicon.ico']]
+    for (const [values, fail, icon] of cases) {
+      store.values = values
+      store.fail = fail
+      expect((await adminMetadata()).icons, JSON.stringify({ values, fail })).toEqual({ icon })
+    }
+    // Next.js outputs `src/app/favicon.ico` as an icon link of its own (the `favicon` file convention); the fixed icon lives in `public/`
+    expect(existsSync('src/app/favicon.ico')).toBe(false)
+    expect(existsSync('public/favicon.ico')).toBe(true)
   })
 
   it.each(['sq', 'en', 'uk', 'it'])('the title and description of %s are the saved ones of that language', async (locale) => {

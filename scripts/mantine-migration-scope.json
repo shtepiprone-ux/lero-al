@@ -173,5 +173,7 @@
   "src/components/admin/AdminEditLayout.tsx",
   "src/components/shared/FilterChoiceGroup.tsx",
   "src/components/shared/YearCombobox.tsx",
-  "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx"
+  "src/design-system/mantine/patterns/MantineDeleteIconButton.tsx",
+  "src/components/admin/AdminFooterManager.tsx",
+  "src/components/admin/AdminSettings.tsx"
 ]

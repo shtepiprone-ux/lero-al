@@ -36,6 +36,7 @@ export type ImageVariant =
   | 'preview'
   | 'upload'
   | 'avatar'
+  | 'brand-logo'
 
 export interface SrcsetEntry {
   w: number
@@ -84,8 +85,24 @@ export interface VariantConfig {
 //   gallery-side  gallery side cell (caller is grid cell)
 //   gallery-strip lightbox bottom strip (caller is button w-20 h-14)
 //   lightbox      lightbox full screen (caller is max-h-[85vh] container)
+//
+// Natural width — the image keeps its own aspect ratio inside a caller-sized height.
+//   brand-logo    the saved site logo in the header (Task 989; caller sets the height
+//                 `theme.other.boxSize.siteLogo`, 28px); Cloudinary fits it into 84px of
+//                 height (3× DPR) and keeps its width; no srcset (the width is the logo's own)
 
 export const VARIANTS: Record<ImageVariant, VariantConfig> = {
+  'brand-logo': {
+    containerClass: cn(styles.frame, styles.frameLogo),
+    imageClass: styles.logoImage,
+    sizes: '240px',
+    cloudinaryTransform: 'h_84,c_fit,f_auto,q_auto',
+    srcsetBase: 'c_fit,f_auto,q_auto',
+    srcsetEntries: [],
+    useLqip: false,
+    placeholder: false,
+    placeholderIconSize: 'standard',
+  },
   listing: {
     containerClass: cn(styles.frame, styles.frameRatio4x3, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
     imageClass: styles.fitCover,

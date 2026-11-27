@@ -19,7 +19,7 @@ export default async function AdminFooterPage() {
   await requireStaffPage({ adminOnly: true })
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
-  const { data, initialized, error } = await getAllFooterContent()
+  const { data, shared, initialized, error } = await getAllFooterContent()
 
   return (
     <AdminPageFrame>
@@ -29,6 +29,7 @@ export default async function AdminFooterPage() {
       />
       <AdminFooterManager
         initialData={data}
+        initialShared={shared}
         initialized={initialized}
         serverError={error}
       />

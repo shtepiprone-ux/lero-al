@@ -20,6 +20,7 @@ import type {
   ComplaintType,
   UserChangeLog,
   UserStatusHistory,
+  SiteFooter,
 } from '@/types/database'
 
 import type { AdminListing } from '@/components/admin/AdminListingsTable'
@@ -494,25 +495,51 @@ export const FIXTURE_TICKET_EVENTS: SupportTicketEventRow[] = [
 
 // ── AllSettings fixture ───────────────────────────────────────────────────────
 
+/** Task 989: one value per key of the settings form (`SETTINGS_FORM_KEYS`); the contacts and the footer switches are on the Footer page (`FIXTURE_FOOTER_SHARED`) */
 export const FIXTURE_SETTINGS: AllSettings = {
   site_name: 'Lero.al',
-  tagline: '',
-  contact_email: 'info@lero.al',
-  contact_phone: '',
-  logo_url: '',
-  logo_dark_url: '',
-  favicon_url: '',
-  social_facebook: '',
-  social_instagram: '',
-  social_linkedin: '',
-  about_al: '',
-  about_uk: '',
-  meta_title: 'Lero.al',
-  meta_desc: '',
+  logo_url: 'https://res.cloudinary.com/lero/image/upload/v1/Lero/logo.svg',
+  favicon_url: 'https://res.cloudinary.com/lero/image/upload/v1/Lero/favicon.png',
+  meta_title_sq: 'Lero.al — Imobiliare në Shqipëri',
+  meta_title_en: 'Lero.al — Real estate in Albania',
+  meta_title_uk: '',
+  meta_title_it: '',
+  meta_desc_sq: 'Gjeni shtëpinë tuaj të ëndrrave në Shqipëri.',
+  meta_desc_en: '',
+  meta_desc_uk: '',
+  meta_desc_it: '',
   og_image: '',
   archived_noindex_days: '90',
   default_locale: 'sq',
 }
+
+/** Task 989: the shared block of the Footer page — the phone on, the support e-mail off, the sales e-mail empty, the text switch absent (on) */
+export const FIXTURE_FOOTER_SHARED: Record<string, string> = {
+  contact_phone: '+355 69 123 4567',
+  contact_email: 'support@lero.al',
+  contact_email_sales: '',
+  footer_show_phone: 'true',
+  footer_show_email_support: 'false',
+}
+
+/** Task 989: the four language rows of the Footer page; the social list (one for all languages) is read from the `sq` row */
+export const FIXTURE_FOOTER_ROWS: Record<string, SiteFooter> = Object.fromEntries((['sq', 'en', 'uk', 'it'] as const).map((locale) => [locale, {
+  locale,
+  brand_title: 'Lero.al',
+  tagline: { sq: 'Tregu kryesor i pasurive të paluajtshme në Shqipëri.', en: 'The leading real estate marketplace in Albania.', uk: 'Головний ринок нерухомості Албанії.', it: 'Il principale mercato immobiliare in Albania.' }[locale],
+  nav_section_title: '',
+  nav_links: [{ id: `${locale}-nav-1`, label: 'Listings', url: '/listings', enabled: true, order: 0 }],
+  info_section_title: '',
+  info_links: [{ id: `${locale}-info-1`, label: 'About', url: '/about', enabled: true, order: 0 }, { id: `${locale}-info-2`, label: 'Draft', url: '/not-a-page', enabled: false, order: 1 }],
+  social_section_title: '',
+  social_links: [
+    { id: 'social-1', label: 'Facebook', url: 'https://www.facebook.com/lero.al', enabled: true, order: 0 },
+    { id: 'social-2', label: 'Instagram', url: 'https://www.instagram.com/lero.al', enabled: false, order: 1 },
+  ],
+  copyright_template: '© {year} Lero.al',
+  updated_at: '2026-11-27T10:00:00Z',
+  updated_by: null,
+} as SiteFooter]))
 
 // ── AdminUserProfile fixtures ─────────────────────────────────────────────────
 

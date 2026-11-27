@@ -4,10 +4,16 @@ import { requireViewer } from '@/lib/auth/requireViewer'
 import { allowedAdminPageKeys } from '@/lib/auth/permissions'
 import { adminHref, adminSidebarPaths } from '@/lib/auth/adminPages'
 import { AdminShell } from '@/components/admin/AdminShell'
-import { getAllSettings } from '@/modules/admin/lib/settings'
+import type { Metadata } from 'next'
+import { getAllSettings, getSettings } from '@/modules/admin/lib/settings'
 import { isAppLocale } from '@/i18n/uiLocale'
+import { isBrandImageUrl } from '@/lib/uploads/imageUrl'
 
-export const metadata = { title: 'Admin — Lero.al' }
+// Task 989: the admin tab shows the saved favicon too, only when it is an image of the account's own Cloudinary; else the fixed `src/app/favicon.ico`
+export async function generateMetadata(): Promise<Metadata> {
+  const favicon = await getSettings(['favicon_url']).then(settings => settings.favicon_url, () => undefined)
+  return { title: 'Admin — Lero.al', ...(isBrandImageUrl(favicon) ? { icons: { icon: favicon as string } } : {}) }
+}
 
 // Task 988 (owner decision O988-4): the admin lives under the language slug. Its language is the `[locale]` segment, checked and given to next-intl by
 // `src/app/[locale]/layout.tsx`, whose provider carries the messages of that language: no cookie and no second message bundle here.

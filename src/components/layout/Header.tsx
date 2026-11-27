@@ -16,7 +16,8 @@ import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
 import { NotificationBell } from '@/modules/notifications/components/NotificationBell'
 import { resolvePostSignOutPath } from '@/lib/auth/postSignOut'
 
-export function Header() {
+/** Task 989: `logoUrl` is the saved logo the site layout accepted (`isBrandImageUrl`), `siteName` its text alternative; both go to `HeaderView` unchanged. */
+export function Header({ logoUrl = null, siteName }: { logoUrl?: string | null; siteName?: string } = {}) {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
@@ -102,6 +103,8 @@ export function Header() {
       mobileOpen={mobileOpen}
       onOpenMobile={() => setMobileOpen(true)}
       onCloseMobile={() => setMobileOpen(false)}
+      logoUrl={logoUrl}
+      siteName={siteName}
       notificationSlot={headerUser ? <NotificationBell userId={user?.id ?? null} /> : undefined}
       authSheetSlot={
         <AuthSheet

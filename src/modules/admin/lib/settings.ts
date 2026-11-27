@@ -29,6 +29,18 @@ export async function getSetting(key: string, fallback: string): Promise<string>
   return data?.value ?? fallback
 }
 
+/**
+ * The named settings in one query (Task 989: the layouts and the footer read several keys per request). A key without a row is absent from the result; a failed
+ * read is an error, and each caller then renders what it shows without the setting (the wordmark, the fixed favicon, a footer without the contacts).
+ */
+export async function getSettings(keys: readonly string[]): Promise<Record<string, string>> {
+  if (keys.length === 0) return {}
+  const db = createAdminClient()
+  const { data, error } = await db.from('site_settings').select('key, value').in('key', [...keys])
+  if (error) throw new Error('site_settings read failed')
+  return Object.fromEntries((data ?? []).map((row) => [row.key as string, row.value as string]))
+}
+
 export async function getArchivedNoindexDays(): Promise<number> {
   const raw = await getSetting('archived_noindex_days', String(ARCHIVED_NOINDEX_DAYS))
   const n = parseInt(raw)

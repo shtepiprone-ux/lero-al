@@ -146,3 +146,56 @@ export const SigningOut: Story = {
     )
   },
 }
+
+/** a wide logo fixture from `public/` (Storybook serves it at the root): the saved logo keeps its own width at the wordmark's height */
+const DEMO_LOGO = '/next.svg'
+
+// Task 989 (GR-3a EXTEND — Mantine/Primitives/HeaderView): the saved logo instead of the wordmark. The site layout hands `logoUrl` only after `isBrandImageUrl`
+// accepted it; the View draws it through `AppImage` (`brand-logo`) at `theme.other.boxSize.siteLogo`, named by the site name. Guest and signed-in, as `Default`.
+export const WithLogo: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const rows = notificationRows(locale)
+    const realBell = (
+      <NotificationBellView
+        notifications={rows}
+        unreadCount={rows.filter(row => !row.is_read).length}
+        onRead={() => {}}
+      />
+    )
+    const common = {
+      locale,
+      onOpenAuth: () => {},
+      onSwitchLocale: () => {},
+      onNavigate: () => {},
+      onOpenAdmin: () => {},
+      onLogout: () => {},
+      mobileOpen: false,
+      onOpenMobile: () => {},
+      onCloseMobile: () => {},
+      authSheetSlot: null,
+      logoUrl: DEMO_LOGO,
+      siteName: 'Lero.al',
+    }
+
+    return (
+      <MantineStoryShell>
+        <Stack gap="xl">
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('header_view_caption_guest')}
+            </Text>
+            <HeaderView {...common} isAuthenticated={false} user={null} notificationSlot={undefined} />
+          </Stack>
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('header_view_caption_authed')}
+            </Text>
+            <HeaderView {...common} isAuthenticated user={{ name: 'Alba Krasniqi', avatar_url: null, role: 'user' }} notificationSlot={realBell} />
+          </Stack>
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
+}

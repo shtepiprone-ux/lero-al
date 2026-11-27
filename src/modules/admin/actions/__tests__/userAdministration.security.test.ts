@@ -246,14 +246,14 @@ describe('locations and pages write only their own columns', () => {
 
 describe('saveSettings', () => {
   it('stores the settings the form offers', async () => {
-    expect(await saveSettings({ site_name: 'Lero.al', default_locale: 'it', archived_noindex_days: '30', social_facebook: 'https://facebook.com/lero', logo_url: '/logo.svg', og_image: '' })).toEqual({})
-    expect(db.tables.site_settings.map((s) => s.key).sort()).toEqual(['archived_noindex_days', 'default_locale', 'logo_url', 'og_image', 'site_name', 'social_facebook'])
+    expect(await saveSettings({ site_name: 'Lero.al', default_locale: 'it', archived_noindex_days: '30', logo_url: '/logo.svg', og_image: '' })).toEqual({})
+    expect(db.tables.site_settings.map((s) => s.key).sort()).toEqual(['archived_noindex_days', 'default_locale', 'logo_url', 'og_image', 'site_name'])
   })
 
   it.each([
     ['an unknown key', { robots_txt: 'x' }], ['a key that tries to be clever', JSON.parse('{"__proto__":"x"}')], ['a language that does not exist', { default_locale: 'xx' }],
     ['zero days', { archived_noindex_days: '0' }], ['days that are not a number', { archived_noindex_days: '30; drop' }], ['a javascript logo', { logo_url: 'javascript:alert(1)' }],
-    ['a script social link', { social_facebook: 'java\tscript:alert(1)' }], ['a data image', { og_image: 'data:text/html,<script>1</script>' }], ['a value over 5000 characters', { about_al: 'x'.repeat(5001) }],
+    ['a script logo link', { logo_url: 'java\tscript:alert(1)' }], ['a data image', { og_image: 'data:text/html,<script>1</script>' }], ['a value over 5000 characters', { site_name: 'x'.repeat(5001) }],
     ['a value that is not text', { site_name: 5 }], ['a value that is an object', { site_name: { a: 1 } }],
   ])('refuses %s and writes nothing', async (_l, entries) => {
     expect(await saveSettings(entries as never)).toEqual({ error: 'validation' })
@@ -275,7 +275,7 @@ describe('saveSettings', () => {
   })
 
   it('accepts exactly 5000 characters', async () => {
-    expect(await saveSettings({ about_al: 'x'.repeat(5000) })).toEqual({})
+    expect(await saveSettings({ site_name: 'x'.repeat(5000) })).toEqual({})
   })
 })
 

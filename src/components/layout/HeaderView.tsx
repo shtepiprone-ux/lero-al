@@ -9,6 +9,7 @@ import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 import { HeaderActions } from '@/components/layout/HeaderActions'
 import { UserMenu } from '@/components/layout/UserMenu'
 import { MobileNavDrawer } from '@/components/layout/MobileNavDrawer'
+import { AppImage } from '@/design-system/media/AppImage'
 import type { AuthView } from '@/modules/auth/components/AuthSheet'
 
 // ── NavLinks ──────────────────────────────────────────────────────────────────
@@ -67,6 +68,10 @@ export interface HeaderViewProps {
   notificationSlot?: ReactNode
   /** AuthSheet — container-owned (owns authOpen/authView state + the AUTH_SHEET_EVENT listener). */
   authSheetSlot?: ReactNode
+  /** Task 989: the saved logo, already accepted by `isBrandImageUrl` in the site layout; without it the wordmark. */
+  logoUrl?: string | null
+  /** Task 989: the site name, the text alternative of the logo. */
+  siteName?: string
 }
 
 export function HeaderView({
@@ -84,6 +89,8 @@ export function HeaderView({
   onCloseMobile,
   notificationSlot,
   authSheetSlot,
+  logoUrl,
+  siteName,
 }: HeaderViewProps) {
   const tc = useTranslations('common')
   const theme = useMantineTheme()
@@ -108,12 +115,18 @@ export function HeaderView({
         py={{ base: 'xs', xs1: 0 }}
         h={{ base: 'auto', xs1: theme.other.boxSize.siteHeaderBar }}
       >
-        {/* Logo */}
+        {/* Logo — Task 989: the saved logo at the wordmark's height, else the wordmark */}
         <Anchor component={Link} href={`/${locale}`} underline="never" fz="xl" fw={700} lh={theme.other.lineHeight.siteWordmark}>
-          <Group component="span" gap="tight" wrap="nowrap">
-            <Text span inherit c="brand">Lero</Text>
-            <Text span inherit c="gray.8">.al</Text>
-          </Group>
+          {logoUrl ? (
+            <Box component="span" display="block" h={theme.other.boxSize.siteLogo}>
+              <AppImage src={logoUrl} alt={siteName ?? 'Lero.al'} variant="brand-logo" priority />
+            </Box>
+          ) : (
+            <Group component="span" gap="tight" wrap="nowrap">
+              <Text span inherit c="brand">Lero</Text>
+              <Text span inherit c="gray.8">.al</Text>
+            </Group>
+          )}
         </Anchor>
 
         {/* Desktop nav — `visibleFrom="md"` replaces `hidden md:flex`. */}

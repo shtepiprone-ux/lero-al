@@ -159,6 +159,20 @@
     transition-duration: var(--motion-duration-slow);
   }
 
+  /* Task 989 — `brand-logo`: the container takes the caller's height (`theme.other.boxSize.siteLogo`) and the logo's own width */
+  .frameLogo {
+    display: inline-flex;
+    height: 100%;
+  }
+
+  /* Task 989 — `brand-logo`: the image is in the flow (it gives the container its width), its natural aspect ratio kept. After `.imageLayer`, so it wins. */
+  .logoImage {
+    position: static;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+  }
+
   /* `opacity-100` — I1 §1 row 16 */
   .visible {
     opacity: 1;

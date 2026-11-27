@@ -142,6 +142,7 @@ declare module '@mantine/core' {
       // `mainViewportOffset` (they happen to coincide numerically) but a DISTINCT rendered role
       // (rule 3): this one sizes the sticky header bar itself, not the main-content top offset.
       | 'siteHeaderBar' // 4rem (64px) — Task 879: HeaderView `.bar` height ≥390px (R3/F7)
+      | 'siteLogo'      // 1.75rem (28px) — Task 989: the height of the saved logo in the header = the wordmark line height `lineHeight.siteWordmark`
       // Task 879 (D81-7, R10) — AuthSheet's register-agent company-logo tile, both the image and
       // placeholder-icon variants (pre-879 `AuthSheet.module.css` `.logoImg`/`.logoPlaceholder`,
       // migrated exactly, one shared role for the two visual states of the same tile).
@@ -807,6 +808,7 @@ export const theme = createTheme({
       content: '48rem',          // 768px
       dashboardContentMaxWidth: '90rem', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1)
       siteHeaderBar: '4rem',      // 64px — Task 879: HeaderView `.bar` height ≥390px (R3/F7)
+      siteLogo: '1.75rem',        // 28px — Task 989: HeaderView saved logo height, the wordmark line height (`lineHeight.siteWordmark`)
       providerLogoTile: '2.25rem', // 36px — Task 879: AuthSheet company-logo tile (R10)
       dashboardListingThumb: '2.5rem', // 40px — Task 854: AGT-10 results-table cover thumbnail (spec §17.3)
     },

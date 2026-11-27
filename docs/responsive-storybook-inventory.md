@@ -58,7 +58,7 @@ are struck below.)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
 | `src/components/admin/AdminUserAvatar.stories.tsx` | ✅ `admin-adminuseravatar--view-placeholder` + `--edit-mode` | Product-rendering story (2 surfaces) |
-| `src/components/admin/AdminSettings.stories.tsx` | ✅ `admin-adminsettings--default` | Product-rendering story |
+| `src/components/admin/AdminSettings.stories.tsx` (removed by Task 989; its states are in `src/stories/patterns/mantine/AdminSettings.stories.tsx`) | ✅ `patterns-mantine-adminsettings--default` | Product-rendering story |
 | `(retired, Task 877) legacy AdminCurrenciesManager.stories.tsx` | ✅ `RETIRED-877-admincurrenciesmanager--default` | Product-rendering story |
 | `src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx` (removed) | ✅ `patterns-mantine-adminexchangeprovidersview--default` | Product-rendering story (Task 874) |
 | `src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx` | ✅ `patterns-mantine-providerformdialogview--new` | Product-rendering story (Task 874) |

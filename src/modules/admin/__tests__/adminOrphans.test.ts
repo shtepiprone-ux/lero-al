@@ -3,23 +3,25 @@
  * unread settings and tables from coming back. The rules are a pure function of a map from path to text (`findSettingFindings`, `findTableFindings`); the first group of cases runs them on
  * the real `src` tree, the second on planted inputs.
  *
- * The admin code is `src/app/[locale]/admin`, `src/components/admin` and `src/modules/admin`. The list of settings is parsed from the SOURCE of `src/modules/admin/actions/index.ts`, because that is a
- * `'use server'` module (it may export only async functions) and so cannot export its constant. A "library helper" is an `export async function` of `src/modules/admin/lib/settings.ts`
+ * The admin code is `src/app/[locale]/admin`, `src/components/admin` and `src/modules/admin`. The list of settings of the real tree is imported from `src/modules/admin/lib/settingKeys.ts`
+ * (Task 989: the lists left the `'use server'` module `src/modules/admin/actions/index.ts`, which may export only async functions); the planted inputs still plant a `SETTING_KEYS` block in an
+ * actions source, parsed by `parseSettingKeys`. A "library helper" is an `export async function` of `src/modules/admin/lib/settings.ts`
  * (a `server-only` module); a helper is used outside the admin code when a file outside it imports its name from `'@/modules/admin/lib/settings'`.
  */
 import { readdirSync, readFileSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { FOOTER_SETTING_KEYS, SETTINGS_FORM_KEYS } from '@/modules/admin/lib/settingKeys'
 
 const ADMIN_DIRS = ['src/app/[locale]/admin/', 'src/components/admin/', 'src/modules/admin/']
 const SETTINGS_ACTIONS = 'src/modules/admin/actions/index.ts'
 const SETTINGS_LIB = 'src/modules/admin/lib/settings.ts'
 
-/** shown on the site by Task 930 (owner D70); Task 930 removes each key from this list when it adds the key's reader */
-const TASK_930_KEYS = [
-  'tagline', 'contact_email', 'contact_phone', 'logo_url', 'logo_dark_url', 'favicon_url', 'social_facebook', 'social_instagram', 'social_linkedin',
-  'about_al', 'about_uk', 'meta_title', 'meta_desc',
-]
+/** shown on the site by Task 930 (owner D70); empty since Task 989, which gave every key a reader (its AC1) */
+const TASK_930_KEYS: readonly string[] = []
+
+/** the keys of the settings form and of the Footer page (Task 989) */
+const SETTING_KEYS: readonly string[] = [...SETTINGS_FORM_KEYS, ...FOOTER_SETTING_KEYS]
 
 /** tables that only staff use: their purpose is the admin screen that reads them, so they have no reader outside the admin code */
 const ADMIN_RECORD_TABLES: Record<string, string> = {
@@ -79,23 +81,36 @@ function parseSettingKeys(files: Files): string[] | null {
   return [...source.slice(start, end).matchAll(/'([a-z_]+)'/g)].map(match => match[1])
 }
 
-/** the files outside the admin code that read the setting, directly or through a helper of the settings library */
+/**
+ * Task 989 (owner, 2026-11-27: extend the detector): the files outside the admin code that import `getSettings` from the settings library and name the key — quoted, as the
+ * template `<base>_${` of a per-language key, or through `FOOTER_SETTING_KEYS` of the key list when the key is one of them
+ */
+function getSettingsReaders(files: Files, key: string): string[] {
+  const perLocale = /^(.+)_(sq|en|uk|it)$/.exec(key)
+  const template = perLocale ? perLocale[1] + '_${' : null
+  const footerKey = FOOTER_SETTING_KEYS.includes(key)
+  return importersOutsideAdmin(files, 'getSettings').filter((path) => {
+    const text = files[path]
+    return text.includes(`'${key}'`) || (template !== null && text.includes(template)) || (footerKey && /\bFOOTER_SETTING_KEYS\b/.test(text))
+  })
+}
+
+/** the files outside the admin code that read the setting, directly, through `getSettings` or through a helper of the settings library */
 function settingReaders(files: Files, helpers: Record<string, string>, key: string): string[] {
   const direct = Object.entries(files).filter(([path, text]) => !isAdmin(path) && (text.includes(`getSetting('${key}'`) || text.includes(`key=eq.${key}`))).map(([path]) => path)
   const through = Object.entries(helpers).filter(([, body]) => body.includes(`getSetting('${key}'`)).flatMap(([name]) => importersOutsideAdmin(files, name))
-  return [...direct, ...through]
+  return [...direct, ...getSettingsReaders(files, key), ...through]
 }
 
 /** Each finding names the setting and what is wrong with it. An empty list means no orphan. */
-function findSettingFindings(files: Files, rules: Rules): string[] {
-  const keys = parseSettingKeys(files)
+function findSettingFindings(files: Files, rules: Rules, keys: readonly string[] | null = parseSettingKeys(files)): string[] {
   if (!keys) return [`SETTING_KEYS: the block "const SETTING_KEYS = [" ... "] as const" is not in ${SETTINGS_ACTIONS}`]
   const helpers = libraryHelpers(files)
   const findings: string[] = []
   for (const key of keys) {
     const readers = settingReaders(files, helpers, key)
     const owned = rules.task930Keys.includes(key)
-    if (!owned && readers.length === 0) findings.push(`setting '${key}': no reader outside the admin code (a getSetting('${key}' call, key=eq.${key}, or a helper of ${SETTINGS_LIB} that reads it)`)
+    if (!owned && readers.length === 0) findings.push(`setting '${key}': no reader outside the admin code (a getSetting('${key}' call, key=eq.${key}, a file that imports getSettings and names the key, or a helper of ${SETTINGS_LIB} that reads it)`)
     if (owned && readers.length > 0) findings.push(`setting '${key}': listed in TASK_930_KEYS but read outside the admin code by ${readers.join(', ')}: remove it from TASK_930_KEYS`)
   }
   for (const key of rules.task930Keys) {
@@ -153,15 +168,13 @@ const RULES: Rules = { task930Keys: TASK_930_KEYS, recordTables: ADMIN_RECORD_TA
 describe('adminOrphans — the real src tree', () => {
   const files = readTree(process.cwd())
 
-  it('parses seventeen unique setting keys from the source of the Server Action module', () => {
-    const keys = parseSettingKeys(files)
-    expect(keys, `SETTING_KEYS block in ${SETTINGS_ACTIONS}`).not.toBeNull()
-    expect(keys).toHaveLength(17)
-    expect(new Set(keys).size, 'the keys are unique').toBe(17)
+  it('reads twenty-one unique setting keys from the key lists of the settings form and the Footer page', () => {
+    expect(SETTING_KEYS).toHaveLength(21)
+    expect(new Set(SETTING_KEYS).size, 'the keys are unique').toBe(21)
   })
 
-  it('every setting key has a reader outside the admin code, except the thirteen keys of Task 930, which have none yet', () => {
-    const findings = findSettingFindings(files, RULES)
+  it('every setting key has a reader outside the admin code (Task 930 has no key left)', () => {
+    const findings = findSettingFindings(files, RULES, SETTING_KEYS)
     expect(findings, findings.join('\n')).toEqual([])
   })
 
@@ -190,6 +203,27 @@ describe('adminOrphans — the rules on planted inputs', () => {
     expect(findSettingFindings(admin, none)).toHaveLength(2)
     const direct: Files = { [SETTINGS_ACTIONS]: actions, [SETTINGS_LIB]: library, 'src/app/a.ts': "await getSetting('alpha', '')", 'src/app/b.ts': 'fetch(`/rest/v1/site_settings?key=eq.beta`)' }
     expect(findSettingFindings(direct, none)).toEqual([])
+  })
+
+  it('Task 989: a file outside the admin code that imports getSettings and names the key is a reader; naming it without that import, or only inside the admin code, is not', () => {
+    const keys = ['alpha', 'beta', 'title_en', 'contact_phone']
+    const base: Files = { [SETTINGS_LIB]: library }
+    const importing = "import { getSettings } from '@/modules/admin/lib/settings'\n"
+    // quoted, a per-language template, and a key of FOOTER_SETTING_KEYS through the list
+    const readers: Files = {
+      ...base,
+      'src/app/a.ts': `${importing}await getSettings(['alpha', 'beta'])`,
+      'src/app/b.ts': importing + 'await getSettings([`title_${locale}`])',
+      'src/components/c.tsx': `${importing}import { FOOTER_SETTING_KEYS } from '@/modules/admin/lib/settingKeys'\nawait getSettings(FOOTER_SETTING_KEYS)`,
+    }
+    expect(findSettingFindings(readers, none, keys)).toEqual([])
+    // the control: the same text without the import of getSettings, or inside the admin code, reads nothing
+    const noImport: Files = { ...base, 'src/app/a.ts': "await getSettings(['alpha', 'beta'])", 'src/app/b.ts': 'await getSettings([`title_${locale}`])', 'src/components/c.tsx': 'await getSettings(FOOTER_SETTING_KEYS)' }
+    expect(findSettingFindings(noImport, none, keys)).toHaveLength(4)
+    const admin: Files = { ...base, 'src/components/admin/a.tsx': `${importing}await getSettings(['alpha', 'beta', 'contact_phone'])` }
+    expect(findSettingFindings(admin, none, keys)).toHaveLength(4)
+    // FOOTER_SETTING_KEYS stands only for its own keys
+    expect(findSettingFindings({ ...base, 'src/components/c.tsx': readers['src/components/c.tsx'] }, none, ['alpha'])).toHaveLength(1)
   })
 
   it('a TASK_930_KEYS key that gains a getSetting reader outside the admin code is reported', () => {

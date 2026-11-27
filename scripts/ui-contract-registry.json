@@ -765,6 +765,47 @@
           ]
         }
       ]
+    },
+    {
+      "id": "admin-footer-manager",
+      "component": "src/components/admin/AdminFooterManager.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/AdminFooterManager.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "admin footer form",
+          "storyExports": [
+            "Default",
+            "Empty",
+            "NotInitialized",
+            "Forbidden"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "admin-settings",
+      "component": "src/components/admin/AdminSettings.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/AdminSettings.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/badgeTones.ts"
+      ],
+      "parity": [
+        {
+          "element": "admin settings form",
+          "storyExports": [
+            "Default",
+            "Empty"
+          ]
+        }
+      ]
     }
   ]
 }

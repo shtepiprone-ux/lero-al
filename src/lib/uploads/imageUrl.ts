@@ -49,6 +49,15 @@ export function r2ThumbUrl(fullUrl: unknown): string | null {
 export function isTrustedImageUrl(raw: unknown, cloudName: string | undefined = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME): boolean {
   if (typeof raw !== 'string' || raw.length === 0 || raw.length > 2048) return false
   if (parseR2ListingPhotoUrl(raw)) return true
+  return isBrandImageUrl(raw, cloudName)
+}
+
+/**
+ * An image of the account's own Cloudinary (Task 989: the logo and the favicon every visitor's browser loads): https on `res.cloudinary.com`, no credentials or
+ * port, inside the project's cloud. A listing photo on the media host is refused: that host holds the photos of the users, not the brand.
+ */
+export function isBrandImageUrl(raw: unknown, cloudName: string | undefined = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME): boolean {
+  if (typeof raw !== 'string' || raw.length === 0 || raw.length > 2048) return false
   let url: URL
   try {
     url = new URL(raw)

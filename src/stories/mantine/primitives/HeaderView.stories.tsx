@@ -146,3 +146,62 @@ export const SigningOut: Story = {
     )
   },
 }
+
+/** a wide logo fixture from `public/` (Storybook serves it at the root): the saved logo keeps its own width at the wordmark's height */
+const DEMO_LOGO = '/next.svg'
+
+/** the props both logo Stories share: the closed shell of `Default`, with the saved logo */
+function logoProps(locale: string) {
+  return {
+    locale,
+    onOpenAuth: () => {},
+    onSwitchLocale: () => {},
+    onNavigate: () => {},
+    onOpenAdmin: () => {},
+    onLogout: () => {},
+    mobileOpen: false,
+    onOpenMobile: () => {},
+    onCloseMobile: () => {},
+    authSheetSlot: null,
+    logoUrl: DEMO_LOGO,
+    siteName: 'Lero.al',
+  }
+}
+
+// Task 989 (GR-3a EXTEND — Mantine/Primitives/HeaderView): the saved logo instead of the wordmark. The site layout hands `logoUrl` only after `isBrandImageUrl`
+// accepted it; the View draws it through `AppImage` (`brand-logo`) at `theme.other.boxSize.siteLogo`, named by the site name. This Story is the guest header;
+// `WithLogoSignedIn` is the signed-in one (Task 989 Revision 3: one state per Story, no caption wrapper).
+export const WithLogo: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const common = logoProps(locale)
+
+    return (
+      <MantineStoryShell>
+        <HeaderView {...common} isAuthenticated={false} user={null} notificationSlot={undefined} />
+      </MantineStoryShell>
+    )
+  },
+}
+
+// Task 989: the saved logo in the signed-in header, with the same user and real bell as `Default`.
+export const WithLogoSignedIn: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const rows = notificationRows(locale)
+    const realBell = (
+      <NotificationBellView
+        notifications={rows}
+        unreadCount={rows.filter(row => !row.is_read).length}
+        onRead={() => {}}
+      />
+    )
+    const common = logoProps(locale)
+
+    return (
+      <MantineStoryShell>
+        <HeaderView {...common} isAuthenticated user={{ name: 'Alba Krasniqi', avatar_url: null, role: 'user' }} notificationSlot={realBell} />
+      </MantineStoryShell>
+    )
+  },
+}

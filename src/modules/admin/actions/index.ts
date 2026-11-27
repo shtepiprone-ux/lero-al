@@ -16,7 +16,7 @@ import { createNotification } from '@/modules/notifications/lib/createNotificati
 import { orContains } from '@/lib/postgrest/escape'
 import { safeExternalUrl } from '@/lib/security/safeUrl'
 import { isCmsBodyEmpty } from '@/modules/cms/lib/isCmsBodyEmpty'
-import { resolveLinkTarget } from '@/lib/security/safeUrl'
+import { validSettingValue } from '@/modules/admin/lib/settingKeys'
 import { isE164, isProfileCompanyFieldWithinBound, isProfileNameWithinBound, MAX_PROFILE_WEBSITE_LENGTH } from '@/lib/security/inputs'
 import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
 import { syncAccountAccess } from '@/lib/auth/accountAccess'
@@ -279,28 +279,13 @@ export async function deleteLocation(id: number): Promise<{ error?: string }> {
 
 // ── Site settings ────────────────────────────────────────────────────────────
 
-/** The settings the admin form offers (Task 923 Revision 7, finding S44): a setting outside this list is refused instead of being added to the table. */
-const SETTING_KEYS = [
-  'site_name', 'tagline', 'contact_email', 'contact_phone', 'logo_url', 'logo_dark_url', 'favicon_url', 'social_facebook', 'social_instagram', 'social_linkedin',
-  'about_al', 'about_uk', 'meta_title', 'meta_desc', 'og_image', 'archived_noindex_days', 'default_locale',
-] as const
-/** settings whose value is an address that is output as a link or an image */
-const SETTING_URL_KEYS: readonly string[] = ['logo_url', 'logo_dark_url', 'favicon_url', 'social_facebook', 'social_instagram', 'social_linkedin', 'og_image']
-const SETTING_MAX_LENGTH = 5000
-
-function validSettingValue(key: string, value: unknown): boolean {
-  if (typeof value !== 'string' || value.length > SETTING_MAX_LENGTH) return false
-  if (key === 'default_locale') return ['sq', 'en', 'uk', 'it'].includes(value)
-  if (key === 'archived_noindex_days') return /^[1-9][0-9]{0,4}$/.test(value)
-  if (SETTING_URL_KEYS.includes(key)) return value === '' || resolveLinkTarget(value, 'sq') !== null
-  return true
-}
-
+// The settings the admin form offers (Task 923 Revision 7, finding S44): a setting outside the list is refused instead of being added to the table. Task 989: the list
+// and the check of each value live in `@/modules/admin/lib/settingKeys` (`SETTINGS_FORM_KEYS`); the contacts and the footer switches are saved by `saveFooterShared`.
 export async function saveSettings(entries: Record<string, string>): Promise<{ error?: string }> {
   await assertPermission('settings.manage')
   if (!entries || typeof entries !== 'object') return { error: 'validation' }
   for (const [key, value] of Object.entries(entries)) {
-    if (!(SETTING_KEYS as readonly string[]).includes(key) || !validSettingValue(key, value)) return { error: 'validation' }
+    if (!validSettingValue(key, value)) return { error: 'validation' }
   }
   const db = createAdminClient()
   const rows = Object.entries(entries).map(([key, value]) => ({

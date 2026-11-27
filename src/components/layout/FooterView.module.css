@@ -100,6 +100,12 @@
   color: var(--foreground);
 }
 
+/* Task 989 — a contact (phone, e-mail) of the contacts column: an address wraps at any character, never clipped (mobile adaptation record) */
+.contactLink {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 /* Site #13 — bottom bar <Flex> (mt/pt moved to Mantine style props — measured 48px/24px, I2) */
 .bottomBar {
   border-top: 1px solid var(--border); /* design-tokens-allow: border-top: 1px — hairline border-width, no §22.1 spacing token targets border-width (HeaderView.module.css:37 precedent, Task 715) */

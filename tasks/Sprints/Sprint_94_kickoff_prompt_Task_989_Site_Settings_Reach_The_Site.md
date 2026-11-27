@@ -160,8 +160,26 @@ The items are written in full in [Task_989_Review_2.md](../../docs/reviews/Task_
 - F7: the Footer page form carries the bounds of the actions from `settingKeys.ts` (`maxLength` on the link label, the link address and the six text fields; "add link" disabled at 50 links); a language-tab save refused with `validation` shows `error_save`, the shared save keeps the contacts message; tests in `AdminFooterManager.shared.test.tsx`.
 - The report quotes each command's summary lines and exit code and names the shell.
 
+## Revision 3 (Review 4, 2026-11-27)
+
+The items are written in full in [Task_989_Review_4.md](../../docs/reviews/Task_989_Review_4.md), "Revision 3": the CI of pull request #85 (run 46011294336) failed on gates not run locally (A5).
+
+- F8: `scripts/ui-contract-registry.json` entries for `AdminFooterManager.tsx` and `AdminSettings.tsx`.
+- F9, F11: the Story list of the Scope ("Stories:") changes — `AppImage` `BrandLogo` leaves (the `brand-logo` variant's height belongs to its one consumer, `HeaderView`); `HeaderView` `WithLogo` (guest) and `WithLogoSignedIn` replace the captioned `WithLogo`.
+- F10: `MantineBadge` for the default-language mark in `AdminSettings.tsx`.
+- F12: the surface-census baseline drops the 12 paid-off rows; tests run `getSettings` and the two admin pages.
+
+## Revision 4 (Review 5, 2026-11-27)
+
+The item is written in full in [Task_989_Review_5.md](../../docs/reviews/Task_989_Review_5.md), "Revision 4"; F8-F12 are fixed.
+
+- F13: each `LinkGroupEditor` gives its `DndContext` a stable `id` from React's `useId`, so the drag handles' `aria-describedby` is the same in the server HTML and after hydration (owner's dev-server log, 2026-11-27); a server-render-then-hydrate test.
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_989_Review_1.md)
 - [Review 2 — NEEDS REVISION](../../docs/reviews/Task_989_Review_2.md)
 - [Review 3 — APPROVED](../../docs/reviews/Task_989_Review_3.md)
+- [Review 4 — NEEDS REVISION (CI of PR #85)](../../docs/reviews/Task_989_Review_4.md)
+- [Review 5 — NEEDS REVISION](../../docs/reviews/Task_989_Review_5.md)
+- [Review 6 — APPROVED](../../docs/reviews/Task_989_Review_6.md)

@@ -1,6 +1,6 @@
 # Task 988 — Review 4
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 4 of the working tree on 4250862d8 (Revision 3, branch `task/988-chosen-language-stays`, uncommitted) — NEEDS REVISION
 Scope: diff-based; `git diff --stat 4250862d8 -- src scripts` → 4 files (+8, −6): the reserved CMS slugs and their test (R3-1), the crawler rule and its test (R3-2). The `.claude/`, `docs/` and `tasks/` changes are Opus's. Entry points: none new; `robots.txt` (public) changes one rule into three. Review 3's open part, V5a for the 22 admin pages, is done here; it finds F7 in the task's Stories.

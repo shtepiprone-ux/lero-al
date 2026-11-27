@@ -1,6 +1,6 @@
 # Task 988 — Review 6
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 6 of pull request #83 at 7ba9ef38d (branch `task/988-chosen-language-stays`, the tree Review 5 approved) — NEEDS REVISION
 Scope: checklist V14 on the pull request: `gh pr checks 83` → CI run 45877879937 with four red jobs (`Lint, types and product checks`, `Unit and component tests`, `Click-shield (production build, real interactions)`, and `CI Required`, which fails because the other three do). Every other check passed, including the authorization regression, the six locale-leak shards, the OWASP task gate, CodeQL, gitleaks, the Storybook build and the Vercel preview. No new diff: this review reads the failed logs and the code they name.

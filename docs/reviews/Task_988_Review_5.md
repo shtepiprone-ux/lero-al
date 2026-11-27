@@ -1,6 +1,6 @@
 # Task 988 — Review 5
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_988_The_Chosen_Language_Stays.md) · OWASP record: [Task_988.json](../security/owasp/reviews/Task_988.json)
 
 Review 5 of the working tree on 0179d9298 (Revision 4, branch `task/988-chosen-language-stays`, uncommitted) — APPROVED
 Scope: diff-based; `git diff --stat 0179d9298 -- src scripts` → 16 files (+45, −23): the 22 admin `pathname` rows of 15 Story files and one test case in `src/lib/auth/__tests__/adminPages.test.ts` (R4-1). The `.claude/`, `docs/` and `tasks/` changes are Opus's. Entry points: none; no product file changes.

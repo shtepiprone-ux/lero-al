@@ -116,7 +116,9 @@ and CODEOWNERS for the sensitive paths.
 
 Every job of §5 runs only on GitHub and is read with `gh pr checks <n>` and `gh run view <id> --log-failed`
 (checklist A5). The commands a model runs locally are the ones its checklist names (`checklists/design.md`,
-`execute.md`, `review.md`). The pre-commit hook (§4) runs on the owner's commit. `db-catalog-audit.mjs` and
+`execute.md`, `review.md`). One step of a job also runs locally: the product checks `node scripts/quality/product-gates.mjs`
+of "Lint, types and product checks" (36 checks, about 23 s), once on the finished tree by I8 and once by V3 (owner,
+2026-11-28, after PR #86 failed CI at two of them on code three reviews had passed). The pre-commit hook (§4) runs on the owner's commit. `db-catalog-audit.mjs` and
 `cloudinary-config.mjs` read the live database catalog and upload presets with `.env.local` credentials (the second
 runs as `node --env-file=.env.local scripts/quality/cloudinary-config.mjs` and takes them from the environment only,
 owner decision O963-1), so they are checklist steps, not CI jobs; their invariants are tested on fixtures in CI. `owasp.mjs` (tests:

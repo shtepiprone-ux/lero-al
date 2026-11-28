@@ -20,7 +20,7 @@ const meta: Meta<typeof MantineRichTextEditor> = {
     docs: {
       description: {
         component:
-          'Controlled HTML editor in `Input.Wrapper` (label + error): formatting, h2–h4, lists, quote, link, alignment, layout columns, tables and an image dialog. Emits `""` for an empty document.',
+          'Controlled HTML editor in `Input.Wrapper` (label + error), the WordPress classic layout (Task 990, O990-1): "Add media" and the Visual/Text tabs above a two-row icon toolbar (bold, italic, strikethrough, lists, quote, horizontal line, alignment, link, table menu, row toggle, full screen; the Paragraph select with h2–h6 and preformatted, underline, justify, the theme-palette text colour, undo, redo). "Text" mode edits the HTML with the WordPress quicktags. Emits `""` for an empty document.',
       },
     },
   },
@@ -72,15 +72,15 @@ export const WithError: Story = { render: () => <EditorDemo withError /> }
 export const ImageUploading: Story = {
   render: () => <EditorDemo uploading />,
   play: async ({ canvasElement }) => {
-    // The image function lives in the Insert menu: open it, then press its image item (the menu is in a portal).
-    canvasElement.querySelector('.lucide-plus')?.closest('button')?.click()
-    for (let attempt = 0; attempt < 20; attempt += 1) {
-      const item = canvasElement.ownerDocument.body.querySelector('.lucide-image-plus')?.closest('button')
-      if (item) {
-        item.click()
-        return
-      }
-      await new Promise(resolve => setTimeout(resolve, 100))
-    }
+    // Task 990: the image function is "Add media" above the toolbar (it was an item of the Insert menu).
+    canvasElement.querySelector<HTMLElement>('.lucide-image-plus')?.closest('button')?.click()
+  },
+}
+
+// Task 990: the "Text" mode (the body's HTML with the WordPress quicktags), opened on load on a body with content.
+export const TextMode: Story = {
+  render: () => <EditorDemo withContent />,
+  play: async ({ canvasElement }) => {
+    canvasElement.querySelector<HTMLElement>('[role="tab"][id$="-tab-text"]')?.click()
   },
 }

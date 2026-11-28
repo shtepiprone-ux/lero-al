@@ -3,6 +3,11 @@
  *
  * Renders the REAL pattern in jsdom and drives the real Tiptap editor through the toolbar controls. The
  * editor instance is reached through the contenteditable's `editor` property (Tiptap sets it on the view DOM).
+ *
+ * Task 990 (O990-1, owner 2026-11-19, replaces D868-6/D868-7): the five menus became the WordPress classic toolbar, so each function is now pressed on its
+ * own tool ("Add media" for the image, the table menu, the "Paragraph" select); every assertion on what a function does is kept. The columns tool left the
+ * toolbar while its extension stays for stored pages, so T7 inserts and removes the block through the editor's own commands; clear formatting is one of the
+ * five tools the owner excluded. `MantineRichTextEditor.toolbar.test.tsx` holds the toolbar itself (AC4).
  */
 import React, { useState } from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
@@ -19,13 +24,14 @@ import { sanitizeCmsHtml } from '@/modules/cms/lib/sanitizeCmsHtml'
 const LABELS = Object.fromEntries(
   (
     [
-      'toolbar', 'menuFormat', 'menuParagraph', 'menuInsert', 'menuHistory', 'bold', 'italic', 'underline', 'strike', 'clearFormatting', 'h2', 'h3', 'h4', 'bulletList',
-      'orderedList', 'blockquote', 'link', 'unlink', 'alignLeft', 'alignCenter', 'alignRight', 'alignJustify',
-      'undo', 'redo', 'linkInputLabel', 'linkInputPlaceholder', 'linkExternal', 'linkInternal', 'linkSave',
-      'columns2', 'columns3', 'columnsRemove', 'tableInsert', 'tableAddRow', 'tableDeleteRow', 'tableAddColumn',
+      'toolbar', 'toolbarToggle', 'fullscreen', 'addMedia', 'modeVisual', 'modeText', 'bold', 'italic', 'underline', 'strike', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'bulletList', 'orderedList', 'blockquote', 'hr', 'link', 'unlink', 'alignLeft', 'alignCenter', 'alignRight', 'alignJustify',
+      'undo', 'redo', 'blockFormat', 'paragraph', 'preformatted', 'textColor', 'colorDefault', 'colorBrand', 'colorGray', 'colorRed', 'colorOrange',
+      'colorGreen', 'colorBlueLight', 'tableMenu', 'linkInputLabel', 'linkInputPlaceholder', 'linkExternal', 'linkInternal', 'linkSave',
+      'tableInsert', 'tableAddRow', 'tableDeleteRow', 'tableAddColumn',
       'tableDeleteColumn', 'tableToggleHeader', 'tableDelete', 'imageInsert', 'imageDialogTitle',
       'imageFileLabel', 'imageFilePlaceholder', 'imageAltLabel', 'imageHint', 'imageUpload', 'imageCancel',
-      'imageErrorType', 'imageErrorSize',
+      'imageErrorType', 'imageErrorSize', 'listItem', 'code', 'closeTags',
     ] as const
   ).map(key => [key, `L:${key}`]),
 ) as unknown as RichTextEditorLabels
@@ -67,7 +73,7 @@ async function getEditor(): Promise<Editor> {
 
 type LabelKey = keyof typeof LABELS
 
-/** Opens one of the toolbar's command menus (the desktop path: an anchored Mantine `Menu`). */
+/** Opens one of the toolbar's menus (the desktop path: an anchored Mantine `Menu`). */
 async function openMenu(trigger: LabelKey) {
   fireEvent.click(screen.getByRole('button', { name: LABELS[trigger] }))
   return screen.findByRole('menu')
@@ -77,6 +83,17 @@ async function openMenu(trigger: LabelKey) {
 async function pick(trigger: LabelKey, item: LabelKey) {
   const menu = await openMenu(trigger)
   fireEvent.click(within(menu).getByRole('menuitem', { name: LABELS[item] }))
+}
+
+/** Presses one tool of the toolbar. */
+function press(tool: LabelKey) {
+  fireEvent.click(within(screen.getByRole('toolbar', { name: LABELS.toolbar })).getByRole('button', { name: LABELS[tool] }))
+}
+
+/** Opens the image dialog ("Add media", Task 990; it was an item of the Insert menu). */
+async function openImageDialog() {
+  fireEvent.click(screen.getByRole('button', { name: LABELS.addMedia }))
+  return screen.findByRole('dialog')
 }
 
 beforeEach(() => {
@@ -96,31 +113,32 @@ beforeEach(() => {
 })
 
 describe('MantineRichTextEditor', () => {
-  it('names the editable area by its label and holds five toolbar controls', async () => {
+  it('names the editable area by its label and holds the 21 tools of the O990-1 toolbar (Task 990; it held five menus)', async () => {
     renderEditor()
     await getEditor()
 
-    const toolbar = screen.getByLabelText(LABELS.toolbar)
-    expect(within(toolbar).getAllByRole('button')).toHaveLength(5)
-    for (const key of ['menuFormat', 'menuParagraph', 'menuInsert', 'link', 'menuHistory'] as const) {
-      expect(within(toolbar).getByRole('button', { name: LABELS[key] }), key).toBeTruthy()
-    }
+    const toolbar = screen.getByRole('toolbar', { name: LABELS.toolbar })
+    expect(within(toolbar).getAllByRole('button')).toHaveLength(21)
   })
 
+  // Every D868-3 function that O990-1 keeps is still reachable by its localized name: on its own tool, in the table menu, in the "Paragraph" select, or as
+  // "Add media". Clear formatting (owner-excluded) and the three columns items (the tool left the toolbar) are not offered.
   it.each([
-    ['menuFormat', ['bold', 'italic', 'underline', 'strike', 'clearFormatting', 'unlink']],
-    ['menuParagraph', ['h2', 'h3', 'h4', 'bulletList', 'orderedList', 'blockquote', 'alignLeft', 'alignCenter', 'alignRight', 'alignJustify']],
-    ['menuInsert', ['columns2', 'columns3', 'columnsRemove', 'tableInsert', 'tableAddRow', 'tableDeleteRow', 'tableAddColumn', 'tableDeleteColumn', 'tableToggleHeader', 'tableDelete', 'imageInsert']],
-    ['menuHistory', ['undo', 'redo']],
-  ] as const)('the %s menu lists every D868-3 function by its localized name', async (trigger, items) => {
+    ['tools', ['bold', 'italic', 'underline', 'strike', 'unlink', 'bulletList', 'orderedList', 'blockquote', 'alignLeft', 'alignCenter', 'alignRight', 'alignJustify', 'undo', 'redo', 'link']],
+    ['tableMenu', ['tableInsert', 'tableAddRow', 'tableDeleteRow', 'tableAddColumn', 'tableDeleteColumn', 'tableToggleHeader', 'tableDelete']],
+    ['paragraph', ['h2', 'h3', 'h4']],
+  ] as const)('the D868-3 functions of %s are offered by their localized names', async (where, items) => {
     renderEditor()
     await getEditor()
 
-    const menu = await openMenu(trigger)
-    expect(within(menu).getAllByRole('menuitem')).toHaveLength(items.length)
-    for (const key of items) {
-      expect(within(menu).getByRole('menuitem', { name: LABELS[key] }), key).toBeTruthy()
+    if (where === 'tools') {
+      const toolbar = screen.getByRole('toolbar', { name: LABELS.toolbar })
+      for (const key of items) expect(within(toolbar).getByRole('button', { name: LABELS[key] }), key).toBeTruthy()
+    } else {
+      const menu = await openMenu(where)
+      for (const key of items) expect(within(menu).getByRole('menuitem', { name: LABELS[key] }), key).toBeTruthy()
     }
+    expect(screen.getByRole('button', { name: LABELS.addMedia })).toBeTruthy()
   })
 
   it('T11 — an empty editor emits "" and never <p></p>', async () => {
@@ -134,11 +152,11 @@ describe('MantineRichTextEditor', () => {
     await waitFor(() => expect(latest).toBe(''))
   })
 
-  it('T7 — the 2-column control inserts the block the sanitizer keeps byte-identical', async () => {
+  it('T7 — the 2-column block (its extension stays for stored pages) is the block the sanitizer keeps byte-identical', async () => {
     renderEditor()
-    await getEditor()
+    const editor = await getEditor()
 
-    await pick('menuInsert', 'columns2')
+    act(() => { editor.chain().focus().insertColumns(2).run() })
     await waitFor(() => expect(latest).toContain('data-type="columns"'))
 
     expect(latest).toMatch(/^<div data-type="columns" data-cols="2">/)
@@ -146,16 +164,16 @@ describe('MantineRichTextEditor', () => {
     expect(sanitizeCmsHtml(latest)).toBe(latest)
   })
 
-  it('T7 — the 3-column control inserts 3 columns, and remove deletes the block', async () => {
+  it('T7 — the 3-column block holds 3 columns, and remove deletes the block', async () => {
     renderEditor()
-    await getEditor()
+    const editor = await getEditor()
 
-    await pick('menuInsert', 'columns3')
+    act(() => { editor.chain().focus().insertColumns(3).run() })
     await waitFor(() => expect(latest).toContain('data-cols="3"'))
     expect((latest.match(/data-type="column"/g) ?? []).length).toBe(3)
     expect(sanitizeCmsHtml(latest)).toBe(latest)
 
-    await pick('menuInsert', 'columnsRemove')
+    act(() => { editor.chain().focus().removeColumns().run() })
     await waitFor(() => expect(latest).not.toContain('data-type="columns"'))
   })
 
@@ -163,7 +181,7 @@ describe('MantineRichTextEditor', () => {
     renderEditor()
     await getEditor()
 
-    await pick('menuInsert', 'tableInsert')
+    await pick('tableMenu', 'tableInsert')
     await waitFor(() => expect(latest).toContain('<table'))
 
     expect((latest.match(/<th\b/g) ?? []).length).toBe(3)
@@ -176,8 +194,7 @@ describe('MantineRichTextEditor', () => {
     renderEditor({ onUpload: upload })
     await getEditor()
 
-    await pick('menuInsert', 'imageInsert')
-    const dialog = await screen.findByRole('dialog')
+    const dialog = await openImageDialog()
     const send = within(dialog).getByRole('button', { name: LABELS.imageUpload }) as HTMLButtonElement
     expect(send.disabled).toBe(true)
 
@@ -199,8 +216,7 @@ describe('MantineRichTextEditor', () => {
     renderEditor({ onUpload: upload })
     await getEditor()
 
-    await pick('menuInsert', 'imageInsert')
-    const dialog = await screen.findByRole('dialog')
+    const dialog = await openImageDialog()
     const input = dialog.querySelector('input[type="file"]') as HTMLInputElement
     fireEvent.change(input, { target: { files: [new File(['x'], 'a.gif', { type: 'image/gif' })] } })
     fireEvent.change(within(dialog).getByLabelText(LABELS.imageAltLabel), { target: { value: 'x' } })
@@ -215,8 +231,7 @@ describe('MantineRichTextEditor', () => {
     renderEditor({ onUpload: upload, initial: '<p>keep me</p>' })
     await getEditor()
 
-    await pick('menuInsert', 'imageInsert')
-    const dialog = await screen.findByRole('dialog')
+    const dialog = await openImageDialog()
     const input = dialog.querySelector('input[type="file"]') as HTMLInputElement
     fireEvent.change(input, { target: { files: [new File([new Uint8Array([1])], 'a.png', { type: 'image/png' })] } })
     fireEvent.change(within(dialog).getByLabelText(LABELS.imageAltLabel), { target: { value: 'x' } })
@@ -228,7 +243,7 @@ describe('MantineRichTextEditor', () => {
     expect(screen.getByText('keep me')).toBeTruthy()
   })
 
-  it('bold through the Format menu wraps the selected text in <strong>, and the selection survives the menu', async () => {
+  it('bold through its tool wraps the selected text in <strong>, and the selection survives the press', async () => {
     renderEditor()
     const editor = await getEditor()
     act(() => {
@@ -236,14 +251,14 @@ describe('MantineRichTextEditor', () => {
       editor.commands.setTextSelection({ from: 1, to: 6 })
     })
 
-    await pick('menuFormat', 'bold')
+    press('bold')
 
     await waitFor(() => expect(latest).toBe('<p><strong>hello</strong></p>'))
     expect(editor.state.selection.from).toBe(1)
     expect(editor.state.selection.to).toBe(6)
   })
 
-  it('H2 through the Paragraph menu turns the block into an <h2>', async () => {
+  it('H2 through the Paragraph select turns the block into an <h2>', async () => {
     renderEditor()
     const editor = await getEditor()
     act(() => {
@@ -251,12 +266,12 @@ describe('MantineRichTextEditor', () => {
       editor.commands.setTextSelection(2)
     })
 
-    await pick('menuParagraph', 'h2')
+    await pick('paragraph', 'h2')
 
     await waitFor(() => expect(latest).toMatch(/^<h2>title<\/h2>/))
   })
 
-  it('align centre through the Paragraph menu sets text-align: center', async () => {
+  it('align centre through its tool sets text-align: center', async () => {
     renderEditor()
     const editor = await getEditor()
     act(() => {
@@ -264,7 +279,7 @@ describe('MantineRichTextEditor', () => {
       editor.commands.setTextSelection(2)
     })
 
-    await pick('menuParagraph', 'alignCenter')
+    press('alignCenter')
 
     await waitFor(() => expect(latest).toContain('text-align: center'))
   })
@@ -274,39 +289,31 @@ describe('MantineRichTextEditor', () => {
     const editor = await getEditor()
     act(() => { editor.commands.setTextSelection(2) })
 
-    const first = await openMenu('menuFormat')
-    expect((within(first).getByRole('menuitem', { name: LABELS.unlink }) as HTMLButtonElement).disabled).toBe(true)
-    fireEvent.keyDown(first, { key: 'Escape' })
-    await waitFor(() => expect(screen.queryByRole('menu')).toBeNull())
+    const unlink = () => within(screen.getByRole('toolbar', { name: LABELS.toolbar })).getByRole('button', { name: LABELS.unlink }) as HTMLButtonElement
+    await waitFor(() => expect(unlink().disabled).toBe(true))
 
     act(() => { editor.commands.setTextSelection(9) })
-    const second = await openMenu('menuFormat')
-    expect((within(second).getByRole('menuitem', { name: LABELS.unlink }) as HTMLButtonElement).disabled).toBe(false)
+    await waitFor(() => expect(unlink().disabled).toBe(false))
   })
 
-  it('undo through the History menu reverts the last change', async () => {
+  it('undo through its tool reverts the last change', async () => {
     renderEditor()
     const editor = await getEditor()
     act(() => { editor.commands.insertContent('x') })
     await waitFor(() => expect(latest).toBe('<p>x</p>'))
 
-    await pick('menuHistory', 'undo')
+    press('undo')
 
     await waitFor(() => expect(latest).toBe(''))
   })
 
-  it('AC30 — with the cursor in bold text the Format trigger is active and the Bold item shows a check', async () => {
+  it('AC30 — with the cursor in bold text the Bold tool is active and the Italic tool is not', async () => {
     renderEditor({ initial: '<p><strong>bold</strong> plain</p>' })
     const editor = await getEditor()
     act(() => { editor.commands.setTextSelection(3) })
 
-    const trigger = screen.getByRole('button', { name: LABELS.menuFormat })
-    await waitFor(() => expect(trigger.hasAttribute('data-active')).toBe(true))
-
-    const menu = await openMenu('menuFormat')
-    const bold = within(menu).getByRole('menuitem', { name: LABELS.bold })
-    expect(bold.hasAttribute('data-active')).toBe(true)
-    expect(bold.querySelector('.lucide-check')).toBeTruthy()
-    expect(within(menu).getByRole('menuitem', { name: LABELS.italic }).querySelector('.lucide-check')).toBeNull()
+    const tool = (key: LabelKey) => within(screen.getByRole('toolbar', { name: LABELS.toolbar })).getByRole('button', { name: LABELS[key] })
+    await waitFor(() => expect(tool('bold').hasAttribute('data-active')).toBe(true))
+    expect(tool('italic').hasAttribute('data-active')).toBe(false)
   })
 })

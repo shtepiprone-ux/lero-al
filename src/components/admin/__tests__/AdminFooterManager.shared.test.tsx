@@ -302,3 +302,30 @@ describe('Task 989 AC5 — the shared block of the Footer page', () => {
     expect(payload).toMatchObject({ brand_title: 'Brand sq', tagline: 'Text sq' })
   })
 })
+
+// Task 990 AC3: the three toasts of a refused internal link name the refused addresses, as plain text (T2: an address never becomes markup).
+describe('Task 990 AC3 — a refused internal link is named', () => {
+  const named = (links: string) => t.error_invalid_internal_link_named.replace('{links}', links)
+
+  it('a language-tab save refused by the server names the links it returned', async () => {
+    mockUpsert.mockResolvedValue({ error: 'invalid_internal_link', links: ['/test', '/<b>x</b>'] })
+    renderManager()
+    fireEvent.click(screen.getByRole('button', { name: t.save }))
+    await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(named('/test, /<b>x</b>')))
+    expect(typeof mockToastError.mock.calls[0][0]).toBe('string')
+  })
+
+  it('the language-tab check names the enabled links of a wrong shape and sends nothing', async () => {
+    renderManager({ nav_links: [{ id: 'n1', label: 'A', url: '/a/b', enabled: true, order: 0 }, { id: 'n2', label: 'B', url: '/c/d', enabled: false, order: 1 }] })
+    fireEvent.click(screen.getByRole('button', { name: t.save }))
+    await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(named('/a/b')))
+    expect(mockUpsert).not.toHaveBeenCalled()
+  })
+
+  it('the shared-block check names the social links of a wrong shape and sends nothing', async () => {
+    renderManager({ social_links: [{ id: 's1', label: 'S', url: '/sq/about', enabled: true, order: 0 }] })
+    fireEvent.click(screen.getByRole('button', { name: t.save_shared }))
+    await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(named('/sq/about')))
+    expect(mockSaveShared).not.toHaveBeenCalled()
+  })
+})

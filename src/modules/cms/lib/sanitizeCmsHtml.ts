@@ -1,5 +1,6 @@
 import sanitizeHtmlLib, { type IOptions } from 'sanitize-html'
 import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
+import { TEXT_COLORS } from '@/design-system/mantine/richtext/textColors'
 
 /**
  * Task 884 (R2) — the CMS body's stored-XSS defence. `CmsPageView.tsx` is the one place a
@@ -19,7 +20,17 @@ import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
  *  - `img` carrying only `src`, `alt`, `width`, `height`, and only when `src` is an `https://res.cloudinary.com/`
  *    URL — every other `img` (relative, `data:`, protocol-relative, another host) is dropped whole;
  *  - `style` on `p`, `h2`–`h4` and `li`, restricted to `text-align: left|center|right|justify`.
+ *
+ * Task 990 (O990-1, the WordPress classic toolbar and its "Text" mode) adds exactly these, and nothing else:
+ *  - `del` and `ins` with no attribute;
+ *  - `span` carrying only `style="color: <value>"`, where the value equals one of the theme palette (`textColors.ts`) exactly, in either of its two
+ *    spellings (the theme's hex, or the `rgb(r, g, b)` the editor writes);
+ *  - the same `text-align` style on `h5` and `h6`.
  */
+const TEXT_ALIGN = { 'text-align': [/^(left|center|right|justify)$/] }
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const PALETTE_COLOR = { color: TEXT_COLORS.flatMap(({ value, rgb }) => [value, rgb]).map(color => new RegExp(`^${escapeRegExp(color)}$`)) }
+
 // The library default list (`node_modules/sanitize-html/index.js:221-227`, 2.18.2) followed by the tags added here.
 const NON_TEXT_TAGS = [
   'script',
@@ -68,6 +79,9 @@ const cmsHtmlAllowlist: IOptions = {
     'td',
     'div',
     'img',
+    'del',
+    'ins',
+    'span',
   ],
   allowedAttributes: {
     a: ['href', 'title', 'target', 'rel'],
@@ -82,10 +96,21 @@ const cmsHtmlAllowlist: IOptions = {
     h2: ['style'],
     h3: ['style'],
     h4: ['style'],
+    h5: ['style'],
+    h6: ['style'],
     li: ['style'],
+    span: ['style'],
   },
+  // per tag, not '*': a span keeps only its palette colour, never an alignment (sanitize-html merges '*' into every tag's own list)
   allowedStyles: {
-    '*': { 'text-align': [/^(left|center|right|justify)$/] },
+    p: TEXT_ALIGN,
+    h2: TEXT_ALIGN,
+    h3: TEXT_ALIGN,
+    h4: TEXT_ALIGN,
+    h5: TEXT_ALIGN,
+    h6: TEXT_ALIGN,
+    li: TEXT_ALIGN,
+    span: PALETTE_COLOR,
   },
   allowedSchemes: ['http', 'https', 'mailto', 'tel'],
   allowedSchemesAppliedToAttributes: ['href'],

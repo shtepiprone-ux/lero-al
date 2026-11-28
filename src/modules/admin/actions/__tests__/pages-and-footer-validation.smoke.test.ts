@@ -51,6 +51,8 @@ vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
 
 const mockSlugCheckSingle = vi.fn()     // pages: select('id')...maybeSingle() — slug uniqueness
 const mockContentReadSingle = vi.fn()   // pages: select('content')...maybeSingle() — R5 stored-content read
+const mockStoredPageSingle = vi.fn()    // pages: select('id, slug').eq('id', …).maybeSingle() — Task 990: the stored address a footer link may name
+const mockFooterSelect = vi.fn()        // site_footer: select('locale, nav_links, info_links, social_links') — Task 990: the footer links of the four rows
 const mockCmsBatchSelect = vi.fn()      // pages: select('slug').in(...).eq('is_published', true) — R4 resolver
 const mockCmsBatchIn = vi.fn()          // records the .in('slug', [...]) call args on that same chain
 const mockCmsBatchEq = vi.fn()          // records the .eq('is_published', true) call args on that same chain
@@ -77,6 +79,7 @@ function makePagesBuilder() {
   const builder = {
     select(cols: string) {
       if (cols === 'content') { resolver = mockContentReadSingle; onCmsBatchChain = false }
+      else if (cols === 'id, slug') { resolver = mockStoredPageSingle; onCmsBatchChain = false }
       else if (cols === 'slug') { resolver = mockCmsBatchSelect; onCmsBatchChain = true }
       else { resolver = mockSlugCheckSingle; onCmsBatchChain = false }
       return builder
@@ -104,6 +107,7 @@ function makePagesBuilder() {
 function makeAdminFrom(table: string) {
   if (table === 'pages') return makePagesBuilder()
   if (table === 'site_footer') return {
+    select: (cols: string) => mockFooterSelect(cols),
     upsert: (payload: unknown, opts: unknown) => mockFooterUpsert(payload, opts),
     update: (patch: unknown) => ({ in: (...args: unknown[]) => mockFooterUpdate(patch, ...args) }),
   }
@@ -149,6 +153,8 @@ beforeEach(() => {
 
   mockSlugCheckSingle.mockResolvedValue({ data: null })
   mockContentReadSingle.mockResolvedValue({ data: null })
+  mockStoredPageSingle.mockResolvedValue({ data: { id: 1, slug: 'about' }, error: null })
+  mockFooterSelect.mockResolvedValue({ data: [], error: null })
   mockCmsBatchSelect.mockResolvedValue({ data: [], error: null })
   mockPageInsert.mockResolvedValue({ error: null })
   mockPageUpdateEq.mockResolvedValue({ error: null })
@@ -187,7 +193,7 @@ describe('upsertFooterContent — CMS slug existence (R4)', () => {
       info_links: [link({ id: 'i1', url: '/draft-page' })],
     })
 
-    expect(result).toEqual({ error: 'invalid_internal_link' })
+    expect(result).toEqual({ error: 'invalid_internal_link', links: ['/draft-page'] }) // Task 990: the refused address is named
     expect(mockFooterUpsert).not.toHaveBeenCalled()
   })
 
@@ -200,7 +206,7 @@ describe('upsertFooterContent — CMS slug existence (R4)', () => {
       info_links: [link({ id: 'i1', url: '/does-not-exist' })],
     })
 
-    expect(result).toEqual({ error: 'invalid_internal_link' })
+    expect(result).toEqual({ error: 'invalid_internal_link', links: ['/does-not-exist'] }) // Task 990
     expect(mockFooterUpsert).not.toHaveBeenCalled()
   })
 
@@ -307,7 +313,7 @@ describe('upsertFooterContent — CMS slug existence (R4)', () => {
       info_links: [link({ id: 'i1', url: '/some/deep/path' })],
     })
 
-    expect(result).toEqual({ error: 'invalid_internal_link' })
+    expect(result).toEqual({ error: 'invalid_internal_link', links: ['/some/deep/path'] }) // Task 990
     expect(mockCmsBatchSelect).not.toHaveBeenCalled()
     expect(mockFooterUpsert).not.toHaveBeenCalled()
   })
@@ -492,5 +498,159 @@ describe('upsertFooterContent — link schemes (S9)', () => {
     const result = await saveFooterShared({ settings: {}, social_links: social })
     expect(result).toEqual({})
     expect(mockFooterUpdate).toHaveBeenCalledWith(expect.objectContaining({ social_links: social }), 'locale', ['sq', 'en', 'uk', 'it'])
+  })
+})
+
+// ═══════════════════════════════════════════════════════
+// Task 990 AC3 — a page a footer link names cannot vanish; a refused footer link is named
+// ═══════════════════════════════════════════════════════
+
+/** one stored footer row with only the link lists the page actions read */
+function footerRow(locale: string, lists: { nav?: FooterLink[]; info?: FooterLink[]; social?: FooterLink[] } = {}) {
+  return { locale, nav_links: lists.nav ?? [], info_links: lists.info ?? [], social_links: lists.social ?? [] }
+}
+
+describe('deletePage / updatePage — a page an enabled footer link names (Task 990 AC3)', () => {
+  it('deletePage of a page the sq and uk footers link → page_in_footer with those languages, nothing written', async () => {
+    mockFooterSelect.mockResolvedValue({ data: [
+      footerRow('sq', { nav: [link({ id: 'n1', url: '/about' })] }),
+      footerRow('en', { nav: [link({ id: 'n2', url: '/privacy-policy' })] }),
+      footerRow('uk', { info: [link({ id: 'i1', url: ' /about/ ' })] }),
+      footerRow('it'),
+    ], error: null })
+    const { deletePage } = await import('../index')
+    const result = await deletePage(1)
+
+    expect(result).toEqual({ error: 'page_in_footer', locales: ['sq', 'uk'] })
+    expect(mockFooterSelect).toHaveBeenCalledWith('locale, nav_links, info_links, social_links')
+    expect(mockPageDeleteEq).not.toHaveBeenCalled()
+  })
+
+  it('a social link (shared by the four rows) names every language', async () => {
+    const social = [link({ id: 's1', url: '/about' })]
+    mockFooterSelect.mockResolvedValue({ data: ['sq', 'en', 'uk', 'it'].map(l => footerRow(l, { social })), error: null })
+    const { deletePage } = await import('../index')
+
+    expect(await deletePage(1)).toEqual({ error: 'page_in_footer', locales: ['sq', 'en', 'uk', 'it'] })
+    expect(mockPageDeleteEq).not.toHaveBeenCalled()
+  })
+
+  it('a disabled link, or a link to another address, does not hold the page', async () => {
+    mockFooterSelect.mockResolvedValue({ data: [
+      footerRow('sq', { nav: [link({ id: 'n1', url: '/about', enabled: false })] }),
+      footerRow('en', { nav: [link({ id: 'n2', url: '/about-us' }), link({ id: 'n3', url: 'https://example.com/about' })] }),
+    ], error: null })
+    const { deletePage, updatePage } = await import('../index')
+
+    expect(await deletePage(1)).toEqual({})
+    expect(mockPageDeleteEq).toHaveBeenCalledWith('id', 1)
+    expect(await updatePage(1, { is_published: false })).toEqual({})
+    expect(await updatePage(1, { slug: 'about-the-site' })).toEqual({})
+    expect(mockPageUpdateEq).toHaveBeenCalledTimes(2)
+  })
+
+  it('a failed footer read refuses with transient and writes nothing', async () => {
+    mockFooterSelect.mockResolvedValue({ data: null, error: { code: '500', message: 'boom' } })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { deletePage, updatePage } = await import('../index')
+
+    expect(await deletePage(1)).toEqual({ error: 'transient' })
+    expect(await updatePage(1, { is_published: false })).toEqual({ error: 'transient' })
+    expect(await updatePage(1, { slug: 'about-the-site' })).toEqual({ error: 'transient' })
+    expect(mockPageDeleteEq).not.toHaveBeenCalled()
+    expect(mockPageUpdateEq).not.toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('a failed read of the stored page refuses with transient and writes nothing', async () => {
+    mockStoredPageSingle.mockResolvedValue({ data: null, error: { code: '500', message: 'boom' } })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { deletePage, updatePage } = await import('../index')
+
+    expect(await deletePage(1)).toEqual({ error: 'transient' })
+    expect(await updatePage(1, { is_published: false })).toEqual({ error: 'transient' })
+    expect(mockPageDeleteEq).not.toHaveBeenCalled()
+    expect(mockPageUpdateEq).not.toHaveBeenCalled()
+    consoleSpy.mockRestore()
+  })
+
+  it('updatePage that unpublishes, or renames, a linked page → page_in_footer, no update', async () => {
+    mockFooterSelect.mockResolvedValue({ data: [footerRow('en', { info: [link({ id: 'i1', url: '/about' })] })], error: null })
+    const { updatePage } = await import('../index')
+
+    expect(await updatePage(1, { is_published: false })).toEqual({ error: 'page_in_footer', locales: ['en'] })
+    expect(await updatePage(1, { slug: 'about-the-site', content: CONTENT_NON_EMPTY_BODY, is_published: true })).toEqual({ error: 'page_in_footer', locales: ['en'] })
+    expect(mockPageUpdateEq).not.toHaveBeenCalled()
+  })
+
+  it('updatePage that keeps the address published, or changes only the content, does not read the footer', async () => {
+    mockFooterSelect.mockResolvedValue({ data: [footerRow('en', { info: [link({ id: 'i1', url: '/about' })] })], error: null })
+    const { updatePage } = await import('../index')
+
+    expect(await updatePage(1, { slug: 'about', content: CONTENT_NON_EMPTY_BODY, is_published: true })).toEqual({})
+    expect(await updatePage(1, { content: CONTENT_NON_EMPTY_BODY })).toEqual({})
+    expect(mockFooterSelect).not.toHaveBeenCalled()
+    expect(mockPageUpdateEq).toHaveBeenCalledTimes(2)
+  })
+
+  it('[SEC-990-PAGE-FOOTER-DENY] a caller without legal.manage is refused before any read of site_footer or pages', async () => {
+    const { assertPermission } = await import('@/lib/auth/permissions')
+    vi.mocked(assertPermission).mockRejectedValue(new Error('forbidden'))
+    try {
+      const { deletePage, updatePage } = await import('../index')
+
+      await expect(deletePage(1)).rejects.toThrow('forbidden')
+      await expect(updatePage(1, { is_published: false })).rejects.toThrow('forbidden')
+      await expect(updatePage(1, { slug: 'about-the-site' })).rejects.toThrow('forbidden')
+      expect(assertPermission).toHaveBeenCalledWith('legal.manage')
+      expect(mockFooterSelect).not.toHaveBeenCalled()
+      expect(mockStoredPageSingle).not.toHaveBeenCalled()
+      expect(mockCreateAdminClient).not.toHaveBeenCalled()
+      expect(mockPageDeleteEq).not.toHaveBeenCalled()
+      expect(mockPageUpdateEq).not.toHaveBeenCalled()
+    } finally {
+      vi.mocked(assertPermission).mockResolvedValue(undefined)
+    }
+  })
+
+  it('[SEC-990-PAGE-FOOTER-DENY] for an allowed caller the permission check runs before the footer read', async () => {
+    const { assertPermission } = await import('@/lib/auth/permissions')
+    const { deletePage } = await import('../index')
+    await deletePage(1)
+    expect(mockFooterSelect).toHaveBeenCalled()
+    expect(vi.mocked(assertPermission).mock.invocationCallOrder[0]).toBeLessThan(mockFooterSelect.mock.invocationCallOrder[0])
+  })
+})
+
+describe('the footer actions name the refused internal links (Task 990 AC3)', () => {
+  it('upsertFooterContent with /test (no published page) → invalid_internal_link with links ["/test"], nothing written', async () => {
+    mockCmsBatchSelect.mockResolvedValue({ data: [{ slug: 'about' }], error: null })
+    const { upsertFooterContent } = await import('../footer')
+    const result = await upsertFooterContent('uk', {
+      ...EMPTY_FOOTER_PAYLOAD,
+      nav_links: [link({ id: 'n1', label: 'Тестова', url: '/test' }), link({ id: 'n2', url: '/about' })],
+    })
+    expect(result).toEqual({ error: 'invalid_internal_link', links: ['/test'] })
+    expect(mockFooterUpsert).not.toHaveBeenCalled()
+  })
+
+  it('upsertFooterContent names each refused shape once, and only the enabled ones', async () => {
+    const { upsertFooterContent } = await import('../footer')
+    const result = await upsertFooterContent('en', {
+      ...EMPTY_FOOTER_PAYLOAD,
+      nav_links: [link({ id: 'n1', url: '/en/about' }), link({ id: 'n2', url: '/a/b' }), link({ id: 'n3', url: '/a/b' }), link({ id: 'n4', url: '/x/y', enabled: false })],
+    })
+    expect(result).toEqual({ error: 'invalid_internal_link', links: ['/en/about', '/a/b'] })
+    expect(mockCmsBatchSelect).not.toHaveBeenCalled()
+  })
+
+  it('saveFooterShared names the refused social links (shape and existence), nothing written', async () => {
+    const { saveFooterShared } = await import('../footer')
+    expect(await saveFooterShared({ settings: {}, social_links: [link({ id: 's1', url: '/a/b' })] })).toEqual({ error: 'invalid_internal_link', links: ['/a/b'] })
+
+    mockCmsBatchSelect.mockResolvedValue({ data: [], error: null })
+    expect(await saveFooterShared({ settings: {}, social_links: [link({ id: 's1', url: '/test' }), link({ id: 's2', url: 'https://x.example' })] })).toEqual({ error: 'invalid_internal_link', links: ['/test'] })
+    expect(mockFooterUpdate).not.toHaveBeenCalled()
+    expect(mockSettingsUpsert).not.toHaveBeenCalled()
   })
 })

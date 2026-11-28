@@ -11,7 +11,13 @@ const page = (over: Record<string, unknown>) => ({ id: 1, slug: 'terms', title: 
 const legacy = (over: Record<string, unknown> = {}) => page({ content: { body: '<p>old</p>' }, ...over })
 
 describe('toSlug', () => {
-  it.each([['About Us', 'about-us'], ['  Terms  &  Conditions ', 'terms-conditions'], ['Përditësime', 'prditsime'], ['--a--', 'a'], ['a - b', 'a-b'], ['-', ''], ['A/B', 'ab'], ['', ''], ['123', '123']])('%j gives %j', (input, slug) => {
+  // Task 990: a Latin letter with a mark loses the mark, not the letter ("Përditësime" gave "prditsime" before)
+  it.each([['About Us', 'about-us'], ['  Terms  &  Conditions ', 'terms-conditions'], ['Përditësime', 'perditesime'], ['--a--', 'a'], ['a - b', 'a-b'], ['-', ''], ['A/B', 'ab'], ['', ''], ['123', '123']])('%j gives %j', (input, slug) => {
+    expect(toSlug(input)).toBe(slug)
+  })
+
+  // Task 990 AC1: the address keeps the Albanian letters without their marks; another script still gives no address (the empty address keeps its format error)
+  it.each([['Çmimet e shtëpive', 'cmimet-e-shtepive'], ['ÇËçë', 'cece'], ['Città più bella', 'citta-piu-bella'], ['Тестова', ''], ['Тестова сторінка', '']])('%j gives %j', (input, slug) => {
     expect(toSlug(input)).toBe(slug)
   })
 })

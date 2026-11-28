@@ -178,4 +178,15 @@ Integration collection (8): `src/lib/account/deleteAccount.integration.test.ts`,
 
 New: `src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.toolbar.test.tsx`.
 
+## Revision 1 (Review 1, 2026-11-27)
+
+The items are written in full in [Task_990_Review_1.md](../../docs/reviews/Task_990_Review_1.md), "Revision 1"; items F1 and F2 reach files the Scope did not name (`scripts/rendered-interaction-states.json`, `src/stories/patterns/mantine/PageEditorDialogView.stories.tsx`): owner's permission 2026-11-28 (translated): "Yes". F5 is Task 1078 (owner decision O1078-1, 2026-11-28). AC6 runs only on GitHub CI (checklist A5): `check-mobile-adaptation-contract.mjs`, `locale-safety.mjs` and the census are not run locally. Owner decision recorded in the executor's report (2026-11-27, translated): "By the 2026-06-26 policy" — no required mark; the en/uk/it titles read "(optional)".
+
+- F1: the census rows of the RichTextEditor Stories (and the editor triggers inside the PageEditorDialogView Stories) follow the O990-1 toolbar: the 28 rows of the removed menus are replaced by one row per trigger that opens a portal (link, table, Paragraph, colour below and from 640px, full screen, "Add media", `TextMode` and its `img`); each selector checked on the Storybook dev server.
+- F2: the `New` Story starts published; a `TitleRequired` Story shows `sqTitleError`, with its registry row.
+- F3: the full-screen dialog's close control is the canonical 44px round close with a close name (`fullscreenClose` in the four languages); the toolbar test asserts both.
+- F4: the six message keys no code reads leave the four message files.
+
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_990_Review_1.md)

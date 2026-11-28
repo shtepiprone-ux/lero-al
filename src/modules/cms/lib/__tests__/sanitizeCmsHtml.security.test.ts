@@ -5,6 +5,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { sanitizeCmsHtml } from '../sanitizeCmsHtml'
+import { TEXT_COLORS } from '@/design-system/mantine/richtext/textColors'
 
 const PROJECT = 'lero-cloud'
 const OWN = `https://res.cloudinary.com/${PROJECT}/image/upload/v1/cms/pages/own.jpg`
@@ -161,5 +162,59 @@ describe('sanitizeCmsHtml', () => {
     expect(out).toBe('<p>before</p><p>after</p>')
     expect(out).not.toContain('evil.example')
     expect(out).not.toContain('embed')
+  })
+})
+
+// Task 990 AC5: the markup the O990-1 toolbar and the "Text" mode add reaches the site; a colour is kept only when it equals a value of the theme palette
+// (`textColors.ts`), every other style, value and attribute of a span is removed (T3).
+describe('sanitizeCmsHtml — the markup of the Task 990 editor', () => {
+  it('keeps del, ins, hr, pre, an aligned h5 and h6 and every palette colour', () => {
+    const kept = '<p><del>old</del> <ins>new</ins></p><hr /><pre><code>block</code></pre><h5 style="text-align:center">five</h5><h6 style="text-align:right">six</h6>'
+    expect(sanitizeCmsHtml(kept)).toBe(kept)
+    expect(TEXT_COLORS.length).toBe(6)
+    for (const { value, rgb } of TEXT_COLORS) {
+      const html = `<p>a <span style="color:${value}">colour</span> b</p>`
+      expect(sanitizeCmsHtml(html), value).toBe(html)
+      expect(sanitizeCmsHtml(sanitizeCmsHtml(html))).toBe(sanitizeCmsHtml(html))
+      // the editor writes the colour through the CSSOM: "color: rgb(r, g, b);" — the same theme value, kept
+      expect(sanitizeCmsHtml(`<p><span style="color: ${rgb};">c</span></p>`), rgb).toBe(`<p><span style="color:${rgb}">c</span></p>`)
+    }
+  })
+
+  it('[SEC-990-CMS-COLOR] the rgb spelling is matched exactly: a neighbouring value or another spelling is removed', () => {
+    const { rgb } = TEXT_COLORS[0]
+    const parts = rgb.slice(4, -1).split(', ').map(Number)
+    const near = `rgb(${parts[0]}, ${parts[1]}, ${(parts[2] + 1) % 256})`
+    for (const color of [near, `rgba(${parts.join(', ')}, 0.5)`, rgb.replace(/, /g, ',  '), rgb.toUpperCase()]) {
+      expect(sanitizeCmsHtml(`<span style="color: ${color}">x</span>`), color).toBe('<span>x</span>')
+    }
+  })
+
+  const OUTSIDE = [
+    ['a colour outside the palette', '<span style="color:#ff0000">x</span>'],
+    ['a named colour', '<span style="color:red">x</span>'],
+    ['a palette value with a suffix', `<span style="color:${TEXT_COLORS[0].value}00">x</span>`],
+    ['a background', '<span style="background:#b42318">x</span>'],
+    ['a background colour', '<span style="background-color:#b42318">x</span>'],
+    ['url()', '<span style="color:url(https://evil.example/x)">x</span>'],
+    ['expression()', '<span style="color:expression(alert(1))">x</span>'],
+    ['text-align on a span', '<span style="text-align:center">x</span>'],
+  ] as const
+
+  it.each(OUTSIDE)('[SEC-990-CMS-COLOR] %s is removed from a span', (_name, html) => {
+    expect(sanitizeCmsHtml(html)).toBe('<span>x</span>')
+  })
+
+  it('[SEC-990-CMS-COLOR] a second style property and every other span attribute are removed, the palette colour stays', () => {
+    const value = TEXT_COLORS[0].value
+    const out = sanitizeCmsHtml(`<span style="color:${value};background-image:url(x);position:fixed" class="c" id="i" title="t" data-x="1" onclick="alert(1)">x</span>`)
+    expect(out).toBe(`<span style="color:${value}">x</span>`)
+    expect(sanitizeCmsHtml('<del cite="https://evil.example" datetime="2026" onclick="alert(1)">x</del><ins class="c">y</ins>')).toBe('<del>x</del><ins>y</ins>')
+  })
+
+  it('[SEC-990-CMS-COLOR] a colour is never kept on another element', () => {
+    const value = TEXT_COLORS[0].value
+    expect(sanitizeCmsHtml(`<p style="color:${value}">x</p>`)).toBe('<p>x</p>')
+    expect(sanitizeCmsHtml(`<del style="color:${value}">x</del>`)).toBe('<del>x</del>')
   })
 })

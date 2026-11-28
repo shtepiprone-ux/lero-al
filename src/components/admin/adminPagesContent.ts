@@ -7,8 +7,11 @@ export type PageLocale = 'sq' | 'en' | 'uk' | 'it'
 export const PAGE_LOCALES: PageLocale[] = ['sq', 'en', 'uk', 'it']
 
 export function toSlug(str: string) {
+  // Task 990: a Latin letter with a mark loses the mark, not the letter (NFD splits "ç" into "c" and a combining mark): "Çmimet e shtëpive" → "cmimet-e-shtepive";
+  // another script still gives nothing, so the empty address keeps its format error.
+  const unmarked = str.normalize('NFD').replace(/[̀-ͯ]/g, '')
   // one hyphen between words and none at the ends (Task 923 Revision 7): "Terms & Conditions" used to give "terms--conditions", "--a--" gave "-a-"
-  return str.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-+|-+$/g, '')
+  return unmarked.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-+|-+$/g, '')
 }
 
 export function isLegacyContent(content: unknown): boolean {

@@ -26,6 +26,8 @@ export interface PageEditorDialogViewProps {
   onSlugChange: (raw: string) => void
   /** The server refused to publish with an empty Albanian body (`sq_body_required`). */
   sqBodyError: boolean
+  /** Task 990: Save was pressed without the Albanian title (`sq_title_required` on its field). */
+  sqTitleError?: boolean
   published: boolean
   onPublishedChange: (published: boolean) => void
   /** Uploads an editor image and resolves to its URL (the container owns the request and its error toast). */
@@ -41,21 +43,19 @@ export function useCmsEditorLabels(): RichTextEditorLabels {
   const t = useTranslations('admin.pages.editor')
   return {
     toolbar: t('toolbar'),
-    menuFormat: t('menu_format'),
-    menuParagraph: t('menu_paragraph'),
-    menuInsert: t('menu_insert'),
-    menuHistory: t('menu_history'),
+    toolbarToggle: t('toolbar_toggle'),
+    fullscreen: t('fullscreen'),
+    addMedia: t('add_media'),
+    modeVisual: t('mode_visual'),
+    modeText: t('mode_text'),
     bold: t('bold'),
     italic: t('italic'),
     underline: t('underline'),
     strike: t('strike'),
-    clearFormatting: t('clear_formatting'),
-    h2: t('h2'),
-    h3: t('h3'),
-    h4: t('h4'),
     bulletList: t('bullet_list'),
     orderedList: t('ordered_list'),
     blockquote: t('blockquote'),
+    hr: t('hr'),
     link: t('link'),
     unlink: t('unlink'),
     alignLeft: t('align_left'),
@@ -64,14 +64,28 @@ export function useCmsEditorLabels(): RichTextEditorLabels {
     alignJustify: t('align_justify'),
     undo: t('undo'),
     redo: t('redo'),
+    blockFormat: t('menu_format'),
+    paragraph: t('menu_paragraph'),
+    h2: t('h2'),
+    h3: t('h3'),
+    h4: t('h4'),
+    h5: t('h5'),
+    h6: t('h6'),
+    preformatted: t('preformatted'),
+    textColor: t('text_color'),
+    colorDefault: t('color_default'),
+    colorBrand: t('color_brand'),
+    colorGray: t('color_gray'),
+    colorRed: t('color_red'),
+    colorOrange: t('color_orange'),
+    colorGreen: t('color_green'),
+    colorBlueLight: t('color_blue_light'),
+    tableMenu: t('table_menu'),
     linkInputLabel: t('link_input_label'),
     linkInputPlaceholder: t('link_input_placeholder'),
     linkExternal: t('link_external'),
     linkInternal: t('link_internal'),
     linkSave: t('link_save'),
-    columns2: t('columns_2'),
-    columns3: t('columns_3'),
-    columnsRemove: t('columns_remove'),
     tableInsert: t('table_insert'),
     tableAddRow: t('table_add_row'),
     tableDeleteRow: t('table_delete_row'),
@@ -89,6 +103,9 @@ export function useCmsEditorLabels(): RichTextEditorLabels {
     imageCancel: t('image_cancel'),
     imageErrorType: t('image_error_type'),
     imageErrorSize: t('image_error_size'),
+    listItem: t('list_item'),
+    code: t('code'),
+    closeTags: t('close_tags'),
   }
 }
 
@@ -110,6 +127,7 @@ export function PageEditorDialogView({
   slugError,
   onSlugChange,
   sqBodyError,
+  sqTitleError = false,
   published,
   onPublishedChange,
   onUploadImage,
@@ -135,7 +153,8 @@ export function PageEditorDialogView({
   // so the monospace face goes through `styles.input` with the theme token.
   const monospaceInput = { input: { fontFamily: theme.fontFamilyMonospace } }
 
-  const saveDisabled = saving || !localeData.sq.title.trim() || !!slugError
+  // Task 990: Save is disabled only while saving or with a slug error; without the Albanian title it answers with the field's error
+  const saveDisabled = saving || !!slugError
 
   return (
     <MantineModal
@@ -189,8 +208,10 @@ export function PageEditorDialogView({
                       {t('empty_locale_warning')}
                     </Alert>
                   )}
+                  {/* Task 990: the Albanian title is required (no mark, owner policy 2026-06-26, confirmed 2026-11-27); the other titles say "(optional)" */}
                   <TextInput
-                    label={t('field_title_label')}
+                    label={loc === 'sq' ? t('field_title_label') : t('field_title_optional_label')}
+                    error={loc === 'sq' && sqTitleError ? t('sq_title_required') : undefined}
                     value={d.title}
                     placeholder={localeLabels[loc]}
                     onChange={e => onFieldChange(loc, 'title', e.target.value)}

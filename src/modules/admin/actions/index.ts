@@ -5,7 +5,8 @@ import { getUser } from '@/lib/auth/server'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { checkActorRank, checkStaff } from '@/lib/auth/staff'
 import { revalidatePath, updateTag } from 'next/cache'
-import type { ListingStatus, UserRole, UserType, PageContent } from '@/types/database'
+import type { ListingStatus, UserRole, UserType, PageContent, FooterLink } from '@/types/database'
+import { normalizeInternalPath } from '@/lib/footer-route-allowlist'
 import { validateSlug } from '@/lib/slug-validator'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
@@ -336,10 +337,35 @@ export async function createPage(data: {
   return {}
 }
 
+/**
+ * Task 990: the languages whose footer holds an enabled link to the page `id` (its stored address), or `transient` when the page or the footer cannot be read
+ * (fail closed). The four `site_footer` rows are read with their three lists (Task 989: the social list is one list stored in each row). Called only after
+ * `assertPermission('legal.manage')`: a service-role read.
+ */
+async function footerLocalesLinking(db: ReturnType<typeof createAdminClient>, id: number, storedSlug?: string): Promise<{ locales: string[] } | 'transient'> {
+  let slug = storedSlug
+  if (slug === undefined) {
+    const { data: page, error: pageError } = await db.from('pages').select('id, slug').eq('id', id).maybeSingle()
+    if (pageError) { console.error('footerLocalesLinking: page read failed', { error: pageError, id }); return 'transient' }
+    if (!page) return { locales: [] }
+    slug = page.slug as string
+  }
+  const { data: rows, error } = await db.from('site_footer').select('locale, nav_links, info_links, social_links')
+  if (error) { console.error('footerLocalesLinking: footer read failed', { error }); return 'transient' }
+  const address = `/${slug}`
+  const locales: string[] = []
+  for (const row of rows ?? []) {
+    const links = [row.nav_links, row.info_links, row.social_links].flatMap(list => (Array.isArray(list) ? (list as FooterLink[]) : []))
+    const linked = links.some(l => l?.enabled === true && typeof l.url === 'string' && l.url.trim().startsWith('/') && normalizeInternalPath(l.url.trim()) === address)
+    if (linked) locales.push(row.locale as string)
+  }
+  return { locales }
+}
+
 export async function updatePage(
   id: number,
   data: { title?: string; slug?: string; content?: PageContent; is_published?: boolean }
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; locales?: string[] }> {
   await assertPermission('legal.manage')
   if (data.slug !== undefined) {
     const slugResult = validateSlug(data.slug)
@@ -349,6 +375,16 @@ export async function updatePage(
     if (existing) return { error: 'slug_already_used' }
   }
   const db = createAdminClient()
+  // Task 990: a page an enabled footer link names is not unpublished or renamed (the link would answer 404); a failed read refuses; nothing is written
+  if (data.is_published === false || data.slug !== undefined) {
+    const { data: stored, error: storedError } = await db.from('pages').select('id, slug').eq('id', id).maybeSingle()
+    if (storedError) { console.error('updatePage: page read failed', { error: storedError, id }); return { error: 'transient' } }
+    if (stored && (data.is_published === false || data.slug !== stored.slug)) {
+      const footer = await footerLocalesLinking(db, id, stored.slug as string)
+      if (footer === 'transient') return { error: 'transient' }
+      if (footer.locales.length > 0) return { error: 'page_in_footer', locales: footer.locales }
+    }
+  }
   // R5: a page cannot publish with an empty Albanian body. "Effective" content is the
   // supplied `data.content` when present; when `is_published: true` arrives without
   // `content`, read the row's stored content first — never assume it is non-empty.
@@ -371,9 +407,13 @@ export async function updatePage(
   return {}
 }
 
-export async function deletePage(id: number): Promise<{ error?: string }> {
+export async function deletePage(id: number): Promise<{ error?: string; locales?: string[] }> {
   await assertPermission('legal.manage')
   const db = createAdminClient()
+  // Task 990: a page an enabled footer link names is not deleted; a failed read refuses (fail closed)
+  const footer = await footerLocalesLinking(db, id)
+  if (footer === 'transient') return { error: 'transient' }
+  if (footer.locales.length > 0) return { error: 'page_in_footer', locales: footer.locales }
   const { error } = await db.from('pages').delete().eq('id', id)
   if (error) { console.error('deletePage failed', { error, id }); return { error: 'delete_error' } }
   revalidatePath('/[locale]/admin/pages', 'page')

@@ -132,6 +132,11 @@ export interface MantineRichTextEditorProps {
   /** An upload is in flight: the dialog's action is disabled and shows a loader. */
   uploading?: boolean
   labels: RichTextEditorLabels
+  /**
+   * Called with `true` when full screen or the "Add media" dialog opens and `false` when neither is open (one call per change). Mantine closes every opened
+   * modal on one Escape, so a dialog around the editor ignores its own close while this is `true` (Task 990 Review 2 F6).
+   */
+  onDialogChange?: (open: boolean) => void
 }
 
 const IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp']
@@ -208,6 +213,7 @@ export function MantineRichTextEditor({
   onUploadImage,
   uploading = false,
   labels,
+  onDialogChange,
 }: MantineRichTextEditorProps) {
   const theme = useMantineTheme()
   const fieldId = useId()
@@ -253,6 +259,15 @@ export function MantineRichTextEditor({
     }
     wasFullscreen.current = fullscreen
   }, [fullscreen, labels.fullscreen])
+
+  // F6: the caller learns when one of the editor's own dialogs opens or closes, once per change.
+  const dialogOpen = fullscreen || imageOpen
+  const reportedDialogOpen = useRef(false)
+  useEffect(() => {
+    if (reportedDialogOpen.current === dialogOpen) return
+    reportedDialogOpen.current = dialogOpen
+    onDialogChange?.(dialogOpen)
+  }, [dialogOpen, onDialogChange])
 
   const pendingCaret = useRef<number | null>(null)
 

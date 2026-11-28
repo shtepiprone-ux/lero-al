@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Check } from 'lucide-react'
 import { Alert, Box, Button, ScrollArea, Stack, Switch, Tabs, TextInput, useMantineTheme } from '@mantine/core'
@@ -112,7 +113,7 @@ export function useCmsEditorLabels(): RichTextEditorLabels {
 
 /**
  * Presentational View of the `/admin/pages` create/edit dialog (Task 868, Container/Presentational
- * split of `PageEditorModal`). No hooks beyond `useTranslations` / `useMantineTheme`, no server
+ * split of `PageEditorModal`). No hooks beyond `useTranslations` / `useMantineTheme` and the editor-dialog flag (F6), no server
  * action, no `toast`: every value and transition is decided by the container (`PageEditorDialog`) and
  * handed down as props. Renders inside the canonical `MantineModal` (centred from 640px, bottom sheet
  * below).
@@ -157,10 +158,14 @@ export function PageEditorDialogView({
   // Task 990: Save is disabled only while saving or with a slug error; without the Albanian title it answers with the field's error
   const saveDisabled = saving || !!slugError
 
+  // F6: Mantine closes every opened modal on one Escape; while the editor's full screen or "Add media" is open, only that one closes. Cancel still closes.
+  const [editorDialogOpen, setEditorDialogOpen] = useState(false)
+  const closeUnlessEditorDialog = () => { if (!editorDialogOpen) onClose() }
+
   return (
     <MantineModal
       opened={opened}
-      onClose={onClose}
+      onClose={closeUnlessEditorDialog}
       structured
       size="xl"
       title={isEdit ? tLegal('modal_title_edit') : tLegal('modal_title_new')}
@@ -225,6 +230,7 @@ export function PageEditorDialogView({
                     uploading={imageUploading}
                     onUploadImage={onUploadImage}
                     onChange={html => onFieldChange(loc, 'body', html)}
+                    onDialogChange={setEditorDialogOpen}
                   />
                 </Stack>
               </Tabs.Panel>

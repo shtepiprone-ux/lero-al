@@ -353,6 +353,55 @@ describe('AdminPagesManager — a page is created from any admin language (Task 
   })
 })
 
+// Task 990 Review 2 F6: Mantine closes every opened modal on one Escape (its window keydown listener, capture phase), so Escape in the editor's full-screen
+// view or "Add media" dialog also closed the page dialog and lost what was typed. Escape now closes only the editor's dialog.
+describe('AdminPagesManager — Escape closes only the editor dialog [F6]', () => {
+  const tEditor = messages.admin.pages.editor
+
+  async function openWithTitle() {
+    renderManager([PAGE_A], 'uk')
+    const dialog = await openNewDialog()
+    fireEvent.change(activePanel(dialog).getByLabelText(t.field_title_label), { target: { value: 'Faqja e re' } })
+    return dialog
+  }
+
+  function pressEscape() {
+    fireEvent.keyDown(document.activeElement ?? document.body, { key: 'Escape' })
+  }
+
+  it('[F6] (a) Escape in full screen closes full screen only; the page dialog and its title stay', async () => {
+    const dialog = await openWithTitle()
+    fireEvent.click(activePanel(dialog).getByRole('button', { name: tEditor.fullscreen }))
+    await screen.findByRole('button', { name: tEditor.fullscreen_close })
+
+    pressEscape()
+
+    await waitFor(() => expect(screen.queryByRole('button', { name: tEditor.fullscreen_close })).toBeNull())
+    expect(screen.getAllByRole('dialog')).toEqual([dialog])
+    expect((activePanel(dialog).getByLabelText(t.field_title_label) as HTMLInputElement).value).toBe('Faqja e re')
+  })
+
+  it('[F6] (b) Escape in "Add media" closes that dialog only; the page dialog and its title stay', async () => {
+    const dialog = await openWithTitle()
+    fireEvent.click(activePanel(dialog).getByRole('button', { name: tEditor.add_media }))
+    await waitFor(() => expect(screen.getAllByRole('dialog')).toHaveLength(2))
+
+    pressEscape()
+
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: tEditor.image_dialog_title })).toBeNull())
+    expect(screen.getAllByRole('dialog')).toEqual([dialog])
+    expect((activePanel(dialog).getByLabelText(t.field_title_label) as HTMLInputElement).value).toBe('Faqja e re')
+  })
+
+  it('[F6] (c) with no editor dialog open, Escape closes the page dialog (as on main)', async () => {
+    await openWithTitle()
+
+    pressEscape()
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+  })
+})
+
 describe('AdminPagesManager — editor image upload (T12)', () => {
   const CLD = 'https://res.cloudinary.com/demo/image/upload/v1/cms/pages/a.png'
 

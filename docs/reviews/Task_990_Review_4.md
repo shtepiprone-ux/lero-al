@@ -1,6 +1,6 @@
 # Task 990 — Review 4
 
-Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
+Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Archive/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
 
 Review 4 of the uncommitted Revision 3 on a4fda73cc (branch `task/990-a-new-page-reaches-the-site`, PR #86) — APPROVED
 Scope: diff-based, `git diff a4fda73cc` (Revision 3, F7-F9): `textColors.ts`, `sanitizeCmsHtml.ts`, `MantineRichTextEditor.tsx`, `package.json`, `package-lock.json`; the page `/admin/pages`; the RichTextEditor Stories; the executor's Revision 3 report
@@ -35,7 +35,7 @@ Overall risk: F7-F9 are removed; the product checks that failed CI on PR #86 pas
 - V11: no finding. The executor's R2 report is Task 1082.
 - V12: this file, linked from the kickoff; `check-files.mjs` on the kickoff, this file and `docs/backlog.md`.
 - V13: APPROVED, handed over with the commit and push commands.
-- V14: after the owner's push, `gh pr checks 86`.
+- V14: the owner committed `7fa246969` and pushed it; `gh pr checks 86` after every check concluded (run 46171666337): 24 passed, none failed — among them "Lint, types and product checks" (F7, F8), "CodeQL" and "CodeQL (SAST)" (F9), "Dependency audit", "SBOM" (the lockfile of V3) and "CI Required"; the pull request `CLEAN`, `MERGEABLE`, its base `9b74f63a0` equal to GitHub `main`.
 
 ## Findings
 

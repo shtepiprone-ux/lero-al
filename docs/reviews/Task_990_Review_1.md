@@ -1,6 +1,6 @@
 # Task 990 — Review 1
 
-Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
+Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Archive/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
 
 Review 1 of the working tree on c968d63c9 (branch `task/990-a-new-page-reaches-the-site`, uncommitted) — NEEDS REVISION
 Scope: diff-based; 17 code files (2 new), 4 message files, `package.json`, `package-lock.json`; entry points: the changed Server Actions `updatePage`, `deletePage` (staff, `legal.manage`), `saveFooterShared`, `upsertFooterContent` (admin); the public page render through `sanitizeCmsHtml`; the executor's report `docs/sessions/2026-11-27-task990-executor-report.md`

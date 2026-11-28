@@ -1,6 +1,6 @@
 # Task 990 — Review 3
 
-Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
+Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Archive/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
 
 Review 3 of 7c5903e2e (branch `task/990-a-new-page-reaches-the-site`, PR #86) — NEEDS REVISION
 Scope: diff-based, `git diff 2c91e20a9` (Revision 2, F6): `PageEditorDialogView.tsx`, `MantineRichTextEditor.tsx`, `AdminPagesManager.smoke.test.tsx`; the page `/admin/pages`; the Stories of the two changed components; the executor's Revision 2 report

@@ -29,8 +29,8 @@ const HOUR = 3_600_000
 /** the prefix a run started `ageMs` ago would have: 8 base-36 time characters, 4 hex characters */
 function prefix(ageMs: number, hex = 'a1b2') { return `zz_synth_${(NOW - ageMs).toString(36)}${hex}` }
 
-type Door = { emails?: string[]; slugs?: string[]; emailsFail?: boolean; slugsFail?: boolean; logText?: string | null; removeResult?: (p: string) => { verified: boolean; remaining: number; errors: string[] } }
-function door({ emails = [], slugs = [], emailsFail = false, slugsFail = false, logText = null, removeResult }: Door = {}) {
+type Door = { emails?: string[]; slugs?: string[]; prefixed?: string[]; emailsFail?: boolean; slugsFail?: boolean; prefixedFail?: boolean; logText?: string | null; removeResult?: (p: string) => { verified: boolean; remaining: number; errors: string[] } }
+function door({ emails = [], slugs = [], prefixed = [], emailsFail = false, slugsFail = false, prefixedFail = false, logText = null, removeResult }: Door = {}) {
   const out: string[] = []
   const removed: string[] = []
   const reads: string[] = []
@@ -38,6 +38,7 @@ function door({ emails = [], slugs = [], emailsFail = false, slugsFail = false, 
     loadEnv: vi.fn<() => unknown>(() => ({ url: 'https://dev.supabase.co', anonKey: 'a', serviceKey: 's', projectRef: 'dev' })),
     readEmails: vi.fn(async () => { reads.push('emails'); if (emailsFail) throw new Error('auth list failed'); return emails }),
     readSlugs: vi.fn(async () => { reads.push('slugs'); if (slugsFail) throw new Error('listings read failed'); return slugs }),
+    readPrefixed: vi.fn(async () => { reads.push('prefixed'); if (prefixedFail) throw new Error('prefixed read failed'); return prefixed }),
     removeRun: vi.fn(async (run: string) => { removed.push(run); return (removeResult ?? (() => ({ verified: true, remaining: 0, errors: [] })))(run) }),
     readLog: vi.fn(() => logText),
     now: () => NOW,
@@ -120,7 +121,7 @@ describe('sweep-synthetic', () => {
     const result = await runSweep({ ...d.deps, argv: ['--dry-run'] })
     expect(result.exitCode).toBe(0)
     expect(d.removed).toEqual([])
-    expect(d.reads).toEqual(['emails', 'slugs'])
+    expect(d.reads).toEqual(['emails', 'slugs', 'prefixed'])
     expect(d.out.join('\n')).toContain(stale)
   })
 
@@ -146,6 +147,45 @@ describe('sweep-synthetic', () => {
     const result = await runSweep({ ...none.deps, argv: [] })
     expect(result.exitCode).toBe(0)
     expect(none.removed).toEqual([])
+  })
+
+  // Task 1080: a run whose accounts and listings are gone, or that wrote none yet, is found by the rows it wrote by its prefix (`fixtures.PREFIXED_COLUMNS`)
+  it('[1080-SWEEP-FOUND] a prefix older than two hours found only in a listed column (no account, no listing) is removed; a younger one stays', async () => {
+    const stale = prefix(3 * HOUR)
+    const fresh = prefix(HOUR, 'beef')
+    const d = door({ prefixed: [`${stale} amenity`, `${stale}-page`, `${stale}`, `${fresh} page`] })
+    const result = await runSweep({ ...d.deps, argv: [] })
+    expect(result.exitCode).toBe(0)
+    expect(d.reads).toEqual(['emails', 'slugs', 'prefixed'])
+    expect(d.removed).toEqual([stale])
+    expect(d.out.join('\n')).not.toMatch(/amenity|page/)
+  })
+
+  it('[SEC-1080-SHAPE] about, zz_synthx…, zz_synth_short, a prefix followed by a letter or digit and a value with the prefix inside it are never passed to removeRun', async () => {
+    const stale = prefix(5 * HOUR)
+    const valid = prefix(6 * HOUR, 'cafe')
+    const d = door({
+      prefixed: [
+        'about', `zz_synthx${stale.slice(9)} x`, 'zz_synth_short', 'zz_synth_short page', `${stale}a`, `${stale}0 page`, `page ${stale}`, `the-${stale}-page`,
+        `Zz_synth_${stale.slice(9)} x`, `${valid}:bucket`,
+      ],
+    })
+    expect((await runSweep({ ...d.deps, argv: [] })).exitCode).toBe(0)
+    expect(d.removed, 'only the value of the exact shape names a prefix').toEqual([valid])
+  })
+
+  it('[1080-SWEEP-READ-FAILS] a failing read of the listed columns removes nothing and exits 1; the target is refused before it', async () => {
+    const d = door({ prefixedFail: true, logText: `${prefix(0)}\n`, prefixed: [`${prefix(9 * HOUR)} x`] })
+    const result = await runSweep({ ...d.deps, argv: [] })
+    expect(result.exitCode).toBe(1)
+    expect(d.removed).toEqual([])
+    expect(d.out).toContain('sweep-synthetic: the read of the synthetic rows failed; nothing was removed')
+    expect(d.out.join('\n')).not.toContain('prefixed read failed')
+    const refused = door({ logText: `${prefix(0)}\n`, prefixed: [`${prefix(9 * HOUR)} x`] })
+    refused.deps.loadEnv.mockImplementation(() => { throw new Error('Refusing to run: set SECURITY_TEST_TARGET=development.') })
+    expect((await runSweep({ ...refused.deps, argv: [] })).exitCode).toBe(1)
+    expect(refused.deps.readPrefixed).not.toHaveBeenCalled()
+    expect(refused.removed).toEqual([])
   })
 })
 

@@ -54,6 +54,13 @@ only the account rules (Git and language), identical in all three. Memory holds 
   `node --env-file` cuts as a comment); never print them. The sign-in form needs a Turnstile token, which a scripted
   browser does not get; a scripted session signs in with `signInWithPassword` the way `src/tests/integration/fixtures.ts`
   does (2026-11-18).
+- The approved development project of the integration suites (owner, 2026-11-28, Task 1080 Review 1, translated:
+  "OK"): `SECURITY_TEST_PROJECT_REF=bmxkzcxaojgmpgzawwtn`, an identifier, not a secret
+  (`src/tests/integration/environment.ts:23`; the same ref in `tasks/Archive/Sprint_93_kickoff_prompt_Task_956_Database_Hardening_V8b.md:168`).
+  A run sets it with `SECURITY_TEST_TARGET=development` in the process environment, never from `.env.local`:
+  `loadIntegrationEnv` compares it with the host of the configured URL (`environment.ts:52`), so a ref read from that
+  same URL confirms nothing. A local run also sets `TURNSTILE_SECRET_KEY` empty: `verifyTurnstile` accepts
+  `dev-noop-token` only without it (`src/lib/captcha/verifyTurnstile.ts:45-52`, Task 990 Review 4).
 - `PGRST204` ("could not find column") means schema drift: check `information_schema.columns`; after a schema change
   run `NOTIFY pgrst, 'reload schema'`.
 - Grants read on 2026-11-15 (`db-catalog-audit.mjs`): `authenticated` has no write grant on 15 of 17 staff tables; only

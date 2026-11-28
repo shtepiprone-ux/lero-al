@@ -1,7 +1,7 @@
 # Task 990 — executor report (first implementation)
 
 Executor: Sonnet (`sclaude`), skill `execute-task`, checklist I under checklist A, U for the visible UI. Kickoff:
-`tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md` (refreshed 2026-11-27 on `9b74f63a0`).
+`tasks/Archive/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md` (refreshed 2026-11-27 on `9b74f63a0`).
 Branch `task/990-a-new-page-reaches-the-site`, base commit `c968d63c9`. No Git command that writes was run.
 
 ## Owner decisions taken in this session (2026-11-27, translated)

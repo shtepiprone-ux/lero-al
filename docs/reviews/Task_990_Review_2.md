@@ -1,6 +1,6 @@
 # Task 990 — Review 2
 
-Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
+Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Archive/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
 
 Review 2 of the working tree on 646917f67 (branch `task/990-a-new-page-reaches-the-site`, Revision 1 uncommitted) — NEEDS REVISION
 Scope: diff-based, `git diff 646917f67` (Revision 1): `MantineRichTextEditor.tsx`, its toolbar test, `PageEditorDialogView.tsx`, `PageEditorDialogView.stories.tsx`, `scripts/rendered-interaction-states.json`, the four message files; the pages `/admin/pages` and `/admin/footer`; the executor's Revision 1 report

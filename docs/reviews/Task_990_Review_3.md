@@ -2,11 +2,11 @@
 
 Kickoff: [Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md](../../tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md) · OWASP record: [Task_990.json](../security/owasp/reviews/Task_990.json)
 
-Review 3 of the working tree on 2c91e20a9 (branch `task/990-a-new-page-reaches-the-site`, Revision 2 uncommitted) — APPROVED
+Review 3 of 7c5903e2e (branch `task/990-a-new-page-reaches-the-site`, PR #86) — NEEDS REVISION
 Scope: diff-based, `git diff 2c91e20a9` (Revision 2, F6): `PageEditorDialogView.tsx`, `MantineRichTextEditor.tsx`, `AdminPagesManager.smoke.test.tsx`; the page `/admin/pages`; the Stories of the two changed components; the executor's Revision 2 report
 Tools: `owasp.mjs sync`, `check` → exit 0; `check-ruleset.mjs` → exit 0; `main` CI 46147156669 green; Route 54 files 1069 passed; integration 8 files 52 passed; `vitest related` 5 files 74 passed; ESLint → exit 0; typecheck → 80 errors, all in the stale `.next`, 0 in `src`; `owasp.mjs review` → exit 0; V5a in Chromium and Firefox on the Storybook and app dev servers
-Findings: Critical 0, High 0, Medium 0, Low 0
-Overall risk: F6 is removed and holds in Chromium and Firefox at every width; the same Escape loss inside the editor's menus comes from shared overlay components this diff does not change and is Task 1081.
+Findings: Critical 0, High 0, Medium 0, Low 3
+Overall risk: F6 is removed and holds in Chromium and Firefox at every width; the same Escape loss inside the editor's menus comes from shared overlay components this diff does not change and is Task 1081. V13 set APPROVED; V14 then found three CI checks red on code of the first implementation (F7-F9), so the verdict is NEEDS REVISION (V14: fixed in the same pull request).
 
 ## Checklist V
 
@@ -32,12 +32,50 @@ Overall risk: F6 is removed and holds in Chromium and Firefox at every width; th
 - V9: below.
 - V10: `node scripts/quality/owasp.mjs review <kickoff> --base main` → exit 0; the record `Task_990.json` holds a verdict for every triggered sheet; Revision 2 triggers none beyond them.
 - V11: no finding. The executor's A4 report is Task 1081.
-- V12: this file, linked from the kickoff; `check-files.mjs` on the kickoff, this file and `docs/backlog.md`.
-- V13: APPROVED.
+- V12: this file, linked from the kickoff; `check-files.mjs` on the kickoff, this file and `docs/backlog.md`; rerun after V14.
+- V13: APPROVED, handed over with the commit, push and pull request commands; the owner committed `7c5903e2e`, pushed it and opened PR #86.
+- V14: `gh pr checks 86` after every check concluded (run 46164462550): 19 passed; failed: "Lint, types and product checks" (job 141038811730), "CodeQL" (check run 141039595359, "1 new alert including 1 high severity security vulnerability") and "CI Required". `gh run view 46164462550 --job 141038811730 --log-failed` → `npm run check:design-tokens:strict` (F7) and `node scripts/check-badge-canonical.mjs` (F8); the CodeQL annotations (`gh api repos/:owner/:repo/check-runs/141039595359/annotations`) → F9. The three files are the first implementation's, unchanged since Review 1; these gates run only on GitHub (A5), so no review ran them. Verdict changed to NEEDS REVISION.
 
 ## Findings
 
-No findings.
+F7 — A raw colour function in the text palette fails the design-token gate
+Severity: Low      Category: UI (U3, `check:design-tokens:strict`)      CWE: —
+Location: `src/design-system/mantine/richtext/textColors.ts:23`
+Description: `colorOf` writes the browser's `rgb(r, g, b)` spelling of each theme colour (the spelling Tiptap's `Color` reads back from `element.style.color`, which the sanitizer must also accept). The template literal holds `rgb(`, which the strict design-token scan reports as a raw colour value.
+Impact: the CI job "Lint, types and product checks" fails; the pull request cannot merge.
+Reproduction: run 46164462550, job 141038811730: `src/design-system/mantine/richtext/textColors.ts (1) :23 [color:color function] "rgb("`, "check:design-tokens STRICT — 1 raw style-value violation(s)".
+Recommendation: Revision 3, item 1.
+References: `docs/design-system.md` §22-23 (the same-line `design-tokens-allow` marker; precedent `src/design-system/mantine/patterns/MantineTooltip.tsx:26`); checklist U3
+Status: open
+
+F8 — The sanitizer's colour rule is named like a badge colour map
+Severity: Low      Category: UI (`check-badge-canonical.mjs`)      CWE: —
+Location: `src/modules/cms/lib/sanitizeCmsHtml.ts:32`
+Description: `PALETTE_COLOR` is the `allowedStyles` rule of `span` (`{ color: RegExp[] }`), the same kind as `TEXT_ALIGN` above it; the gate refuses any object variable named `*_COLOR` or `*_TONE` outside `badgeTones.ts` (`scripts/check-badge-canonical.mjs:9`, `:67`).
+Impact: the CI job "Lint, types and product checks" fails.
+Reproduction: run 46164462550: "FAIL src/modules/cms/lib/sanitizeCmsHtml.ts:32 [colour-map] declares `PALETTE_COLOR`".
+Recommendation: Revision 3, item 2.
+References: `scripts/check-badge-canonical.mjs`
+Status: open
+
+F9 — The "Text" mode parses the typed HTML with `DOMParser` (CodeQL js/xss-through-dom, high)
+Severity: Low      Category: JavaScript and TypeScript      CWE: CWE-79
+Location: `src/design-system/mantine/patterns/MantineRichTextEditor.tsx:176-185` (`insAsUnderline`), `:306`
+Description: the textarea's value flows into `new DOMParser().parseFromString(html, 'text/html')` and back out as `doc.body.innerHTML` into `editor.commands.setContent`. The parsed document is inert and only an admin's own text reaches it (visitors get a page only through `sanitizeCmsHtml`), so the practical risk is low; CodeQL reports "DOM text reinterpreted as HTML" at high severity, and a high alert blocks the merge (`quality-gates.md` §5). The function exists only to read `ins` as underline, which the editor schema can do itself.
+Impact: the CodeQL check and `CI Required` fail; the pull request cannot merge.
+Reproduction: check run 141039595359, annotation `src/design-system/mantine/patterns/MantineRichTextEditor.tsx:178` "DOM text reinterpreted as HTML".
+Recommendation: Revision 3, item 3.
+References: OWASP `DOM_based_XSS_Prevention`; `quality-gates.md` §5 "CodeQL"
+Status: open
+
+## Revision 3
+
+Items for the executor (`/execute-task`). The base is the commit of this review's documentation that the owner makes (V13); Review 4 diffs against it and reads `gh pr checks 86` again. `textColors.ts`, `sanitizeCmsHtml.ts` and `MantineRichTextEditor.tsx` are in the Scope; `package.json` and `package-lock.json` for item 3, as for `@tiptap/extension-text-style` in the Scope. Nobody runs the gates locally (A5): CI on the pushed branch is the check.
+
+1. F7: `textColors.ts:23` — keep the computed `rgb(r, g, b)` spelling and add the same-line marker of `docs/design-system.md` §23 in the form of `MantineTooltip.tsx:26`: `// design-tokens-allow: rgb( — the browser's serialization of a theme colour, computed from the theme hex; the sanitizer and the editor compare it, it is not a style value`. No other change in the file.
+2. F8: `sanitizeCmsHtml.ts` — rename `PALETTE_COLOR` to `PALETTE_COLOR_STYLE` (its declaration and its one use); behaviour unchanged.
+3. F9: `MantineRichTextEditor.tsx` — remove `insAsUnderline` and its `DOMParser`; `changeText` passes the typed HTML to `setContent` as it is. In `RICH_TEXT_EXTENSIONS`: `StarterKit.configure({ link: false, underline: false })` and `Underline.extend({ parseHTML() { return [...(this.parent?.() ?? []), { tag: 'ins' }] } })` from `@tiptap/extension-underline`, added to `package.json` `dependencies` as `"@tiptap/extension-underline": "3.32.2"`. It is already installed as a dependency of `@tiptap/starter-kit` 3.32.2; `npm view @tiptap/extension-underline@3.32.2`, read 2026-11-28: repository `ueberdosis/tiptap`, scripts `build` only, peer `@tiptap/core` 3.32.2, integrity equal to `package-lock.json:7353`, first release 2020-11-16, latest 3.35.1 (the pin follows the installed Tiptap). Update `package-lock.json` with `npm install --package-lock-only`; no other package may change (the lockfile diff is the root `dependencies` entry only). Update the docstring above the removed function. The toolbar test's case "back in Visual, del is strike and ins is underline" (`MantineRichTextEditor.toolbar.test.tsx:289`) passes unchanged; `richTextRoundTrip.test.ts` and `sanitizeCmsHtml.security.test.ts` unchanged and passing.
+4. Report: the Route tests, both §8.1 searches over every changed file, `npm run typecheck`, the hook's ESLint command over the changed code files, each with its exit code; `git diff package-lock.json` in full; a grep showing `DOMParser` and `insAsUnderline` gone from `src/design-system`.
 
 ## Stories for the owner (V9)
 

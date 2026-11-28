@@ -193,8 +193,16 @@ The item is written in full in [Task_990_Review_2.md](../../docs/reviews/Task_99
 
 - F6: Escape in the editor's full-screen view or "Add media" dialog closes only that view or dialog; the page dialog and what was typed in it stay. `MantineRichTextEditor.tsx` reports its open dialogs (`onDialogChange`), `PageEditorDialogView.tsx` ignores the page dialog's close while one is open; tested in `AdminPagesManager.smoke.test.tsx` (`[F6]`).
 
+## Revision 3 (Review 3, 2026-11-28)
+
+The items are written in full in [Task_990_Review_3.md](../../docs/reviews/Task_990_Review_3.md), "Revision 3": the three red CI checks of PR #86 (run 46164462550) on code of the first implementation. Item 3 also reaches `package.json` and `package-lock.json` (a pinned `@tiptap/extension-underline` 3.32.2, already installed through `@tiptap/starter-kit`).
+
+- F7: the computed `rgb(` spelling in `textColors.ts:23` carries the design-token allow marker with its reason.
+- F8: `PALETTE_COLOR` in `sanitizeCmsHtml.ts` is renamed `PALETTE_COLOR_STYLE`.
+- F9: the editor reads `ins` as underline through its schema (`Underline.extend` with an `ins` parse rule); `insAsUnderline` and its `DOMParser` leave.
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_990_Review_1.md)
 - [Review 2 — NEEDS REVISION](../../docs/reviews/Task_990_Review_2.md)
-- [Review 3 — APPROVED](../../docs/reviews/Task_990_Review_3.md)
+- [Review 3 — NEEDS REVISION](../../docs/reviews/Task_990_Review_3.md)

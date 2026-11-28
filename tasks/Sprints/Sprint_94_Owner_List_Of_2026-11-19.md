@@ -95,7 +95,7 @@ visitor's language nor `sq` has a title or body (`src/app/[locale]/[slug]/page.t
 text Save stays disabled with no reason and an empty address (the Albanian title is required and the address is built
 from it only, `src/components/admin/AdminPagesManager.tsx:36,54-56,88`); a saved page starts as a draft (`:47`); the
 Ukrainian footer links `/test`, which no page has (`/uk/test` → 404). Kickoff:
-`tasks/Sprints/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md` (owner decision O990-1, the
+`tasks/Archive/Sprint_79_kickoff_prompt_Task_990_A_New_Page_Reaches_The_Site.md` (owner decision O990-1, the
 WordPress classic toolbar and its Text mode). The editor offers bold, italic,
 underline, strike, h2-h4, lists, quote, link, alignment, undo and redo in five menus
 (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:241-353`); no special characters, no font size or colour.

@@ -27,7 +27,7 @@ import {
   Table as TableIcon,
   TableProperties,
   Trash2,
-  Underline,
+  Underline as UnderlineIcon,
   Undo2,
   Unlink,
   X,
@@ -37,6 +37,7 @@ import { ActionIcon, Button, ColorSwatch, FileInput, Flex, Group, Input, Modal, 
 import { RichTextEditor } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
+import { Underline } from '@tiptap/extension-underline'
 import { Link } from '@tiptap/extension-link'
 import { TextAlign } from '@tiptap/extension-text-align'
 import { Image } from '@tiptap/extension-image'
@@ -144,9 +145,11 @@ const IMAGE_MAX_BYTES = 5 * 1024 * 1024
 
 // Heading levels stay at the Tiptap default (h1–h6) so a stored body keeps every level; the "Paragraph" select offers h2–h6 (the page title is the h1,
 // `CmsPageView.tsx`). Code and rules stay enabled for the same reason. The columns block keeps its extension so a stored page renders (Task 990: the tool left
-// the toolbar). Task 990: the text colour is a `textStyle` mark with a `color` from the theme palette (`textColors.ts`).
+// the toolbar). Task 990: the text colour is a `textStyle` mark with a `color` from the theme palette (`textColors.ts`). The "Text" mode's `ins` is underline
+// (the WordPress quicktag; `del` is already a strike of the schema): the underline mark also parses an `ins` element, so the typed HTML needs no rewrite.
 export const RICH_TEXT_EXTENSIONS = [
-  StarterKit.configure({ link: false }),
+  StarterKit.configure({ link: false, underline: false }),
+  Underline.extend({ parseHTML() { return [...(this.parent?.() ?? []), { tag: 'ins' }] } }),
   Link.configure({ openOnClick: false }),
   TextAlign.configure({ types: ['heading', 'paragraph'] }),
   Image.configure({ allowBase64: false }),
@@ -167,21 +170,6 @@ export const RICH_TEXT_EXTENSIONS = [
 function serialise(editor: { isEmpty: boolean; getHTML: () => string }): string {
   const html = editor.getHTML()
   return editor.isEmpty && !/<(img|table|div)\b/i.test(html) ? '' : html
-}
-
-/**
- * Task 990: the "Text" mode's `ins` is underline in the editor (the WordPress quicktag; `del` is already a strike of the schema). The HTML is parsed into an
- * inert document (no script runs, nothing loads) and each `ins` element becomes a `u` element with the same children; the editor schema then parses the result.
- */
-function insAsUnderline(html: string): string {
-  if (!/<ins\b/i.test(html)) return html
-  const doc = new DOMParser().parseFromString(html, 'text/html')
-  for (const ins of Array.from(doc.body.querySelectorAll('ins'))) {
-    const u = doc.createElement('u')
-    u.append(...Array.from(ins.childNodes))
-    ins.replaceWith(u)
-  }
-  return doc.body.innerHTML
 }
 
 /** An attribute value written into the "Text" mode's HTML: `&`, `"`, `<` and `>` as entities, so the value stays one attribute. */
@@ -303,7 +291,7 @@ export function MantineRichTextEditor({
   function changeText(next: string) {
     setText(next)
     if (!editor) return
-    editor.commands.setContent(insAsUnderline(next), { emitUpdate: false })
+    editor.commands.setContent(next, { emitUpdate: false })
     onChangeRef.current(serialise(editor))
   }
 
@@ -546,7 +534,7 @@ export function MantineRichTextEditor({
                     {menuTool(currentBlock.label, currentBlock.label, blockItems, false, false, labels.blockFormat)}
                   </RichTextEditor.ControlsGroup>
                   <RichTextEditor.ControlsGroup>
-                    {tool(labels.underline, Underline, on('underline'), !canEdit, () => chain()?.toggleUnderline().run())}
+                    {tool(labels.underline, UnderlineIcon, on('underline'), !canEdit, () => chain()?.toggleUnderline().run())}
                     {tool(labels.alignJustify, AlignJustify, aligned('justify'), !canEdit, () => chain()?.setTextAlign('justify').run())}
                     {menuTool(labels.textColor, <Baseline size={icon} />, colorItems, !!currentColor)}
                   </RichTextEditor.ControlsGroup>

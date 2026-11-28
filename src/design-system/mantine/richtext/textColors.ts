@@ -20,7 +20,7 @@ function colorOf(name: TextColorName): { name: TextColorName; value: string; rgb
   const value = shade === undefined ? undefined : theme.colors?.[name]?.[shade]
   if (!value || !/^#[0-9a-f]{6}$/i.test(value)) throw new Error(`textColors: the theme has no six-digit hex ${name} colour at shade ${String(shade)}`)
   const n = Number.parseInt(value.slice(1), 16)
-  return { name, value, rgb: `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})` }
+  return { name, value, rgb: `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})` } // design-tokens-allow: rgb( — the browser's serialization of a theme colour, computed from the theme hex; the sanitizer and the editor compare it, it is not a style value
 }
 
 export const TEXT_COLORS: ReadonlyArray<{ name: TextColorName; value: string; rgb: string }> = Object.freeze(

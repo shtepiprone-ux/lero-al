@@ -29,7 +29,7 @@ import { TEXT_COLORS } from '@/design-system/mantine/richtext/textColors'
  */
 const TEXT_ALIGN = { 'text-align': [/^(left|center|right|justify)$/] }
 const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-const PALETTE_COLOR = { color: TEXT_COLORS.flatMap(({ value, rgb }) => [value, rgb]).map(color => new RegExp(`^${escapeRegExp(color)}$`)) }
+const PALETTE_COLOR_STYLE = { color: TEXT_COLORS.flatMap(({ value, rgb }) => [value, rgb]).map(color => new RegExp(`^${escapeRegExp(color)}$`)) }
 
 // The library default list (`node_modules/sanitize-html/index.js:221-227`, 2.18.2) followed by the tags added here.
 const NON_TEXT_TAGS = [
@@ -110,7 +110,7 @@ const cmsHtmlAllowlist: IOptions = {
     h5: TEXT_ALIGN,
     h6: TEXT_ALIGN,
     li: TEXT_ALIGN,
-    span: PALETTE_COLOR,
+    span: PALETTE_COLOR_STYLE,
   },
   allowedSchemes: ['http', 'https', 'mailto', 'tel'],
   allowedSchemesAppliedToAttributes: ['href'],

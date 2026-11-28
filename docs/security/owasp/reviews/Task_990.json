@@ -62,7 +62,7 @@
   "DOM_based_XSS_Prevention": {
    "verdict": "met",
    "quotes": ["It is always a bad idea to use a user-controlled input in dangerous sources such as eval."],
-   "evidence": "the \"Text\" mode parses typed HTML in an inert `DOMParser` document and the editor schema (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:170`, `:276`); no `eval`, no live `innerHTML` write; the inserted image markup escapes its attributes (`:296`, toolbar test \"img in Text mode\")"
+   "evidence": "the \"Text\" mode hands typed HTML to `setContent` (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:294`), which Tiptap parses in an inert `DOMParser` document (`node_modules/@tiptap/core/dist/index.js:558-562`) into the editor schema; `ins` is read by the underline mark's parse rule (`:152`), Revision 3 removed the component's own `DOMParser` pass; no `eval`, no live `innerHTML` write; the inserted image markup escapes its attributes (`:176`, `:314`, toolbar test \"img in Text mode\")"
   },
   "Denial_of_Service": {
    "verdict": "met",
@@ -72,7 +72,7 @@
   "Dependency_Graph_SBOM": {
    "verdict": "met",
    "quotes": ["Validate the document against its format's schema before publication or ingestion"],
-   "evidence": "the lockfile gains one entry, `node_modules/@tiptap/extension-text-style` 3.32.2 with its integrity (`git diff c968d63c9 -- package-lock.json`, +14 lines); the CI SBOM job validates the document (AC7, `gh pr checks`)"
+   "evidence": "the lockfile gains one entry, `node_modules/@tiptap/extension-text-style` 3.32.2 with its integrity (`git diff c968d63c9 -- package-lock.json`, +14 lines); Revision 3 adds only the root dependency line of `@tiptap/extension-underline` 3.32.2, whose package entry was already locked through `@tiptap/starter-kit` (`npm ls --package-lock-only` deduped, exit 0); the CI SBOM job validates the document (AC7, `gh pr checks`)"
   },
   "File_Upload": {
    "verdict": "met",
@@ -116,7 +116,7 @@
   "NPM_Security": {
    "verdict": "met",
    "quotes": ["Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."],
-   "evidence": "`@tiptap/extension-text-style` 3.32.2 read on npm in the kickoff (2026-11-19 and 2026-11-27: first release 2020-11-16, this version 2026-10-30, repository `ueberdosis/tiptap`, scripts `build` only); lockfile entry from `registry.npmjs.org` with `integrity` (`package-lock.json`)"
+   "evidence": "`@tiptap/extension-text-style` 3.32.2 read on npm in the kickoff (2026-11-19 and 2026-11-27: first release 2020-11-16, this version 2026-10-30, repository `ueberdosis/tiptap`, scripts `build` only); lockfile entry from `registry.npmjs.org` with `integrity` (`package-lock.json`); Revision 3: `@tiptap/extension-underline` 3.32.2 read on npm in Review 4 (2026-11-28: first release 2020-11-16, this version 2026-10-30, repository `ueberdosis/tiptap`, scripts `build` only, peer `@tiptap/core` 3.32.2, integrity `sha512-kY7B5ocK…` equal to the lockfile)"
   },
   "Nextjs_Security": {
    "verdict": "met",
@@ -150,7 +150,7 @@
   "Software_Supply_Chain_Security": {
    "verdict": "met",
    "quotes": ["limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"],
-   "evidence": "exact pin `\"@tiptap/extension-text-style\": \"3.32.2\"` (`package.json`), the version of the installed Tiptap packages, published 2026-10-30 (28 days before the review)"
+   "evidence": "exact pins `\"@tiptap/extension-text-style\": \"3.32.2\"` and (Revision 3) `\"@tiptap/extension-underline\": \"3.32.2\"` (`package.json`), the version of the installed Tiptap packages, both published 2026-10-30 (29 days before Review 4)"
   },
   "Threat_Modeling": {
    "verdict": "met",
@@ -168,12 +168,12 @@
   "Verifying_Third_Party_Agent_Execution_Evidence": {
    "verdict": "met",
    "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
-   "evidence": "Review 1 V3 and V8 reran the Route (`npm test --` 54 files, 1063 passed), the integration files (8, 52 passed), the import graph and each AC with its product change undone (`git show c968d63c9:<path>` in place, restored byte for byte)"
+   "evidence": "Review 1 V3 and V8 reran the Route (`npm test --` 54 files, 1063 passed), the integration files (8, 52 passed), the import graph and each AC with its product change undone (`git show c968d63c9:<path>` in place, restored byte for byte); Review 4 reran Revision 3's report: Route 54 files 1069 passed, `product-gates.mjs` 36 of 36, the import graph (475 files, the one failure is the I8 exception `[SEC-T1-SRV-BUILT-PROXY]`), the toolbar test failing with the `ins` parse rule undone"
   },
   "Vulnerable_Dependency_Management": {
    "verdict": "met",
    "quotes": ["It's highly recommended to perform automated analysis of the dependencies from the birth of the project."],
-   "evidence": "the CI dependency audit runs on the tree with the new package (AC7, `gh pr checks`); the package has no dependency of its own besides the peer `@tiptap/core` (`package-lock.json`)"
+   "evidence": "the CI dependency audit runs on the tree with the new package (AC7, `gh pr checks`); the package has no dependency of its own besides the peer `@tiptap/core` (`package-lock.json`); the same holds for `@tiptap/extension-underline` 3.32.2 (Revision 3)"
   },
   "Web_Frontend_Security": {
    "verdict": "met",

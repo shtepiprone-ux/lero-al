@@ -29,6 +29,15 @@ export interface CleanupResult { verified: boolean; remaining: number; errors: s
 const clientOptions = { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
 
 /**
+ * Every (table, column) a suite writes the run prefix to, other than the listings, the users and `listing_inquiries` (Task 1080): `removeRun` deletes and counts the run's rows of each,
+ * and the sweep reads each for a stale prefix. Their children (translations, replies, actions, events) go with them by `ON DELETE CASCADE`.
+ */
+export const PREFIXED_COLUMNS: readonly (readonly [table: string, column: string])[] = [
+  ['amenities', 'name_al'], ['companies', 'name'], ['contact_inquiries', 'name'], ['email_templates', 'key'], ['listing_reports', 'comment'], ['locations', 'name_al'],
+  ['pages', 'slug'], ['rate_limit_hits', 'bucket'], ['site_settings', 'key'], ['support_tickets', 'subject'], ['verification_requests', 'document_url'],
+]
+
+/**
  * Removes everything of ONE run, by its prefix (`zz_synth_<time><hex>`): the clean-up of `createRun()` and the sweep of `scripts/sweep-synthetic.mjs` (Task 957, O957-5) are this one body,
  * the same order and the same verification. `tracked` carries the ids the run created itself; anything else of the run is found by the prefix (listing slugs and auth e-mails).
  * A query that fails is "unknown", never "zero left".
@@ -59,6 +68,7 @@ export async function removeRun(admin: SupabaseClient, run: string, tracked: { u
   }
   const allUsers = [...userIds], allListings = [...listingIds]
 
+  for (const [table, column] of PREFIXED_COLUMNS) await step(table, () => admin.from(table).delete().like(column, RUN_LIKE))
   await step('inquiries', () => admin.from('listing_inquiries').delete().like('name', RUN_LIKE))
   if (allListings.length) {
     await step('contact events', () => admin.from('listing_contact_events').delete().in('listing_id', allListings))
@@ -97,6 +107,14 @@ export async function removeRun(admin: SupabaseClient, run: string, tracked: { u
   await count('notifications', () => admin.from('notifications').select('id').in('user_id', uids))
   await count('contact events', () => admin.from('listing_contact_events').select('id').in('listing_id', lids))
   await count('contact reveals', () => admin.from('listing_contact_reveals').select('id').in('viewer_id', allUsers.length ? allUsers : none))
+  for (const [table, column] of PREFIXED_COLUMNS) {
+    try {
+      const { count: left, error } = await admin.from(table).select('*', { count: 'exact', head: true }).like(column, RUN_LIKE)
+      if (error) errors.push(`verify ${table}: ${error.message.slice(0, 80)}`)
+      else if (typeof left !== 'number') errors.push(`verify ${table}: no count`)
+      else remaining += left
+    } catch (e) { errors.push(`verify ${table}: ${(e as Error).message.slice(0, 80)}`) }
+  }
   for (let page = 1; page <= 10; page++) {
     const list = await admin.auth.admin.listUsers({ page, perPage: 200 })
     if (list.error) { errors.push(`verify auth users: ${list.error.message.slice(0, 80)}`); break }

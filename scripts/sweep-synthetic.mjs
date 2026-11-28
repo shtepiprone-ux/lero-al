@@ -27,6 +27,8 @@ const TIME_AND_HEX = 'zz_synth_[0-9a-z]{8}[0-9a-f]{4}';
 export const PREFIX_SHAPE = new RegExp(`^${TIME_AND_HEX}$`);
 const EMAIL_PREFIX = new RegExp(`^(${TIME_AND_HEX})_.+@example\\.com$`);
 const SLUG_PREFIX = new RegExp(`^(${TIME_AND_HEX})-`);
+/** a value of a column of `fixtures.PREFIXED_COLUMNS` (Task 1080): the exact prefix at its start, then its end or a character that is not a letter or digit */
+const PREFIXED_VALUE = new RegExp(`^(${TIME_AND_HEX})(?![0-9a-z])`);
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
 /** The prefixes of a run log: one per line, only a line that is exactly a prefix counts (the log can never name a person). */
@@ -41,12 +43,14 @@ function prefixTime(prefix) {
 }
 
 /**
- * The sweep, with every outside thing handed in (so the test needs no database): `loadEnv` (the development-target guard), `readEmails` / `readSlugs` (read-only), `removeRun`, `readLog`.
+ * The sweep, with every outside thing handed in (so the test needs no database): `loadEnv` (the development-target guard), `readEmails` / `readSlugs` / `readPrefixed` (read-only;
+ * `readPrefixed` gives the values of every column of `fixtures.PREFIXED_COLUMNS` that start with `zz_synth_`, matched by `PREFIXED_VALUE`, Task 1080), `removeRun`, `readLog`.
  * @param {{
  *   argv?: string[],
  *   loadEnv: () => unknown,
  *   readEmails: (env: any) => Promise<string[]>,
  *   readSlugs: (env: any) => Promise<string[]>,
+ *   readPrefixed: (env: any) => Promise<string[]>,
  *   removeRun: (prefix: string) => Promise<{ verified: boolean, remaining: number, errors?: string[] }>,
  *   readLog: () => string | null,
  *   now?: () => number,
@@ -54,7 +58,7 @@ function prefixTime(prefix) {
  * }} deps
  * @returns {Promise<{ exitCode: number, prefixes: string[] }>}
  */
-export async function runSweep({ argv = [], loadEnv, readEmails, readSlugs, removeRun, readLog, now = () => Date.now(), out = console.log }) {
+export async function runSweep({ argv = [], loadEnv, readEmails, readSlugs, readPrefixed, removeRun, readLog, now = () => Date.now(), out = console.log }) {
   const dryRun = argv.includes('--dry-run');
 
   // the target is judged before anything is read
@@ -77,6 +81,7 @@ export async function runSweep({ argv = [], loadEnv, readEmails, readSlugs, remo
   // every read first: a read that fails removes nothing
   let emails;
   let slugs;
+  let prefixedValues;
   try {
     emails = await readEmails(env);
   } catch {
@@ -89,10 +94,16 @@ export async function runSweep({ argv = [], loadEnv, readEmails, readSlugs, remo
     out('sweep-synthetic: the read of the listings failed; nothing was removed');
     return { exitCode: 1, prefixes: [] };
   }
+  try {
+    prefixedValues = await readPrefixed(env);
+  } catch {
+    out('sweep-synthetic: the read of the synthetic rows failed; nothing was removed');
+    return { exitCode: 1, prefixes: [] };
+  }
 
   const found = new Set(logged);
   const cutoff = now() - TWO_HOURS_MS;
-  for (const [list, shape] of [[emails, EMAIL_PREFIX], [slugs, SLUG_PREFIX]]) {
+  for (const [list, shape] of [[emails, EMAIL_PREFIX], [slugs, SLUG_PREFIX], [prefixedValues, PREFIXED_VALUE]]) {
     for (const value of list) {
       const match = typeof value === 'string' ? shape.exec(value) : null;
       if (match && prefixTime(match[1]) < cutoff) found.add(match[1]);
@@ -182,6 +193,20 @@ async function main() {
         for (const row of data ?? []) slugs.push(row.slug);
         if ((data ?? []).length < 1000) return slugs;
       }
+    },
+    readPrefixed: async (confirmed) => {
+      const client = admin(confirmed);
+      const values = [];
+      const pattern = `${escape.escapeLike('zz_synth_')}%`;
+      for (const [table, column] of fixtures.PREFIXED_COLUMNS) {
+        for (let from = 0; ; from += 1000) {
+          const { data, error } = await client.from(table).select(column).like(column, pattern).order(column).range(from, from + 999);
+          if (error) throw new Error('synthetic rows read failed');
+          for (const row of data ?? []) values.push(row[column]);
+          if ((data ?? []).length < 1000) break;
+        }
+      }
+      return values;
     },
     removeRun: (prefix) => fixtures.removeRun(admin(env), prefix),
   });

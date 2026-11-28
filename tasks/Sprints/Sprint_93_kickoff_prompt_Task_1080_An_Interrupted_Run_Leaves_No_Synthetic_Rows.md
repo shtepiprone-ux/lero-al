@@ -181,4 +181,14 @@ Integration collection, `npm run test:security-integration --` (35, every import
 `src/tests/integration/rateLimit.integration.test.ts`, `src/tests/integration/signUpTrigger.integration.test.ts`,
 `src/tests/integration/syntheticListingsHidden.integration.test.ts`.
 
+## Revision 1 (Review 1, 2026-11-28)
+
+The item is written in full in [Task_1080_Review_1.md](../../docs/reviews/Task_1080_Review_1.md), "Revision 1"; it
+stays in the Scope files `src/tests/integration/fixtures.ts` and `src/tests/integration/__tests__/removeRun.test.ts`.
+
+- R1 (F1): `removeRun` refuses, before any read or delete, a `run` that is not of the shape
+  `^zz_synth_[0-9a-z]{8}[0-9a-f]{4}$`, returning `{ verified: false, remaining: 0, errors: ['refused: not a run prefix'] }`;
+  test `[SEC-1080-SHAPE-ONLY]` in `removeRun.test.ts`.
+
 ## Review
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_1080_Review_1.md)

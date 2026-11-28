@@ -1,0 +1,147 @@
+{
+ "task": "1080",
+ "sheets": {
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries (`.claude/rules/flow.md`, `checklists/execute.md`, `checklists/review.md`); the rule change only names the local product checks I8 and V3 run; no agent permission, hook or tool changes"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries; no model prompt, model input or model output handling exists in the changed code"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries; no MCP server, tool, configuration or permission is added or changed by this branch"
+  },
+  "Input_Validation": {
+   "verdict": "finding",
+   "finding": "F1",
+   "note": "`removeRun` deletes by `escapeLike(run) + '%'` for any string `run`, without checking the run-prefix shape (`src/tests/integration/fixtures.ts:45-48`, `:71`)"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is built from untrusted keys; `row[column]` reads a column name from the fixed list `PREFIXED_COLUMNS`"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": ["developers should understand and monitor the Attack Surface as they design and build and change a system"],
+   "evidence": "the diff widens exactly the kickoff's surface: the service-role delete and count of `PREFIXED_COLUMNS` (`src/tests/integration/fixtures.ts:35-38`, `:71`, `:110-117`) and the sweep's read (`scripts/sweep-synthetic.mjs:197-209`)"
+  },
+  "Authorization": {
+   "verdict": "not applicable",
+   "reason": "no permission check, role or session path changes; the clean-up acts as the service role as on main"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "not applicable",
+   "reason": "no authorization decision is made or consumed by the changed code"
+  },
+  "Authorization_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no protected resource gains or loses an enforcement point in this diff"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "not applicable",
+   "reason": "the suites' authorization cases are unchanged; the 35 integration files pass on the changed clean-up"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "not applicable",
+   "reason": "no authorization matrix row is added, removed or changed by this diff"
+  },
+  "CI_CD_Security": {
+   "verdict": "not applicable",
+   "reason": "`.github/workflows/ci.yml` is not changed; the sweep step keeps its secret, target and condition"
+  },
+  "Database_Security": {
+   "verdict": "not applicable",
+   "reason": "no grant, policy, role or schema changes; the service role exists already"
+  },
+  "GitHub_Actions_Security": {
+   "verdict": "not applicable",
+   "reason": "no workflow, action pin, permission or secret placement changes in this diff"
+  },
+  "GraphQL": {
+   "verdict": "not applicable",
+   "reason": "the project has no GraphQL endpoint; PostgREST filters only"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no identity crosses a service; the clean-up acts as the service role only"
+  },
+  "Injection_Prevention": {
+   "verdict": "met",
+   "quotes": ["The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"],
+   "evidence": "every delete, count and read is a PostgREST `like` filter with the `escapeLike` pattern (`src/tests/integration/fixtures.ts:48`, `:71`, `:112`; `scripts/sweep-synthetic.mjs:200`, `:203`); `[SEC-1080-PREFIX-ONLY]` in `src/tests/integration/__tests__/removeRun.test.ts` fails with the escaping removed"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "met",
+   "quotes": ["Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."],
+   "evidence": "`PREFIXED_VALUE` (`scripts/sweep-synthetic.mjs:31`) is a fixed-length prefix and one negative lookahead; `[SEC-1080-SHAPE]` in `scripts/__tests__/sweep-synthetic.test.ts` fails with a looser pattern"
+  },
+  "Key_Management": {
+   "verdict": "not applicable",
+   "reason": "the service-role key, its source and its use stay as on main"
+  },
+  "Logging": {
+   "verdict": "met",
+   "quotes": ["The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"],
+   "evidence": "the sweep prints counts and prefixes only (`scripts/sweep-synthetic.mjs:131`); `[1080-SWEEP-FOUND]` asserts that no read value reaches the output"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "no security event is logged; the sweep prints its own counts only"
+  },
+  "Mass_Assignment": {
+   "verdict": "not applicable",
+   "reason": "no object is bound from input; the clean-up deletes by fixed columns"
+  },
+  "Multi_Tenant_Security": {
+   "verdict": "not applicable",
+   "reason": "synthetic rows of one run; the project has no tenants of its own"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "the sweep starts no process and builds no shell command"
+  },
+  "Query_Parameterization": {
+   "verdict": "not applicable",
+   "reason": "no SQL text is written; PostgREST receives each filter as a parameter"
+  },
+  "SQL_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no statement is concatenated; the filters go through the Supabase client"
+  },
+  "Secrets_Management": {
+   "verdict": "not applicable",
+   "reason": "the credentials are read by name as on main and never printed"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": ["Security-Focused Review differs from functional code review by specifically targeting security concerns"],
+   "evidence": "`docs/reviews/Task_1080_Review_1.md` V7: the six steps and every category, the breaks of AC1-AC3 rerun"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": ["Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."],
+   "evidence": "`git diff --stat 0eccad3b2`: only the four Scope files; the executor's report was rerun claim by claim (`docs/reviews/Task_1080_Review_1.md` V3)"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": ["Threat Modeling - which results in security related stories being added during"],
+   "evidence": "T1-T3 of the kickoff are AC1-AC3 with tests in `src/tests/integration/__tests__/removeRun.test.ts` and `scripts/__tests__/sweep-synthetic.test.ts`; the unenforced part of T1 is F1"
+  },
+  "Software_Supply_Chain_Security": {
+   "verdict": "not applicable",
+   "reason": "no dependency, lockfile entry or workflow pin changes in this diff"
+  },
+  "Threat_Modeling": {
+   "verdict": "finding",
+   "finding": "F1",
+   "note": "T1's mitigation names `RUN` of the exact shape; `removeRun` does not check it (`src/tests/integration/fixtures.ts:45-48`)"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
+   "evidence": "`docs/reviews/Task_1080_Review_1.md` V3 and V8: every test, break and the integration run rerun by the reviewer"
+  }
+ }
+}

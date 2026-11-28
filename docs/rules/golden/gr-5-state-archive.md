@@ -22,14 +22,17 @@ state that was already in the file, or any response that wrote no file, passed u
 - a registry number the archive ledger already closed.
 
 No hook runs it any more (the agent hooks were removed on 2026-11-06); it runs in CI (`scripts/quality/product-gates.mjs`)
-and locally only in checklist H7, once the task is approved and the backlog is brought to its current state for the commit.
+and locally only in checklist H7, once the task is approved and the backlog is brought to its current state for the commit,
+and inside the whole set `node scripts/quality/product-gates.mjs` that I8 and V3 run once (owner, 2026-11-28).
 It cannot see a stale row, so H7 also reads every section of the backlog.
 
 **When it runs locally (owner rule, 2026-11-23, translated):** *"Run check:backlog-active only after the task gets the
 status Approve. Before that there is no sense at all in running this check again and again. The backlog must be checked
 when the task is done and approved; only then is the backlog brought to its current state and goes into the commit!"*
-A task design, a review with `NEEDS REVISION` or a backlog row filed in between does not run it; CI checks the file on
-every pull request.
+A task design, a review with `NEEDS REVISION` or a backlog row filed in between does not run it on its own; CI checks the
+file on every pull request. The one other local run (owner, 2026-11-28, translated: "add the exception to the rules",
+option "the whole set, I8 and V3"): it is one of the 36 checks of `product-gates.mjs`, which I8 and V3 run once as a
+whole; there its failure is read like that of any other check.
 
 **Receipts:** `GR-5 STATE SYNCED — <task> = <status> in: <every file touched>.` For an approved verdict also emit
 `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.` and, from the H7 run,

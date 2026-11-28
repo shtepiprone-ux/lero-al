@@ -378,11 +378,20 @@ export function AdminFooterManager({ initialData, initialShared = {}, initialize
     }))
   }
 
+  // Task 990: the toast names the refused addresses, as plain text (next-intl inserts the value as text, never as markup)
+  function invalidLinkMessage(links: string[] | undefined) {
+    return links && links.length > 0 ? t('error_invalid_internal_link_named', { links: links.join(', ') }) : t('error_invalid_internal_link')
+  }
+
+  function refusedShapes(links: FooterLink[]) {
+    return [...new Set(links.filter(l => l.enabled && !isValidFooterUrl(l.url)).map(l => l.url))]
+  }
+
   // Revision 2, F7: `validation` names the contacts only for the shared block; a language tab refused with it (a bound of the row) shows the save error
-  function showResult(result: { error?: string }, validationMessage: 'error_invalid_contact' | 'error_save') {
+  function showResult(result: { error?: string; links?: string[] }, validationMessage: 'error_invalid_contact' | 'error_save') {
     if (result.error === 'forbidden') { toast.error(t('error_forbidden')); return }
     if (result.error === 'invalid_url') { toast.error(t('error_invalid_url')); return }
-    if (result.error === 'invalid_internal_link') { toast.error(t('error_invalid_internal_link')); return }
+    if (result.error === 'invalid_internal_link') { toast.error(invalidLinkMessage(result.links)); return }
     if (result.error === 'validation') { toast.error(t(validationMessage)); return }
     if (result.error) { toast.error(t('error_save')); return }
     toast.success(t('save_success'))
@@ -390,9 +399,9 @@ export function AdminFooterManager({ initialData, initialShared = {}, initialize
 
   function handleSave(locale: Locale) {
     const form = forms[locale]
-    const allLinks = [...form.nav_links, ...form.info_links]
-    if (allLinks.some(l => l.enabled && !isValidFooterUrl(l.url))) {
-      toast.error(t('error_invalid_internal_link'))
+    const refused = refusedShapes([...form.nav_links, ...form.info_links])
+    if (refused.length > 0) {
+      toast.error(invalidLinkMessage(refused))
       return
     }
     startTransition(async () => {
@@ -401,8 +410,9 @@ export function AdminFooterManager({ initialData, initialShared = {}, initialize
   }
 
   function handleSaveShared() {
-    if (socialLinks.some(l => l.enabled && !isValidFooterUrl(l.url))) {
-      toast.error(t('error_invalid_internal_link'))
+    const refused = refusedShapes(socialLinks)
+    if (refused.length > 0) {
+      toast.error(invalidLinkMessage(refused))
       return
     }
     const settings: Record<string, string> = { ...sharedText }

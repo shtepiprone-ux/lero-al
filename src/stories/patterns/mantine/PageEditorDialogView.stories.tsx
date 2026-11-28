@@ -56,6 +56,7 @@ function EditorDemo({
   initialSlug = '',
   reservedSlug = false,
   sqBodyError = false,
+  sqTitleError = false,
   initialPublished = false,
   saving = false,
 }: {
@@ -65,6 +66,7 @@ function EditorDemo({
   initialSlug?: string
   reservedSlug?: boolean
   sqBodyError?: boolean
+  sqTitleError?: boolean
   initialPublished?: boolean
   saving?: boolean
 }) {
@@ -83,6 +85,8 @@ function EditorDemo({
   const [tab, setTab] = useState<PageLocale>(initialTab)
   const [slug, setSlug] = useState(initialSlug)
   const [published, setPublished] = useState(initialPublished)
+  // as the container: typing the Albanian title clears its required error
+  const [titleError, setTitleError] = useState(sqTitleError)
   return (
     <PageEditorDialogView
       opened
@@ -90,13 +94,15 @@ function EditorDemo({
       activeTab={tab}
       onTabChange={setTab}
       localeData={fields}
-      onFieldChange={(locale, field, value) =>
+      onFieldChange={(locale, field, value) => {
         setFields(prev => ({ ...prev, [locale]: { ...prev[locale], [field]: value } }))
-      }
+        if (locale === 'sq' && field === 'title') setTitleError(false)
+      }}
       slug={slug}
       slugError={reservedSlug ? t('slug_reserved') : null}
       onSlugChange={setSlug}
       sqBodyError={sqBodyError}
+      sqTitleError={titleError}
       published={published}
       onPublishedChange={setPublished}
       onUploadImage={fakeUpload}
@@ -108,7 +114,11 @@ function EditorDemo({
   )
 }
 
-export const New: Story = { render: () => <EditorDemo /> }
+// Task 990: a new page opens on the Albanian tab and starts published (owner list item 20).
+export const New: Story = { render: () => <EditorDemo initialPublished /> }
+
+// Task 990: Save pressed without the Albanian title — the Albanian tab shows `sq_title_required` on the title field.
+export const TitleRequired: Story = { render: () => <EditorDemo initialPublished sqTitleError /> }
 
 export const EditPublished: Story = {
   render: () => <EditorDemo isEdit fixture="edit" initialSlug="terms-of-use" initialPublished />,

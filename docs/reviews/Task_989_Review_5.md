@@ -1,6 +1,6 @@
 # Task 989 — Review 5
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 4](Task_989_Review_4.md)
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json) · Previous: [Review 4](Task_989_Review_4.md)
 
 Review 5 of Revision 3: the working tree on debd90141 (branch `task/989-site-settings-reach-the-site`, PR #85, uncommitted) — NEEDS REVISION
 Scope: diff-based against `debd90141`; 7 changed files and 2 new tests; the executor's report `docs/sessions/2026-11-27-task989-revision3-executor-report.md`; the owner's dev-server log of 2026-11-27 (hydration error on `/uk/admin/footer`)

@@ -12,6 +12,13 @@ import { createPage, updatePage, deletePage } from '@/modules/admin/actions'
 import { validateSlug } from '@/lib/slug-validator'
 import type { Page, PageContent } from '@/types/database'
 
+/** Task 990: the names of the footer languages a `page_in_footer` refusal returns, in the admin's language ("Albanian, Ukrainian") */
+function usePageLocaleNames() {
+  const t = useTranslations('admin.pages')
+  const names: Record<PageLocale, string> = { sq: t('editor_locale_sq'), en: t('editor_locale_en'), uk: t('editor_locale_uk'), it: t('editor_locale_it') }
+  return (locales: string[] | undefined) => (locales ?? []).map(locale => names[locale as PageLocale] ?? locale).join(', ')
+}
+
 // ── Page editor dialog (container) ────────────────────────────────────────────
 // Kept in this file, like `ProviderFormDialog` in Task 874: a second tier-1 file would be a new
 // census baseline key, which Task 868's R9 forbids.
@@ -33,7 +40,10 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
   const t = useTranslations('admin.pages')
   const tLegal = useTranslations('admin.legal')
 
-  const [activeTab, setActiveTab] = useState<PageLocale>(adminLocale)
+  const localeNames = usePageLocaleNames()
+
+  // Task 990: a new page opens on the Albanian tab, the one language a page must have; an edited page keeps the admin's language (owner list item 20)
+  const [activeTab, setActiveTab] = useState<PageLocale>(page ? adminLocale : 'sq')
   const [localeData, setLocaleData] = useState<PageLocaleFields>({
     sq: getLocaleContent(page, 'sq'),
     en: getLocaleContent(page, 'en'),
@@ -44,13 +54,16 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
   const [slugManual, setSlugManual] = useState(!!page)
   const [slugError, setSlugError] = useState<string | null>(null)
   const [sqBodyError, setSqBodyError] = useState(false)
-  const [published, setPublished] = useState(page?.is_published ?? false)
+  const [sqTitleError, setSqTitleError] = useState(false)
+  // Task 990 (owner list item 20): a new page is published unless the admin switches it to draft; an edited page keeps its stored state
+  const [published, setPublished] = useState(page?.is_published ?? true)
   const [saving, setSaving] = useState(false)
   const [imageUploading, setImageUploading] = useState(false)
 
   function setField(locale: PageLocale, field: 'title' | 'body', value: string) {
     setLocaleData(prev => ({ ...prev, [locale]: { ...prev[locale], [field]: value } }))
     if (locale === 'sq' && field === 'body') setSqBodyError(false)
+    if (locale === 'sq' && field === 'title') setSqTitleError(false)
     if (locale === 'sq' && field === 'title' && !slugManual) {
       setSlug(toSlug(value))
       setSlugError(null)
@@ -85,7 +98,12 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
   }
 
   async function handleSave() {
-    if (!localeData.sq.title.trim()) return
+    // Task 990: Save always answers: without the Albanian title it shows the field's error on the Albanian tab and calls no action
+    if (!localeData.sq.title.trim()) {
+      setActiveTab('sq')
+      setSqTitleError(true)
+      return
+    }
     const currentSlug = slug || toSlug(localeData.sq.title)
     const slugResult = validateSlug(currentSlug)
     if (!slugResult.ok) {
@@ -99,7 +117,7 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
       uk: { title: localeData.uk.title.trim(), body: localeData.uk.body.trim() },
       it: { title: localeData.it.title.trim(), body: localeData.it.body.trim() },
     }
-    const result = page
+    const result: { error?: string; locales?: string[] } = page
       ? await updatePage(page.id, { title: content.sq.title, slug: currentSlug, content, is_published: published })
       : await createPage({ title: content.sq.title, slug: currentSlug, content, is_published: published })
     setSaving(false)
@@ -109,6 +127,8 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
       } else if (result.error === 'sq_body_required') {
         setActiveTab('sq')
         setSqBodyError(true)
+      } else if (result.error === 'page_in_footer') {
+        toast.error(t('page_in_footer', { locales: localeNames(result.locales) }))
       } else {
         toast.error(tLegal('save_error'))
       }
@@ -130,6 +150,7 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
       slugError={slugError}
       onSlugChange={handleSlugChange}
       sqBodyError={sqBodyError}
+      sqTitleError={sqTitleError}
       published={published}
       onPublishedChange={setPublished}
       onUploadImage={uploadImage}
@@ -155,7 +176,9 @@ interface Props {
  * server actions; renders only `AdminPagesView`.
  */
 export function AdminPagesManager({ pages: init, adminLocale, now }: Props) {
+  const t = useTranslations('admin.pages')
   const tLegal = useTranslations('admin.legal')
+  const localeNames = usePageLocaleNames()
   const router = useRouter()
   const locale = useLocale() as PageLocale
   const activeLocale = adminLocale || locale
@@ -176,7 +199,9 @@ export function AdminPagesManager({ pages: init, adminLocale, now }: Props) {
     setDeletingId(id)
     startTransition(async () => {
       const result = await deletePage(id)
-      if (result.error) {
+      if (result.error === 'page_in_footer') {
+        toast.error(t('page_in_footer', { locales: localeNames(result.locales) }))
+      } else if (result.error) {
         toast.error(tLegal('delete_error'))
       } else {
         setItems(prev => prev.filter(p => p.id !== id))

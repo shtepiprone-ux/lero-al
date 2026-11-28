@@ -34,6 +34,11 @@ function validateLinks(links: FooterLink[]): boolean {
   return links.every(l => isValidLinkUrl(l.url))
 }
 
+/** Task 990: the addresses of the enabled links whose internal path has a wrong shape, each once, in list order (the admin is told which links to fix) */
+function badShapeLinks(links: FooterLink[]): string[] {
+  return [...new Set(links.filter(l => l.enabled && !isValidFooterUrl(l.url)).map(l => l.url))]
+}
+
 // A single-segment internal path that is not one of the static entries is a candidate
 // CMS page slug (its shape already passed isValidFooterUrl's validateSlug check). Its
 // EXISTENCE — is it a real, published `pages` row — is decided here, on the server,
@@ -57,9 +62,10 @@ function collectCandidateCmsSlugs(links: FooterLink[]): Set<string> {
 
 /**
  * R4: every enabled CMS-slug candidate is resolved against `pages` in one batched query, not one query per link. Unknown or unpublished → `invalid_internal_link`,
- * as the shape rejection, so the whole payload is not saved. Called only after the admin check (a service-role read).
+ * as the shape rejection, so the whole payload is not saved; Task 990: with the addresses of the links that name it. Called only after the admin check (a
+ * service-role read).
  */
-async function checkCmsSlugs(db: ReturnType<typeof createAdminClient>, links: FooterLink[]): Promise<'transient' | 'invalid_internal_link' | null> {
+async function checkCmsSlugs(db: ReturnType<typeof createAdminClient>, links: FooterLink[]): Promise<{ error: 'transient' } | { error: 'invalid_internal_link'; links: string[] } | null> {
   const candidateSlugs = collectCandidateCmsSlugs(links)
   if (candidateSlugs.size === 0) return null
   const { data: publishedPages, error: pagesError } = await db
@@ -69,13 +75,17 @@ async function checkCmsSlugs(db: ReturnType<typeof createAdminClient>, links: Fo
     .eq('is_published', true)
   if (pagesError) {
     console.error('[footer] pages lookup failed', { error: pagesError })
-    return 'transient'
+    return { error: 'transient' }
   }
   const publishedSlugs = new Set((publishedPages ?? []).map(p => p.slug))
-  for (const slug of candidateSlugs) {
-    if (!publishedSlugs.has(slug)) return 'invalid_internal_link'
-  }
-  return null
+  const missing = new Set([...candidateSlugs].filter(slug => !publishedSlugs.has(slug)))
+  if (missing.size === 0) return null
+  const refused = links.filter(l => {
+    if (!l.enabled) return false
+    const trimmed = l.url.trim()
+    return trimmed.startsWith('/') && missing.has(normalizeInternalPath(trimmed).slice(1))
+  })
+  return { error: 'invalid_internal_link', links: [...new Set(refused.map(l => l.url))] }
 }
 
 // ── Admin: read all 4 locale rows ─────────────────────────────────────────────
@@ -138,7 +148,7 @@ function socialLinkFrom(raw: unknown): FooterLink | null {
 export async function saveFooterShared(payload: {
   settings: Record<string, string>
   social_links: FooterLink[]
-}): Promise<{ error?: string }> {
+}): Promise<{ error?: string; links?: string[] }> {
   const actorId = await assertAdminUser()
   if (!actorId) return { error: 'forbidden' }
 
@@ -153,11 +163,12 @@ export async function saveFooterShared(payload: {
   if (socialLinks.some(link => link === null)) return { error: 'validation' }
   const links = socialLinks as FooterLink[]
   if (!validateLinks(links)) return { error: 'invalid_url' }
-  if (links.some(l => l.enabled && !isValidFooterUrl(l.url))) return { error: 'invalid_internal_link' }
+  const badShape = badShapeLinks(links)
+  if (badShape.length > 0) return { error: 'invalid_internal_link', links: badShape }
 
   const db = createAdminClient()
   const slugError = await checkCmsSlugs(db, links)
-  if (slugError) return { error: slugError }
+  if (slugError) return slugError
 
   const now = new Date().toISOString()
   if (entries.length > 0) {
@@ -188,7 +199,7 @@ export async function saveFooterShared(payload: {
 export async function upsertFooterContent(
   locale: string,
   payload: FooterLocalePayload,
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; links?: string[] }> {
   if (!(VALID_LOCALES as readonly string[]).includes(locale)) {
     return { error: 'validation' }
   }
@@ -201,8 +212,9 @@ export async function upsertFooterContent(
     return { error: 'invalid_url' }
   }
   const allLinks = [...payload.nav_links, ...payload.info_links]
-  if (allLinks.some(l => l.enabled && !isValidFooterUrl(l.url))) {
-    return { error: 'invalid_internal_link' }
+  const badShape = badShapeLinks(allLinks)
+  if (badShape.length > 0) {
+    return { error: 'invalid_internal_link', links: badShape }
   }
 
   // R7/review-1 F1: the admin check runs after the pure checks above but BEFORE any
@@ -214,7 +226,7 @@ export async function upsertFooterContent(
   const db = createAdminClient()
 
   const slugError = await checkCmsSlugs(db, allLinks)
-  if (slugError) return { error: slugError }
+  if (slugError) return slugError
 
   // Task 989: the social links are not written here: they are shared by the four rows and saved by `saveFooterShared`
   const { error } = await db.from('site_footer').upsert({

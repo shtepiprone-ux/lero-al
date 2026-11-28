@@ -14,7 +14,9 @@ owner sent a screenshot of the WordPress classic editor (both modes) and wrote (
 icon. Look at the screenshot, how many icons and functions there are." The toolbar below takes every tool of that
 screenshot except the five the owner excluded and the one that has no function on this site. The owner confirmed the
 text colour from the theme palette only, with no free colour (2026-11-19, translated): "yes!" Plan files: `tasks/Sprints/Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`,
-`tasks/Sprints/Sprint_94_Owner_List_Of_2026-11-19.md`. Implementer: Sonnet. Reviewer: Opus. Human owner of the change:
+`tasks/Sprints/Sprint_94_Owner_List_Of_2026-11-19.md`. Kickoff refreshed 2026-11-27 on `9b74f63a0` (after Tasks 988 and 989: the site
+page moved under `(site)`, the footer actions and the Footer page rewritten, the social links shared by the four footers).
+Implementer: Sonnet. Reviewer: Opus. Human owner of the change:
 the owner.
 
 ## Goal
@@ -28,13 +30,13 @@ the editor shows every tool as a familiar icon in one toolbar (O990-1).
 
 ## Cause
 
-Read at `dc5e3af66`
+Read at `9b74f63a0`
 - The dialog opens on the admin's language: `src/components/admin/AdminPagesManager.tsx:36`; Save stays disabled until the Albanian title is filled (`src/components/admin/PageEditorDialogView.tsx:138`, `src/components/admin/AdminPagesManager.tsx:88`), and no text says so; the address comes only from the Albanian title (`src/components/admin/AdminPagesManager.tsx:54-56`) through `toSlug`, which keeps `a-z0-9` only (`src/components/admin/adminPagesContent.ts:11`). Measured 2026-11-19 on production with `HYDRATION_ADMIN` and the admin language `uk`, a Playwright run that saved nothing: `node pages-create-repro.mjs` → `dialog opens on tab: "Українська"`, then after a Ukrainian title and text `save disabled = true | slug = ""`. `node --experimental-strip-types -e "…toSlug('Çmimet e shtëpive')"` → `"mimet-e-shtpive"`.
-- A new page starts as a draft (`src/components/admin/AdminPagesManager.tsx:47`) and the site serves published pages only (`src/app/[locale]/[slug]/page.tsx:47`).
-- The footer check of published pages runs only when a footer is saved (`src/modules/admin/actions/footer.ts:115-131`); `updatePage` and `deletePage` never look at the footer (`src/modules/admin/actions/index.ts:357-399`), and the footer error names no link (`src/components/admin/AdminFooterManager.tsx:266`, `:273`). Read-only 2026-11-19: the Ukrainian footer keeps an enabled link `/test` ("Тестова", saved 2026-05-30), `pages` has no such row, and `curl -s -o /dev/null -w "%{http_code}" https://lero.al/uk/test` → `404`.
+- A new page starts as a draft (`src/components/admin/AdminPagesManager.tsx:47`) and the site serves published pages only (`src/app/[locale]/(site)/[slug]/page.tsx:47`).
+- The footer check of published pages (`checkCmsSlugs`, `src/modules/admin/actions/footer.ts:62-79`) runs only when a footer is saved (`saveFooterShared` `:159`, `upsertFooterContent` `:216`); `updatePage` and `deletePage` never look at the footer (`src/modules/admin/actions/index.ts:339-381`), and the footer error names no link (`src/components/admin/AdminFooterManager.tsx:385`, `:395`, `:405`). Read-only 2026-11-19: the Ukrainian footer kept an enabled link `/test` ("Тестова") to no page, and `https://lero.al/uk/test` answered `404`. Read-only 2026-11-27: that link is gone; the four footers link `/about`, `/privacy-policy` and `/terms-of-service`, each a published page, and nothing stops deleting, unpublishing or renaming one of them.
 - The toolbar offers bold, italic, underline, strikethrough, H2-H4, lists, quote, alignment, link, columns, table, image, undo and redo in five menus (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:241-287`), so every tool is two presses away, and the text menu holds clear formatting (`:253`), which O990-1 excludes. Of the screenshot's tools it lacks the horizontal line, text colour, the row toggle, full screen, H5, H6, preformatted text and the HTML ("Text") mode; the editor loads no colour extension (`:127-135`).
 - The page sanitizer keeps no `del`, `ins` or `span` and only `text-align` as a style, on `p`, `h2`-`h4` and `li` (`src/modules/cms/lib/sanitizeCmsHtml.ts:40`, `:85`, `:87`), so a colour, `del`, `ins` or an aligned `h5` would be lost on the site.
-- The "New page" button draws a plus icon and its text starts with "+ " (`src/components/admin/AdminPagesView.tsx:187`, `messages/uk.json` `admin.pages.btn_new` "+ Нова сторінка"): the screenshot shows "+ + Нова сторінка".
+- The "New page" button draws a plus icon and its text starts with "+ " (`src/components/admin/AdminPagesView.tsx:182-186`, `messages/uk.json:1043` `admin.pages.btn_new` "+ Нова сторінка"): the screenshot shows "+ + Нова сторінка".
 
 Fix: a new page opens on the Albanian tab, Save always answers (a missing Albanian title is a field error), the address keeps Albanian letters, a new page is published by default; a page an enabled footer link names cannot be deleted, unpublished or renamed, and a footer error names its links; the editor gets the O990-1 toolbar and HTML mode, and the sanitizer keeps exactly the markup they add.
 
@@ -42,8 +44,8 @@ Fix: a new page opens on the Albanian tab, Save always answers (a missing Albani
 
 - `src/components/admin/AdminPagesManager.tsx`, `PageEditorDialogView.tsx`: a new page opens on `sq`; the Albanian tab and title carry the required mark; Save is disabled only while saving or with a slug error; a press without the Albanian title switches to `sq` and shows `admin.pages.sq_title_required` on the field, no action call; a new page's switch starts on "Published" (owner item 20), an edited page keeps its stored state.
 - `src/components/admin/adminPagesContent.ts` `toSlug`: Latin letters with marks lose the mark first (`normalize('NFD')`, combining marks removed), so `ç`→`c`, `ë`→`e`; other scripts give nothing as today, and the empty address keeps its existing format error.
-- `src/modules/admin/actions/index.ts`: `deletePage`, and `updatePage` when it unpublishes or changes the slug, read the four footers after `assertPermission('legal.manage')`; an enabled link to `/<old slug>` → `{ error: 'page_in_footer', locales }`, nothing written; a failed footer read refuses with `transient`. The dialog and the delete toast name the footer languages (`admin.pages.page_in_footer`).
-- `src/modules/admin/actions/footer.ts`: `invalid_internal_link` returns the refused addresses (`links`); `AdminFooterManager.tsx` names them in the toast (`admin.footer.error_invalid_internal_link_named`).
+- `src/modules/admin/actions/index.ts`: `deletePage`, and `updatePage` when it unpublishes or changes the slug, read `nav_links`, `info_links` and `social_links` of the four `site_footer` rows (Task 989: the social links are one list stored in each row) after `assertPermission('legal.manage')`; an enabled link to `/<old slug>` → `{ error: 'page_in_footer', locales }`, nothing written; a failed footer read refuses with `transient`. The dialog and the delete toast name the footer languages (`admin.pages.page_in_footer`).
+- `src/modules/admin/actions/footer.ts`: `invalid_internal_link` of `saveFooterShared` and `upsertFooterContent` (shape and existence) returns the refused addresses (`links`); `AdminFooterManager.tsx` names them in its three toasts (`:385`, `:395`, `:405`, `admin.footer.error_invalid_internal_link_named`); the other results and the bounds of Task 989 unchanged.
 - `src/design-system/mantine/patterns/MantineRichTextEditor.tsx` (EXTEND), O990-1, the WordPress classic layout at every
   width (the rows wrap below 640px; replaces D868-6/D868-7). Above the toolbar: "Add media" (today's image upload,
   Cloudinary only) and the tabs "Visual" and "Text". Each tool is an icon with its name as tooltip and accessible name
@@ -67,7 +69,8 @@ Fix: a new page opens on the Albanian tab, Save always answers (a missing Albani
   (exact values from `textColors.ts`); `text-align` also on `h5`, `h6`; everything else unchanged.
 - The Story `src/stories/patterns/mantine/RichTextEditor.stories.tsx` shows both modes at 320px, 640px and 1440px.
 - `messages/{sq,en,uk,it}.json`: `admin.pages.btn_new` without the leading "+ "; the new keys above.
-- Dependencies: `@tiptap/extension-text-style` 3.32.2 (above). Out of scope: the `/test` footer link (owner action after the merge: remove it, or create the page); the page bodies (O79-0).
+- Dependencies: `@tiptap/extension-text-style` 3.32.2 (above; `npm view` repeated 2026-11-27: the same dates, repository, scripts and peer; latest 3.35.1, the pin follows the installed Tiptap 3.32.2). Out of scope: the page bodies (O79-0); the synthetic draft pages `zz_synth_*` left in `pages` by an integration run (read-only 2026-11-27: 15 rows).
+- Kept as on `main` (checklist A2): `AdminPagesManager.tsx`/`PageEditorDialogView.tsx` — the four language tabs, the fields, the slug field and its errors, the `sq` body rule (`sq_body_required`), the image upload, the edit of an existing page; `adminPagesContent.ts` — `validateSlug` and the reserved addresses; `index.ts` — `createPage`, the slug uniqueness check, the `legal.manage` permission first, `pickFields`; `footer.ts` — every check, bound and result of Task 989 other than the added `links`; `AdminFooterManager.tsx` — the form, its bounds and the other toasts; `MantineRichTextEditor.tsx` — the stored HTML format, the extensions (columns kept for stored pages), the image upload path; `sanitizeCmsHtml.ts` — every tag and attribute it keeps today; `CmsPageView.tsx` unchanged.
 
 ## Attack surface
 
@@ -86,7 +89,7 @@ Changed: two staff actions read one more table; staff can write raw HTML and col
 
 ## OWASP
 
-Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
+Required by `node scripts/quality/owasp.mjs plan` (2026-11-19; repeated 2026-11-27, which adds React_Security).
 
 - Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names the new footer read and the HTML mode — AC3, AC5.
 - Authorization: "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source." — both page actions keep `legal.manage` as their first check — AC3.
@@ -107,6 +110,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — each page action checks the permission before any read, tested by direct call — AC3.
 - Prototype_Pollution_Prevention: not applicable — no object is built from client keys.
 - NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — `@tiptap/extension-text-style` is read on npm in Scope (age, repository, no install script, peer) — AC7.
+- React_Security: "Writing to `.innerHTML`, `.outerHTML`, or `.insertAdjacentHTML()` through a ref is exactly as safe or unsafe as `dangerouslySetInnerHTML` with the same input" — the editor and Text mode write no HTML through a ref; the page body reaches `dangerouslySetInnerHTML` only through `sanitizeCmsHtml` (`CmsPageView.tsx:32`) — AC5.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — reviewed with the review-task skill on this task's diff — AC7.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — one dependency, read on npm in Scope; the reviewer reruns every claim of the report — AC7.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the threat model's mitigations are AC3 and AC5.
@@ -157,7 +161,49 @@ inherited canonical design — owner decision 2026-10-20.
 1. Branch from `main`. Read the files of Scope, `footer.ts` and the two Stories.
 2. Tests first (AC1-AC5); save each failing output.
 3. The dialog, the slug, the page actions, the footer error, the toolbar and Text mode, the colour palette and the sanitiser, the messages, the Stories. One pass over every changed file (checklist I7).
-4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break of the footer check, restored.
-5. Report: each command, exit code, relevant output. After the merge Opus repeats the 2026-11-19 run with `HYDRATION_ADMIN` in Ukrainian, now saving a page `opus-990-check`, opens it on the site, deletes it; the owner removes or fills the `/test` footer link.
+4. Run (checklist A5, nothing else locally) every test both searches of `quality-gates.md` §8.1 find (2026-11-27,
+   `9b74f63a0`, over the product files of the Scope), plus the new toolbar test, as listed under "Route tests" below:
+   the default collection with `npm test --`, the integration files with `npm run test:security-integration --` (the
+   environment of `project-facts.md`, "Supabase and test data"). CI on GitHub only (`gh pr checks <n>`); one deliberate
+   break of the footer check, restored.
+5. Report: each command, exit code, relevant output. After the merge Opus repeats the 2026-11-19 run with `HYDRATION_ADMIN` in Ukrainian, now saving a page `opus-990-check`, opens it on the site, deletes it.
+
+### Route tests
+
+Import graph, default collection (48): `src/__tests__/reactHooksV7Components.test.tsx`, `src/__tests__/security/staffActions.test.ts`, `src/app/[locale]/(site)/[slug]/__tests__/page.errors.test.ts`, `src/app/[locale]/admin/__tests__/adminSlug.test.tsx`, `src/app/[locale]/admin/footer/__tests__/footerPage.test.tsx`, `src/app/[locale]/admin/settings/__tests__/settingsPage.test.tsx`, `src/app/[locale]/admin/users/__tests__/adminUserGone.security.test.ts`, `src/app/[locale]/admin/users/__tests__/adminUsersNotice.security.test.tsx`, `src/app/__tests__/serverNowProps.test.tsx`, `src/components/admin/__tests__/AdminFooterManager.shared.test.tsx`, `src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx`, `src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx`, `src/components/admin/__tests__/AdminPagesView.test.tsx`, `src/components/admin/__tests__/AdminSettings.seo.test.tsx`, `src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx`, `src/components/admin/__tests__/AdminUserCreate.watch.test.tsx`, `src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx`, `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`, `src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx`, `src/components/admin/__tests__/adminPagesContent.test.ts`, `src/components/admin/__tests__/adminPagesHydration.test.tsx`, `src/components/layout/__tests__/FooterView.security.test.tsx`, `src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx`, `src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts`, `src/lib/account/deleteAccount.security.test.ts`, `src/lib/auth/__tests__/moderatorKeys.security.test.ts`, `src/lib/auth/staffAccess.security.test.ts`, `src/modules/__tests__/noDbMessage.security.test.ts`, `src/modules/admin/actions/__tests__/adminActorRank.security.test.ts`, `src/modules/admin/actions/__tests__/adminCatalog.security.test.ts`, `src/modules/admin/actions/__tests__/adminOperations.security.test.ts`, `src/modules/admin/actions/__tests__/adminPermissions.security.test.ts`, `src/modules/admin/actions/__tests__/adminResults.security.test.ts`, `src/modules/admin/actions/__tests__/createAdminUser.security.test.ts`, `src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts`, `src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts`, `src/modules/admin/actions/__tests__/profileBounds.security.test.ts`, `src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts`, `src/modules/admin/actions/__tests__/userAdministration.security.test.ts`, `src/modules/admin/actions/__tests__/userWebsite.security.test.ts`, `src/modules/admin/actions/accountBan.security.test.ts`, `src/modules/cabinet/components/__tests__/CabinetShell.now.test.tsx`, `src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx`, `src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx`, `src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx`, `src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts`, `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`, `src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts`.
+
+Text search only, default collection (5): `src/__tests__/security/filterStrings.test.ts`, `src/__tests__/security/publicListingsTag.test.ts`, `src/components/admin/__tests__/adminFormsKit.test.ts`, `src/modules/admin/__tests__/adminOrphans.test.ts`, `src/modules/admin/actions/__tests__/footerContent.security.test.ts`.
+
+Integration collection (8): `src/lib/account/deleteAccount.integration.test.ts`, `src/lib/auth/sessionEnd.integration.test.ts`, `src/lib/auth/staffAccess.integration.test.ts`, `src/modules/admin/actions/accountBan.integration.test.ts`, `src/modules/admin/actions/adminPermissions.integration.test.ts`, `src/modules/admin/actions/userProfileFields.integration.test.ts`, `src/tests/integration/adminPage.integration.test.ts`, `src/tests/integration/moderatorKeys.integration.test.ts`.
+
+New: `src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.toolbar.test.tsx`.
+
+## Revision 1 (Review 1, 2026-11-27)
+
+The items are written in full in [Task_990_Review_1.md](../../docs/reviews/Task_990_Review_1.md), "Revision 1"; items F1 and F2 reach files the Scope did not name (`scripts/rendered-interaction-states.json`, `src/stories/patterns/mantine/PageEditorDialogView.stories.tsx`): owner's permission 2026-11-28 (translated): "Yes". F5 is Task 1078 (owner decision O1078-1, 2026-11-28). AC6 runs only on GitHub CI (checklist A5): `check-mobile-adaptation-contract.mjs`, `locale-safety.mjs` and the census are not run locally. Owner decision recorded in the executor's report (2026-11-27, translated): "By the 2026-06-26 policy" — no required mark; the en/uk/it titles read "(optional)".
+
+- F1: the census rows of the RichTextEditor Stories (and the editor triggers inside the PageEditorDialogView Stories) follow the O990-1 toolbar: the 28 rows of the removed menus are replaced by one row per trigger that opens a portal (link, table, Paragraph, colour below and from 640px, full screen, "Add media", `TextMode` and its `img`); each selector checked on the Storybook dev server.
+- F2: the `New` Story starts published; a `TitleRequired` Story shows `sqTitleError`, with its registry row.
+- F3: the full-screen dialog's close control is the canonical 44px round close with a close name (`fullscreenClose` in the four languages); the toolbar test asserts both.
+- F4: the six message keys no code reads leave the four message files.
+
+## Revision 2 (Review 2, 2026-11-28)
+
+The item is written in full in [Task_990_Review_2.md](../../docs/reviews/Task_990_Review_2.md), "Revision 2"; its two files are in the Scope. AC6 runs only on GitHub CI (checklist A5).
+
+- F6: Escape in the editor's full-screen view or "Add media" dialog closes only that view or dialog; the page dialog and what was typed in it stay. `MantineRichTextEditor.tsx` reports its open dialogs (`onDialogChange`), `PageEditorDialogView.tsx` ignores the page dialog's close while one is open; tested in `AdminPagesManager.smoke.test.tsx` (`[F6]`).
+
+## Revision 3 (Review 3, 2026-11-28)
+
+The items are written in full in [Task_990_Review_3.md](../../docs/reviews/Task_990_Review_3.md), "Revision 3": the three red CI checks of PR #86 (run 46164462550) on code of the first implementation. Item 3 also reaches `package.json` and `package-lock.json` (a pinned `@tiptap/extension-underline` 3.32.2, already installed through `@tiptap/starter-kit`).
+
+- F7: the computed `rgb(` spelling in `textColors.ts:23` carries the design-token allow marker with its reason.
+- F8: `PALETTE_COLOR` in `sanitizeCmsHtml.ts` is renamed `PALETTE_COLOR_STYLE`.
+- F9: the editor reads `ins` as underline through its schema (`Underline.extend` with an `ins` parse rule); `insAsUnderline` and its `DOMParser` leave.
 
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_990_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_990_Review_2.md)
+- [Review 3 — NEEDS REVISION](../../docs/reviews/Task_990_Review_3.md)
+- [Review 4 — APPROVED](../../docs/reviews/Task_990_Review_4.md)

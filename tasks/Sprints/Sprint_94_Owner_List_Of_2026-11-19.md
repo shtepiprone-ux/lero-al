@@ -20,7 +20,7 @@ kickoff is written by `create-task` (cause, OWASP plan, tested acceptance criter
 | 11 card price, price per m², ID and date at the bottom; 13 "View all" at the right edge on a phone | 996 | 94 |
 | 15 sold and rented listings listed for search engines, behind an admin switch | 992 | 73 |
 | 16 houses get the apartment filters; 17 parking attribute and filter | 1001 | 94 |
-| 19 logo, favicon and the other site settings applied on the site | 989, 1006 | 94 |
+| 19 logo, favicon and the other site settings applied on the site | 989 — merged in PR #85 (`9b74f63a0`), 2026-11-27; 1006 open | 94 |
 | 20 a page the admin creates reaches the site; editor styles and symbols; 21 the three pages fixes | 990 | 79 |
 | 22 verify a user from the admin profile; the owner's answer to O994-2: staff cannot give the badge today | 998 | 94 |
 | 23 "the pre-existing unrelated task861 file" | answered, nothing open | — |
@@ -62,7 +62,7 @@ and no page reads any of them: the header draws the text "Lero.al" (`src/compone
 the favicon is the static `src/app/favicon.ico`, the footer tagline comes from the footer editor
 (`src/components/layout/Footer.tsx:25`). The task applies the logo and the favicon (only from the account's Cloudinary)
 and, per the open owner decision O989-1, applies or removes the other eleven. Kickoff:
-`tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md`.
+`tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md`.
 
 Owner decision O989-1 (2026-11-19, translated): "I choose this option [keep the setting and apply it]. There is no talk
 about the 'Contacts' page at all. The 'Contacts' page must be a separate page altogether, which must be fully

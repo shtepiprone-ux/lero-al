@@ -1,0 +1,189 @@
+{
+ "task": "990",
+ "sheets": {
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); the rule change only names one local check Opus runs and forbids a CI gate as a test; no agent permission, hook or tool changes"
+  },
+  "Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); the Task 1078 SQL is only described in a kickoff; no query, command or interpreter call is written here"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); no model prompt, model input or model output handling exists in the changed product code"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); no MCP server, tool, configuration or permission is added or changed by this branch"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); no process is spawned and no shell command is built by any changed product file"
+  },
+  "Attack_Surface_Analysis": {
+   "verdict": "met",
+   "quotes": ["developers should understand and monitor the Attack Surface as they design and build and change a system"],
+   "evidence": "the diff adds exactly the kickoff's surface: the service-role footer read of `deletePage`/`updatePage` (`src/modules/admin/actions/index.ts:345-363`) and the staff HTML of the \"Text\" mode and the colour, rendered only through `sanitizeCmsHtml` (`src/modules/cms/components/CmsPageView.tsx:32`) (Review 1 V7)"
+  },
+  "Authorization": {
+   "verdict": "met",
+   "quotes": ["Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."],
+   "evidence": "`assertPermission('legal.manage')` stays the first await of `updatePage` and `deletePage` (`src/modules/admin/actions/index.ts:369`, `:411`); `[SEC-990-PAGE-FOOTER-DENY]` in `pages-and-footer-validation.smoke.test.ts` fails when the footer read moves before it (Review 1 V3, break BRK1)"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "verdict": "met",
+   "quotes": ["Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."],
+   "evidence": "a failed page or footer read returns `transient` and writes nothing (`src/modules/admin/actions/index.ts:349`, `:354`, `:381`); tested by \"a failed footer read refuses with transient\" and \"a failed read of the stored page\" in `pages-and-footer-validation.smoke.test.ts`, which fail without the change (Review 1 V8)"
+  },
+  "Authorization_Patterns": {
+   "verdict": "not applicable",
+   "reason": "no authorization rule moves or is added; the permission check stays inside each action, next to its write"
+  },
+  "Authorization_Regression_Testing": {
+   "verdict": "met",
+   "quotes": ["Automated tests should specifically target the ways authorization usually degrades over time."],
+   "evidence": "`[SEC-990-PAGE-FOOTER-DENY]` (two cases, `pages-and-footer-validation.smoke.test.ts`) assert the call order and that no read of `site_footer` or `pages` happens for a refused caller; the reviewer's break BRK1 makes both fail (Review 1 V3)"
+  },
+  "Authorization_Testing_Automation": {
+   "verdict": "not applicable",
+   "reason": "the authorization matrix gains no row: same two actions, same permission key, same audience"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "verdict": "met",
+   "quotes": ["Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."],
+   "evidence": "the page body reaches the DOM only through the allowlist sanitizer (`src/modules/cms/components/CmsPageView.tsx:32`); a span keeps only an exact palette colour (`src/modules/cms/lib/sanitizeCmsHtml.ts:32`, `:113`); the toasts pass addresses and language names as ICU values, rendered as text (`AdminFooterManager.shared.test.tsx` \"/<b>x</b>\" case)"
+  },
+  "DOM_Clobbering_Prevention": {
+   "verdict": "met",
+   "quotes": ["Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering."],
+   "evidence": "`span` gains only `style`, `del` and `ins` none (`src/modules/cms/lib/sanitizeCmsHtml.ts:82-102`); `id`, `class`, `name` and every other attribute are removed (`[SEC-990-CMS-COLOR] a second style property and every other span attribute are removed`)"
+  },
+  "DOM_based_XSS_Prevention": {
+   "verdict": "met",
+   "quotes": ["It is always a bad idea to use a user-controlled input in dangerous sources such as eval."],
+   "evidence": "the \"Text\" mode hands typed HTML to `setContent` (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:294`), which Tiptap parses in an inert `DOMParser` document (`node_modules/@tiptap/core/dist/index.js:558-562`) into the editor schema; `ins` is read by the underline mark's parse rule (`:152`), Revision 3 removed the component's own `DOMParser` pass; no `eval`, no live `innerHTML` write; the inserted image markup escapes its attributes (`:176`, `:314`, toolbar test \"img in Text mode\")"
+  },
+  "Denial_of_Service": {
+   "verdict": "met",
+   "quotes": ["Using validation that is cheap in resources first"],
+   "evidence": "the colour check is an anchored exact match against 12 fixed values (`src/modules/cms/lib/sanitizeCmsHtml.ts:32`); `updatePage` runs the slug format check before any read, and reads the footer only on an unpublish or a slug change (`src/modules/admin/actions/index.ts:377`)"
+  },
+  "Dependency_Graph_SBOM": {
+   "verdict": "met",
+   "quotes": ["Validate the document against its format's schema before publication or ingestion"],
+   "evidence": "the lockfile gains one entry, `node_modules/@tiptap/extension-text-style` 3.32.2 with its integrity (`git diff c968d63c9 -- package-lock.json`, +14 lines); Revision 3 adds only the root dependency line of `@tiptap/extension-underline` 3.32.2, whose package entry was already locked through `@tiptap/starter-kit` (`npm ls --package-lock-only` deduped, exit 0); the CI SBOM job validates the document (AC7, `gh pr checks`)"
+  },
+  "File_Upload": {
+   "verdict": "met",
+   "quotes": ["Validate the file type, don't trust the Content-Type header as it can be spoofed"],
+   "evidence": "\"Add media\" and the `img` quicktag call the unchanged `onUploadImage` path (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:291-304`); only Cloudinary images survive `sanitizeCmsHtml` (unchanged `isTrustedImageUrl`, `sanitizeCmsHtml.security.test.ts` 55 passed)"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "verdict": "not applicable",
+   "reason": "no response header changes; `src/lib/security/headers.ts` and `next.config.ts` are untouched"
+  },
+  "Identity_Propagation_Patterns": {
+   "verdict": "not applicable",
+   "reason": "the new service-role reads carry no identity; they run only after the session's permission check, as the existing page reads"
+  },
+  "Input_Validation": {
+   "verdict": "met",
+   "quotes": ["Reject invalid requests with a clear error; do not continue with partially validated data."],
+   "evidence": "a missing Albanian title shows `sq_title_required` on the field and calls no action (`src/components/admin/AdminPagesManager.tsx:101-106`); a page a footer names is refused with `page_in_footer` and its languages, nothing written (`src/modules/admin/actions/index.ts:385`, `:416`); tests fail without the change (Review 1 V8 AC1, AC3)"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "verdict": "not applicable",
+   "reason": "staff with legal.manage act on every page by design; no object scope changes"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "verdict": "not applicable",
+   "reason": "no merge, path setter or regular expression over input: the one runtime RegExp is built from the theme's fixed palette values, escaped (sanitizeCmsHtml.ts:31-32), and toSlug uses fixed character classes"
+  },
+  "Logging": {
+   "verdict": "met",
+   "quotes": ["The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"],
+   "evidence": "the new `console.error` lines log the Supabase error object and the page id only (`src/modules/admin/actions/index.ts:349`, `:354`, `:381`), as the existing branches; no footer content or user data"
+  },
+  "Logging_Vocabulary": {
+   "verdict": "not applicable",
+   "reason": "no security event type is added; the new log lines are server read failures"
+  },
+  "Mass_Assignment": {
+   "verdict": "not applicable",
+   "reason": "updatePage keeps its field allow-list `pickFields`; no field is added to any write"
+  },
+  "NPM_Security": {
+   "verdict": "met",
+   "quotes": ["Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."],
+   "evidence": "`@tiptap/extension-text-style` 3.32.2 read on npm in the kickoff (2026-11-19 and 2026-11-27: first release 2020-11-16, this version 2026-10-30, repository `ueberdosis/tiptap`, scripts `build` only); lockfile entry from `registry.npmjs.org` with `integrity` (`package-lock.json`); Revision 3: `@tiptap/extension-underline` 3.32.2 read on npm in Review 4 (2026-11-28: first release 2020-11-16, this version 2026-10-30, repository `ueberdosis/tiptap`, scripts `build` only, peer `@tiptap/core` 3.32.2, integrity `sha512-kY7B5ocK…` equal to the lockfile)"
+  },
+  "Nextjs_Security": {
+   "verdict": "met",
+   "quotes": ["Treat each reachable action as a client-callable POST entry point."],
+   "evidence": "`updatePage`, `deletePage`, `saveFooterShared` and `upsertFooterContent` are called directly in `pages-and-footer-validation.smoke.test.ts`; each checks the caller before any read (`src/modules/admin/actions/index.ts:369`, `:411`; `src/modules/admin/actions/footer.ts:152`, `:223`)"
+  },
+  "Prototype_Pollution_Prevention": {
+   "verdict": "not applicable",
+   "reason": "no object is built from client keys; the footer lists are read from the database and only iterated"
+  },
+  "React_Security": {
+   "verdict": "met",
+   "quotes": ["Writing to `.innerHTML`, `.outerHTML`, or `.insertAdjacentHTML()` through a ref is exactly as safe or unsafe as `dangerouslySetInnerHTML` with the same input"],
+   "evidence": "the editor writes no HTML through a ref; the textarea ref only sets the caret (`src/design-system/mantine/patterns/MantineRichTextEditor.tsx:249`); the page body reaches `dangerouslySetInnerHTML` only through `sanitizeCmsHtml` (`src/modules/cms/components/CmsPageView.tsx:32`)"
+  },
+  "Secure_Code_Review": {
+   "verdict": "met",
+   "quotes": ["Diff-Based Reviews focus on code changes only."],
+   "evidence": "Review 1 (`docs/reviews/Task_990_Review_1.md`) reviewed the diff against `c968d63c9` with V1-V14"
+  },
+  "Secure_Coding_with_AI": {
+   "verdict": "met",
+   "quotes": ["Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."],
+   "evidence": "the executor's report was treated as a supplier assertion: Review 1 V3 and V8 reran every test claim and both deliberate breaks; one exit code and one omitted search did not reproduce as stated (`docs/reviews/Task_990_Review_1.md` V3)"
+  },
+  "Secure_Product_Design": {
+   "verdict": "met",
+   "quotes": ["Threat Modeling - which results in security related stories being added during"],
+   "evidence": "the kickoff's threats T1-T3 are AC3 and AC5 with `SEC-990-PAGE-FOOTER-DENY` and `SEC-990-CMS-COLOR`, both failing under the reviewer's breaks (Review 1 V3)"
+  },
+  "Software_Supply_Chain_Security": {
+   "verdict": "met",
+   "quotes": ["limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"],
+   "evidence": "exact pins `\"@tiptap/extension-text-style\": \"3.32.2\"` and (Revision 3) `\"@tiptap/extension-underline\": \"3.32.2\"` (`package.json`), the version of the installed Tiptap packages, both published 2026-10-30 (29 days before Review 4)"
+  },
+  "Threat_Modeling": {
+   "verdict": "met",
+   "quotes": ["the threat modeling process should answer the following four questions"],
+   "evidence": "the kickoff's \"## Attack surface\" answers them; the diff adds no entry point outside it: the new reads are `src/modules/admin/actions/index.ts:353` and `:380`, the new sink is the palette `span` of `src/modules/cms/lib/sanitizeCmsHtml.ts:113` (Review 1 V7)"
+  },
+  "Transport_Layer_Security": {
+   "verdict": "not applicable",
+   "reason": "no transport, header or outbound request changes; the new package resolves from the https npm registry"
+  },
+  "User_Privacy_Protection": {
+   "verdict": "not applicable",
+   "reason": "the pages, the footer and the toolbar read or show no personal data"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "verdict": "met",
+   "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
+   "evidence": "Review 1 V3 and V8 reran the Route (`npm test --` 54 files, 1063 passed), the integration files (8, 52 passed), the import graph and each AC with its product change undone (`git show c968d63c9:<path>` in place, restored byte for byte); Review 4 reran Revision 3's report: Route 54 files 1069 passed, `product-gates.mjs` 36 of 36, the import graph (475 files, the one failure is the I8 exception `[SEC-T1-SRV-BUILT-PROXY]`), the toolbar test failing with the `ins` parse rule undone"
+  },
+  "Vulnerable_Dependency_Management": {
+   "verdict": "met",
+   "quotes": ["It's highly recommended to perform automated analysis of the dependencies from the birth of the project."],
+   "evidence": "the CI dependency audit runs on the tree with the new package (AC7, `gh pr checks`); the package has no dependency of its own besides the peer `@tiptap/core` (`package-lock.json`); the same holds for `@tiptap/extension-underline` 3.32.2 (Revision 3)"
+  },
+  "Web_Frontend_Security": {
+   "verdict": "met",
+   "quotes": ["The fundamental security rule is to never use innerHTML with untrusted data."],
+   "evidence": "the toasts write text only (`src/components/admin/AdminFooterManager.tsx:383`, `src/components/admin/AdminPagesManager.tsx:131`); the page body reaches the DOM only after `sanitizeCmsHtml` (`src/modules/cms/components/CmsPageView.tsx:32`)"
+  },
+  "XSS_Filter_Evasion": {
+   "verdict": "met",
+   "quotes": ["input filtering is an incomplete defense for XSS"],
+   "evidence": "the colour is matched exactly, not filtered by pattern: a neighbouring rgb, `rgba`, extra spaces, upper case, a suffix, `url()` and `expression()` are removed (`[SEC-990-CMS-COLOR]` cases in `sanitizeCmsHtml.security.test.ts`, which fail under break BRK2)"
+  }
+ }
+}

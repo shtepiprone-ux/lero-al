@@ -35,6 +35,9 @@ import { NextIntlClientProvider } from 'next-intl'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import messages from '../../../../messages/en.json'
+import sqMessages from '../../../../messages/sq.json'
+import ukMessages from '../../../../messages/uk.json'
+import itMessages from '../../../../messages/it.json'
 import type { Page } from '@/types/database'
 import { AdminPagesManager } from '../AdminPagesManager'
 
@@ -87,11 +90,11 @@ const PAGE_B: Page = { ...PAGE_A, id: 2, title: 'About us', slug: 'about-us', is
   content: { ...(PAGE_A.content as object), sq: { title: 'Rreth nesh', body: '' } } as Page['content'] }
 const PAGE_LEGACY: Page = { ...PAGE_A, id: 3, title: 'Legacy page', slug: 'legacy-page', content: { body: '<p>old</p>' } }
 
-function renderManager(pages: Page[]) {
+function renderManager(pages: Page[], adminLocale: 'sq' | 'en' | 'uk' | 'it' = 'en') {
   return render(
     <NextIntlClientProvider locale="en" messages={messages}>
       <MantineProvider theme={theme} env="test">
-        <AdminPagesManager pages={pages} adminLocale="en" />
+        <AdminPagesManager pages={pages} adminLocale={adminLocale} />
       </MantineProvider>
     </NextIntlClientProvider>,
   )
@@ -102,8 +105,9 @@ async function openNewDialog() {
   return screen.findByRole('dialog')
 }
 
+// The language panel is the dialog's first visible tabpanel (Task 990: the editor's Visual/Text tabs add their own panel inside it).
 function activePanel(dialog: HTMLElement) {
-  return within(within(dialog).getByRole('tabpanel'))
+  return within(within(dialog).getAllByRole('tabpanel')[0])
 }
 
 beforeEach(() => {
@@ -144,8 +148,8 @@ describe('AdminPagesManager (T1–T6)', () => {
     renderManager([PAGE_A])
 
     const dialog = await openNewDialog()
-    // The editor opens on the admin locale (en), not on sq.
-    expect(within(dialog).getByRole('tab', { name: t.editor_locale_en }).getAttribute('aria-selected')).toBe('true')
+    // Task 990: a new page opens on the Albanian tab, whatever the admin locale (en here); before, it opened on the admin locale.
+    expect(within(dialog).getByRole('tab', { name: t.editor_locale_sq }).getAttribute('aria-selected')).toBe('true')
 
     fireEvent.click(within(dialog).getByRole('tab', { name: t.editor_locale_sq }))
     fireEvent.change(activePanel(dialog).getByLabelText(t.field_title_label), { target: { value: 'Rreth nesh' } })
@@ -242,15 +246,170 @@ describe('AdminPagesManager (T1–T6)', () => {
   })
 })
 
+// Task 990 AC1, AC2, AC3 (the page side): owner list item 20 (2026-11-19) — a page the admin creates in any admin language is saved and published.
+describe('AdminPagesManager — a page is created from any admin language (Task 990)', () => {
+  it('AC1 — with the admin language uk, "New page" opens on the Albanian tab', async () => {
+    renderManager([PAGE_A], 'uk')
+    const dialog = await openNewDialog()
+    expect(within(dialog).getByRole('tab', { name: t.editor_locale_sq }).getAttribute('aria-selected')).toBe('true')
+    expect(within(dialog).getByRole('tab', { name: t.editor_locale_uk }).getAttribute('aria-selected')).toBe('false')
+  })
+
+  it('AC1 — the other languages\' titles are marked optional, the Albanian one is not (owner policy 2026-06-26, confirmed 2026-11-27)', async () => {
+    renderManager([PAGE_A], 'uk')
+    const dialog = await openNewDialog()
+    expect(activePanel(dialog).getByLabelText(t.field_title_label)).toBeTruthy()
+    fireEvent.click(within(dialog).getByRole('tab', { name: t.editor_locale_uk }))
+    expect(activePanel(dialog).getByLabelText(t.field_title_optional_label)).toBeTruthy()
+    expect(activePanel(dialog).queryByLabelText(t.field_title_label)).toBeNull()
+  })
+
+  it('AC1 — Save with only Ukrainian fields shows sq_title_required on the Albanian title and calls no action', async () => {
+    renderManager([PAGE_A], 'uk')
+    const dialog = await openNewDialog()
+    fireEvent.click(within(dialog).getByRole('tab', { name: t.editor_locale_uk }))
+    fireEvent.change(activePanel(dialog).getByLabelText(t.field_title_optional_label), { target: { value: 'Тестова' } })
+
+    const save = within(dialog).getByRole('button', { name: tc.save }) as HTMLButtonElement
+    expect(save.disabled).toBe(false)
+    fireEvent.click(save)
+
+    await waitFor(() => expect(within(dialog).getByRole('tab', { name: new RegExp(t.editor_locale_sq) }).getAttribute('aria-selected')).toBe('true'))
+    const title = activePanel(dialog).getByLabelText(t.field_title_label)
+    expect(title.getAttribute('aria-invalid')).toBe('true')
+    expect(activePanel(dialog).getByText(t.sq_title_required)).toBeTruthy()
+    expect(mockCreate).not.toHaveBeenCalled()
+    expect(mockUpdate).not.toHaveBeenCalled()
+    expect(mockToastError).not.toHaveBeenCalled()
+
+    // typing the Albanian title clears the error
+    fireEvent.change(title, { target: { value: 'Faqe' } })
+    expect(activePanel(dialog).queryByText(t.sq_title_required)).toBeNull()
+  })
+
+  it('AC1 — with an Albanian title a new page is created published, with the address from its letters', async () => {
+    renderManager([PAGE_A], 'uk')
+    const dialog = await openNewDialog()
+    expect(within(dialog).getByRole('switch', { name: tLegal.toggle_published })).toBeTruthy()
+    fireEvent.change(activePanel(dialog).getByLabelText(t.field_title_label), { target: { value: 'Çmimet e shtëpive' } })
+    expect((within(dialog).getByLabelText(t.field_slug_label) as HTMLInputElement).value).toBe('cmimet-e-shtepive')
+    fireEvent.click(within(dialog).getByRole('button', { name: tc.save }))
+
+    await waitFor(() => expect(mockCreate).toHaveBeenCalledTimes(1))
+    expect(mockCreate).toHaveBeenCalledWith(expect.objectContaining({ slug: 'cmimet-e-shtepive', is_published: true }))
+  })
+
+  it('AC1 — editing a draft keeps it a draft, editing a published page keeps it published', async () => {
+    renderManager([PAGE_A, PAGE_B])
+    fireEvent.click(screen.getAllByRole('button', { name: tc.edit })[1])
+    let dialog = await screen.findByRole('dialog')
+    expect(within(dialog).getByRole('switch', { name: tLegal.toggle_draft })).toBeTruthy()
+    fireEvent.click(within(dialog).getByRole('button', { name: tc.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    expect(mockUpdate).toHaveBeenCalledWith(PAGE_B.id, expect.objectContaining({ is_published: false }))
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    fireEvent.click(screen.getAllByRole('button', { name: tc.edit })[0])
+    dialog = await screen.findByRole('dialog')
+    fireEvent.click(within(dialog).getByRole('button', { name: tc.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(2))
+    expect(mockUpdate).toHaveBeenLastCalledWith(PAGE_A.id, expect.objectContaining({ is_published: true }))
+  })
+
+  it('AC2 — the button reads "New page" once: no message and no button text starts with "+"', () => {
+    for (const locale of [messages, sqMessages, ukMessages, itMessages]) {
+      expect(locale.admin.pages.btn_new.trim().startsWith('+')).toBe(false)
+    }
+    renderManager([PAGE_A])
+    for (const button of screen.getAllByRole('button', { name: t.btn_new })) {
+      expect(button.textContent?.trim().startsWith('+')).toBe(false)
+    }
+  })
+
+  it('AC3 — a delete refused with page_in_footer names the footer languages in the toast and keeps the row', async () => {
+    mockDelete.mockResolvedValue({ error: 'page_in_footer', locales: ['sq', 'uk'] })
+    renderManager([PAGE_A, PAGE_B])
+    fireEvent.click(screen.getAllByRole('button', { name: tc.delete })[0])
+    const dialog = await screen.findByRole('dialog')
+    fireEvent.click(within(dialog).getByRole('button', { name: tc.delete }))
+
+    const named = t.page_in_footer.replace('{locales}', `${t.editor_locale_sq}, ${t.editor_locale_uk}`)
+    await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(named))
+    expect(mockToastSuccess).not.toHaveBeenCalled()
+    expect(screen.queryAllByText('Kushtet').length).toBeGreaterThan(0)
+  })
+
+  it('AC3 — a save refused with page_in_footer names the footer languages and keeps the dialog open', async () => {
+    mockUpdate.mockResolvedValue({ error: 'page_in_footer', locales: ['en'] })
+    renderManager([PAGE_A])
+    fireEvent.click(screen.getAllByRole('button', { name: tc.edit })[0])
+    const dialog = await screen.findByRole('dialog')
+    fireEvent.click(within(dialog).getByRole('switch', { name: tLegal.toggle_published }))
+    fireEvent.click(within(dialog).getByRole('button', { name: tc.save }))
+
+    await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(t.page_in_footer.replace('{locales}', t.editor_locale_en)))
+    expect(mockToastSuccess).not.toHaveBeenCalled()
+    expect(screen.getByRole('dialog')).toBeTruthy()
+  })
+})
+
+// Task 990 Review 2 F6: Mantine closes every opened modal on one Escape (its window keydown listener, capture phase), so Escape in the editor's full-screen
+// view or "Add media" dialog also closed the page dialog and lost what was typed. Escape now closes only the editor's dialog.
+describe('AdminPagesManager — Escape closes only the editor dialog [F6]', () => {
+  const tEditor = messages.admin.pages.editor
+
+  async function openWithTitle() {
+    renderManager([PAGE_A], 'uk')
+    const dialog = await openNewDialog()
+    fireEvent.change(activePanel(dialog).getByLabelText(t.field_title_label), { target: { value: 'Faqja e re' } })
+    return dialog
+  }
+
+  function pressEscape() {
+    fireEvent.keyDown(document.activeElement ?? document.body, { key: 'Escape' })
+  }
+
+  it('[F6] (a) Escape in full screen closes full screen only; the page dialog and its title stay', async () => {
+    const dialog = await openWithTitle()
+    fireEvent.click(activePanel(dialog).getByRole('button', { name: tEditor.fullscreen }))
+    await screen.findByRole('button', { name: tEditor.fullscreen_close })
+
+    pressEscape()
+
+    await waitFor(() => expect(screen.queryByRole('button', { name: tEditor.fullscreen_close })).toBeNull())
+    expect(screen.getAllByRole('dialog')).toEqual([dialog])
+    expect((activePanel(dialog).getByLabelText(t.field_title_label) as HTMLInputElement).value).toBe('Faqja e re')
+  })
+
+  it('[F6] (b) Escape in "Add media" closes that dialog only; the page dialog and its title stay', async () => {
+    const dialog = await openWithTitle()
+    fireEvent.click(activePanel(dialog).getByRole('button', { name: tEditor.add_media }))
+    await waitFor(() => expect(screen.getAllByRole('dialog')).toHaveLength(2))
+
+    pressEscape()
+
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: tEditor.image_dialog_title })).toBeNull())
+    expect(screen.getAllByRole('dialog')).toEqual([dialog])
+    expect((activePanel(dialog).getByLabelText(t.field_title_label) as HTMLInputElement).value).toBe('Faqja e re')
+  })
+
+  it('[F6] (c) with no editor dialog open, Escape closes the page dialog (as on main)', async () => {
+    await openWithTitle()
+
+    pressEscape()
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+  })
+})
+
 describe('AdminPagesManager — editor image upload (T12)', () => {
   const CLD = 'https://res.cloudinary.com/demo/image/upload/v1/cms/pages/a.png'
 
   async function openImageDialog() {
     const dialog = await openNewDialog()
     fireEvent.click(within(dialog).getByRole('tab', { name: t.editor_locale_sq }))
-    // The image function is an item of the toolbar's Insert menu.
-    fireEvent.click(within(dialog).getByRole('button', { name: messages.admin.pages.editor.menu_insert }))
-    fireEvent.click(await screen.findByRole('menuitem', { name: messages.admin.pages.editor.image_insert }))
+    // Task 990 (O990-1): the image function is "Add media" above the toolbar (it was an item of the Insert menu).
+    fireEvent.click(activePanel(dialog).getByRole('button', { name: messages.admin.pages.editor.add_media }))
     const imageDialog = (await screen.findAllByRole('dialog')).find(d => d !== dialog) as HTMLElement
     const input = imageDialog.querySelector('input[type="file"]') as HTMLInputElement
     fireEvent.change(input, { target: { files: [new File([new Uint8Array([1, 2])], 'a.png', { type: 'image/png' })] } })

@@ -1,6 +1,6 @@
 # Task 989 — Review 1
 
-Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json)
+Kickoff: [Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md](../../tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md) · OWASP record: [Task_989.json](../security/owasp/reviews/Task_989.json)
 
 Review 1 of the working tree on 8896ef0d7 (branch `task/989-site-settings-reach-the-site`, uncommitted) — NEEDS REVISION
 Scope: diff-based; 31 code files, 2 CSS modules, 4 message files, `package.json`, `package-lock.json`, `scripts/mantine-migration-scope.json`; entry points: the new Server Action `saveFooterShared` (admin), the changed `upsertFooterContent`, `getAllFooterContent`, `saveSettings`, the site and admin layouts' `generateMetadata`; the executor's report `docs/sessions/2026-11-27-task989-executor-report.md`

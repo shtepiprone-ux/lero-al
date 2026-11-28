@@ -1,7 +1,7 @@
 # Task 989: executor report (Sonnet)
 
 Date: 2026-11-27. Branch: `task/989-site-settings-reach-the-site`, base `8896ef0d7` (the owner switched to it). Every change is in the working tree; nothing is committed or pushed (no mutating Git command was run).
-Sources: the kickoff `tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md`, checklists A, I and U, `.claude/rules/quality-gates.md` §1-§5 and §8.1, and the owner's later instructions in this session.
+Sources: the kickoff `tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md`, checklists A, I and U, `.claude/rules/quality-gates.md` §1-§5 and §8.1, and the owner's later instructions in this session.
 Anything not read or not measured is marked UNKNOWN or "not done". The report to the owner was given in Ukrainian; this file is its record in English.
 
 ---

@@ -1,6 +1,6 @@
 # Task 989 — Revision 3 executor report (Review 4, F8-F12)
 
-Kickoff: `tasks/Sprints/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md` ("## Revision 3"). Review: `docs/reviews/Task_989_Review_4.md`.
+Kickoff: `tasks/Archive/Sprint_94_kickoff_prompt_Task_989_Site_Settings_Reach_The_Site.md` ("## Revision 3"). Review: `docs/reviews/Task_989_Review_4.md`.
 Executor: Sonnet, 2026-11-27. Base commit `debd90141`. Shell: Windows PowerShell 5.1 (the PowerShell tool) unless a line names Git Bash.
 No Git command that writes was run; read-only `git status`, `git log`, `git diff`, `git show` only.
 

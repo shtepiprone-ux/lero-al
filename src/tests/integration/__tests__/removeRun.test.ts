@@ -18,7 +18,7 @@ const RUN = `zz_synth_${Date.UTC(2026, 10, 28, 12).toString(36)}a1b2`
 const ESCAPED = `zz\\_synth\\_${RUN.slice('zz_synth_'.length)}%`
 
 type Result = { data: unknown[] | null; count?: number | null; error: { message: string } | null }
-type Call = { kind: 'query'; table: string; op: 'delete' | 'select'; columns?: string; options?: { count?: string; head?: boolean }; filter?: 'like' | 'in'; column?: string; value?: unknown } | { kind: 'deleteUser'; id: string }
+type Call = { kind: 'query'; table: string; op: 'delete' | 'select'; columns?: string; options?: { count?: string; head?: boolean }; filter?: 'like' | 'in'; column?: string; value?: unknown } | { kind: 'deleteUser'; id: string } | { kind: 'listUsers' }
 type Options = { failDelete?: string[]; failCount?: string[]; throwCount?: string[]; nullCount?: string[]; left?: Record<string, number> }
 
 function fakeAdmin({ failDelete = [], failCount = [], throwCount = [], nullCount = [], left = {} }: Options = {}) {
@@ -50,7 +50,7 @@ function fakeAdmin({ failDelete = [], failCount = [], throwCount = [], nullCount
     from,
     auth: {
       admin: {
-        listUsers: async () => ({ data: { users: [] as { id: string; email?: string }[] }, error: null }),
+        listUsers: async () => { calls.push({ kind: 'listUsers' }); return { data: { users: [] as { id: string; email?: string }[] }, error: null } },
         deleteUser: async (id: string) => { calls.push({ kind: 'deleteUser', id }); return { data: {}, error: null } },
       },
     },
@@ -122,6 +122,15 @@ describe('removeRun: only the rows of this one run (Task 1080, T1)', () => {
       expect(call.filter, `${call.table} ${call.op}`).toBe('like')
       expect(call.value, `${call.table} ${call.op}`).toBe(ESCAPED)
       expect(String(call.value), `${call.table} ${call.op}`).toMatch(/^zz\\_synth\\_[0-9a-z]{8}[0-9a-f]{4}%$/)
+    }
+  })
+
+  it('[SEC-1080-SHAPE-ONLY] a value that is not a run prefix is refused before any read, delete or count', async () => {
+    for (const run of ['', 'zz_synth_', 'zz_synth_short', `${RUN}%`, `${RUN}x`, ` ${RUN}`, '%']) {
+      const { admin, calls } = fakeAdmin()
+      const result = await removeRun(admin, run, tracked())
+      expect(result, JSON.stringify(run)).toEqual({ verified: false, remaining: 0, errors: ['refused: not a run prefix'] })
+      expect(calls, JSON.stringify(run)).toEqual([])
     }
   })
 })

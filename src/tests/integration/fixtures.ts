@@ -43,6 +43,8 @@ export const PREFIXED_COLUMNS: readonly (readonly [table: string, column: string
  * A query that fails is "unknown", never "zero left".
  */
 export async function removeRun(admin: SupabaseClient, run: string, tracked: { userIds?: Set<string>; listingIds?: Set<string> } = {}): Promise<CleanupResult> {
+  // Only the exact shape `createRun` makes: an empty or shorter value would match every row of the listed tables, every synthetic run or every user (Task 1080 Review 1, F1).
+  if (!/^zz_synth_[0-9a-z]{8}[0-9a-f]{4}$/.test(run)) return { verified: false, remaining: 0, errors: ['refused: not a run prefix'] }
   const RUN = run
   // The prefix contains `_`, which LIKE reads as "any character": the pattern is escaped, so a clean-up deletes only rows that really start with this run's prefix.
   const RUN_LIKE = `${escapeLike(RUN)}%`

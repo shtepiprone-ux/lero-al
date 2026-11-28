@@ -8,6 +8,8 @@
  * (`viewportKit`), and the control sizes are read from the rules Mantine writes for the responsive style props.
  */
 import React, { useState } from 'react'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { act, render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
@@ -21,7 +23,7 @@ import { MantineRichTextEditor, type RichTextEditorLabels } from '../MantineRich
 import { setViewport } from './viewportKit'
 
 const KEYS = [
-  'toolbar', 'toolbarToggle', 'fullscreen', 'addMedia', 'modeVisual', 'modeText',
+  'toolbar', 'toolbarToggle', 'fullscreen', 'fullscreenClose', 'addMedia', 'modeVisual', 'modeText',
   'bold', 'italic', 'underline', 'strike', 'bulletList', 'orderedList', 'blockquote', 'hr',
   'link', 'unlink', 'alignLeft', 'alignCenter', 'alignRight', 'alignJustify', 'undo', 'redo',
   'blockFormat', 'paragraph', 'h2', 'h3', 'h4', 'h5', 'h6', 'preformatted',
@@ -374,5 +376,58 @@ describe('Task 990 AC4 — the O990-1 toolbar', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
     await waitFor(() => expect(screen.getByText('keep me')).toBeTruthy())
     expect(within(toolbar()).getByRole('button', { name: L.fullscreen }).hasAttribute('data-active')).toBe(false)
+  })
+
+  // Review 1 F3: the full-screen dialog closes through the canonical dialog close (`MantineModal.tsx`: ActionIcon light gray, radius pill, size xl), named as a close.
+  it('below 640px the full-screen dialog has the canonical 44px round close, named "close full screen", and it leaves full screen', async () => {
+    setViewport(320)
+    renderEditor({ initial: '<p>keep me</p>' })
+    await getEditor()
+    fireEvent.click(within(toolbar()).getByRole('button', { name: L.fullscreen }))
+
+    const dialog = await screen.findByRole('dialog')
+    const close = within(dialog).getByRole('button', { name: L.fullscreenClose })
+    expect(close.classList.contains('mantine-ActionIcon-root')).toBe(true)
+    expect(close.getAttribute('data-size')).toBe('xl')
+    expect(close.getAttribute('data-variant')).toBe('light')
+    expect(close.getAttribute('style') ?? '').toContain('--ai-radius: var(--mantine-radius-pill)')
+    // Mantine's `xl` ActionIcon is 2.75rem = 44px; the theme does not override it
+    expect(theme.components?.ActionIcon?.vars).toBeUndefined()
+    const css = readFileSync(join(process.cwd(), 'node_modules/@mantine/core/styles.css'), 'utf8')
+    const xl = /--ai-size-xl:\s*calc\(([\d.]+)rem/.exec(css)
+    expect(Number(xl?.[1]) * 16).toBe(44)
+
+    fireEvent.click(close)
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    await waitFor(() => expect(screen.getByText('keep me')).toBeTruthy())
+  })
+
+  // The census gate (CI) checks that Escape and the close control return the focus to the trigger: the full-screen tool is replaced while the dialog is open,
+  // and a toolbar control does not take the focus on a click, so the editor returns it itself.
+  it('leaving full screen by Escape or by the close control puts the focus back on the full-screen tool', async () => {
+    renderEditor({ initial: '<p>keep me</p>' })
+    await getEditor()
+    const fullscreenTool = () => within(toolbar()).getByRole('button', { name: L.fullscreen })
+
+    fireEvent.click(fullscreenTool())
+    fireEvent.keyDown(await screen.findByRole('dialog'), { key: 'Escape' })
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(fullscreenTool()))
+
+    fireEvent.click(fullscreenTool())
+    fireEvent.click(within(await screen.findByRole('dialog')).getByRole('button', { name: L.fullscreenClose }))
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(fullscreenTool()))
+  })
+
+  it('closing the image dialog opened by "img" in Text mode puts the focus back on "img"', async () => {
+    renderEditor()
+    await getEditor()
+    fireEvent.click(screen.getByRole('tab', { name: L.modeText }))
+    const img = within(screen.getByRole('toolbar', { name: L.modeText })).getByRole('button', { name: 'img' })
+    fireEvent.click(img)
+    fireEvent.keyDown(await screen.findByRole('dialog'), { key: 'Escape' })
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(img))
   })
 })

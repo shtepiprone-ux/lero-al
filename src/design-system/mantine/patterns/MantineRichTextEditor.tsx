@@ -30,9 +30,10 @@ import {
   Underline,
   Undo2,
   Unlink,
+  X,
   type LucideIcon,
 } from 'lucide-react'
-import { Button, ColorSwatch, FileInput, Flex, Group, Input, Modal, Stack, Tabs, Textarea, TextInput, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Button, ColorSwatch, FileInput, Flex, Group, Input, Modal, Stack, Tabs, Textarea, TextInput, useMantineTheme } from '@mantine/core'
 import { RichTextEditor } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
@@ -53,6 +54,8 @@ export interface RichTextEditorLabels {
   toolbar: string
   toolbarToggle: string
   fullscreen: string
+  /** the name of the full-screen dialog's close control */
+  fullscreenClose: string
   addMedia: string
   modeVisual: string
   modeText: string
@@ -238,7 +241,19 @@ export function MantineRichTextEditor({
   const [openTags, setOpenTags] = useState<string[]>([])
   const [rowTwo, setRowTwo] = useState(true)
   const [fullscreen, setFullscreen] = useState(false)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const wasFullscreen = useRef(false)
   const textRef = useRef<HTMLTextAreaElement>(null)
+
+  // Leaving full screen puts the editor back in place: the focus returns to its full-screen tool, which the dialog replaced while it was open.
+  useEffect(() => {
+    if (wasFullscreen.current && !fullscreen) {
+      const tools = wrapperRef.current?.querySelectorAll<HTMLButtonElement>('button') ?? []
+      Array.from(tools).find(button => button.getAttribute('aria-label') === labels.fullscreen)?.focus({ preventScroll: true })
+    }
+    wasFullscreen.current = fullscreen
+  }, [fullscreen, labels.fullscreen])
+
   const pendingCaret = useRef<number | null>(null)
 
   // After a quicktag the caret stands after the inserted markup.
@@ -407,8 +422,10 @@ export function MantineRichTextEditor({
   ]
 
   /** a quicktag wraps the selection; without one it opens its tag, and pressed again (it reads "/b") closes it, as WordPress does */
-  function applyQuicktag(tag: Quicktag) {
+  function applyQuicktag(tag: Quicktag, trigger: HTMLElement) {
     if (tag.id === 'img') {
+      // a toolbar control takes no focus on a click; focused, it is where the image dialog returns the focus
+      trigger.focus()
       setImageOpen(true)
       return
     }
@@ -537,7 +554,7 @@ export function MantineRichTextEditor({
           <RichTextEditor.Toolbar role="toolbar" aria-label={labels.modeText}>
             <Flex wrap="wrap" columnGap="sm">
               {quicktags.map(tag => (
-                <RichTextEditor.Control key={tag.id} title={tag.title} active={openTags.includes(tag.id)} disabled={!canEdit} px="xs" onClick={() => applyQuicktag(tag)} {...touch}>
+                <RichTextEditor.Control key={tag.id} title={tag.title} active={openTags.includes(tag.id)} disabled={!canEdit} px="xs" onClick={event => applyQuicktag(tag, event.currentTarget)} {...touch}>
                   {openTags.includes(tag.id) ? `/${tag.id}` : tag.id}
                 </RichTextEditor.Control>
               ))}
@@ -565,13 +582,24 @@ export function MantineRichTextEditor({
   )
 
   return (
-    <Input.Wrapper id={fieldId} labelElement="div" label={label} error={error}>
+    <Input.Wrapper ref={wrapperRef} id={fieldId} labelElement="div" label={label} error={error}>
       {!fullscreen && body}
 
-      {/* Full screen: the same editor (its document stays) in a full-screen dialog above the page; the toolbar tool or the close button returns it */}
-      <Modal opened={fullscreen} onClose={() => setFullscreen(false)} fullScreen title={label} closeButtonProps={{ 'aria-label': labels.fullscreen }}>
-        {fullscreen && body}
-      </Modal>
+      {/* Full screen: the same editor (its document stays) in a full-screen dialog above the page; the toolbar tool or the close button returns it.
+          The focus goes back to the full-screen tool (the effect above): the element that held it inside the dialog is gone. */}
+      <Modal.Root opened={fullscreen} onClose={() => setFullscreen(false)} fullScreen returnFocus={false}>
+        <Modal.Overlay />
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title>{label}</Modal.Title>
+            {/* the canonical dialog close (`MantineModal.tsx`): 44px round light gray */}
+            <ActionIcon variant="light" color="gray" radius="pill" size="xl" aria-label={labels.fullscreenClose} onClick={() => setFullscreen(false)}>
+              <X size={theme.other.iconSize.standard} />
+            </ActionIcon>
+          </Modal.Header>
+          <Modal.Body>{fullscreen && body}</Modal.Body>
+        </Modal.Content>
+      </Modal.Root>
 
       <MantineModal
         structured

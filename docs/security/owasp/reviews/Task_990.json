@@ -1,6 +1,26 @@
 {
  "task": "990",
  "sheets": {
+  "AI_Agent_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); the rule change only names one local check Opus runs and forbids a CI gate as a test; no agent permission, hook or tool changes"
+  },
+  "Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); the Task 1078 SQL is only described in a kickoff; no query, command or interpreter call is written here"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); no model prompt, model input or model output handling exists in the changed product code"
+  },
+  "MCP_Security": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); no MCP server, tool, configuration or permission is added or changed by this branch"
+  },
+  "OS_Command_Injection_Defense": {
+   "verdict": "not applicable",
+   "reason": "triggered by the documentation this branch carries since Review 1 (`.claude/rules/checklists/common.md`, `design.md`, `flow.md`, the Task 1078 kickoff); no process is spawned and no shell command is built by any changed product file"
+  },
   "Attack_Surface_Analysis": {
    "verdict": "met",
    "quotes": ["developers should understand and monitor the Attack Surface as they design and build and change a system"],

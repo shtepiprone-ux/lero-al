@@ -187,6 +187,13 @@ The items are written in full in [Task_990_Review_1.md](../../docs/reviews/Task_
 - F3: the full-screen dialog's close control is the canonical 44px round close with a close name (`fullscreenClose` in the four languages); the toolbar test asserts both.
 - F4: the six message keys no code reads leave the four message files.
 
+## Revision 2 (Review 2, 2026-11-28)
+
+The item is written in full in [Task_990_Review_2.md](../../docs/reviews/Task_990_Review_2.md), "Revision 2"; its two files are in the Scope. AC6 runs only on GitHub CI (checklist A5).
+
+- F6: Escape in the editor's full-screen view or "Add media" dialog closes only that view or dialog; the page dialog and what was typed in it stay. `MantineRichTextEditor.tsx` reports its open dialogs (`onDialogChange`), `PageEditorDialogView.tsx` ignores the page dialog's close while one is open; tested in `AdminPagesManager.smoke.test.tsx` (`[F6]`).
+
 ## Review
 
 - [Review 1 — NEEDS REVISION](../../docs/reviews/Task_990_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_990_Review_2.md)

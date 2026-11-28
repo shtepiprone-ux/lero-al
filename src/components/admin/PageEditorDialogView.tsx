@@ -45,6 +45,7 @@ export function useCmsEditorLabels(): RichTextEditorLabels {
     toolbar: t('toolbar'),
     toolbarToggle: t('toolbar_toggle'),
     fullscreen: t('fullscreen'),
+    fullscreenClose: t('fullscreen_close'),
     addMedia: t('add_media'),
     modeVisual: t('mode_visual'),
     modeText: t('mode_text'),

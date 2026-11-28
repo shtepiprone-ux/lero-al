@@ -8406,6 +8406,17 @@
       "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
     },
     {
+      "id": "patterns-mantine-pageeditordialogview--title-required",
+      "story": "patterns-mantine-pageeditordialogview--title-required",
+      "open": {
+        "kind": "mount"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [],
+      "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
+    },
+    {
       "id": "patterns-mantine-premiumdialogview--custom-date",
       "story": "patterns-mantine-premiumdialogview--custom-date",
       "open": {
@@ -8531,7 +8542,7 @@
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(5)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8539,86 +8550,47 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(5)"
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > button:nth-child(2)"
     },
     {
-      "id": "patterns-mantine-richtexteditor--default~history",
+      "id": "patterns-mantine-richtexteditor--default~add-media",
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
       },
       "portals": 1,
-      "focus": "inside",
+      "focus": "trap",
       "dismiss": [
         "escape",
+        "close-control",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)",
-      "widths": {
-        "max": 639
-      }
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
     },
     {
-      "id": "patterns-mantine-richtexteditor--default~history-wide",
+      "id": "patterns-mantine-richtexteditor--default~fullscreen",
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > button:nth-child(4)"
       },
       "portals": 1,
-      "focus": "inside",
+      "focus": "trap",
       "dismiss": [
         "escape",
-        "outside"
+        "close-control"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)",
-      "widths": {
-        "min": 640
-      }
-    },
-    {
-      "id": "patterns-mantine-richtexteditor--default~insert",
-      "story": "patterns-mantine-richtexteditor--default",
-      "open": {
-        "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)"
-      },
-      "portals": 1,
-      "focus": "inside",
-      "dismiss": [
-        "escape",
-        "outside"
-      ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
-      "widths": {
-        "max": 639
-      }
-    },
-    {
-      "id": "patterns-mantine-richtexteditor--default~insert-wide",
-      "story": "patterns-mantine-richtexteditor--default",
-      "open": {
-        "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)"
-      },
-      "portals": 1,
-      "focus": "inside",
-      "dismiss": [
-        "escape",
-        "outside"
-      ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
-      "widths": {
-        "min": 640
-      }
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > button:nth-child(4)"
     },
     {
       "id": "patterns-mantine-richtexteditor--default~paragraph",
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8626,7 +8598,7 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
       "widths": {
         "max": 639
       }
@@ -8636,7 +8608,7 @@
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8644,17 +8616,17 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
       "widths": {
         "min": 640
       }
     },
     {
-      "id": "patterns-mantine-richtexteditor--default~text-format",
+      "id": "patterns-mantine-richtexteditor--default~table",
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8662,17 +8634,17 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)",
       "widths": {
         "max": 639
       }
     },
     {
-      "id": "patterns-mantine-richtexteditor--default~text-format-wide",
+      "id": "patterns-mantine-richtexteditor--default~table-wide",
       "story": "patterns-mantine-richtexteditor--default",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8680,7 +8652,43 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)",
+      "widths": {
+        "min": 640
+      }
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--default~text-color",
+      "story": "patterns-mantine-richtexteditor--default",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)",
+      "widths": {
+        "max": 639
+      }
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--default~text-color-wide",
+      "story": "patterns-mantine-richtexteditor--default",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)",
       "widths": {
         "min": 640
       }
@@ -8701,11 +8709,45 @@
       "closeSelector": ".mantine-Modal-header button"
     },
     {
+      "id": "patterns-mantine-richtexteditor--text-mode~add-media",
+      "story": "patterns-mantine-richtexteditor--text-mode",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "close-control",
+        "outside"
+      ],
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--text-mode~img",
+      "story": "patterns-mantine-richtexteditor--text-mode",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(14)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "close-control",
+        "outside"
+      ],
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(14)"
+    },
+    {
       "id": "patterns-mantine-richtexteditor--with-content~add-link",
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(5)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8713,86 +8755,47 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(5)"
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > button:nth-child(2)"
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-content~history",
+      "id": "patterns-mantine-richtexteditor--with-content~add-media",
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
       },
       "portals": 1,
-      "focus": "inside",
+      "focus": "trap",
       "dismiss": [
         "escape",
+        "close-control",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)",
-      "widths": {
-        "max": 639
-      }
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-content~history-wide",
+      "id": "patterns-mantine-richtexteditor--with-content~fullscreen",
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > button:nth-child(4)"
       },
       "portals": 1,
-      "focus": "inside",
+      "focus": "trap",
       "dismiss": [
         "escape",
-        "outside"
+        "close-control"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)",
-      "widths": {
-        "min": 640
-      }
-    },
-    {
-      "id": "patterns-mantine-richtexteditor--with-content~insert",
-      "story": "patterns-mantine-richtexteditor--with-content",
-      "open": {
-        "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)"
-      },
-      "portals": 1,
-      "focus": "inside",
-      "dismiss": [
-        "escape",
-        "outside"
-      ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
-      "widths": {
-        "max": 639
-      }
-    },
-    {
-      "id": "patterns-mantine-richtexteditor--with-content~insert-wide",
-      "story": "patterns-mantine-richtexteditor--with-content",
-      "open": {
-        "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)"
-      },
-      "portals": 1,
-      "focus": "inside",
-      "dismiss": [
-        "escape",
-        "outside"
-      ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
-      "widths": {
-        "min": 640
-      }
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > button:nth-child(4)"
     },
     {
       "id": "patterns-mantine-richtexteditor--with-content~paragraph",
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8800,7 +8803,7 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
       "widths": {
         "max": 639
       }
@@ -8810,7 +8813,7 @@
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8818,17 +8821,17 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
       "widths": {
         "min": 640
       }
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-content~text-format",
+      "id": "patterns-mantine-richtexteditor--with-content~table",
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8836,17 +8839,17 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)",
       "widths": {
         "max": 639
       }
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-content~text-format-wide",
+      "id": "patterns-mantine-richtexteditor--with-content~table-wide",
       "story": "patterns-mantine-richtexteditor--with-content",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8854,7 +8857,43 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)",
+      "widths": {
+        "min": 640
+      }
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--with-content~text-color",
+      "story": "patterns-mantine-richtexteditor--with-content",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)",
+      "widths": {
+        "max": 639
+      }
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--with-content~text-color-wide",
+      "story": "patterns-mantine-richtexteditor--with-content",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)",
       "widths": {
         "min": 640
       }
@@ -8864,7 +8903,7 @@
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(5)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8872,86 +8911,47 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(5)"
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > button:nth-child(2)"
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-error~history",
+      "id": "patterns-mantine-richtexteditor--with-error~add-media",
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
       },
       "portals": 1,
-      "focus": "inside",
+      "focus": "trap",
       "dismiss": [
         "escape",
+        "close-control",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)",
-      "widths": {
-        "max": 639
-      }
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-error~history-wide",
+      "id": "patterns-mantine-richtexteditor--with-error~fullscreen",
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > button:nth-child(4)"
       },
       "portals": 1,
-      "focus": "inside",
+      "focus": "trap",
       "dismiss": [
         "escape",
-        "outside"
+        "close-control"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)",
-      "widths": {
-        "min": 640
-      }
-    },
-    {
-      "id": "patterns-mantine-richtexteditor--with-error~insert",
-      "story": "patterns-mantine-richtexteditor--with-error",
-      "open": {
-        "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)"
-      },
-      "portals": 1,
-      "focus": "inside",
-      "dismiss": [
-        "escape",
-        "outside"
-      ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
-      "widths": {
-        "max": 639
-      }
-    },
-    {
-      "id": "patterns-mantine-richtexteditor--with-error~insert-wide",
-      "story": "patterns-mantine-richtexteditor--with-error",
-      "open": {
-        "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)"
-      },
-      "portals": 1,
-      "focus": "inside",
-      "dismiss": [
-        "escape",
-        "outside"
-      ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(3) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)",
-      "widths": {
-        "min": 640
-      }
+      "closeSelector": ".mantine-Modal-header button",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > button:nth-child(4)"
     },
     {
       "id": "patterns-mantine-richtexteditor--with-error~paragraph",
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8959,7 +8959,7 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
       "widths": {
         "max": 639
       }
@@ -8969,7 +8969,7 @@
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8977,17 +8977,17 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
       "widths": {
         "min": 640
       }
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-error~text-format",
+      "id": "patterns-mantine-richtexteditor--with-error~table",
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -8995,17 +8995,17 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)",
       "widths": {
         "max": 639
       }
     },
     {
-      "id": "patterns-mantine-richtexteditor--with-error~text-format-wide",
+      "id": "patterns-mantine-richtexteditor--with-error~table-wide",
       "story": "patterns-mantine-richtexteditor--with-error",
       "open": {
         "kind": "click",
-        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)"
       },
       "portals": 1,
       "focus": "inside",
@@ -9013,7 +9013,43 @@
         "escape",
         "outside"
       ],
-      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > button:nth-child(2)",
+      "widths": {
+        "min": 640
+      }
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--with-error~text-color",
+      "story": "patterns-mantine-richtexteditor--with-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)",
+      "widths": {
+        "max": 639
+      }
+    },
+    {
+      "id": "patterns-mantine-richtexteditor--with-error~text-color-wide",
+      "story": "patterns-mantine-richtexteditor--with-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span:nth-child(5) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > button:nth-child(2)",
       "widths": {
         "min": 640
       }
